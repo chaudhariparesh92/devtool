@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .token.string { @apply text-[#22863a] dark:text-[#8ddb8c]; }
+  .token.number { @apply text-[#005cc5] dark:text-[#79b8ff]; }
+  .token.boolean { @apply text-[#d73a49] dark:text-[#f97583]; }
+  .token.null { @apply text-[#6a737d] dark:text-[#959da5]; }
+  .token.key { @apply text-[#6f42c1] dark:text-[#b392f0]; }
+}
