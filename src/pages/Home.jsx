@@ -16,14 +16,14 @@ export default function Home() {
   return (
     <div className="space-y-12 text-center">
       <SeoHead 
-        title="Free Online Developer Tools" 
+        title="Free DevToolss" 
         description="Fast, private tools for developers. Process JSON, decode JWTs, generate UUIDs, and more." 
         url="/" 
       />
       
       {/* Hero Section */}
       <div className="py-12">
-        <h1 className="text-5xl font-bold mb-4">Free Online Developer Tools</h1>
+        <h1 className="text-5xl font-bold mb-4">Free DevToolss</h1>
         <p className="text-xl text-gray-600 dark:text-gray-400">
           Fast, private, browser-based tools. No signup.
         </p>

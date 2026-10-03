@@ -10,7 +10,7 @@ export default function Header() {
     <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between max-w-[1400px]">
         <Link to="/" className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-bold text-xl">
-          <Terminal size={24} /><span>Online Developer Tool Pro</span>
+          <Terminal size={24} /><span>DevTools Pro</span>
         </Link>
         <nav className="hidden md:flex gap-6 text-sm font-medium text-gray-600 dark:text-gray-300">
           <Link to="/tools" className="hover:text-indigo-500">All Tools</Link>
