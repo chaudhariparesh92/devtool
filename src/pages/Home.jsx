@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <div className="space-y-12 text-center">
       <SeoHead 
-        title="Free DevToolss" 
+        title="Free DevTools" 
         description="Fast, private tools for developers. Process JSON, decode JWTs, generate UUIDs, and more." 
         url="/" 
       />
