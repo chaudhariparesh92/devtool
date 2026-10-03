@@ -5,6 +5,7 @@ const CATEGORIES = [
   'JSON Tools', 
   'Encoders & Decoders', 
   'Generators & Hashes', 
+  'Network & Monitoring',
   'Web Tools', 
   'Text & Data'
 ];

@@ -4,11 +4,14 @@ import { routes } from '../App';
 
 // Helper function to dynamically map a route path to a category
 const getCategoryForPath = (path) => {
+  // Web Tools category exclusively for website-checker
+  if (path === '/website-checker') return 'Web Tools';
+
   if (path.includes('json')) return 'JSON Tools';
   if (path.includes('encode') || path.includes('decode')) return 'Encoders & Decoders';
   if (path.includes('generator') || path.includes('hash') || path.includes('uuid')) return 'Generators & Hashes';
-  if (path.includes('time') || path.includes('cron') || path.includes('query') || path.includes('color') || path.includes('hex-to') || path.includes('rgb')) return 'Web Tools';
-  return 'Text & Data'; // Fallback for diff, text, case, xml, yaml, csv, regex, etc.
+  if (path.includes('time') || path.includes('cron') || path.includes('query') || path.includes('color')) return 'Utility Tools'; // Move other web utilities here if desired
+  return 'Text & Data'; 
 };
 
 export default function ToolsIndex() {

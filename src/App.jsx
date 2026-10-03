@@ -21,6 +21,7 @@ import DiffTool from './pages/tools/DiffTool';
 import QueryStringTool from './pages/tools/QueryStringTool';
 import CronTool from './pages/tools/CronTool';
 import AdSlot from './components/AdSlot';
+import WebsiteCheckerTool from './pages/tools/WebsiteCheckerTool';
 
 export const routes = [
   { path: '/', component: Home },
@@ -81,7 +82,8 @@ export const routes = [
   { path: '/query-string-parser', component: QueryStringTool },
   { path: '/query-string-generator', component: QueryStringTool },
   { path: '/cron-expression-generator', component: CronTool },
-  { path: '/cron-expression-parser', component: CronTool }
+  { path: '/cron-expression-parser', component: CronTool },
+  { path: '/website-checker', component: WebsiteCheckerTool }
 ];
 
 export default function App() {
@@ -89,27 +91,27 @@ export default function App() {
     <Router>
       <div className="flex flex-col min-h-screen font-sans bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors">
         <Header />
-        
+
         <div className="container mx-auto px-4 py-8 max-w-[1400px] flex-grow flex flex-col">
-          
+
           {/* TOP AD: Global Header Banner */}
-          <div className="w-full flex justify-center mb-8">
-             <AdSlot className="w-full max-w-[970px] h-[90px]" slot="YOUR_TOP_AD_SLOT_ID" />
+          <div className="w-full flex justify-center mb-4">
+            <AdSlot className="w-full max-w-[970px] h-[60px]" slot="YOUR_TOP_AD_SLOT_ID" />
           </div>
 
           {/* MAIN LAYOUT: Content (Left) + Sidebar Ads (Right) */}
           <div className="flex flex-col lg:flex-row gap-8 flex-grow">
-            
+
             {/* Tool/Page Content */}
             <main className="flex-grow min-w-0">
               <Routes>
                 {routes.map((r, i) => (
-                   <Route key={i} path={r.path} element={<r.component path={r.path} />} />
+                  <Route key={i} path={r.path} element={<r.component path={r.path} />} />
                 ))}
                 <Route path="*" element={<div className="text-center py-20 text-2xl font-bold">404 - Tool Not Found</div>} />
               </Routes>
             </main>
-            
+
             {/* RIGHT SIDEBAR ADS: Sticky global column */}
             <aside className="w-full lg:w-[300px] flex-shrink-0">
               <div className="sticky top-6 flex flex-col items-center lg:items-start space-y-6">
@@ -122,11 +124,11 @@ export default function App() {
 
           {/* BOTTOM AD: Global Footer Banner */}
           <div className="w-full flex justify-center mt-8">
-             <AdSlot className="w-full max-w-[970px] h-[90px]" slot="YOUR_BOTTOM_AD_SLOT_ID" />
+            <AdSlot className="w-full max-w-[970px] h-[90px]" slot="YOUR_BOTTOM_AD_SLOT_ID" />
           </div>
-          
+
         </div>
-        
+
         <Footer />
       </div>
     </Router>

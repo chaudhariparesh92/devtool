@@ -1,10 +1,16 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function AdSlot({ className = "", slot = "" }) {
+  const adLoaded = useRef(false);
+
   useEffect(() => {
+    // Prevent running twice if already initialized in React StrictMode
+    if (adLoaded.current) return;
+
     try {
       // Tells Google to fill the ad slot when the component mounts
       (window.adsbygoogle = window.adsbygoogle || []).push({});
+      adLoaded.current = true;
     } catch (e) {
       console.error("AdSense error", e);
     }
