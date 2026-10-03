@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Main Pages -->
+  <url>
+    <loc>https://onlinedevelopertool.com/</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/tools</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/categories</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/about</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/privacy</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/terms</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/contact</loc>
+  </url>
+
+  <!-- JSON Tools -->
+  <url>
+    <loc>https://onlinedevelopertool.com/json-formatter</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/json-validator</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/json-minifier</loc>
+  </url>
+
+  <!-- JSON Converters -->
+  <url>
+    <loc>https://onlinedevelopertool.com/json-to-csharp</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/json-to-typescript</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/json-to-java</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/json-to-python</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/json-to-go</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/json-to-php</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/json-to-kotlin</loc>
+  </url>
+
+  <!-- Encoding & Decoding -->
+  <url>
+    <loc>https://onlinedevelopertool.com/url-encoder</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/url-decoder</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/base64-encoder</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/base64-decoder</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/html-encoder</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/html-decoder</loc>
+  </url>
+
+  <!-- UUID Tools -->
+  <url>
+    <loc>https://onlinedevelopertool.com/uuid-generator</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/uuid-validator</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/uuid-parser</loc>
+  </url>
+
+  <!-- JWT Tools -->
+  <url>
+    <loc>https://onlinedevelopertool.com/jwt-decoder</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/jwt-generator</loc>
+  </url>
+
+  <!-- XML / YAML / CSV -->
+  <url>
+    <loc>https://onlinedevelopertool.com/xml-formatter</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/xml-validator</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/yaml-formatter</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/yaml-to-json</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/csv-to-json</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/json-to-csv</loc>
+  </url>
+
+  <!-- Text Tools -->
+  <url>
+    <loc>https://onlinedevelopertool.com/text-counter</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/case-converter</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/text-to-slug</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/slug-generator</loc>
+  </url>
+
+  <!-- Hash Tools -->
+  <url>
+    <loc>https://onlinedevelopertool.com/hash-generator</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/sha256-generator</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/sha512-generator</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/md5-generator</loc>
+  </url>
+
+  <!-- Timestamp Tools -->
+  <url>
+    <loc>https://onlinedevelopertool.com/timestamp-converter</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/unix-timestamp</loc>
+  </url>
+
+  <!-- Color Tools -->
+  <url>
+    <loc>https://onlinedevelopertool.com/color-converter</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/hex-to-rgb</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/rgb-to-hex</loc>
+  </url>
+
+  <!-- Number Base Tools -->
+  <url>
+    <loc>https://onlinedevelopertool.com/number-base-converter</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/binary-to-decimal</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/decimal-to-binary</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/hex-to-decimal</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/decimal-to-hex</loc>
+  </url>
+
+  <!-- Regex Tools -->
+  <url>
+    <loc>https://onlinedevelopertool.com/regex-tester</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/regex-generator</loc>
+  </url>
+
+  <!-- Diff Tool -->
+  <url>
+    <loc>https://onlinedevelopertool.com/diff-checker</loc>
+  </url>
+
+  <!-- Query String Tools -->
+  <url>
+    <loc>https://onlinedevelopertool.com/query-string-parser</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/query-string-generator</loc>
+  </url>
+
+  <!-- Cron Tools -->
+  <url>
+    <loc>https://onlinedevelopertool.com/cron-expression-generator</loc>
+  </url>
+  <url>
+    <loc>https://onlinedevelopertool.com/cron-expression-parser</loc>
+  </url>
+
+</urlset>
