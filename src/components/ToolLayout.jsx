@@ -34,6 +34,17 @@ export default function ToolLayout({ title, desc, path, children }) {
         ],
       },
       {
+        '@type': 'WebApplication',
+        name,
+        url: `${SITE_URL}${path}`,
+        description: seoDesc,
+        applicationCategory: 'DeveloperApplication',
+        operatingSystem: 'Any (runs in a web browser)',
+        browserRequirements: 'Requires JavaScript',
+        isAccessibleForFree: true,
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      },
+      {
         '@type': 'FAQPage',
         mainEntity: c.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
       },

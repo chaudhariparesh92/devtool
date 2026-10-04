@@ -23,6 +23,7 @@ import QueryStringTool from './pages/tools/QueryStringTool';
 import CronTool from './pages/tools/CronTool';
 import WebsiteStatusTool from './pages/tools/WebsiteStatusTool';
 import AdSlot from './components/AdSlot';
+import FooterSeoContent from './components/FooterSeoContent';
 import NotFound from './pages/NotFound';
 
 export const routes = [
@@ -129,6 +130,7 @@ export default function App() {
           
         </div>
         
+        <FooterSeoContent />
         <Footer />
       </div>
     </Router>

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
-import SeoHead, { SITE_URL } from '../components/SeoHead';
+import SeoHead, { SITE_URL, SITE_DOMAIN } from '../components/SeoHead';
+import VideoEmbed from '../components/VideoEmbed';
 import AdSlot from '../components/AdSlot';
 import FrustratedDev from '../components/FrustratedDev';
 import ToolFinder from '../components/ToolFinder';
@@ -28,7 +29,7 @@ const pains = [
 ];
 
 const faqs = [
-  { q: 'What is FREE Developer Tool?', a: `A collection of ${TOOLS.length} free, browser-based developer tools for everyday chores: formatting, encoding, decoding, converting, generating, validating and checking.` },
+  { q: 'What is FREE Developer Tool?', a: `FREE Developer Tool, found at ${SITE_DOMAIN}, is a collection of ${TOOLS.length} free, browser-based developer tools for everyday chores: formatting, encoding, decoding, converting, generating, validating and checking.` },
   { q: 'Do I need to sign up?', a: 'No. Open a tool and use it.' },
   { q: 'Is my data uploaded anywhere?', a: 'The tools run in your browser, so what you paste is processed locally. The one thing to know: the Website Status Checker sends a request from your browser to the sites you type in, so those sites will see it.' },
   { q: 'Which tools are included?', a: 'JSON tools (format, validate, minify and convert to C#, TypeScript, Java, Python, Go, PHP and Kotlin), URL/Base64/HTML encoders and decoders, JWT, UUID and hash tools, timestamp, color, number base, regex, diff, query string and cron tools, XML/YAML/CSV converters, text tools and a website status checker.' },
@@ -37,11 +38,54 @@ const faqs = [
 
 const th = 'text-left';
 
+const HOME_TITLE = 'onlinedevelopertool.com/ - Free Online JSON, JWT & Base64 Developer Tools';
+const HOME_DESC = 'Use free developer tools at onlinedevelopertool.com/ to format JSON, decode JWT, encode Base64 and generate UUIDs in your browser. No signup, private by design.';
+
 export default function Home() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
-      { '@type': 'WebSite', name: 'FREE Developer Tool', url: `${SITE_URL}/` },
+      {
+        '@type': 'WebSite',
+        '@id': `${SITE_URL}/#website`,
+        name: 'FREE Developer Tool',
+        alternateName: 'onlinedevelopertool.com',
+        url: `${SITE_URL}/`,
+        inLanguage: 'en',
+      },
+      {
+        '@type': 'Organization',
+        '@id': `${SITE_URL}/#organization`,
+        name: 'DevTransition',
+        url: `${SITE_URL}/`,
+        logo: `${SITE_URL}/images/og-onlinedevelopertool.webp`,
+      },
+      {
+        '@type': 'WebPage',
+        '@id': `${SITE_URL}/#webpage`,
+        url: `${SITE_URL}/`,
+        name: HOME_TITLE,
+        description: HOME_DESC,
+        isPartOf: { '@id': `${SITE_URL}/#website` },
+        primaryImageOfPage: { '@id': `${SITE_URL}/#primaryimage` },
+      },
+      {
+        '@type': 'ImageObject',
+        '@id': `${SITE_URL}/#primaryimage`,
+        url: `${SITE_URL}/images/onlinedevelopertool-com-free-online-developer-tools.webp`,
+        width: 1200,
+        height: 630,
+        caption: 'onlinedevelopertool.com/ free online developer tools',
+      },
+      {
+        '@type': 'VideoObject',
+        name: 'JSON Formatter demo: format JSON in seconds',
+        description: 'A short demo showing messy JSON pasted into the JSON Formatter and returned as clean, indented JSON.',
+        thumbnailUrl: `${SITE_URL}/images/json-formatter-demo-poster.webp`,
+        contentUrl: `${SITE_URL}/video/json-formatter-demo.mp4`,
+        uploadDate: '2026-10-04',
+        duration: 'PT8S',
+      },
       { '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
     ],
   };
@@ -49,8 +93,10 @@ export default function Home() {
   return (
     <div className="space-y-16">
       <SeoHead 
-        title="FREE Developer Tool - Free Online Tools for JSON, JWT, Base64, UUID & More - onlinedevelopertool.com" 
-        description="Stop wasting time on tiny developer tasks. Free, private, browser-based tools to format, encode, decode, convert, generate and validate. No signup." 
+        title={HOME_TITLE}
+        description={HOME_DESC}
+        image={`${SITE_URL}/images/og-onlinedevelopertool.webp`}
+        imageAlt="onlinedevelopertool.com/ free online developer tools banner"
         url="/" 
         jsonLd={jsonLd}
       />
@@ -67,9 +113,8 @@ export default function Home() {
             Stop wasting time on <span className="marker">tiny developer tasks.</span>
           </h1>
           <p className="lede">
-            Need to decode a value, format JSON, convert a timestamp, generate a UUID, or create a hash? 
-            Get it done in seconds with free online developer tools from <b>onlinedevelopertool.com</b>. 
-            Format, encode, decode, convert, generate, validate, and debug common development data—all in one place, with no signup required. 
+            Format JSON, decode a token, convert a timestamp or generate a UUID in seconds with the free online developer tools at{' '}
+            <b>{SITE_DOMAIN}</b>, all running in your browser with no signup required.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link to="/tools" className="btn btn-primary">Explore Free Developer Tools <span aria-hidden="true">&rarr;</span></Link>
@@ -119,7 +164,7 @@ export default function Home() {
 
       {/* ---------------- POPULAR ---------------- */}
       <section aria-labelledby="popular-heading" className="space-y-6">
-        <h2 id="popular-heading" className="h-section">Popular tools</h2>
+        <h2 id="popular-heading" className="h-section">Popular tools on {SITE_DOMAIN}</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {popularTools.map(tool => (
             <Link key={tool.path} to={tool.path} className="card card-hover p-6">
@@ -212,16 +257,66 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ---------------- FAQ ---------------- */}
-      <section aria-labelledby="home-faq" className="faq max-w-3xl">
-        <h2 id="home-faq" className="h-section mb-4">Questions developers ask</h2>
-        {faqs.map((f) => (
-          <details key={f.q}>
-            <summary>{f.q}</summary>
-            <p className="faq-a">{f.a}</p>
-          </details>
-        ))}
+      {/* ---------------- SEE IT IN ACTION: video + images ---------------- */}
+      <section aria-labelledby="demo-heading" className="space-y-6">
+        <div className="space-y-2">
+          <span className="sticker cyan">Watch</span>
+          <h2 id="demo-heading" className="h-section">See a tool in action: format JSON in seconds</h2>
+          <p className="lede">
+            This 8-second demo shows the workflow every tool on <b>{SITE_DOMAIN}</b> follows: paste, click, copy.
+          </p>
+        </div>
+        <VideoEmbed
+          src="/video/json-formatter-demo.mp4"
+          poster="/images/json-formatter-demo-poster.webp"
+          title="JSON Formatter demo video"
+          caption="Demo: a one-line JSON object is pasted, processed and returned as readable, indented JSON."
+        />
+        <div className="grid gap-6 md:grid-cols-2">
+          <figure className="m-0">
+            <img
+              src="/images/onlinedevelopertool-com-free-online-developer-tools.webp"
+              alt="onlinedevelopertool.com/ free online developer tools banner showing JSON formatting, JWT, UUID and Base64 utilities"
+              width="1200"
+              height="630"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-auto rounded-[14px] border-[3px]"
+              style={{ borderColor: 'var(--border)' }}
+            />
+          </figure>
+          <figure className="m-0">
+            <img
+              src="/images/json-formatter-online-before-after.webp"
+              alt="JSON Formatter before and after: minified JSON on the left, readable indented JSON on the right"
+              width="1200"
+              height="630"
+              loading="lazy"
+              decoding="async"
+              className="w-full h-auto rounded-[14px] border-[3px]"
+              style={{ borderColor: 'var(--border)' }}
+            />
+          </figure>
+        </div>
       </section>
+
+      {/* ---------------- FAQ ---------------- */}
+      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] items-start">
+        <section aria-labelledby="home-faq" className="faq min-w-0">
+          <h2 id="home-faq" className="h-section mb-4">Questions developers ask</h2>
+          {faqs.map((f) => (
+            <details key={f.q}>
+              <summary>{f.q}</summary>
+              <p className="faq-a">{f.a}</p>
+            </details>
+          ))}
+        </section>
+
+        {/* AD: right of the FAQ on desktop, drops below it on small screens. In normal flow (not sticky). */}
+        <div className="flex justify-center w-full lg:pt-12">
+          <AdSlot className="w-full max-w-[300px] h-[250px]" slot="YOUR_HOME_FAQ_SIDE_AD_SLOT" />
+        </div>
+      </div>
 
       {/* ---------------- CTA ---------------- */}
       <section className="card p-8 text-center space-y-4" style={{ background: 'var(--surface-2)' }}>
