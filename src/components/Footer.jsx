@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { Terminal, ArrowUp } from 'lucide-react';
+import { Terminal, ArrowUp, ExternalLink } from 'lucide-react';
 import { CATEGORIES } from '../data/tools';
 
 const POPULAR = [
@@ -95,6 +95,15 @@ export default function Footer() {
                 <li key={l.path}><FooterLink to={l.path}>{l.name}</FooterLink></li>
               ))}
             </ul>
+            <a
+              href="https://devtransition.blogspot.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-pink !py-2 !px-4 !text-sm mt-4"
+            >
+              Read our blogs here <ExternalLink size={16} strokeWidth={3} aria-hidden="true" />
+              <span className="sr-only"> (opens in a new tab)</span>
+            </a>
           </nav>
         </div>
 
