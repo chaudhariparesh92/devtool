@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
+import OutputBox from '../../components/OutputBox';
 import { load, dump } from 'js-yaml';
 import formatXml from 'xml-formatter';
 
@@ -53,7 +54,7 @@ export default function DataFormatTool({ path }) {
           <button onClick={process} className="px-6 py-2 w-full bg-indigo-600 text-white rounded">Process</button>
           {err && <div className="text-red-600 p-2 bg-red-50 border rounded text-sm">{err}</div>}
         </div>
-        <textarea readOnly className="w-full h-full p-4 font-mono text-sm bg-indigo-50 dark:bg-indigo-900/20 border rounded" value={out} placeholder="Output..."></textarea>
+        <OutputBox value={out} label="Output" placeholder="Output..." className="h-full" />
       </div>
     </ToolLayout>
   );

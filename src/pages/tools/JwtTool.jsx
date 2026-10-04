@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import CryptoJS from 'crypto-js';
+import OutputBox from '../../components/OutputBox';
+import CopyButton from '../../components/CopyButton';
 
 export default function JwtTool({ path }) {
   const [inp, setInp] = useState('');
@@ -39,8 +41,14 @@ export default function JwtTool({ path }) {
             <button onClick={decode} className="px-6 py-2 bg-indigo-600 text-white rounded">Decode Token</button>
             {out && (
               <div className="grid md:grid-cols-2 gap-4 mt-4">
-                <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded border border-red-200"><h3 className="font-bold text-red-600 mb-2">Header</h3><pre className="text-xs">{out.header}</pre></div>
-                <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded border border-purple-200"><h3 className="font-bold text-purple-600 mb-2">Payload</h3><pre className="text-xs">{out.payload}</pre></div>
+                <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded border border-red-200">
+                  <div className="flex items-center justify-between mb-2"><h3 className="font-bold text-red-600">Header</h3><CopyButton text={out.header} label="Copy header" /></div>
+                  <pre className="text-xs">{out.header}</pre>
+                </div>
+                <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded border border-purple-200">
+                  <div className="flex items-center justify-between mb-2"><h3 className="font-bold text-purple-600">Payload</h3><CopyButton text={out.payload} label="Copy payload" /></div>
+                  <pre className="text-xs">{out.payload}</pre>
+                </div>
               </div>
             )}
           </>
@@ -51,7 +59,7 @@ export default function JwtTool({ path }) {
                <input type="text" className="w-full p-2 border rounded" value={secret} onChange={e=>setSecret(e.target.value)} placeholder="Secret Key (default: secret)" />
                <button onClick={generate} className="w-full px-6 py-2 bg-indigo-600 text-white rounded">Generate Token</button>
             </div>
-            <textarea readOnly className="w-full h-full min-h-[200px] p-4 font-mono text-sm bg-indigo-50 dark:bg-indigo-900/20 border rounded break-all" value={out || ''} placeholder="Resulting JWT"></textarea>
+            <OutputBox value={out || ''} label="Generated JWT" placeholder="Resulting JWT" className="h-full min-h-[200px]" textareaClassName="break-all" copyDisabled={!out} />
           </div>
         )}
       </div>

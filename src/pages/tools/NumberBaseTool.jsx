@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
+import CopyButton from '../../components/CopyButton';
 
 export default function NumberBaseTool({ path }) {
   const [inp, setInp] = useState('');
@@ -35,7 +36,10 @@ export default function NumberBaseTool({ path }) {
           </div>
         </div>
         <input type="text" className="w-full p-4 font-mono bg-gray-50 dark:bg-gray-900 border rounded" value={inp} onChange={e=>convert(e.target.value, fromBase, toBase)} placeholder="Enter number..." />
-        <input type="text" readOnly className="w-full p-4 font-mono bg-indigo-50 dark:bg-indigo-900/20 rounded border" value={out} placeholder="Result" />
+        <div className="flex items-center gap-2">
+          <input type="text" readOnly aria-label="Result" className="flex-1 min-w-0 p-4 font-mono bg-indigo-50 dark:bg-indigo-900/20 rounded border" value={out} placeholder="Result" />
+          <CopyButton text={out} disabled={out.startsWith('Invalid')} className="shrink-0" />
+        </div>
       </div>
     </ToolLayout>
   );

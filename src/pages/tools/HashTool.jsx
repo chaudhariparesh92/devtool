@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import CryptoJS from 'crypto-js';
+import CopyButton from '../../components/CopyButton';
 
 export default function HashTool({ path }) {
   const [inp, setInp] = useState('');
@@ -19,7 +20,12 @@ export default function HashTool({ path }) {
     <ToolLayout title={path.replace('/','').replace(/-/g, ' ').toUpperCase()} desc="Generate cryptographic hashes locally." path={path}>
       <div className="p-6 space-y-4">
         <textarea className="w-full p-4 font-mono bg-gray-50 dark:bg-gray-900 border rounded min-h-[150px]" value={inp} onChange={e=>generate(e.target.value)} placeholder="String to hash..." />
-        {out && <div className="p-4 font-mono bg-indigo-50 dark:bg-indigo-900/20 rounded border break-all text-xl">{out}</div>}
+        {out && (
+          <div className="relative">
+            <div className="p-4 pr-24 font-mono bg-indigo-50 dark:bg-indigo-900/20 rounded border break-all text-xl">{out}</div>
+            <CopyButton text={out} label="Copy hash" className="absolute top-2 right-2" />
+          </div>
+        )}
       </div>
     </ToolLayout>
   );

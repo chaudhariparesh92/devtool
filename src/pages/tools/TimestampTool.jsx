@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import ToolLayout from '../../components/ToolLayout';
+import OutputBox from '../../components/OutputBox';
 
 export default function TimestampTool({ path }) {
   const [inp, setInp] = useState('');
@@ -27,7 +28,7 @@ export default function TimestampTool({ path }) {
     <ToolLayout title={path.replace('/','').replace(/-/g, ' ').toUpperCase()} desc="Convert timestamps to dates and vice versa." path={path}>
       <div className="p-6 space-y-4">
         <input type="text" className="w-full p-4 font-mono bg-gray-50 dark:bg-gray-900 border rounded" value={inp} onChange={e=>setInp(e.target.value)} placeholder="Enter Unix timestamp or date string..." />
-        <textarea readOnly className="w-full h-48 p-4 font-mono bg-indigo-50 dark:bg-indigo-900/20 rounded border break-all" value={out}></textarea>
+        <OutputBox value={out} label="Converted date and time" placeholder="Result..." className="h-48" textareaClassName="break-all" copyDisabled={out === 'Invalid Date / Timestamp'} />
       </div>
     </ToolLayout>
   );

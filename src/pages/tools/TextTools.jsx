@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
+import OutputBox from '../../components/OutputBox';
 export default function TextTools({ path }) {
   const [inp, setInp] = useState('');
   const [out, setOut] = useState('');
@@ -21,7 +22,7 @@ export default function TextTools({ path }) {
     <ToolLayout title={path.replace('/','').replace(/-/g, ' ').toUpperCase()} desc="Text manipulation tools." path={path}>
       <div className="p-6 grid md:grid-cols-2 gap-4 h-[400px]">
         <textarea className="w-full h-full p-4 font-mono text-sm border rounded bg-gray-50 dark:bg-gray-900" value={inp} onChange={e=>process(e.target.value)} placeholder="Enter text..."></textarea>
-        <textarea readOnly className="w-full h-full p-4 font-mono text-sm bg-indigo-50 dark:bg-indigo-900/20 border rounded whitespace-pre-wrap" value={out} placeholder="Output..."></textarea>
+        <OutputBox value={out} label="Output" placeholder="Output..." className="h-full" textareaClassName="whitespace-pre-wrap" />
       </div>
     </ToolLayout>
   );

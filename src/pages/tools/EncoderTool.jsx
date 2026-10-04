@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
+import OutputBox from '../../components/OutputBox';
 export default function EncoderTool({ path }) {
   const [inp, setInp] = useState('');
   const [out, setOut] = useState('');
@@ -24,7 +25,7 @@ export default function EncoderTool({ path }) {
     <ToolLayout title={path.replace('/','').replace(/-/g, ' ').toUpperCase()} desc="Encode or decode text securely." path={path}>
       <div className="p-6 grid md:grid-cols-2 gap-4 h-[500px]">
         <textarea className="w-full p-4 font-mono text-sm bg-gray-50 dark:bg-gray-900 border rounded" value={inp} onChange={e=>process(e.target.value)} placeholder="Input text..."></textarea>
-        <textarea readOnly className="w-full p-4 font-mono text-sm bg-indigo-50 dark:bg-indigo-900/20 border rounded" value={out} placeholder="Output..."></textarea>
+        <OutputBox value={out} label="Output" placeholder="Output..." />
       </div>
     </ToolLayout>
   );

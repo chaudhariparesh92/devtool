@@ -1,33 +1,43 @@
 import { Link } from 'react-router-dom';
 import SeoHead from '../components/SeoHead';
-
-const CATEGORIES = [
-  'JSON Tools', 
-  'Encoders & Decoders', 
-  'Generators & Hashes', 
-  'Network & Monitoring',
-  'Web Tools', 
-  'Text & Data'
-];
+import { CATEGORIES, CATEGORY_INFO, TOOLS } from '../data/tools';
 
 export default function CategoriesIndex() {
   return (
     <div className="space-y-8">
-      <SeoHead title="Tool Categories" description="Browse tools by category." url="/categories" />
-      <h1 className="text-3xl font-bold">Categories</h1>
-      
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {CATEGORIES.map(c => (
-           <div key={c} className="p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
-             <h2 className="text-xl font-bold mb-4">{c}</h2>
-             <Link 
-               to={`/tools?category=${encodeURIComponent(c)}`} 
-               className="text-indigo-600 dark:text-indigo-400 hover:underline font-medium"
-             >
-               View {c} &rarr;
-             </Link>
-           </div>
-        ))}
+      <SeoHead
+        title="Developer Tool Categories - FREE Developer Tool"
+        description="Browse free developer tools by category: JSON, encoders and decoders, generators and hashes, web tools, text and data tools, and website checking."
+        url="/categories"
+      />
+      <header className="space-y-3">
+        <span className="sticker pink">Browse</span>
+        <h1 className="h-display text-4xl sm:text-5xl">Categories</h1>
+        <p className="lede">Pick the kind of chore you are facing. Every category links to working, browser-based tools.</p>
+      </header>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {CATEGORIES.map((c) => {
+          const inCat = TOOLS.filter((t) => t.category === c);
+          return (
+            <section key={c} className="card p-6 min-w-0">
+              <h2 className="text-2xl font-black mb-1">{c}</h2>
+              <p className="text-sm mb-3" style={{ color: 'var(--muted)' }}>{CATEGORY_INFO[c]}</p>
+              <ul className="flex flex-wrap gap-2 mb-4">
+                {inCat.slice(0, 6).map((t) => (
+                  <li key={t.path}><Link to={t.path} className="a-link text-sm">{t.name}</Link></li>
+                ))}
+                {inCat.length > 6 && <li className="text-sm" style={{ color: 'var(--muted)' }}>+{inCat.length - 6} more</li>}
+              </ul>
+              <Link
+                to={`/tools?category=${encodeURIComponent(c)}`}
+                className="btn btn-ghost !py-2 !px-4 !text-sm"
+              >
+                View {c} ({inCat.length}) <span aria-hidden="true">&rarr;</span>
+              </Link>
+            </section>
+          );
+        })}
       </div>
     </div>
   );

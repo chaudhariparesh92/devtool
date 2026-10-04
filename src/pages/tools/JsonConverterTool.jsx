@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
+import OutputBox from '../../components/OutputBox';
 export default function JsonConverterTool({ path }) {
   const [inp, setInp] = useState('');
   const [out, setOut] = useState('');
@@ -68,7 +69,7 @@ export default function JsonConverterTool({ path }) {
           <button onClick={convert} className="py-2 bg-indigo-600 text-white rounded font-bold">Convert to {lang}</button>
           {err && <div className="text-red-600 p-2 bg-red-50 border rounded text-sm">{err}</div>}
         </div>
-        <textarea readOnly className="w-full h-full p-4 font-mono text-sm bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 rounded" value={out} placeholder="Generated code..."></textarea>
+        <OutputBox value={out} label="Generated code" placeholder="Generated code..." className="h-full" textareaClassName="border-indigo-200 dark:border-indigo-800" />
       </div>
     </ToolLayout>
   );

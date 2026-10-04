@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
+import OutputBox from '../../components/OutputBox';
 
 export default function QueryStringTool({ path }) {
   const [inp, setInp] = useState('');
@@ -27,7 +28,7 @@ export default function QueryStringTool({ path }) {
           <textarea className="w-full flex-1 p-4 font-mono text-sm border rounded bg-gray-50 dark:bg-gray-900" value={inp} onChange={e=>setInp(e.target.value)} placeholder={isParse ? "?key=value&a=b" : '{"key": "value", "a": "b"}'}></textarea>
           <button onClick={process} className="px-6 py-2 bg-indigo-600 text-white rounded">{isParse ? 'Parse' : 'Generate'}</button>
         </div>
-        <textarea readOnly className="w-full h-full p-4 font-mono text-sm bg-indigo-50 dark:bg-indigo-900/20 border rounded" value={out}></textarea>
+        <OutputBox value={out} label="Output" placeholder="Result..." className="h-full" copyDisabled={out === 'Error processing input.'} />
       </div>
     </ToolLayout>
   );

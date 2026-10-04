@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
+import OutputBox from '../../components/OutputBox';
+import CopyButton from '../../components/CopyButton';
 
 export default function UuidTool({ path }) {
   const [inp, setInp] = useState('');
   const [out, setOut] = useState('');
   const [count, setCount] = useState(10);
-  const [copied, setCopied] = useState(false);
 
   const isGen = path.includes('generator');
   const isVal = path.includes('validator');
@@ -17,17 +18,6 @@ export default function UuidTool({ path }) {
       res.push(crypto.randomUUID());
     }
     setOut(res.join('\n'));
-    setCopied(false);
-  };
-
-  const copyToClipboard = async () => {
-    try {
-      await navigator.clipboard.writeText(out);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      console.error("Failed to copy", err);
-    }
   };
 
   const validateOrParse = () => {
@@ -70,23 +60,7 @@ export default function UuidTool({ path }) {
             </div>
 
             {out && (
-              <div className="w-full relative mt-2">
-                <textarea 
-                  readOnly 
-                  className="w-full h-64 p-4 font-mono text-sm bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded text-left dark:text-white" 
-                  value={out}
-                ></textarea>
-                <button 
-                  onClick={copyToClipboard}
-                  className={`absolute top-3 right-3 px-3 py-1.5 rounded text-xs font-medium transition-colors shadow-sm ${
-                    copied 
-                      ? 'bg-green-600 text-white' 
-                      : 'bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 dark:text-white'
-                  }`}
-                >
-                  {copied ? "Copied! ✓" : "Copy to Clipboard"}
-                </button>
-              </div>
+              <OutputBox value={out} label="Generated UUIDs" className="w-full h-64 mt-2" textareaClassName="text-left" />
             )}
           </div>
         ) : (
@@ -100,8 +74,9 @@ export default function UuidTool({ path }) {
             />
             <button onClick={validateOrParse} className="px-6 py-2 bg-indigo-600 text-white rounded">Process</button>
             {out && (
-              <div className={`p-4 font-bold border rounded ${out.includes('Valid') || out.includes('Version') ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+              <div className={`relative p-4 pr-24 font-bold border rounded ${out.includes('Valid') || out.includes('Version') ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
                 <pre>{out}</pre>
+                <CopyButton text={out} className="absolute top-2 right-2" />
               </div>
             )}
           </div>

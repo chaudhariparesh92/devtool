@@ -1,68 +1,68 @@
 import { Link, useSearchParams } from 'react-router-dom';
 import SeoHead from '../components/SeoHead';
-import { routes } from '../App';
+import { TOOLS, CATEGORIES, CATEGORY_INFO } from '../data/tools';
 
-// Helper function to dynamically map a route path to a category
-const getCategoryForPath = (path) => {
-  // Web Tools category exclusively for website-checker
-  if (path === '/website-checker') return 'Web Tools';
-
-  if (path.includes('json')) return 'JSON Tools';
-  if (path.includes('encode') || path.includes('decode')) return 'Encoders & Decoders';
-  if (path.includes('generator') || path.includes('hash') || path.includes('uuid')) return 'Generators & Hashes';
-  if (path.includes('time') || path.includes('cron') || path.includes('query') || path.includes('color')) return 'Utility Tools'; // Move other web utilities here if desired
-  return 'Text & Data'; 
-};
+const ToolLink = ({ r }) => (
+  <Link to={r.path} className="card card-hover p-4 font-bold truncate">
+    {r.name} <span className="card-arrow" aria-hidden="true">&rarr;</span>
+  </Link>
+);
 
 export default function ToolsIndex() {
   const [searchParams] = useSearchParams();
   const categoryFilter = searchParams.get('category');
 
-  // Filter out static pages and root pages
-  let displayRoutes = routes.filter(r => 
-    r.path.startsWith('/') && 
-    r.path.length > 2 && 
-    !['/about','/contact','/privacy','/terms','/categories','/tools'].includes(r.path)
-  );
-
   // Apply category filter if it exists in the URL
-  if (categoryFilter) {
-    displayRoutes = displayRoutes.filter(r => getCategoryForPath(r.path) === categoryFilter);
-  }
+  const displayRoutes = categoryFilter
+    ? TOOLS.filter(t => t.category === categoryFilter)
+    : TOOLS;
 
   return (
     <div className="space-y-8">
       <SeoHead 
-        title={categoryFilter ? `${categoryFilter} - Developer Tools` : "All Developer Tools"} 
-        description="Complete list of all developer tools." 
+        title={categoryFilter ? `${categoryFilter} - Free Developer Tools` : "All Free Developer Tools - FREE Developer Tool"} 
+        description={categoryFilter && CATEGORY_INFO[categoryFilter] ? CATEGORY_INFO[categoryFilter] : "Complete list of free online developer tools: JSON, Base64, URL and HTML encoding, JWT, UUID, hashes, timestamps, regex, cron, diff and more."} 
         url="/tools" 
       />
       
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-gray-200 dark:border-gray-800 pb-4">
-         <div>
-           <h1 className="text-3xl font-bold">{categoryFilter ? categoryFilter : "All Developer Tools"}</h1>
-           <p className="text-gray-600 dark:text-gray-400 mt-2">
-             {categoryFilter ? `Showing tools for ${categoryFilter}.` : "Select a tool to get started."}
+      <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+         <div className="space-y-3">
+           <span className="sticker lime">{displayRoutes.length} tools</span>
+           <h1 className="h-display text-4xl sm:text-5xl">{categoryFilter ? categoryFilter : "All Developer Tools"}</h1>
+           <p className="lede">
+             {categoryFilter ? (CATEGORY_INFO[categoryFilter] || `Showing tools for ${categoryFilter}.`) : "Select a tool to get started. Everything runs in your browser."}
            </p>
          </div>
          {categoryFilter && (
-           <Link to="/tools" className="text-sm px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+           <Link to="/tools" className="btn btn-ghost !py-2 !px-4 !text-sm self-start">
              Clear Filter
            </Link>
          )}
-      </div>
+      </header>
       
       {displayRoutes.length === 0 ? (
-         <div className="p-12 text-center bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
+         <div className="card p-12 text-center">
             No tools found for this category.
          </div>
+      ) : categoryFilter ? (
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+           {displayRoutes.map(r => <ToolLink key={r.path} r={r} />)}
+         </div>
       ) : (
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-           {displayRoutes.map(r => (
-             <Link key={r.path} to={r.path} className="p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-400 hover:shadow-sm truncate transition-all">
-               {r.path.replace('/', '').replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-             </Link>
-           ))}
+         <div className="space-y-10">
+           {CATEGORIES.map((c) => {
+             const list = displayRoutes.filter((t) => t.category === c);
+             if (list.length === 0) return null;
+             return (
+               <section key={c} aria-labelledby={`cat-${c}`}>
+                 <h2 id={`cat-${c}`} className="h-section mb-1">{c}</h2>
+                 <p className="text-sm mb-4" style={{ color: 'var(--muted)' }}>{CATEGORY_INFO[c]}</p>
+                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                   {list.map(r => <ToolLink key={r.path} r={r} />)}
+                 </div>
+               </section>
+             );
+           })}
          </div>
       )}
     </div>

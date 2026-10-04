@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -20,8 +21,9 @@ import RegexTool from './pages/tools/RegexTool';
 import DiffTool from './pages/tools/DiffTool';
 import QueryStringTool from './pages/tools/QueryStringTool';
 import CronTool from './pages/tools/CronTool';
+import WebsiteStatusTool from './pages/tools/WebsiteStatusTool';
 import AdSlot from './components/AdSlot';
-import WebsiteCheckerTool from './pages/tools/WebsiteCheckerTool';
+import NotFound from './pages/NotFound';
 
 export const routes = [
   { path: '/', component: Home },
@@ -83,52 +85,50 @@ export const routes = [
   { path: '/query-string-generator', component: QueryStringTool },
   { path: '/cron-expression-generator', component: CronTool },
   { path: '/cron-expression-parser', component: CronTool },
-  { path: '/website-checker', component: WebsiteCheckerTool }
+  { path: '/website-status-checker', component: WebsiteStatusTool }
 ];
+
+// Jump back to the top when navigating to a new page (hash links are left alone).
+function ScrollToTop() {
+  const { pathname, hash } = useLocation();
+  useEffect(() => {
+    if (!hash) window.scrollTo(0, 0);
+  }, [pathname, hash]);
+  return null;
+}
 
 export default function App() {
   return (
     <Router>
-      <div className="flex flex-col min-h-screen font-sans bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors">
+      <ScrollToTop />
+      <div className="site-root flex flex-col min-h-screen">
+        <a href="#main" className="skip-link">Skip to content</a>
         <Header />
-
+        
         <div className="container mx-auto px-4 py-8 max-w-[1400px] flex-grow flex flex-col">
-
-          {/* TOP AD: Global Header Banner */}
-          <div className="w-full flex justify-center mb-4">
-            <AdSlot className="w-full max-w-[970px] h-[60px]" slot="YOUR_TOP_AD_SLOT_ID" />
+          
+          {/* AD 1 - TOP: below the sticky header, above the content. Scrolls with the page. */}
+          <div className="w-full flex justify-center mb-8">
+             <AdSlot className="w-full max-w-[970px] h-[90px]" slot="YOUR_TOP_AD_SLOT_ID" />
           </div>
 
-          {/* MAIN LAYOUT: Content (Left) + Sidebar Ads (Right) */}
-          <div className="flex flex-col lg:flex-row gap-8 flex-grow">
+          {/* Tool/Page Content (full width: the old sticky sidebar ads were removed so tools get room and ads stay in flow) */}
+          <main id="main" className="flex-grow min-w-0 w-full max-w-[1100px] mx-auto">
+            <Routes>
+              {routes.map((r, i) => (
+                 <Route key={i} path={r.path} element={<r.component path={r.path} />} />
+              ))}
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </main>
 
-            {/* Tool/Page Content */}
-            <main className="flex-grow min-w-0">
-              <Routes>
-                {routes.map((r, i) => (
-                  <Route key={i} path={r.path} element={<r.component path={r.path} />} />
-                ))}
-                <Route path="*" element={<div className="text-center py-20 text-2xl font-bold">404 - Tool Not Found</div>} />
-              </Routes>
-            </main>
-
-            {/* RIGHT SIDEBAR ADS: Sticky global column */}
-            <aside className="w-full lg:w-[300px] flex-shrink-0">
-              <div className="sticky top-6 flex flex-col items-center lg:items-start space-y-6">
-                <AdSlot className="w-[300px] h-[600px]" slot="YOUR_SIDEBAR_AD_SLOT_1" />
-                <AdSlot className="w-[300px] h-[250px]" slot="YOUR_SIDEBAR_AD_SLOT_2" />
-              </div>
-            </aside>
-
+          {/* AD 4 - BOTTOM: before the footer */}
+          <div className="w-full flex justify-center mt-10">
+             <AdSlot className="w-full max-w-[970px] h-[90px]" slot="YOUR_BOTTOM_AD_SLOT_ID" />
           </div>
-
-          {/* BOTTOM AD: Global Footer Banner */}
-          <div className="w-full flex justify-center mt-8">
-            <AdSlot className="w-full max-w-[970px] h-[90px]" slot="YOUR_BOTTOM_AD_SLOT_ID" />
-          </div>
-
+          
         </div>
-
+        
         <Footer />
       </div>
     </Router>

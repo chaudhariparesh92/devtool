@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
+import CopyButton from '../../components/CopyButton';
 
 export default function RegexTool({ path }) {
   const [regex, setRegex] = useState('');
@@ -30,7 +31,10 @@ export default function RegexTool({ path }) {
         {err && <div className="text-red-600 p-2 bg-red-50 border rounded text-sm">{err}</div>}
         <textarea className="w-full h-32 p-4 font-mono text-sm border rounded bg-gray-50 dark:bg-gray-900" value={text} onChange={e=>setText(e.target.value)} placeholder="Test string..."></textarea>
         <div className="p-4 border rounded bg-gray-50 dark:bg-gray-900">
-          <h3 className="font-bold mb-2">Matches ({out.length})</h3>
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="font-bold">Matches ({out.length})</h3>
+            <CopyButton text={out.map((m) => m[0]).join('\n')} label="Copy matches" disabled={out.length === 0} />
+          </div>
           {out.map((m, i) => (
              <div key={i} className="p-2 mb-2 bg-white dark:bg-gray-800 border rounded">
                <span className="font-mono text-indigo-600 dark:text-indigo-400 font-bold">{m[0]}</span>
