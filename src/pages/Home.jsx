@@ -49,7 +49,7 @@ export default function Home() {
   return (
     <div className="space-y-16">
       <SeoHead 
-        title="FREE Developer Tool - Free Online Tools for JSON, JWT, Base64, UUID & More" 
+        title="FREE Developer Tool - Free Online Tools for JSON, JWT, Base64, UUID & More - onlinedevelopertool.com" 
         description="Stop wasting time on tiny developer tasks. Free, private, browser-based tools to format, encode, decode, convert, generate and validate. No signup." 
         url="/" 
         jsonLd={jsonLd}
@@ -67,8 +67,9 @@ export default function Home() {
             Stop wasting time on <span className="marker">tiny developer tasks.</span>
           </h1>
           <p className="lede">
-            Need to decode a value, clean up JSON, convert a timestamp or hash a string? Do it here in seconds.
-            Free tools for formatting, encoding, decoding, converting, generating, validating and debugging, all in one tab.
+            Need to decode a value, format JSON, convert a timestamp, generate a UUID, or create a hash? 
+            Get it done in seconds with free online developer tools from <b>onlinedevelopertool.com</b>. 
+            Format, encode, decode, convert, generate, validate, and debug common development data—all in one place, with no signup required. 
           </p>
           <div className="flex flex-wrap gap-4">
             <Link to="/tools" className="btn btn-primary">Explore Free Developer Tools <span aria-hidden="true">&rarr;</span></Link>
