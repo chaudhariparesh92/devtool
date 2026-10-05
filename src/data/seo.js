@@ -134,7 +134,7 @@ export function getHomeJsonLd() {
         description: 'A short demo showing messy JSON pasted into the JSON Formatter and returned as clean, indented JSON.',
         thumbnailUrl: `${SITE_URL}/images/json-formatter-demo-poster.webp`,
         contentUrl: `${SITE_URL}/video/json-formatter-demo.mp4`,
-        uploadDate: '2026-10-04',
+        uploadDate: '2026-10-04T10:30:00+05:30',
         duration: 'PT8S',
       },
       {
