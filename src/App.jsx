@@ -5,6 +5,8 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import ToolsIndex from './pages/ToolsIndex';
 import CategoriesIndex from './pages/CategoriesIndex';
+import CategoryPage from './pages/CategoryPage';
+import { CATEGORY_ROUTES } from './data/seo';
 import StaticPage from './pages/StaticPage';
 import JsonFormatterTool from './pages/tools/JsonFormatterTool';
 import JsonConverterTool from './pages/tools/JsonConverterTool';
@@ -30,6 +32,7 @@ export const routes = [
   { path: '/', component: Home },
   { path: '/tools', component: ToolsIndex },
   { path: '/categories', component: CategoriesIndex },
+  ...CATEGORY_ROUTES.map((path) => ({ path, component: CategoryPage })),
   { path: '/about', component: StaticPage },
   { path: '/privacy', component: StaticPage },
   { path: '/terms', component: StaticPage },

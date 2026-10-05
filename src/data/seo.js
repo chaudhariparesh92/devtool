@@ -6,21 +6,27 @@
 
 import { TOOLS } from './tools.js';
 import { getToolContent } from './toolContent.js';
+import { TOOL_SEO_DATA } from './toolSeoData.js';
+import { CATEGORY_PAGES, categoryPath } from './categoryContent.js';
 
 export const SITE_URL = 'https://onlinedevelopertool.com';
 export const SITE_NAME = 'OnlineDeveloperTool';
 export const SITE_DOMAIN = 'onlinedevelopertool.com';
-export const DEFAULT_IMAGE = `${SITE_URL}/images/og-onlinedevelopertool.webp`;
+// Local asset path (file lives in public/images). The absolute URL below is built from the central
+// SITE_URL only because og:image / twitter:image / JSON-LD require absolute URLs.
+export const OG_IMAGE_PATH = '/images/og-onlinedevelopertool.webp';
+export const DEFAULT_IMAGE = `${SITE_URL}${OG_IMAGE_PATH}`;
 
 // Bump this when page content genuinely changes. It feeds <lastmod> in sitemap.xml.
 export const CONTENT_LAST_MODIFIED = '2026-10-05';
 
 // ---------------------------------------------------------------- Homepage
-export const HOME_TITLE = 'Free Online Developer Tools - JSON Formatter, JWT Decoder & More';
+export const HOME_TITLE = 'Online Developer Tools - Free JSON, JWT, Base64 & More';
 export const HOME_DESC =
-  'Free online developer tools for JSON formatting, JSON validation, JWT decoding, Base64 encoding and UUID generation. Fast, private and browser-based with no signup required.';
+  'Free online developer tools for JSON, JWT, Base64, UUID, hashing, URLs, timestamps, regex, XML, YAML and more. Fast browser-based utilities with no signup.';
 export const HOME_SOCIAL_DESC =
-  'Free browser-based developer tools for formatting JSON, validating JSON, decoding JWT, encoding Base64 and generating UUIDs. No signup required.';
+  'Free browser-based developer tools for JSON, JWT, Base64, UUID, hashing, timestamps, regex, XML, YAML and more. No signup required.';
+export const HOME_H1 = 'Free Online Developer Tools';
 
 export const HOME_POPULAR = [
   { name: 'JSON Formatter', path: '/json-formatter', blurb: 'Pretty-print or inspect messy JSON in one click.' },
@@ -101,7 +107,7 @@ export function getHomeJsonLd() {
         '@type': 'WebSite',
         '@id': `${SITE_URL}/#website`,
         name: SITE_NAME,
-        alternateName: [SITE_DOMAIN, 'FREE Developer Tool'],
+        alternateName: [SITE_DOMAIN, 'Online Developer Tool'],
         url: `${SITE_URL}/`,
         inLanguage: 'en',
       },
@@ -153,7 +159,7 @@ export const PAGE_SEO = {
   },
   '/about': {
     title: `About ${SITE_NAME} - Free Browser-Based Developer Tools`,
-    description: 'Learn how the free, browser-based developer tools work, why they run locally in your browser and what happens to the text you paste.',
+    description: 'Learn how the free, browser-based developer tools on OnlineDeveloperTool work, why they run locally in your browser and what happens to the text you paste.',
     h1: 'About Us',
   },
   '/privacy': {
@@ -163,86 +169,99 @@ export const PAGE_SEO = {
   },
   '/terms': {
     title: `Terms of Service | ${SITE_NAME}`,
-    description: 'The terms and conditions for using the free online developer tools.',
+    description: 'The terms and conditions for using the free online developer tools on OnlineDeveloperTool.',
     h1: 'Terms of Service',
   },
   '/contact': {
     title: `Contact Us | ${SITE_NAME}`,
-    description: 'Send feedback, report a bug or suggest a new developer tool.',
+    description: 'Send feedback, report a bug or suggest a new developer tool by email. Tell us which OnlineDeveloperTool page you were using.',
     h1: 'Contact Us',
   },
 };
 
-// -------------------------------------------------------------- Tool pages
-// Hand-written titles/descriptions for the highest-value pages.
-// Every other tool gets a unique title from its name (see getToolSeo).
-export const TOOL_SEO = {
-  '/json-formatter': {
-    title: 'JSON Formatter Online - Free JSON Beautifier & Validator',
-    description: 'Format, beautify and validate JSON online for free. Pretty print JSON, detect syntax errors and make JSON easier to read. No signup required.',
-  },
-  '/json-validator': {
-    title: 'JSON Validator Online - Check JSON Syntax for Free',
-    description: 'Validate JSON online for free. Check whether your JSON is valid and see the parser error when it is not. Runs in your browser, no signup required.',
-  },
-  '/json-beautifier': {
-    title: 'JSON Beautifier Online - Pretty Print JSON for Free',
-    description: 'Beautify JSON online for free. Turn minified or messy JSON into clean, indented, readable JSON in your browser. No signup required.',
-  },
-  '/json-minifier': {
-    title: 'JSON Minifier Online - Compress JSON to One Line',
-    description: 'Minify JSON online for free. Remove whitespace and line breaks to get compact single-line JSON. Runs in your browser, no signup required.',
-  },
-  '/json-to-csharp': {
-    title: 'JSON to C# Converter - Convert JSON to C# Classes Online',
-    description: 'Convert JSON to C# classes online for free. Generate C# models from JSON instantly with this browser-based developer tool. No signup required.',
-  },
-  '/jwt-decoder': {
-    title: 'JWT Decoder Online - Decode JSON Web Tokens for Free',
-    description: 'Decode JWT tokens online and inspect the header and payload instantly. Free browser-based JWT decoder with no signup required.',
-  },
-  '/base64-decoder': {
-    title: 'Base64 Decoder Online - Decode Base64 Text for Free',
-    description: 'Decode Base64 text online for free. Quickly convert Base64 encoded strings back to readable text directly in your browser.',
-  },
-  '/base64-encoder': {
-    title: 'Base64 Encoder Online - Encode Text to Base64 for Free',
-    description: 'Encode text to Base64 online for free. Convert plain text, including UTF-8 characters, to a Base64 string directly in your browser.',
-  },
-  '/uuid-generator': {
-    title: 'UUID Generator Online - Generate Random UUIDs for Free',
-    description: 'Generate UUIDs online for free. Create random UUID v4 identifiers instantly in your browser with no signup required.',
-  },
-};
-
-export function getRelatedTools(path, group, category) {
-  const same = (t) => t.path !== path && getToolContent(t.path, t.name)?.group === group;
-  const first = TOOLS.filter(same);
-  const more = TOOLS.filter((t) => t.path !== path && t.category === category && !first.includes(t));
-  return [...first, ...more].slice(0, 6);
+// ------------------------------------------------------ Category pages
+// /category/<slug> pages are defined in data/categoryContent.js. Their title/description are
+// registered here so every non-tool page is looked up the same way.
+for (const c of Object.values(CATEGORY_PAGES)) {
+  PAGE_SEO[`/category/${c.slug}`] = { title: c.title, description: c.description, h1: c.h1 };
 }
 
-// Returns everything a tool page needs for <head>. `fallbackName` / `fallbackDesc`
-// are only used if a path is not listed in data/tools.js or has no content entry.
-export function getToolSeo(path, fallbackName, fallbackDesc) {
-  const tool = TOOLS.find((t) => t.path === path);
-  const name = tool ? tool.name : fallbackName;
-  const c = getToolContent(path, name);
-  const custom = TOOL_SEO[path];
-  const title = custom ? custom.title : `${name} Online - Free Browser-Based Tool`;
-  const description = custom ? custom.description : c ? c.meta : fallbackDesc;
+// Link target for a category: its real page when one exists, otherwise the filtered tools list.
+export const categoryLink = (category) => categoryPath(category) || `/tools?category=${encodeURIComponent(category)}`;
 
-  const jsonLd = c && {
+export function getCategoryByPath(path) {
+  const entry = Object.entries(CATEGORY_PAGES).find(([, c]) => `/category/${c.slug}` === path);
+  return entry ? { category: entry[0], ...entry[1] } : null;
+}
+
+export function getCategoryJsonLd(category) {
+  const c = CATEGORY_PAGES[category];
+  const url = `${SITE_URL}/category/${c.slug}`;
+  const tools = TOOLS.filter((t) => t.category === category);
+  return {
     '@context': 'https://schema.org',
     '@graph': [
       {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-          ...(tool ? [{ '@type': 'ListItem', position: 2, name: tool.category, item: `${SITE_URL}/tools?category=${encodeURIComponent(tool.category)}` }] : []),
-          { '@type': 'ListItem', position: tool ? 3 : 2, name, item: `${SITE_URL}${path}` },
+          { '@type': 'ListItem', position: 2, name: 'Categories', item: `${SITE_URL}/categories` },
+          { '@type': 'ListItem', position: 3, name: category, item: url },
         ],
       },
+      {
+        '@type': 'CollectionPage',
+        '@id': `${url}#page`,
+        url,
+        name: c.h1,
+        description: c.description,
+        isPartOf: { '@id': `${SITE_URL}/#website` },
+        mainEntity: {
+          '@type': 'ItemList',
+          itemListElement: tools.map((t, i) => ({ '@type': 'ListItem', position: i + 1, name: t.name, url: `${SITE_URL}${t.path}` })),
+        },
+      },
+    ],
+  };
+}
+
+// -------------------------------------------------------------- Tool pages
+// Per-tool title, description, H1 and keyword cluster live in data/toolSeoData.js.
+// TOOL_SEO is kept as an alias so older imports keep working.
+export const TOOL_SEO = TOOL_SEO_DATA;
+
+// Curated related tools (3-8) from the tool's `related` list; falls back to same group / category.
+export function getRelatedTools(path, group, category) {
+  const cfg = TOOL_SEO_DATA[path];
+  if (cfg && cfg.related && cfg.related.length) {
+    return cfg.related.map((p) => TOOLS.find((t) => t.path === p)).filter((t) => t && t.path !== path).slice(0, 8);
+  }
+  const same = (t) => t.path !== path && getToolContent(t.path, t.name)?.group === group;
+  const first = TOOLS.filter(same);
+  const more = TOOLS.filter((t) => t.path !== path && t.category === category && !first.includes(t));
+  return [...first, ...more].slice(0, 6);
+}
+
+// Returns everything a tool page needs for <head> and for the page body. `fallbackName` /
+// `fallbackDesc` are only used if a path is not listed in data/tools.js or has no content entry.
+export function getToolSeo(path, fallbackName, fallbackDesc) {
+  const tool = TOOLS.find((t) => t.path === path);
+  const name = tool ? tool.name : fallbackName;
+  const c = getToolContent(path, name);
+  const cfg = TOOL_SEO_DATA[path];
+  const title = cfg ? cfg.title : `${name} Online - Free Browser-Based Tool`;
+  const description = cfg ? cfg.description : c ? c.meta : fallbackDesc;
+  const h1 = cfg ? cfg.h1 : name;
+  const catPath = tool ? categoryPath(tool.category) : null;
+
+  const crumbs = [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` }];
+  if (catPath) crumbs.push({ '@type': 'ListItem', position: crumbs.length + 1, name: tool.category, item: `${SITE_URL}${catPath}` });
+  crumbs.push({ '@type': 'ListItem', position: crumbs.length + 1, name, item: `${SITE_URL}${path}` });
+
+  const jsonLd = c && {
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'BreadcrumbList', itemListElement: crumbs },
       {
         '@type': 'WebApplication',
         name,
@@ -261,5 +280,31 @@ export function getToolSeo(path, fallbackName, fallbackDesc) {
     ],
   };
 
-  return { tool, name, content: c, title, description, jsonLd };
+  return { tool, name, content: c, title, description, h1, cfg, categoryPath: catPath, jsonLd };
+}
+
+// ---------------------------------------------------- Routes for build scripts
+export const STATIC_ROUTES = ['/', '/tools', '/categories', '/about', '/contact', '/privacy', '/terms'];
+export const CATEGORY_ROUTES = Object.values(CATEGORY_PAGES).map((c) => `/category/${c.slug}`);
+
+// Every indexable URL, in sitemap order. App.jsx's route list must stay in sync with this
+// (scripts/prerender.mjs fails the build if a route here is missing from App.jsx).
+export function getIndexableRoutes() {
+  return [...STATIC_ROUTES.slice(0, 3), ...CATEGORY_ROUTES, ...STATIC_ROUTES.slice(3), ...TOOLS.map((t) => t.path)];
+}
+
+// One lookup used by the prerender script: head values + JSON-LD for ANY indexable route.
+export function getRouteSeo(path) {
+  if (path === '/') {
+    return { kind: 'home', title: HOME_TITLE, description: HOME_DESC, social: HOME_SOCIAL_DESC, h1: HOME_H1, jsonLd: getHomeJsonLd() };
+  }
+  const cat = getCategoryByPath(path);
+  if (cat) {
+    return { kind: 'category', title: cat.title, description: cat.description, h1: cat.h1, jsonLd: getCategoryJsonLd(cat.category), category: cat };
+  }
+  if (PAGE_SEO[path]) {
+    return { kind: 'page', title: PAGE_SEO[path].title, description: PAGE_SEO[path].description, h1: PAGE_SEO[path].h1, jsonLd: null };
+  }
+  const t = getToolSeo(path);
+  return { kind: 'tool', title: t.title, description: t.description, h1: t.h1, jsonLd: t.jsonLd, tool: t };
 }

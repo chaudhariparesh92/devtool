@@ -9,7 +9,7 @@ import { getToolSeo, getRelatedTools } from '../data/seo';
 
 export default function ToolLayout({ title, desc, path, children }) {
   const seo = getToolSeo(path, title, desc);
-  const { tool, name, content: c, jsonLd } = seo;
+  const { tool, name, content: c, jsonLd, h1, categoryPath: catPath } = seo;
   const related = tool && c ? getRelatedTools(path, c.group, tool.category) : [];
   const seoTitle = seo.title;
   const seoDesc = seo.description;
@@ -24,7 +24,7 @@ export default function ToolLayout({ title, desc, path, children }) {
       <nav aria-label="Breadcrumb" className="crumbs">
         <ol>
           <li><Link to="/" className="a-link">Home</Link></li>
-          {tool && <li><Link to={`/tools?category=${encodeURIComponent(tool.category)}`} className="a-link">{tool.category}</Link></li>}
+          {tool && catPath && <li><Link to={catPath} className="a-link">{tool.category}</Link></li>}
           <li aria-current="page">{name}</li>
         </ol>
       </nav>
@@ -32,7 +32,7 @@ export default function ToolLayout({ title, desc, path, children }) {
       {/* Title */}
       <header className="space-y-3">
         {tool && <span className="sticker lime">{tool.category}</span>}
-        <h1 className="h-display text-4xl sm:text-5xl break-words">{name}</h1>
+        <h1 className="h-display text-4xl sm:text-5xl break-words">{h1}</h1>
         <p className="lede">{c ? c.lede : desc}</p>
       </header>
 
@@ -129,7 +129,7 @@ export default function ToolLayout({ title, desc, path, children }) {
 
           {related.length > 0 && (
             <section aria-labelledby="related-heading">
-              <h2 id="related-heading" className="h-section mb-4">You might also need</h2>
+              <h2 id="related-heading" className="h-section mb-4">Related Developer Tools</h2>
               <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {related.map((r) => (
                   <li key={r.path}>

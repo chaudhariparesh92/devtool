@@ -5,7 +5,7 @@ import AdSlot from '../components/AdSlot';
 import FrustratedDev from '../components/FrustratedDev';
 import ToolFinder from '../components/ToolFinder';
 import { TOOLS, CATEGORIES, CATEGORY_INFO } from '../data/tools';
-import { HOME_TITLE, HOME_DESC, HOME_SOCIAL_DESC, HOME_POPULAR, HOME_LINK_GROUPS, HOME_WHY, HOME_FAQS, getHomeJsonLd } from '../data/seo';
+import { HOME_TITLE, HOME_DESC, HOME_SOCIAL_DESC, HOME_POPULAR, HOME_LINK_GROUPS, HOME_WHY, HOME_FAQS, getHomeJsonLd, categoryLink } from '../data/seo';
 
 // Popular tools, FAQs and link groups live in data/seo.js (shared with the prerender script).
 const popularTools = HOME_POPULAR;
@@ -132,7 +132,7 @@ export default function Home() {
         <h2 id="cat-heading" className="h-section">Browse by what you are trying to do</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {CATEGORIES.map((c) => (
-            <Link key={c} to={`/tools?category=${encodeURIComponent(c)}`} className="card card-hover p-6">
+            <Link key={c} to={categoryLink(c)} className="card card-hover p-6">
               <h3 className="text-lg font-black mb-1">{c} <span className="card-arrow" aria-hidden="true">&rarr;</span></h3>
               <p className="text-sm" style={{ color: 'var(--muted)' }}>{CATEGORY_INFO[c]}</p>
             </Link>

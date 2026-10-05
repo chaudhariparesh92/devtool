@@ -2,6 +2,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import SeoHead from '../components/SeoHead';
 import { TOOLS, CATEGORIES, CATEGORY_INFO } from '../data/tools';
 import { PAGE_SEO } from '../data/seo';
+import { categoryPath } from '../data/categoryContent';
 
 const ToolLink = ({ r }) => (
   <Link to={r.path} className="card card-hover p-4 font-bold truncate">
@@ -23,7 +24,7 @@ export default function ToolsIndex() {
       <SeoHead 
         title={categoryFilter ? `${categoryFilter} - Free Online Developer Tools` : PAGE_SEO['/tools'].title} 
         description={categoryFilter && CATEGORY_INFO[categoryFilter] ? CATEGORY_INFO[categoryFilter] : PAGE_SEO['/tools'].description} 
-        url="/tools" 
+        url={categoryFilter && categoryPath(categoryFilter) ? categoryPath(categoryFilter) : '/tools'} 
       />
       
       <header className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">

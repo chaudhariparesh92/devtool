@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { CATEGORIES, CATEGORY_INFO, TOOLS } from '../data/tools';
 import { SITE_DOMAIN } from './SeoHead';
+import { categoryLink } from '../data/seo';
 
 // Helpful reference copy shown just above the footer. Every statement here is
 // factual and describes what the site really does (no invented numbers or claims).
@@ -69,7 +70,7 @@ export default function FooterSeoContent() {
           {CATEGORIES.map((c) => (
             <li key={c} className="card p-5">
               <h4 className="font-black mb-1">
-                <Link to={`/tools?category=${encodeURIComponent(c)}`} className="a-link">{c}</Link>
+                <Link to={categoryLink(c)} className="a-link">{c}</Link>
               </h4>
               <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{CATEGORY_INFO[c]}</p>
             </li>

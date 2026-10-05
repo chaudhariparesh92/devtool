@@ -5,6 +5,8 @@
 // getToolContent(path, name) -> { group, lede, meta, what, problem, steps, example,
 //   useCases, tasks, faqs, relatedGroup } or null when a path has no copy.
 
+import { EXTRA_MORE } from './toolExtra.js';
+
 const BT = '`';
 const SAMPLE_USER = '{"id":1,"name":"Ada"}';
 
@@ -815,6 +817,6 @@ export function getToolContent(path, name) {
   const g = GROUPS.find((x) => x.test(path));
   if (!g) return null;
   const base = { group: g.id, ...g.build(name, path) };
-  const x = EXTRA[path];
+  const x = EXTRA[path] || EXTRA_MORE[path];
   return x ? { ...base, sections: x.sections, faqs: [...base.faqs, ...x.faqs] } : base;
 }

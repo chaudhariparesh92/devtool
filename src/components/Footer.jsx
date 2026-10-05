@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Terminal, ArrowUp, ExternalLink } from 'lucide-react';
 import { CATEGORIES } from '../data/tools';
+import { categoryLink } from '../data/seo';
 
 const POPULAR = [
   { name: 'JSON Formatter', path: '/json-formatter' },
@@ -78,7 +79,7 @@ export default function Footer() {
               {CATEGORIES.map((c) => (
                 <li key={c}>
                   <Link
-                    to={`/tools?category=${encodeURIComponent(c)}`}
+                    to={categoryLink(c)}
                     className="nav-link !text-sm !px-3 !py-1"
                   >
                     {c}

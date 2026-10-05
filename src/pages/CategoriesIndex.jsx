@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import SeoHead from '../components/SeoHead';
 import { CATEGORIES, CATEGORY_INFO, TOOLS } from '../data/tools';
-import { PAGE_SEO } from '../data/seo';
+import { PAGE_SEO, categoryLink } from '../data/seo';
 
 export default function CategoriesIndex() {
   return (
@@ -31,7 +31,7 @@ export default function CategoriesIndex() {
                 {inCat.length > 6 && <li className="text-sm" style={{ color: 'var(--muted)' }}>+{inCat.length - 6} more</li>}
               </ul>
               <Link
-                to={`/tools?category=${encodeURIComponent(c)}`}
+                to={categoryLink(c)}
                 className="btn btn-ghost !py-2 !px-4 !text-sm"
               >
                 View {c} ({inCat.length}) <span aria-hidden="true">&rarr;</span>
