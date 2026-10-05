@@ -5,19 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0e0b16" />
 
-    <!-- Fallback tags for crawlers/social bots that do not run JavaScript.
-         react-helmet-async (SeoHead.jsx) replaces these per page once React loads. -->
-    <title>onlinedevelopertool.com/ - Free Online JSON, JWT &amp; Base64 Developer Tools</title>
-    <meta name="description" content="Use free developer tools at onlinedevelopertool.com/ to format JSON, decode JWT, encode Base64 and generate UUIDs in your browser. No signup, private by design." />
-    <link rel="canonical" href="https://onlinedevelopertool.com/" />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="FREE Developer Tool" />
-    <meta property="og:title" content="onlinedevelopertool.com/ - Free Online JSON, JWT & Base64 Developer Tools" />
-    <meta property="og:description" content="Free, private, browser-based developer tools: format JSON, decode JWT, encode Base64, generate UUIDs and more." />
-    <meta property="og:url" content="https://onlinedevelopertool.com/" />
-    <meta property="og:image" content="https://onlinedevelopertool.com/images/og-onlinedevelopertool.webp" />
-    <meta name="twitter:card" content="summary_large_image" />
+    <!-- SEO-HEAD:START
+         Fallback tags for dev mode and any URL that has no prerendered page. After `npm run build`,
+         scripts/prerender.mjs rewrites everything between these markers for every route, and
+         react-helmet-async (SeoHead.jsx) takes over once React loads. The data-rh attribute tells
+         Helmet these tags are managed, so it replaces them instead of adding duplicates. -->
+    <title>Free Online Developer Tools - JSON Formatter, JWT Decoder & More</title>
+    <meta data-rh="true" name="description" content="Free online developer tools for JSON formatting, JSON validation, JWT decoding, Base64 encoding and UUID generation. Fast, private and browser-based with no signup required." />
+    <link data-rh="true" rel="canonical" href="https://onlinedevelopertool.com/" />
+    <meta data-rh="true" name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+    <meta data-rh="true" property="og:type" content="website" />
+    <meta data-rh="true" property="og:site_name" content="OnlineDeveloperTool" />
+    <meta data-rh="true" property="og:title" content="Free Online Developer Tools - JSON Formatter, JWT Decoder & More" />
+    <meta data-rh="true" property="og:description" content="Free browser-based developer tools for formatting JSON, validating JSON, decoding JWT, encoding Base64 and generating UUIDs. No signup required." />
+    <meta data-rh="true" property="og:url" content="https://onlinedevelopertool.com/" />
+    <meta data-rh="true" property="og:image" content="https://onlinedevelopertool.com/images/og-onlinedevelopertool.webp" />
+    <meta data-rh="true" property="og:image:width" content="1200" />
+    <meta data-rh="true" property="og:image:height" content="630" />
+    <meta data-rh="true" property="og:image:alt" content="Free Online Developer Tools" />
+    <meta data-rh="true" name="twitter:card" content="summary_large_image" />
+    <meta data-rh="true" name="twitter:title" content="Free Online Developer Tools - JSON Formatter, JWT Decoder & More" />
+    <meta data-rh="true" name="twitter:description" content="Free browser-based developer tools for formatting JSON, validating JSON, decoding JWT, encoding Base64 and generating UUIDs. No signup required." />
+    <meta data-rh="true" name="twitter:image" content="https://onlinedevelopertool.com/images/og-onlinedevelopertool.webp" />
+    <meta data-rh="true" name="twitter:url" content="https://onlinedevelopertool.com/" />
+    <!-- SEO-HEAD:END -->
 
     <link rel="icon" href="/favicon.ico" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
@@ -30,8 +41,7 @@
   <body>
     <div id="root"></div>
     <noscript>
-      <h1>Free online developer tools - onlinedevelopertool.com/</h1>
-      <p>Format JSON, decode JWT, encode Base64, generate UUIDs and more. These tools need JavaScript enabled to run in your browser.</p>
+      <p>Free online developer tools: JSON Formatter, JWT Decoder, Base64 Encoder, UUID Generator and more. The tools need JavaScript enabled to run in your browser.</p>
     </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>

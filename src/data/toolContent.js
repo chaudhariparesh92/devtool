@@ -28,6 +28,15 @@ const jsonFmt = {
     useCases: ['Checking a hand-edited config file', 'Debugging a 400 error caused by a bad request body', 'Validating JSON before importing it somewhere strict'],
     tasks: ['Validate JSON online', 'Find a JSON syntax error', 'Check if JSON is valid'],
   },
+  '/json-beautifier': {
+    lede: 'Turn minified or messy JSON into clean, indented, readable JSON.',
+    what: 'JSON Beautifier re-prints JSON with 2-space indentation and one item per line, so nested objects and arrays are easy to follow.',
+    problem: 'Logs, network panels and API clients often show JSON squeezed onto one line. Reading it that way hides the structure and makes mistakes easy to miss.',
+    steps: ['Paste your JSON into the input box.', 'Press Process.', 'Copy the beautified result. If the JSON is invalid, you get the parser error instead.'],
+    example: { inLabel: 'Input', input: '{"user":{"id":1,"roles":["admin","dev"]},"active":true}', outLabel: 'Output', output: '{\n  "user": {\n    "id": 1,\n    "roles": [\n      "admin",\n      "dev"\n    ]\n  },\n  "active": true\n}' },
+    useCases: ['Reading a minified response copied from browser dev tools', 'Making JSON diff-friendly before code review', 'Pasting readable JSON into documentation or a bug report'],
+    tasks: ['Beautify JSON online', 'Pretty print JSON', 'Make minified JSON readable'],
+  },
   '/json-minifier': {
     lede: 'Strip whitespace from JSON so it is as small as it can be, without changing the data.',
     what: 'JSON Minifier parses your JSON and prints it back on a single line with no extra spaces or line breaks.',
@@ -470,6 +479,333 @@ const GROUPS = [
   },
 ];
 
+// ---- In-depth content for the highest-value pages --------------------------
+// Optional extras merged into getToolContent(): { sections, faqs }.
+// Every statement describes how the tool (or the underlying standard) really behaves.
+const EXTRA = {
+  '/json-formatter': {
+    sections: [
+      {
+        h: 'Common JSON errors and how to fix them',
+        paras: ['If the formatter shows an error, the input is not strict JSON. These are the usual causes:'],
+        list: [
+          'A trailing comma after the last item in an object or array. Remove it.',
+          'Single quotes around keys or strings. JSON requires double quotes.',
+          'Unquoted keys such as {name: "Ada"}. Every key must be a double-quoted string.',
+          'Comments (// or /* */). JSON has no comment syntax, so strip them first.',
+          'Values such as undefined, NaN or Infinity. None of these exist in JSON; use null or a string.',
+          'Raw line breaks or unescaped quotes inside a string. Write them as \\n and \\".',
+        ],
+      },
+      {
+        h: 'What formatting changes, and what it does not',
+        paras: [
+          'Formatting only changes whitespace. The tool parses your JSON with the browser\'s JSON.parse and prints it again with JSON.stringify, so the data itself stays the same.',
+          'Because it uses JavaScript\'s parser, three behaviors are worth knowing. Integers larger than 9,007,199,254,740,991 lose precision. If an object repeats a key, the last value wins and the earlier one is dropped. Keys that look like whole numbers, such as "1" or "2", are moved to the front in ascending order.',
+        ],
+      },
+      {
+        h: 'Where a JSON formatter helps most',
+        list: [
+          'Reading API responses and webhook payloads copied from logs or a network panel',
+          'Reviewing config files such as package.json or appsettings.json',
+          'Making request bodies readable in bug reports and documentation',
+          'Spotting a missing bracket before it reaches production',
+        ],
+        links: [['JSON Validator', '/json-validator'], ['JSON Beautifier', '/json-beautifier'], ['JSON Minifier', '/json-minifier'], ['JSON to C#', '/json-to-csharp']],
+        linksLabel: 'Next steps',
+      },
+    ],
+    faqs: [
+      q('What is the difference between a JSON formatter and a JSON validator?', 'A formatter re-prints valid JSON with indentation. A validator only tells you whether the JSON is valid. This formatter also shows the parser error when the JSON is invalid, so it checks syntax as a side effect.'),
+      q('How many spaces does it indent with?', 'Two spaces per level. The indentation size is not configurable.'),
+      q('Can it format very large JSON files?', 'It runs in your browser\'s memory, so inputs of many megabytes can be slow or freeze the tab. For very large files, a command-line tool such as jq is a better fit.'),
+    ],
+  },
+
+  '/json-validator': {
+    sections: [
+      {
+        h: 'What counts as valid JSON',
+        paras: [
+          'JSON (defined in RFC 8259) has seven kinds of value: object, array, string, number, true, false and null. Strings and keys use double quotes, items are separated by commas with no trailing comma, and comments are not allowed.',
+          'A bare value is valid too. The text "hello", 42 and null are each valid JSON documents on their own.',
+        ],
+      },
+      {
+        h: 'What this validator checks, and what it does not',
+        list: [
+          'It checks syntax only, using the browser\'s own JSON parser.',
+          'It does not check your data against a JSON Schema, so it cannot tell you that a field is missing or has the wrong type.',
+          'It reports the first error the parser hits. Fix it and press Process again to find the next one.',
+          'The wording of the error message depends on your browser, because each engine words its parse errors differently.',
+        ],
+      },
+      {
+        h: 'A quick validation workflow',
+        paras: ['Paste the JSON, press Process, and fix whatever the error points at. Once it reads Valid JSON, format it so the structure is easy to read, or minify it if you need a compact string.'],
+        links: [['JSON Formatter', '/json-formatter'], ['JSON Minifier', '/json-minifier'], ['JSON to C#', '/json-to-csharp']],
+        linksLabel: 'Next steps',
+      },
+    ],
+    faqs: [
+      q('Does it validate against a JSON Schema?', 'No. It checks that the text is syntactically valid JSON. Schema validation needs a schema and a schema-aware validator.'),
+      q('Why does it only show one error?', 'JSON.parse stops at the first problem it finds. Fix that one and validate again to reveal the next.'),
+      q('Is a plain string or number valid JSON?', 'Yes. Under the current standard any JSON value can appear at the top level, so "hello" and 42 are both valid.'),
+    ],
+  },
+
+  '/json-beautifier': {
+    sections: [
+      {
+        h: 'When to beautify JSON',
+        list: [
+          'Reading a minified response copied from browser dev tools or a log line',
+          'Making JSON diff-friendly so a code review shows one change per line',
+          'Putting readable JSON into documentation, tickets and bug reports',
+          'Checking nesting depth and spotting a misplaced bracket by eye',
+        ],
+      },
+      {
+        h: 'Beautified versus minified JSON',
+        paras: [
+          'Both describe exactly the same data. Beautified JSON adds line breaks and indentation for people. Minified JSON removes them to save space in a request body, an environment variable or a stored string.',
+          'You can switch between the two at any time without losing information, because only whitespace differs.',
+        ],
+        links: [['JSON Minifier', '/json-minifier']],
+        linksLabel: 'Go the other way',
+      },
+      {
+        h: 'Beautifier, formatter and pretty printer',
+        paras: [
+          'These names describe the same operation. On this site the JSON Beautifier and the JSON Formatter use the same engine and the same 2-space indentation. Use whichever name you searched for. If you also want a clear valid or invalid verdict, use the JSON Validator.',
+        ],
+        links: [['JSON Formatter', '/json-formatter'], ['JSON Validator', '/json-validator']],
+        linksLabel: 'Related',
+      },
+    ],
+    faqs: [
+      q('Can I choose tabs or 4-space indentation?', 'No. Output is always indented with two spaces.'),
+      q('Does beautifying change the order of keys?', 'Key order is kept, with one JavaScript quirk: keys that look like whole numbers, such as "1" and "2", are moved to the front in ascending order.'),
+      q('Is this different from the JSON Formatter?', 'No. Both produce the same output. They exist as separate pages because people search for both names.'),
+    ],
+  },
+
+  '/json-minifier': {
+    sections: [
+      {
+        h: 'What minifying removes',
+        paras: [
+          'The minifier removes spaces, tabs and line breaks that sit between JSON tokens. Whitespace inside a string value is part of the data, so it is kept.',
+        ],
+      },
+      {
+        h: 'Minified JSON and file size',
+        paras: [
+          'How much you save depends on how much whitespace the original had. Deeply indented JSON shrinks a lot; JSON that was already compact barely changes.',
+          'Over HTTP, gzip or Brotli compression already squeezes repeated whitespace, so the extra gain from minifying is smaller there. Minified JSON is most useful where compression is not in play: environment variables, query parameters, local storage values and one-line config entries.',
+        ],
+      },
+      {
+        h: 'Things to know',
+        list: [
+          'Number formatting can be normalized: 1.0 becomes 1 and 1e3 becomes 1000.',
+          'Integers beyond 9,007,199,254,740,991 lose precision, because the browser parses numbers as 64-bit floats.',
+          'If a key appears twice in an object, the last value wins.',
+        ],
+        links: [['JSON Formatter', '/json-formatter'], ['JSON Validator', '/json-validator']],
+        linksLabel: 'Related',
+      },
+    ],
+    faqs: [
+      q('Does minifying change my data?', 'The values stay the same. Only whitespace between tokens is removed, apart from the number normalization noted above.'),
+      q('Can I reverse it?', 'Yes. Paste the minified JSON into the JSON Formatter to get indented output again. Key order is preserved.'),
+    ],
+  },
+
+  '/json-to-csharp': {
+    sections: [
+      {
+        h: 'How the C# output is generated',
+        list: [
+          'The class is named Root and gets one property for each top-level key.',
+          'Numbers become double, true/false becomes bool and text becomes string.',
+          'Nested objects, arrays and null values become object, so refine those by hand.',
+          'Property names have their first letter capitalized: "name" becomes Name.',
+        ],
+      },
+      {
+        h: 'What to adjust after generating',
+        list: [
+          'Rename Root to something meaningful such as OrderDto.',
+          'Change double to int, long or decimal where the data calls for it. One sample cannot tell them apart.',
+          'Replace object with a real nested class or a List<T>.',
+          'Mark properties nullable if a field can be missing.',
+        ],
+      },
+      {
+        h: 'Matching property names when you deserialize',
+        paras: [
+          'System.Text.Json matches property names case-sensitively by default, so a JSON key "name" will not fill a property called Name unless you allow it. Either enable case-insensitive matching or add an attribute such as [JsonPropertyName("name")]. Newtonsoft.Json matches case-insensitively by default.',
+        ],
+        code: 'var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };\nvar root = JsonSerializer.Deserialize<Root>(json, options);',
+        links: [['JSON to TypeScript', '/json-to-typescript'], ['JSON Formatter', '/json-formatter'], ['JSON Validator', '/json-validator']],
+        linksLabel: 'Related',
+      },
+    ],
+    faqs: [
+      q('Can it generate nested classes?', 'No. It maps top-level keys only. Nested objects and arrays are typed as object, and you create the nested classes yourself.'),
+      q('Why are all numbers double?', 'A JSON sample does not show whether a number is an integer or a decimal, so the tool uses double for every number. Change it to int, long or decimal where appropriate.'),
+      q('Does the output work with System.Text.Json and Newtonsoft.Json?', 'Yes. The output is a plain class with get/set properties. Check the property-name matching described above before you deserialize.'),
+    ],
+  },
+
+  '/jwt-decoder': {
+    sections: [
+      {
+        h: 'Anatomy of a JWT',
+        paras: [
+          'A JSON Web Token has three parts separated by dots: header.payload.signature. The header and payload are JSON that has been Base64URL-encoded.',
+          'The header usually names the signing algorithm (alg) and the token type (typ). The payload holds claims. Common registered claims include iss (issuer), sub (subject), aud (audience), exp (expiry), nbf (not before), iat (issued at) and jti (token ID).',
+        ],
+      },
+      {
+        h: 'Decoding is not verifying',
+        paras: [
+          'Anyone can read the header and payload of a signed JWT, because they are only encoded, not encrypted. Decoding does not prove the token is genuine. Only checking the signature with the right key does that, and it belongs on your server.',
+          'For the same reason, never put secrets in a JWT payload, and never trust decoded claims without verifying the signature first.',
+        ],
+      },
+      {
+        h: 'Reading exp, nbf and iat',
+        paras: [
+          'These claims are Unix timestamps in seconds. A value like 1516239022 is hard to read on sight; paste it into a timestamp converter to see the date.',
+        ],
+        links: [['Timestamp Converter', '/timestamp-converter'], ['Unix Timestamp', '/unix-timestamp'], ['JWT Generator', '/jwt-generator'], ['Base64 Decoder', '/base64-decoder']],
+        linksLabel: 'Related',
+      },
+      {
+        h: 'A note on real tokens',
+        paras: [
+          'This decoder runs in your browser and the token is not uploaded for processing. Even so, a live token is a credential. Prefer expired or test tokens when you paste into any online tool.',
+        ],
+      },
+    ],
+    faqs: [
+      q('Can this tool verify the signature?', 'No. It decodes the header and payload only. Signature verification needs the signing key or public key.'),
+      q('Is a JWT encrypted?', 'A typical signed JWT is not encrypted. Its contents are readable by anyone who has the token. Encrypted tokens (JWE) are a different format.'),
+      q('What does the exp claim mean?', 'It is the expiry time as a Unix timestamp in seconds. After that moment a server should reject the token.'),
+      q('Is it safe to decode a JWT online?', 'Decoding here happens in your browser. Still, treat real tokens as credentials and use test or expired tokens when you can.'),
+    ],
+  },
+
+  '/base64-decoder': {
+    sections: [
+      {
+        h: 'What Base64 is',
+        paras: [
+          'Base64 represents binary data using 64 printable characters: A-Z, a-z, 0-9, + and /, with = used for padding. It turns bytes into text that can travel safely through systems built for text, at the cost of making the data about one third larger.',
+        ],
+      },
+      {
+        h: 'Standard and URL-safe Base64',
+        paras: [
+          'This decoder expects the standard alphabet. URL-safe Base64, used in JWTs and some URLs, swaps + for - and / for _. To decode a URL-safe string here, replace - with + and _ with / first.',
+        ],
+      },
+      {
+        h: 'Why the output may be empty or unreadable',
+        list: [
+          'The input is not valid Base64, for example because it is cut off or contains characters outside the alphabet.',
+          'The string uses the URL-safe alphabet (see above).',
+          'The decoded bytes are not UTF-8 text, such as an image or a compressed file. This tool decodes text only.',
+        ],
+        links: [['Base64 Encoder', '/base64-encoder'], ['URL Decoder', '/url-decoder'], ['JWT Decoder', '/jwt-decoder']],
+        linksLabel: 'Related',
+      },
+      {
+        h: 'Base64 is not encryption',
+        paras: ['Decoding Base64 needs no key, which means anything stored as Base64 is readable by anyone. Do not use it to hide passwords or tokens.'],
+      },
+    ],
+    faqs: [
+      q('Can I decode an image or file here?', 'No. This tool decodes Base64 into text. Binary data such as images will not display correctly.'),
+      q('Why does the decoded text look like gibberish?', 'The underlying bytes are probably not UTF-8 text. Base64 can hold any kind of data, not only text.'),
+      q('Does it decode URL-safe Base64?', 'Not directly. Replace - with + and _ with / in the input first, then decode.'),
+    ],
+  },
+
+  '/base64-encoder': {
+    sections: [
+      {
+        h: 'What Base64 encoding is used for',
+        list: [
+          'Embedding small binary or text values inside JSON, XML or HTML',
+          'Building data: URIs for inline images and fonts',
+          'The user:password string in HTTP Basic authentication headers',
+          'Email attachments (MIME) and the segments of a JWT (in a URL-safe variant)',
+        ],
+      },
+      {
+        h: 'UTF-8 and special characters',
+        paras: [
+          'The tool converts your text to UTF-8 bytes before encoding, so accented letters and emoji encode correctly. For example, the text héllo encodes to aMOpbGxv.',
+        ],
+      },
+      {
+        h: 'Size, alphabet and padding',
+        paras: [
+          'Encoded output is about one third longer than the input. The tool produces standard Base64 with = padding. For the URL-safe variant, replace + with - and / with _, and remove the trailing = signs.',
+        ],
+        links: [['Base64 Decoder', '/base64-decoder'], ['URL Encoder', '/url-encoder'], ['JWT Decoder', '/jwt-decoder'], ['Hash Generator', '/hash-generator']],
+        linksLabel: 'Related',
+      },
+      {
+        h: 'Base64 is not encryption',
+        paras: ['Base64 is a reversible encoding. Anyone can decode it without a key, so it should never be used to protect secrets.'],
+      },
+    ],
+    faqs: [
+      q('Does it output URL-safe Base64?', 'No. It outputs standard Base64. Replace + with - and / with _ and strip the = padding if you need the URL-safe form.'),
+      q('Can it encode files or images?', 'No. It encodes text typed or pasted into the input box.'),
+      q('Why is the output longer than the input?', 'Base64 maps every 3 bytes to 4 characters, so the result is roughly 33% larger.'),
+    ],
+  },
+
+  '/uuid-generator': {
+    sections: [
+      {
+        h: 'What a UUID looks like',
+        paras: [
+          'A UUID is a 128-bit identifier written as 32 hexadecimal digits in five groups, 8-4-4-4-12, for example 3b241101-e2bb-4255-8caf-4136c566a962. In .NET and some databases it is called a GUID.',
+          'This tool generates version 4 UUIDs, which are made of random bits. The version digit 4 appears at the start of the third group, and the first digit of the fourth group is 8, 9, a or b.',
+        ],
+      },
+      {
+        h: 'How the UUIDs are generated',
+        paras: [
+          'Each UUID comes from your browser\'s crypto.randomUUID(), which uses a cryptographically secure random source. You can generate 1, 5, 10, 25, 50 or 100 at a time. Nothing is stored or sent anywhere.',
+        ],
+      },
+      {
+        h: 'When to use UUIDs, and when to think twice',
+        list: [
+          'Good for: primary keys created on the client, request and correlation IDs, test fixtures and unique file names.',
+          'Random UUIDs make poor clustered index keys in some databases, because new rows land at random positions and cause page splits. Time-ordered UUIDs such as version 7 are designed for that case. This tool does not generate them.',
+          'A UUID is an identifier, not a secret. Do not use one as a password or an authorization token.',
+        ],
+        links: [['UUID Validator', '/uuid-validator'], ['UUID Parser', '/uuid-parser'], ['Hash Generator', '/hash-generator'], ['Timestamp Converter', '/timestamp-converter']],
+        linksLabel: 'Related',
+      },
+    ],
+    faqs: [
+      q('Is a UUID the same as a GUID?', 'They share the same 128-bit format. GUID is the name used in Microsoft environments such as .NET and SQL Server.'),
+      q('Can two generated UUIDs be the same?', 'It is theoretically possible but so unlikely with 122 random bits that applications treat version 4 UUIDs as unique.'),
+      q('Does it generate version 1 or version 7 UUIDs?', 'No. It generates version 4 (random) UUIDs only.'),
+    ],
+  },
+};
+
 export function getToolGroup(path) {
   const g = GROUPS.find((x) => x.test(path));
   return g ? g.id : null;
@@ -478,5 +814,7 @@ export function getToolGroup(path) {
 export function getToolContent(path, name) {
   const g = GROUPS.find((x) => x.test(path));
   if (!g) return null;
-  return { group: g.id, ...g.build(name, path) };
+  const base = { group: g.id, ...g.build(name, path) };
+  const x = EXTRA[path];
+  return x ? { ...base, sections: x.sections, faqs: [...base.faqs, ...x.faqs] } : base;
 }

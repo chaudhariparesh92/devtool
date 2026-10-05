@@ -16,6 +16,7 @@ export const TOOLS = [
   // JSON Tools
   t('/json-formatter', 'JSON Formatter', 'JSON Tools'),
   t('/json-validator', 'JSON Validator', 'JSON Tools'),
+  t('/json-beautifier', 'JSON Beautifier', 'JSON Tools'),
   t('/json-minifier', 'JSON Minifier', 'JSON Tools'),
   t('/json-to-csharp', 'JSON to C#', 'JSON Tools'),
   t('/json-to-typescript', 'JSON to TypeScript', 'JSON Tools'),
@@ -81,7 +82,7 @@ export const TOOLS = [
 
 // Short descriptions used on the Categories and Tools pages (presentation/SEO only).
 export const CATEGORY_INFO = {
-  'JSON Tools': 'Format, validate and minify JSON, generate C#, TypeScript, Java, Python, Go, PHP and Kotlin models from it, or convert between JSON, YAML and CSV.',
+  'JSON Tools': 'Format, validate, beautify and minify JSON, generate C#, TypeScript, Java, Python, Go, PHP and Kotlin models from it, or convert between JSON, YAML and CSV.',
   'Encoders & Decoders': 'URL, Base64 and HTML encoding and decoding, plus a JWT decoder for reading token claims.',
   'Generators & Hashes': 'Generate UUIDs and JWTs, validate UUIDs, and create MD5, SHA-256 and SHA-512 hashes.',
   'Web Tools': 'Timestamps, color codes, query strings and cron expressions - the small things web work keeps throwing at you.',

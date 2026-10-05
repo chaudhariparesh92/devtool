@@ -1,55 +1,18 @@
 import { Link } from 'react-router-dom';
-import SeoHead, { SITE_URL } from './SeoHead';
+import SeoHead from './SeoHead';
 import AdSlot from './AdSlot';
-import { TOOLS } from '../data/tools';
-import { getToolContent } from '../data/toolContent';
+import { getToolSeo, getRelatedTools } from '../data/seo';
 
 // Wraps every tool. The tool itself is rendered untouched as {children};
 // this component only adds the page chrome and the supporting content around it.
-function relatedTools(path, group, category) {
-  const same = (t) => t.path !== path && getToolContent(t.path, t.name)?.group === group;
-  const first = TOOLS.filter(same);
-  const more = TOOLS.filter((t) => t.path !== path && t.category === category && !first.includes(t));
-  return [...first, ...more].slice(0, 6);
-}
+// Title, description and JSON-LD come from data/seo.js (shared with the prerender script).
 
 export default function ToolLayout({ title, desc, path, children }) {
-  const tool = TOOLS.find((t) => t.path === path);
-  const name = tool ? tool.name : title;
-  const c = getToolContent(path, name);
-  const related = tool && c ? relatedTools(path, c.group, tool.category) : [];
-
-  const seoTitle = `${name} - Free Online Tool | FREE Developer Tool`;
-  const seoDesc = c ? c.meta : desc;
-
-  const jsonLd = c && {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'BreadcrumbList',
-        itemListElement: [
-          { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-          ...(tool ? [{ '@type': 'ListItem', position: 2, name: tool.category, item: `${SITE_URL}/tools?category=${encodeURIComponent(tool.category)}` }] : []),
-          { '@type': 'ListItem', position: tool ? 3 : 2, name, item: `${SITE_URL}${path}` },
-        ],
-      },
-      {
-        '@type': 'WebApplication',
-        name,
-        url: `${SITE_URL}${path}`,
-        description: seoDesc,
-        applicationCategory: 'DeveloperApplication',
-        operatingSystem: 'Any (runs in a web browser)',
-        browserRequirements: 'Requires JavaScript',
-        isAccessibleForFree: true,
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-      },
-      {
-        '@type': 'FAQPage',
-        mainEntity: c.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
-      },
-    ],
-  };
+  const seo = getToolSeo(path, title, desc);
+  const { tool, name, content: c, jsonLd } = seo;
+  const related = tool && c ? getRelatedTools(path, c.group, tool.category) : [];
+  const seoTitle = seo.title;
+  const seoDesc = seo.description;
 
   const h2 = 'h-section mb-3';
 
@@ -131,6 +94,28 @@ export default function ToolLayout({ title, desc, path, children }) {
               </ul>
             </div>
           </section>
+
+          {/* In-depth guidance for the highest-value tool pages (data/toolContent.js -> sections) */}
+          {c.sections && c.sections.map((sec) => (
+            <section key={sec.h} className="card p-5 sm:p-6 space-y-3 min-w-0">
+              <h2 className="h-section">{sec.h}</h2>
+              {sec.paras && sec.paras.map((t) => <p key={t} className="leading-relaxed" style={{ color: 'var(--muted)' }}>{t}</p>)}
+              {sec.list && (
+                <ul className="list-disc pl-6 space-y-2 leading-relaxed" style={{ color: 'var(--muted)' }}>
+                  {sec.list.map((li) => <li key={li}>{li}</li>)}
+                </ul>
+              )}
+              {sec.code && <pre className="code-block">{sec.code}</pre>}
+              {sec.links && (
+                <p className="text-sm">
+                  {sec.linksLabel || 'Related'}:{' '}
+                  {sec.links.map(([label, to], i) => (
+                    <span key={to}>{i > 0 && ', '}<Link to={to} className="a-link">{label}</Link></span>
+                  ))}
+                </p>
+              )}
+            </section>
+          ))}
 
           <section aria-labelledby="faq-heading" className="faq">
             <h2 id="faq-heading" className="h-section mb-4">{name} FAQ</h2>

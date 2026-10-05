@@ -36,6 +36,7 @@ export const routes = [
   { path: '/contact', component: StaticPage },
   { path: '/json-formatter', component: JsonFormatterTool },
   { path: '/json-validator', component: JsonFormatterTool },
+  { path: '/json-beautifier', component: JsonFormatterTool },
   { path: '/json-minifier', component: JsonFormatterTool },
   { path: '/json-to-csharp', component: JsonConverterTool },
   { path: '/json-to-typescript', component: JsonConverterTool },

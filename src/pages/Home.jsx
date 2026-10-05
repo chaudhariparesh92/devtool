@@ -5,16 +5,10 @@ import AdSlot from '../components/AdSlot';
 import FrustratedDev from '../components/FrustratedDev';
 import ToolFinder from '../components/ToolFinder';
 import { TOOLS, CATEGORIES, CATEGORY_INFO } from '../data/tools';
+import { HOME_TITLE, HOME_DESC, HOME_SOCIAL_DESC, HOME_POPULAR, HOME_LINK_GROUPS, HOME_WHY, HOME_FAQS, getHomeJsonLd } from '../data/seo';
 
-// A selection of popular tools to feature on the homepage
-const popularTools = [
-  { name: 'JSON Formatter', path: '/json-formatter', blurb: 'Pretty-print or inspect messy JSON in one click.' },
-  { name: 'JWT Decoder', path: '/jwt-decoder', blurb: 'Read the header and claims inside a token.' },
-  { name: 'UUID Generator', path: '/uuid-generator', blurb: 'Make random UUIDs in bulk and copy them.' },
-  { name: 'Base64 Decoder', path: '/base64-decoder', blurb: 'Turn Base64 back into readable text.' },
-  { name: 'JSON to C#', path: '/json-to-csharp', blurb: 'Draft a C# class from a sample JSON object.' },
-  { name: 'Timestamp Converter', path: '/timestamp-converter', blurb: 'Unix time to dates, and back again.' },
-];
+// Popular tools, FAQs and link groups live in data/seo.js (shared with the prerender script).
+const popularTools = HOME_POPULAR;
 
 // Real pains -> real tools that exist in src/data/tools.js
 const pains = [
@@ -28,75 +22,21 @@ const pains = [
   { pain: 'Debugging the small stuff', fix: [['Diff Checker', '/diff-checker'], ['Regex Tester', '/regex-tester'], ['Website Status Checker', '/website-status-checker']] },
 ];
 
-const faqs = [
-  { q: 'What is FREE Developer Tool?', a: `FREE Developer Tool, found at ${SITE_DOMAIN}, is a collection of ${TOOLS.length} free, browser-based developer tools for everyday chores: formatting, encoding, decoding, converting, generating, validating and checking.` },
-  { q: 'Do I need to sign up?', a: 'No. Open a tool and use it.' },
-  { q: 'Is my data uploaded anywhere?', a: 'The tools run in your browser, so what you paste is processed locally. The one thing to know: the Website Status Checker sends a request from your browser to the sites you type in, so those sites will see it.' },
-  { q: 'Which tools are included?', a: 'JSON tools (format, validate, minify and convert to C#, TypeScript, Java, Python, Go, PHP and Kotlin), URL/Base64/HTML encoders and decoders, JWT, UUID and hash tools, timestamp, color, number base, regex, diff, query string and cron tools, XML/YAML/CSV converters, text tools and a website status checker.' },
-  { q: 'Does it work on a phone or tablet?', a: 'Yes. The layout adapts to small screens, though pasting big payloads is still easier on a keyboard.' },
-];
+const faqs = HOME_FAQS;
 
 const th = 'text-left';
 
-const HOME_TITLE = 'onlinedevelopertool.com/ - Free Online JSON, JWT & Base64 Developer Tools';
-const HOME_DESC = 'Use free developer tools at onlinedevelopertool.com/ to format JSON, decode JWT, encode Base64 and generate UUIDs in your browser. No signup, private by design.';
-
 export default function Home() {
-  const jsonLd = {
-    '@context': 'https://schema.org',
-    '@graph': [
-      {
-        '@type': 'WebSite',
-        '@id': `${SITE_URL}/#website`,
-        name: 'FREE Developer Tool',
-        alternateName: 'onlinedevelopertool.com',
-        url: `${SITE_URL}/`,
-        inLanguage: 'en',
-      },
-      {
-        '@type': 'Organization',
-        '@id': `${SITE_URL}/#organization`,
-        name: 'DevTransition',
-        url: `${SITE_URL}/`,
-        logo: `${SITE_URL}/images/og-onlinedevelopertool.webp`,
-      },
-      {
-        '@type': 'WebPage',
-        '@id': `${SITE_URL}/#webpage`,
-        url: `${SITE_URL}/`,
-        name: HOME_TITLE,
-        description: HOME_DESC,
-        isPartOf: { '@id': `${SITE_URL}/#website` },
-        primaryImageOfPage: { '@id': `${SITE_URL}/#primaryimage` },
-      },
-      {
-        '@type': 'ImageObject',
-        '@id': `${SITE_URL}/#primaryimage`,
-        url: `${SITE_URL}/images/onlinedevelopertool-com-free-online-developer-tools.webp`,
-        width: 1200,
-        height: 630,
-        caption: 'onlinedevelopertool.com/ free online developer tools',
-      },
-      {
-        '@type': 'VideoObject',
-        name: 'JSON Formatter demo: format JSON in seconds',
-        description: 'A short demo showing messy JSON pasted into the JSON Formatter and returned as clean, indented JSON.',
-        thumbnailUrl: `${SITE_URL}/images/json-formatter-demo-poster.webp`,
-        contentUrl: `${SITE_URL}/video/json-formatter-demo.mp4`,
-        uploadDate: '2026-10-04',
-        duration: 'PT8S',
-      },
-      { '@type': 'FAQPage', mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
-    ],
-  };
+  const jsonLd = getHomeJsonLd();
 
   return (
     <div className="space-y-16">
       <SeoHead 
         title={HOME_TITLE}
         description={HOME_DESC}
+        socialDescription={HOME_SOCIAL_DESC}
         image={`${SITE_URL}/images/og-onlinedevelopertool.webp`}
-        imageAlt="onlinedevelopertool.com/ free online developer tools banner"
+        imageAlt="Free Online Developer Tools"
         url="/" 
         jsonLd={jsonLd}
       />
@@ -110,11 +50,13 @@ export default function Home() {
             <span className="sticker cyan">{TOOLS.length} tools</span>
           </div>
           <h1 id="hero-heading" className="h-display text-5xl sm:text-6xl xl:text-7xl break-words">
-            Stop wasting time on <span className="marker">tiny developer tasks.</span>
+            Free Online <span className="marker">Developer Tools</span>
           </h1>
+          <p className="h-section">Stop wasting time on tiny developer tasks.</p>
           <p className="lede">
-            Format JSON, decode a token, convert a timestamp or generate a UUID in seconds with the free online developer tools at{' '}
-            <b>{SITE_DOMAIN}</b>, all running in your browser with no signup required.
+            Free browser-based tools for developers including JSON Formatter, JSON Validator, JWT Decoder, Base64 Encoder and UUID Generator.
+            Format JSON, decode a token, convert a timestamp or generate a UUID in seconds at{' '}
+            <b>{SITE_DOMAIN}</b>, with no signup required.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link to="/tools" className="btn btn-primary">Explore Free Developer Tools <span aria-hidden="true">&rarr;</span></Link>
@@ -164,7 +106,7 @@ export default function Home() {
 
       {/* ---------------- POPULAR ---------------- */}
       <section aria-labelledby="popular-heading" className="space-y-6">
-        <h2 id="popular-heading" className="h-section">Popular tools on {SITE_DOMAIN}</h2>
+        <h2 id="popular-heading" className="h-section">Popular Developer Tools</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {popularTools.map(tool => (
             <Link key={tool.path} to={tool.path} className="card card-hover p-6">
@@ -194,6 +136,24 @@ export default function Home() {
               <h3 className="text-lg font-black mb-1">{c} <span className="card-arrow" aria-hidden="true">&rarr;</span></h3>
               <p className="text-sm" style={{ color: 'var(--muted)' }}>{CATEGORY_INFO[c]}</p>
             </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ---------------- JSON / JWT / ENCODING: direct links to tool pages ---------------- */}
+      <section aria-labelledby="groups-heading" className="space-y-6">
+        <h2 id="groups-heading" className="h-section">JSON, JWT and encoding tools</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {HOME_LINK_GROUPS.map((g) => (
+            <div key={g.h} className="card p-6 min-w-0">
+              <h3 className="text-lg font-black mb-1">{g.h}</h3>
+              <p className="text-sm mb-3" style={{ color: 'var(--muted)' }}>{g.p}</p>
+              <ul className="space-y-1">
+                {g.links.map(([label, to]) => (
+                  <li key={to}><Link to={to} className="a-link text-sm">{label}</Link></li>
+                ))}
+              </ul>
+            </div>
           ))}
         </div>
       </section>
@@ -263,7 +223,7 @@ export default function Home() {
           <span className="sticker cyan">Watch</span>
           <h2 id="demo-heading" className="h-section">See a tool in action: format JSON in seconds</h2>
           <p className="lede">
-            This 8-second demo shows the workflow every tool on <b>{SITE_DOMAIN}</b> follows: paste, click, copy.
+            This 8-second demo shows the workflow every tool follows: paste, click, copy.
           </p>
         </div>
         <VideoEmbed
@@ -276,7 +236,7 @@ export default function Home() {
           <figure className="m-0">
             <img
               src="/images/onlinedevelopertool-com-free-online-developer-tools.webp"
-              alt="onlinedevelopertool.com/ free online developer tools banner showing JSON formatting, JWT, UUID and Base64 utilities"
+              alt="Free online developer tools: JSON formatter, JWT decoder, UUID generator and Base64 utilities"
               width="1200"
               height="630"
               loading="lazy"
@@ -298,6 +258,19 @@ export default function Home() {
             />
           </figure>
         </div>
+      </section>
+
+      {/* ---------------- WHY ---------------- */}
+      <section aria-labelledby="why-heading" className="space-y-6">
+        <h2 id="why-heading" className="h-section">Why use our developer tools?</h2>
+        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {HOME_WHY.map((w) => (
+            <li key={w.h} className="card p-5">
+              <h3 className="font-black mb-1">{w.h}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{w.p}</p>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* ---------------- FAQ ---------------- */}

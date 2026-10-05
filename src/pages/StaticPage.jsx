@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import SeoHead from '../components/SeoHead';
+import { PAGE_SEO } from '../data/seo';
 
 export default function StaticPage({ path }) {
   const contentMap = {
@@ -117,7 +118,7 @@ export default function StaticPage({ path }) {
 
   return (
     <div className="max-w-3xl mx-auto space-y-6 card p-6 sm:p-8">
-      <SeoHead title={`${current.title} - FREE Developer Tool`} description={current.desc} url={path} />
+      <SeoHead title={PAGE_SEO[path] ? PAGE_SEO[path].title : current.title} description={PAGE_SEO[path] ? PAGE_SEO[path].description : current.desc} url={path} />
       
       <h1 className="h-display text-4xl sm:text-5xl border-b-[3px] border-dashed pb-4 break-words" style={{ borderColor: 'var(--border)' }}>
         {current.title}

@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import SeoHead from '../components/SeoHead';
 import { CATEGORIES, CATEGORY_INFO, TOOLS } from '../data/tools';
+import { PAGE_SEO } from '../data/seo';
 
 export default function CategoriesIndex() {
   return (
     <div className="space-y-8">
       <SeoHead
-        title="Developer Tool Categories - FREE Developer Tool"
-        description="Browse free developer tools by category: JSON, encoders and decoders, generators and hashes, web tools, text and data tools, and website checking."
+        title={PAGE_SEO['/categories'].title}
+        description={PAGE_SEO['/categories'].description}
         url="/categories"
       />
       <header className="space-y-3">
