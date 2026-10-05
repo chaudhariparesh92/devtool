@@ -16,7 +16,7 @@ export const DEFAULT_IMAGE = `${SITE_URL}/images/og-onlinedevelopertool.webp`;
 export const CONTENT_LAST_MODIFIED = '2026-10-05';
 
 // ---------------------------------------------------------------- Homepage
-export const HOME_TITLE = 'Free online developer tools';
+export const HOME_TITLE = 'Free Online Developer Tools - JSON Formatter, JWT Decoder & More';
 export const HOME_DESC =
   'Free online developer tools for JSON formatting, JSON validation, JWT decoding, Base64 encoding and UUID generation. Fast, private and browser-based with no signup required.';
 export const HOME_SOCIAL_DESC =
