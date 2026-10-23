@@ -68,9 +68,9 @@ export default function ToolLayout({ title, desc, path, children }) {
             </div>
             <div className="card p-5 sm:p-6 min-w-0">
               <h2 className={h2}>Example</h2>
-              <p className="code-label">{c.example.inLabel}</p>
+              <h3 className="code-label">{c.example.inLabel}</h3>
               <pre className="code-block mb-4">{c.example.input}</pre>
-              <p className="code-label">{c.example.outLabel}</p>
+              <h3 className="code-label">{c.example.outLabel}</h3>
               <pre className="code-block">{c.example.output}</pre>
             </div>
           </section>

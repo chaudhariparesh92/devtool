@@ -11,6 +11,24 @@ export default function SeoHead({ title, description, socialDescription, url, js
   const canonical = url && !noindex ? `${SITE_URL}${url === '/' ? '/' : url}` : null;
   const alt = imageAlt || 'Free online developer tools: JSON formatter, JWT decoder, UUID generator and Base64 tools';
   const social = socialDescription || description;
+
+  // Keep a valid page-level schema on indexable routes even when a page does not
+  // need a specialized schema. Tool and category pages pass their richer JSON-LD.
+  // This is metadata only; it does not change routing or tool behavior.
+  const resolvedJsonLd = jsonLd || (canonical && !noindex ? {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url: canonical,
+    isPartOf: {
+      '@type': 'WebSite',
+      name: SITE_NAME,
+      url: `${SITE_URL}/`,
+    },
+    inLanguage: 'en',
+  } : null);
+
   return (
     <Helmet>
       <html lang="en" />
@@ -34,7 +52,7 @@ export default function SeoHead({ title, description, socialDescription, url, js
       <meta name="twitter:description" content={social} />
       <meta name="twitter:image" content={image} />
       <meta name="twitter:image:alt" content={alt} />
-      {jsonLd && <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>}
+      {resolvedJsonLd && <script type="application/ld+json">{JSON.stringify(resolvedJsonLd)}</script>}
     </Helmet>
   );
 }
