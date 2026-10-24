@@ -6,7 +6,7 @@ export default function FrustratedDev({ className = '' }) {
     <figure
       className={`m-0 ${className}`}
       role="img"
-      aria-label="Illustration: a frustrated developer with hands on head, surrounded by error messages, many browser tabs and cold coffee, next to a calm FREE Developer Tool window where the task is done in one click."
+      aria-label="Illustration: a frustrated developer with hands on head, surrounded by error messages, many browser tabs and cold coffee, next to a calm OnlineDeveloperTool window where the task is done in one click."
     >
       <div className="card overflow-hidden" style={{ background: 'var(--surface-2)' }}>
         <svg viewBox="0 0 640 340" className="block w-full h-auto" aria-hidden="true" focusable="false">
@@ -90,7 +90,7 @@ export default function FrustratedDev({ className = '' }) {
             <circle cx="506" cy="196" r="30" fill="#c6ff3d" stroke="#14111f" strokeWidth="3" />
             <path d="M491 197 l11 11 l21 -23" stroke="#14111f" strokeWidth="6" fill="none" strokeLinecap="round" strokeLinejoin="round" />
             <rect x="424" y="262" width="164" height="30" rx="8" fill="#ff3d8b" stroke="#14111f" strokeWidth="3" />
-            <text x="506" y="282" textAnchor="middle" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="13" fontWeight="900" fill="#14111f">FREE Developer Tool</text>
+            <text x="506" y="282" textAnchor="middle" fontFamily="ui-sans-serif, system-ui, sans-serif" fontSize="13" fontWeight="900" fill="#14111f">OnlineDeveloperTool</text>
           </g>
         </svg>
         <figcaption className="flex flex-wrap justify-between gap-2 px-4 py-3 border-t-[3px]" style={{ borderColor: 'var(--border)' }}>

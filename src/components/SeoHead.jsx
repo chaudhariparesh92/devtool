@@ -7,8 +7,27 @@ export { SITE_URL, SITE_NAME, SITE_DOMAIN, DEFAULT_IMAGE };
 
 // socialDescription: optional shorter text for og:/twitter: tags (defaults to description).
 // noindex: for pages that must not appear in search (e.g. the 404 page); no canonical is emitted.
+function normalizeCanonicalPath(value) {
+  if (!value || typeof value !== 'string') return null;
+  // Canonicals describe the page, not tracking/query variants or in-page fragments.
+  let path = value.trim();
+  try {
+    if (/^https?:\/\//i.test(path)) {
+      const parsed = new URL(path);
+      if (parsed.origin !== SITE_URL) return null;
+      path = parsed.pathname;
+    }
+  } catch {
+    return null;
+  }
+  path = `/${path}`.replace(/\/{2,}/g, '/').split(/[?#]/, 1)[0];
+  if (path.length > 1) path = path.replace(/\/+$/, '');
+  return path || '/';
+}
+
 export default function SeoHead({ title, description, socialDescription, url, jsonLd, image = DEFAULT_IMAGE, imageAlt, noindex = false }) {
-  const canonical = url && !noindex ? `${SITE_URL}${url === '/' ? '/' : url}` : null;
+  const canonicalPath = normalizeCanonicalPath(url);
+  const canonical = canonicalPath && !noindex ? `${SITE_URL}${canonicalPath}` : null;
   const alt = imageAlt || 'Free online developer tools: JSON formatter, JWT decoder, UUID generator and Base64 tools';
   const social = socialDescription || description;
 

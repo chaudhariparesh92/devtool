@@ -40,7 +40,7 @@ export const CATEGORY_PAGES = {
   'Generators & Hashes': {
     slug: 'generators-hashes',
     title: 'UUID, JWT and Hash Generators - Free Online Tools',
-    description: 'Free browser-based generators and checkers: random UUID v4 generator, UUID validator and parser, HS256 JWT generator, and SHA-256, SHA-512 and MD5 hash generators.',
+    description: 'Free browser-based tools to generate UUID v4 values, validate and parse UUIDs, create HS256 JWT test tokens, and calculate SHA-256, SHA-512 or MD5 hashes.',
     h1: 'UUID, JWT and Hash Generators',
     intro: [
       'These tools create or check the identifiers and digests that show up in everyday development. The UUID generator makes random version 4 UUIDs in bulk, and the validator and parser check a UUID\'s format, version and variant. The JWT generator signs a test token with HS256, which is handy for trying an API or a decoder.',

@@ -28,6 +28,12 @@ import AdSlot from './components/AdSlot';
 import FooterSeoContent from './components/FooterSeoContent';
 import NotFound from './pages/NotFound';
 
+// Keep ad wrappers out of the layout until real numeric AdSense slot IDs are configured.
+// This avoids empty top/bottom gaps when the project still contains placeholder IDs.
+const TOP_AD_SLOT = 'YOUR_TOP_AD_SLOT_ID';
+const BOTTOM_AD_SLOT = 'YOUR_BOTTOM_AD_SLOT_ID';
+const isConfiguredAdSlot = (slot) => /^\d+$/.test(String(slot || '').trim());
+
 export const routes = [
   { path: '/', component: Home },
   { path: '/tools', component: ToolsIndex },
@@ -102,9 +108,9 @@ function ScrollToTop() {
   return null;
 }
 
-export default function App() {
+export function AppRoutes() {
   return (
-    <Router>
+    <>
       <ScrollToTop />
       <div className="site-root flex flex-col min-h-screen">
         <a href="#main" className="skip-link">Skip to content</a>
@@ -112,10 +118,12 @@ export default function App() {
         
         <div className="container mx-auto px-4 py-8 max-w-[1400px] flex-grow flex flex-col">
           
-          {/* AD 1 - TOP: below the sticky header, above the content. Scrolls with the page. */}
-          <div className="w-full flex justify-center mb-8">
-             <AdSlot className="w-full max-w-[970px] h-[90px]" slot="YOUR_TOP_AD_SLOT_ID" />
-          </div>
+          {/* AD 1 - TOP: only reserve space when a real numeric slot is configured. */}
+          {isConfiguredAdSlot(TOP_AD_SLOT) && (
+            <div className="w-full flex justify-center mb-8">
+              <AdSlot className="w-full max-w-[970px] h-[90px]" slot={TOP_AD_SLOT} />
+            </div>
+          )}
 
           {/* Tool/Page Content (full width: the old sticky sidebar ads were removed so tools get room and ads stay in flow) */}
           <main id="main" className="flex-grow min-w-0 w-full max-w-[1100px] mx-auto">
@@ -127,16 +135,26 @@ export default function App() {
             </Routes>
           </main>
 
-          {/* AD 4 - BOTTOM: before the footer */}
-          <div className="w-full flex justify-center mt-10">
-             <AdSlot className="w-full max-w-[970px] h-[90px]" slot="YOUR_BOTTOM_AD_SLOT_ID" />
-          </div>
+          {/* AD 4 - BOTTOM: only reserve space when a real numeric slot is configured. */}
+          {isConfiguredAdSlot(BOTTOM_AD_SLOT) && (
+            <div className="w-full flex justify-center mt-10">
+              <AdSlot className="w-full max-w-[970px] h-[90px]" slot={BOTTOM_AD_SLOT} />
+            </div>
+          )}
           
         </div>
         
         <FooterSeoContent />
         <Footer />
       </div>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <Router>
+      <AppRoutes />
     </Router>
   );
 }

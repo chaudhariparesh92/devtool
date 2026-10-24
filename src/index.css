@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* ==========================================================================
-   FREE Developer Tool - design system
+   OnlineDeveloperTool - design system
    Neo-brutalist cards + dark developer surfaces + neon accents.
    Presentation only: no component logic depends on anything in this file.
    Tokens are CSS variables so light/dark just swap values.

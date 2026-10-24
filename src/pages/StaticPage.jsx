@@ -6,11 +6,11 @@ export default function StaticPage({ path }) {
   const contentMap = {
     '/about': {
       title: 'About Us',
-      desc: 'Learn more about FREE Developer Tool, your trusted source for secure, fast, and browser-based developer utilities.',
+      desc: 'Learn about OnlineDeveloperTool, a collection of free browser-based developer utilities and how the tools process your data.',
       body: (
         <div className="space-y-4 text-gray-700 dark:text-gray-300">
           <p className="text-lg">
-            Welcome to <strong>FREE Developer Tool</strong>, a comprehensive suite of high-performance developer utilities designed to streamline your everyday coding workflows.
+            Welcome to <strong>OnlineDeveloperTool</strong>, a comprehensive suite of high-performance developer utilities designed to streamline your everyday coding workflows.
           </p>
           
           <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-6 mb-2">Our Mission</h2>
@@ -20,11 +20,11 @@ export default function StaticPage({ path }) {
 
           <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-6 mb-2">Privacy-First Architecture</h2>
           <p>
-            Unlike traditional web-based developer tools that transmit your sensitive payloads, API tokens, logs, or source code to remote servers, <strong>FREE Developer Tool processes everything locally within your browser</strong>.
+            <strong>Most formatting, conversion, encoding, and text utilities process the input in your browser</strong>, without uploading that input to an OnlineDeveloperTool application server. The Website Status Checker is different: it makes requests from your browser to the website address you enter.
           </p>
           <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Zero Server Uploads:</strong> Your inputs never leave your local machine.</li>
-            <li><strong>No Database Storage:</strong> We do not store, log, or cache any user-entered data.</li>
+            <li><strong>Local processing:</strong> Inputs for browser-based formatting and conversion tools are handled on your device.</li>
+            <li><strong>No account required:</strong> The site does not require an account to use its tools. Avoid entering secrets into any online service unless you understand the tool and browser environment.</li>
           </ul>
 
           <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mt-6 mb-2">Regulatory & Operational Compliance</h2>
@@ -36,61 +36,61 @@ export default function StaticPage({ path }) {
     },
     '/privacy': {
       title: 'Privacy Policy',
-      desc: 'Read the FREE Developer Tool Privacy Policy. Discover how our client-side architecture ensures absolute data security.',
+      desc: 'Read how OnlineDeveloperTool handles browser-processed inputs, website status checks, and advertising cookies.',
       body: (
         <div className="space-y-4 text-gray-700 dark:text-gray-300">
           <p className="text-sm text-gray-500">Last Updated: January 2026</p>
           <p>
-            At <strong>FREE Developer Tool</strong>, the privacy of our visitors is of extreme importance. This Privacy Policy document outlines the types of information that is received and collected and how it is used.
+            At <strong>OnlineDeveloperTool</strong>, the privacy of our visitors is of extreme importance. This Privacy Policy document outlines the types of information that is received and collected and how it is used.
           </p>
 
           <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-4 mb-2">1. Client-Side Processing</h3>
           <p>
-            The core architecture of FREE Developer Tool relies entirely on client-side execution (JavaScript running locally in your browser). Data you paste into our tools is processed locally and is <strong>never</strong> sent to our servers.
+            Many tools run in JavaScript in your browser, so their inputs are processed locally rather than uploaded to an OnlineDeveloperTool application server. The Website Status Checker sends browser requests to the target URLs you enter; the target website may receive normal connection information such as your IP address. Browser extensions, hosting, analytics, advertising, and other third-party services may also process data according to their own policies.
           </p>
 
           <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-4 mb-2">2. Google AdSense & Third-Party Cookies</h3>
           <p>
-            Google, as a third-party vendor, uses cookies to serve ads on FREE Developer Tool. Google&apos;s use of advertising cookies enables it and its partners to serve ads based on your visit to our site and other sites across the Internet. You may opt out of personalized advertising by visiting Google Ads Settings.
+            Google AdSense may use cookies or similar technologies to deliver, measure, and personalize advertising, subject to your region and consent settings. You can review or change personalized-ad settings through Google Ads Settings. Third-party advertising practices are governed by the relevant provider policies.
           </p>
 
           <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-4 mb-2">3. Compliance Frameworks</h3>
           <p>
-            We are dedicated to fulfilling global data protection compliance mandates. Because our utilities execute client-side and we do not profile users or harvest personal data through our tools, our operational footprint minimizes privacy risks by design.
+            This page is general information, not a guarantee of security or legal compliance. The way data is processed can also depend on your browser, extensions, network, the target website you check, and third-party services such as advertising.
           </p>
         </div>
       )
     },
     '/terms': {
       title: 'Terms of Service',
-      desc: 'Review the terms and conditions for using FREE Developer Tool online utilities.',
+      desc: 'Review the terms and conditions for using OnlineDeveloperTool online utilities.',
       body: (
         <div className="space-y-4 text-gray-700 dark:text-gray-300">
           <p className="text-sm text-gray-500">Last Updated: January 2026</p>
           <p>
-            Please read these Terms of Service carefully before using FREE Developer Tool. By accessing or using the Service, you agree to be bound by these Terms.
+            Please read these Terms of Service carefully before using OnlineDeveloperTool. By accessing or using the Service, you agree to be bound by these Terms.
           </p>
 
           <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-4 mb-2">1. Disclaimer of Warranties</h3>
           <p>
-            The tools and services provided on FREE Developer Tool are offered on an <strong>&quot;as is&quot; and &quot;as available&quot; basis without warranties of any kind</strong>. You are solely responsible for validating critical code, data structures, and outputs generated by our tools before utilizing them in production environments.
+            The tools and services provided on OnlineDeveloperTool are offered on an <strong>&quot;as is&quot; and &quot;as available&quot; basis without warranties of any kind</strong>. You are solely responsible for validating critical code, data structures, and outputs generated by our tools before utilizing them in production environments.
           </p>
 
           <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-4 mb-2">2. Limitation of Liability</h3>
           <p>
-            In no event shall FREE Developer Tool be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your access to or use of (or inability to access or use) the service.
+            In no event shall OnlineDeveloperTool be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your access to or use of (or inability to access or use) the service.
           </p>
 
           <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mt-4 mb-2">3. Compliance with Laws</h3>
           <p>
-            Users agree to use FREE Developer Tool strictly for lawful purposes and in compliance with all applicable local, national, and international laws and regulations.
+            Users agree to use OnlineDeveloperTool strictly for lawful purposes and in compliance with all applicable local, national, and international laws and regulations.
           </p>
         </div>
       )
     },
     '/contact': {
       title: 'Contact Us',
-      desc: 'Get in touch with the FREE Developer Tool team for feedback, inquiries, or support.',
+      desc: 'Get in touch with the OnlineDeveloperTool team for feedback, inquiries, or support.',
       body: (
         <div className="space-y-4 text-gray-700 dark:text-gray-300">
           <p>
@@ -112,7 +112,7 @@ export default function StaticPage({ path }) {
 
   const current = contentMap[path] || {
     title: 'Information',
-    desc: 'Information page for FREE Developer Tool',
+    desc: 'Information page for OnlineDeveloperTool',
     body: <p>Content not found.</p>
   };
 

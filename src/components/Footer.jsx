@@ -46,10 +46,10 @@ export default function Footer() {
       <div className="container mx-auto px-4 py-10 max-w-[1400px]">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-4 min-w-0">
-            <Link to="/" className="brand" aria-label="FREE Developer Tool - home">
+            <Link to="/" className="brand" aria-label="OnlineDeveloperTool - home">
               <span className="brand-mark"><Terminal size={20} strokeWidth={3} /></span>
               <span className="brand-text">
-                <span className="brand-free">FREE</span>Developer Tool
+                <span className="brand-free">Online</span>DeveloperTool
               </span>
             </Link>
             <p className="text-sm" style={{ color: 'var(--muted)' }}>
@@ -117,7 +117,7 @@ export default function Footer() {
               &copy; {new Date().getFullYear()} <strong style={{ color: 'var(--ink)' }}>DevTransition</strong>. All rights reserved.
             </p>
             <p className="text-xs">
-              FREE Developer Tool is built and maintained by DevTransition. Your input is processed locally in your browser.
+              OnlineDeveloperTool is built and maintained by DevTransition. Most tool inputs are processed in your browser; the Website Status Checker makes requests to the URLs you enter.
             </p>
           </div>
           <button

@@ -26,6 +26,11 @@ const faqs = HOME_FAQS;
 
 const th = 'text-left';
 
+const HOME_IN_FEED_AD_SLOT = 'YOUR_HOME_IN_FEED_AD_SLOT';
+const HOME_MID_AD_SLOT = 'YOUR_HOME_MID_AD_SLOT';
+const HOME_FAQ_SIDE_AD_SLOT = 'YOUR_HOME_FAQ_SIDE_AD_SLOT';
+const isConfiguredAdSlot = (slot) => /^\d+$/.test(String(slot || '').trim());
+
 export default function Home() {
   const jsonLd = getHomeJsonLd();
 
@@ -69,10 +74,12 @@ export default function Home() {
         <FrustratedDev />
       </section>
 
-      {/* AD: in-feed under the hero */}
-      <div className="flex justify-center w-full">
-         <AdSlot className="w-full max-w-[728px] h-[90px]" slot="YOUR_HOME_IN_FEED_AD_SLOT" />
-      </div>
+      {/* AD: in-feed under the hero. Do not render an empty wrapper for placeholder slots. */}
+      {isConfiguredAdSlot(HOME_IN_FEED_AD_SLOT) && (
+        <div className="flex justify-center w-full">
+          <AdSlot className="w-full max-w-[728px] h-[90px]" slot={HOME_IN_FEED_AD_SLOT} />
+        </div>
+      )}
 
       {/* ---------------- PROBLEM -> SOLUTION ---------------- */}
       <section aria-labelledby="problem-heading" className="space-y-6">
@@ -123,9 +130,11 @@ export default function Home() {
       </section>
 
       {/* AD: between content sections */}
-      <div className="flex justify-center w-full">
-         <AdSlot className="w-full max-w-[728px] h-[90px]" slot="YOUR_HOME_MID_AD_SLOT" />
-      </div>
+      {isConfiguredAdSlot(HOME_MID_AD_SLOT) && (
+        <div className="flex justify-center w-full">
+          <AdSlot className="w-full max-w-[728px] h-[90px]" slot={HOME_MID_AD_SLOT} />
+        </div>
+      )}
 
       {/* ---------------- CATEGORIES ---------------- */}
       <section aria-labelledby="cat-heading" className="space-y-6">
@@ -274,7 +283,7 @@ export default function Home() {
       </section>
 
       {/* ---------------- FAQ ---------------- */}
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_320px] items-start">
+      <div className={`grid gap-8 ${isConfiguredAdSlot(HOME_FAQ_SIDE_AD_SLOT) ? 'lg:grid-cols-[minmax(0,1fr)_320px]' : 'grid-cols-1'} items-start`}>
         <section aria-labelledby="home-faq" className="faq min-w-0">
           <h2 id="home-faq" className="h-section mb-4">Questions developers ask</h2>
           {faqs.map((f) => (
@@ -285,10 +294,12 @@ export default function Home() {
           ))}
         </section>
 
-        {/* AD: right of the FAQ on desktop, drops below it on small screens. In normal flow (not sticky). */}
-        <div className="flex justify-center w-full lg:pt-12">
-          <AdSlot className="w-full max-w-[300px] h-[250px]" slot="YOUR_HOME_FAQ_SIDE_AD_SLOT" />
-        </div>
+        {/* AD: reserve a column only when a real numeric slot is configured. */}
+        {isConfiguredAdSlot(HOME_FAQ_SIDE_AD_SLOT) && (
+          <div className="flex justify-center w-full lg:pt-12">
+            <AdSlot className="w-full max-w-[300px] h-[250px]" slot={HOME_FAQ_SIDE_AD_SLOT} />
+          </div>
+        )}
       </div>
 
       {/* ---------------- CTA ---------------- */}

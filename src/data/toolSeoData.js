@@ -73,7 +73,7 @@ export const TOOL_SEO_DATA = {
   }),
   '/json-to-java': S({
     title: 'JSON to Java Converter - Generate Java Classes Online',
-    description: 'Convert JSON to a Java class online. Paste a JSON object and get private fields with getters and setters as a starting point for your POJO. Runs in your browser.',
+    description: 'Convert JSON to a Java class online. Paste a JSON object to create a starting POJO with private fields, getters, and setters for your application models.',
     h1: 'JSON to Java Converter',
     primary: 'json to java class',
     secondary: ['json to java', 'json to pojo', 'generate java class from json', 'json to java converter'],
@@ -143,7 +143,7 @@ export const TOOL_SEO_DATA = {
   }),
   '/json-to-csv': S({
     title: 'JSON to CSV Converter Online - Array of Objects to CSV',
-    description: 'Convert a JSON array of objects to CSV online. Keys from the first object become the header row. Runs in your browser.',
+    description: 'Convert a JSON array of objects to CSV online. Use keys from the first object as headers, then copy the output for spreadsheets or data imports.',
     h1: 'JSON to CSV Converter',
     primary: 'json to csv',
     secondary: ['json to csv converter', 'convert json to csv online', 'json array to csv', 'json to csv online'],
@@ -227,7 +227,7 @@ export const TOOL_SEO_DATA = {
   // ----------------------------------------------------------- Generators
   '/uuid-generator': S({
     title: 'UUID Generator Online - Generate Random UUID v4',
-    description: 'Generate random version 4 UUIDs online, 1 to 100 at a time, and copy them. Uses your browser\'s secure random source. Same format as a GUID.',
+    description: 'Generate up to 100 random UUID v4 values online. Copy identifiers for tests and sample data; generation uses your browser’s cryptographic random source.',
     h1: 'UUID Generator Online',
     primary: 'uuid generator online',
     secondary: ['uuid generator', 'generate uuid', 'uuid v4 generator', 'guid generator', 'random uuid'],
@@ -247,7 +247,7 @@ export const TOOL_SEO_DATA = {
   }),
   '/uuid-parser': S({
     title: 'UUID Parser Online - Read UUID Version and Variant',
-    description: 'Parse a UUID online to see its version digit and variant. Checks the format first. Runs in your browser.',
+    description: 'Parse a UUID online to inspect its version and variant. Check the format of a UUID string and understand the fields before using it in your application.',
     h1: 'UUID Parser Online',
     primary: 'uuid parser online',
     secondary: ['uuid parser', 'parse uuid', 'uuid version checker', 'uuid decoder', 'uuid variant'],
@@ -401,7 +401,7 @@ export const TOOL_SEO_DATA = {
   // ---------------------------------------------------------- Text & Data
   '/xml-formatter': S({
     title: 'XML Formatter Online - Pretty Print and Indent XML',
-    description: 'Format XML online. Indent nested elements so a one-line XML document becomes readable. Runs in your browser.',
+    description: 'Format XML online by indenting nested elements and line breaks. Turn compact XML into a readable structure for debugging, review, and development.',
     h1: 'XML Formatter Online',
     primary: 'xml formatter online',
     secondary: ['xml formatter', 'format xml online', 'xml pretty print', 'xml beautifier', 'indent xml'],
@@ -431,7 +431,7 @@ export const TOOL_SEO_DATA = {
   }),
   '/text-counter': S({
     title: 'Text Counter Online - Count Characters, Words and Lines',
-    description: 'Count characters, words and lines in your text online. Results update as you type or paste. Runs in your browser.',
+    description: 'Count characters, words, lines, and spaces in text online. Results update as you type or paste for editing and content-limit checks.',
     h1: 'Text Counter Online',
     primary: 'text counter online',
     secondary: ['text counter', 'character counter', 'word counter', 'line counter', 'count characters online'],

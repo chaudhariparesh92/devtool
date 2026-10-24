@@ -56,10 +56,10 @@ export default function Header() {
     <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>
       <div className="container mx-auto px-4 max-w-[1400px]">
         <div className="h-16 flex items-center justify-between gap-3">
-          <Link to="/" className="brand" aria-label="FREE Developer Tool - home">
+          <Link to="/" className="brand" aria-label="OnlineDeveloperTool - home">
             <span className="brand-mark"><Terminal size={20} strokeWidth={3} /></span>
             <span className="brand-text truncate">
-              <span className="brand-free">FREE</span>Developer Tool
+              <span className="brand-free">Online</span>DeveloperTool
             </span>
           </Link>
           <nav aria-label="Main" className="hidden md:flex items-center gap-2">{links}</nav>

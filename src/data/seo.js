@@ -18,7 +18,7 @@ export const OG_IMAGE_PATH = '/images/og-onlinedevelopertool.webp';
 export const DEFAULT_IMAGE = `${SITE_URL}${OG_IMAGE_PATH}`;
 
 // Bump this when page content genuinely changes. It feeds <lastmod> in sitemap.xml.
-export const CONTENT_LAST_MODIFIED = '2026-10-05';
+export const CONTENT_LAST_MODIFIED = '2026-10-24';
 
 // ---------------------------------------------------------------- Homepage
 export const HOME_TITLE = 'Online Developer Tools - Free JSON, JWT, Base64 & More';
@@ -123,7 +123,7 @@ export function getHomeJsonLd() {
       {
         '@type': 'ImageObject',
         '@id': `${SITE_URL}/#primaryimage`,
-        url: `${SITE_URL}/images/onlinedevelopertool-com-free-online-developer-tools.webp`,
+        url: `${SITE_URL}${OG_IMAGE_PATH}`, 
         width: 1200,
         height: 630,
         caption: 'Free online developer tools: JSON formatter, JWT decoder, UUID generator and Base64 tools',
@@ -134,7 +134,7 @@ export function getHomeJsonLd() {
         description: 'A short demo showing messy JSON pasted into the JSON Formatter and returned as clean, indented JSON.',
         thumbnailUrl: `${SITE_URL}/images/json-formatter-demo-poster.webp`,
         contentUrl: `${SITE_URL}/video/json-formatter-demo.mp4`,
-        uploadDate: '2026-10-04T10:30:00+05:30',
+        uploadDate: '2026-10-24T10:30:00+05:30',
         duration: 'PT8S',
       },
       {
@@ -153,12 +153,12 @@ export const PAGE_SEO = {
     h1: 'All Developer Tools',
   },
   '/categories': {
-    title: 'Developer Tool Categories - JSON, Encoders, Generators & More',
+    title: 'Developer Tool Categories: JSON, Encoders & More',
     description: 'Browse free developer tools by category: JSON, encoders and decoders, generators and hashes, web tools, text and data tools, and website checking.',
     h1: 'Categories',
   },
   '/about': {
-    title: `About ${SITE_NAME} - Free Browser-Based Developer Tools`,
+    title: `About ${SITE_NAME} - Free Developer Tools`,
     description: 'Learn how the free, browser-based developer tools on OnlineDeveloperTool work, why they run locally in your browser and what happens to the text you paste.',
     h1: 'About Us',
   },
@@ -169,7 +169,7 @@ export const PAGE_SEO = {
   },
   '/terms': {
     title: `Terms of Service | ${SITE_NAME}`,
-    description: 'The terms and conditions for using the free online developer tools on OnlineDeveloperTool.',
+    description: 'Read the terms for using OnlineDeveloperTool, including permitted use, service limitations, intellectual property, and important information about tool outputs.',
     h1: 'Terms of Service',
   },
   '/contact': {
