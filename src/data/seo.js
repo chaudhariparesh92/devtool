@@ -7,6 +7,7 @@
 import { TOOLS } from './tools.js';
 import { getToolContent } from './toolContent.js';
 import { TOOL_SEO_DATA } from './toolSeoData.js';
+import { SEO_RESEARCH } from './seoResearch.js';
 import { CATEGORY_PAGES, categoryPath } from './categoryContent.js';
 
 export const SITE_URL = 'https://onlinedevelopertool.com';
@@ -292,7 +293,7 @@ export function getToolSeo(path, fallbackName, fallbackDesc) {
     ],
   };
 
-  return { tool, name, content: c, title, description, h1, cfg, categoryPath: catPath, jsonLd };
+  return { tool, name, content: c, title, description, h1, cfg, research: SEO_RESEARCH[path] || null, categoryPath: catPath, jsonLd };
 }
 
 // ---------------------------------------------------- Routes for build scripts

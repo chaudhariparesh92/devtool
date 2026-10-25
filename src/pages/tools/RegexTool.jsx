@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import CopyButton from '../../components/CopyButton';
+import DownloadButton from '../../components/DownloadButton';
 
 export default function RegexTool({ path }) {
   const [regex, setRegex] = useState('');
@@ -34,6 +35,7 @@ export default function RegexTool({ path }) {
           <div className="flex items-center justify-between mb-2">
             <h3 className="font-bold">Matches ({out.length})</h3>
             <CopyButton text={out.map((m) => m[0]).join('\n')} label="Copy matches" disabled={out.length === 0} />
+            <DownloadButton text={out.map((m) => m[0]).join('\n')} filename="regex-matches.txt" label="Download" />
           </div>
           {out.map((m, i) => (
              <div key={i} className="p-2 mb-2 bg-white dark:bg-gray-800 border rounded">

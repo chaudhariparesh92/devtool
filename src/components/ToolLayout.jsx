@@ -10,7 +10,7 @@ import { CONTENT_LAST_MODIFIED } from '../data/seo';
 
 export default function ToolLayout({ title, desc, path, children }) {
   const seo = getToolSeo(path, title, desc);
-  const { tool, name, content: c, jsonLd, h1, categoryPath: catPath } = seo;
+  const { tool, name, content: c, jsonLd, h1, categoryPath: catPath, research } = seo;
   const related = tool && c ? getRelatedTools(path, c.group, tool.category) : [];
   const seoTitle = seo.title;
   const seoDesc = seo.description;
@@ -43,6 +43,15 @@ export default function ToolLayout({ title, desc, path, children }) {
         {children}
       </section>
       <p className="text-sm" style={{ color: 'var(--muted)' }}>This tool runs in your browser. No account or signup is required.</p>
+
+      {seo.cfg && seo.cfg.longTail && seo.cfg.longTail.length > 0 && (
+        <section aria-labelledby="search-tasks-heading" className="card p-5 sm:p-6">
+          <h2 id="search-tasks-heading" className={h2}>Common {name} tasks</h2>
+          <p className="leading-relaxed" style={{ color: 'var(--muted)' }}>
+            This page is designed for practical developer tasks such as {seo.cfg.longTail.slice(0, 4).join(', ')}, and similar day-to-day work with {name.toLowerCase()}.
+          </p>
+        </section>
+      )}
 
       {/* AD 2: right under the tool, in normal page flow */}
       <div className="flex justify-center w-full">
