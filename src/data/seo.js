@@ -18,7 +18,7 @@ export const OG_IMAGE_PATH = '/images/og-onlinedevelopertool.webp';
 export const DEFAULT_IMAGE = `${SITE_URL}${OG_IMAGE_PATH}`;
 
 // Bump this when page content genuinely changes. It feeds <lastmod> in sitemap.xml.
-export const CONTENT_LAST_MODIFIED = '2026-10-24';
+export const CONTENT_LAST_MODIFIED = '2026-10-25';
 
 // ---------------------------------------------------------------- Homepage
 export const HOME_TITLE = 'Online Developer Tools - Free JSON, JWT, Base64 & More';
@@ -263,11 +263,23 @@ export function getToolSeo(path, fallbackName, fallbackDesc) {
     '@graph': [
       { '@type': 'BreadcrumbList', itemListElement: crumbs },
       {
+        '@type': 'WebPage',
+        '@id': `${SITE_URL}${path}#webpage`,
+        url: `${SITE_URL}${path}`,
+        name,
+        description,
+        dateModified: CONTENT_LAST_MODIFIED,
+        isPartOf: { '@id': `${SITE_URL}/#website` },
+        mainEntity: { '@id': `${SITE_URL}${path}#application` },
+      },
+      {
         '@type': 'WebApplication',
+        '@id': `${SITE_URL}${path}#application`,
         name,
         url: `${SITE_URL}${path}`,
         description,
         applicationCategory: 'DeveloperApplication',
+        applicationSubCategory: tool?.category || 'Developer Tool',
         operatingSystem: 'Any (runs in a web browser)',
         browserRequirements: 'Requires JavaScript',
         isAccessibleForFree: true,

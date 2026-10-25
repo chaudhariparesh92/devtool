@@ -40,7 +40,7 @@ const jsonFmt = {
     tasks: ['Beautify JSON online', 'Pretty print JSON', 'Make minified JSON readable'],
   },
   '/json-minifier': {
-    lede: 'Strip whitespace from JSON so it is as small as it can be, without changing the data.',
+    lede: 'Strip JSON whitespace to produce compact one-line output, while preserving the caveats of JavaScript JSON parsing.',
     what: 'JSON Minifier parses your JSON and prints it back on a single line with no extra spaces or line breaks.',
     problem: 'Pretty-printed JSON carries whitespace you do not need in a request body, a query parameter or an environment variable.',
     steps: ['Paste formatted JSON into the input box.', 'Press Process.', 'Copy the single-line output.'],
@@ -152,7 +152,7 @@ const GROUPS = [
         meta: `${n} online: ${v.lede} Free, runs in your browser, no signup.`,
         faqs: [
           q('What makes JSON invalid?', 'Common causes are trailing commas, single quotes instead of double quotes, unquoted keys, and comments. Strict JSON allows none of these.'),
-          q('Does it change my data?', 'No. The tool parses your JSON and prints it again. Keys and values stay the same; only whitespace changes.'),
+          q('Does formatting preserve my JSON exactly?', 'Formatting changes whitespace, but this tool uses JavaScript JSON.parse and JSON.stringify. Very large integers can lose precision, duplicate object keys keep only the last value, and integer-like keys can be reordered. Keep the original input when exact preservation matters.'),
           LOCAL,
         ],
       };
@@ -502,7 +502,7 @@ const EXTRA = {
       {
         h: 'What formatting changes, and what it does not',
         paras: [
-          'Formatting only changes whitespace. The tool parses your JSON with the browser\'s JSON.parse and prints it again with JSON.stringify, so the data itself stays the same.',
+          'Formatting normally changes whitespace, but the parser and serializer can also normalize some values. Very large integers can lose precision, duplicate object keys keep only the last value, and integer-like keys can be reordered.',
           'Because it uses JavaScript\'s parser, three behaviors are worth knowing. Integers larger than 9,007,199,254,740,991 lose precision. If an object repeats a key, the last value wins and the earlier one is dropped. Keys that look like whole numbers, such as "1" or "2", are moved to the front in ascending order.',
         ],
       },
@@ -520,7 +520,7 @@ const EXTRA = {
     ],
     faqs: [
       q('What is the difference between a JSON formatter and a JSON validator?', 'A formatter re-prints valid JSON with indentation. A validator only tells you whether the JSON is valid. This formatter also shows the parser error when the JSON is invalid, so it checks syntax as a side effect.'),
-      q('How many spaces does it indent with?', 'Two spaces per level. The indentation size is not configurable.'),
+      q('Can I choose tabs or 4-space indentation?', 'Yes. The formatter supports 2 spaces, 4 spaces or tabs. JSON validity is unchanged; only the output whitespace differs.'),
       q('Can it format very large JSON files?', 'It runs in your browser\'s memory, so inputs of many megabytes can be slow or freeze the tab. For very large files, a command-line tool such as jq is a better fit.'),
     ],
   },
@@ -571,8 +571,8 @@ const EXTRA = {
       {
         h: 'Beautified versus minified JSON',
         paras: [
-          'Both describe exactly the same data. Beautified JSON adds line breaks and indentation for people. Minified JSON removes them to save space in a request body, an environment variable or a stored string.',
-          'You can switch between the two at any time without losing information, because only whitespace differs.',
+          'For ordinary JSON, beautified and minified output represent the same values. Beautified JSON adds line breaks and indentation for people; minified JSON removes unnecessary whitespace for compact storage or transport. JavaScript parsing can still normalize large numbers, duplicate keys and integer-like key order.',
+          'You can switch between the two for ordinary JSON, but this browser-based parser has the same JavaScript number, duplicate-key and integer-like-key behaviors described above.',
         ],
         links: [['JSON Minifier', '/json-minifier']],
         linksLabel: 'Go the other way',
@@ -587,8 +587,8 @@ const EXTRA = {
       },
     ],
     faqs: [
-      q('Can I choose tabs or 4-space indentation?', 'No. Output is always indented with two spaces.'),
-      q('Does beautifying change the order of keys?', 'Key order is kept, with one JavaScript quirk: keys that look like whole numbers, such as "1" and "2", are moved to the front in ascending order.'),
+      q('Can I choose tabs or 4-space indentation?', 'Yes. The shared JSON tool supports 2 spaces, 4 spaces or tabs for formatted output.'),
+      q('Does beautifying change the order of keys?', 'Usually the existing order is retained, but JavaScript reorders integer-like object keys such as "1" and "2". Duplicate keys also collapse to the last value.'),
       q('Is this different from the JSON Formatter?', 'No. Both produce the same output. They exist as separate pages because people search for both names.'),
     ],
   },
@@ -620,8 +620,8 @@ const EXTRA = {
       },
     ],
     faqs: [
-      q('Does minifying change my data?', 'The values stay the same. Only whitespace between tokens is removed, apart from the number normalization noted above.'),
-      q('Can I reverse it?', 'Yes. Paste the minified JSON into the JSON Formatter to get indented output again. Key order is preserved.'),
+      q('Does minifying change my data?', 'For ordinary JSON, only insignificant whitespace is removed. Because the tool parses and re-serializes JSON, very large integers can lose precision, duplicate keys keep only the last value, and integer-like keys can be reordered.'),
+      q('Can I reverse it?', 'Yes. Paste the minified JSON into the JSON Formatter to get indented output again. Keep the original if exact numeric precision, duplicate keys or key ordering matters.'),
     ],
   },
 

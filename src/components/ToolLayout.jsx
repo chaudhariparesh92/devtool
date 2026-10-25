@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import SeoHead from './SeoHead';
 import AdSlot from './AdSlot';
 import { getToolSeo, getRelatedTools } from '../data/seo';
+import { CONTENT_LAST_MODIFIED } from '../data/seo';
 
 // Wraps every tool. The tool itself is rendered untouched as {children};
 // this component only adds the page chrome and the supporting content around it.
@@ -34,12 +35,14 @@ export default function ToolLayout({ title, desc, path, children }) {
         {tool && <span className="sticker lime">{tool.category}</span>}
         <h1 className="h-display text-4xl sm:text-5xl break-words">{h1}</h1>
         <p className="lede">{c ? c.lede : desc}</p>
+        <p className="text-xs" style={{ color: 'var(--muted)' }}>Updated <time dateTime={CONTENT_LAST_MODIFIED}>{CONTENT_LAST_MODIFIED}</time></p>
       </header>
 
       {/* The tool (unchanged component tree) */}
       <section aria-label={`${name} tool`} className="card tool-surface overflow-hidden min-h-[400px]">
         {children}
       </section>
+      <p className="text-sm" style={{ color: 'var(--muted)' }}>This tool runs in your browser. No account or signup is required.</p>
 
       {/* AD 2: right under the tool, in normal page flow */}
       <div className="flex justify-center w-full">
@@ -79,6 +82,17 @@ export default function ToolLayout({ title, desc, path, children }) {
           <div className="flex justify-center w-full">
             <AdSlot className="w-full max-w-[728px] h-[100px]" slot="YOUR_TOOL_MID_AD_SLOT" />
           </div>
+
+          <section aria-labelledby="features-heading" className="card p-5 sm:p-6">
+            <h2 id="features-heading" className={h2}>What you can do with {name}</h2>
+            <ul className="grid gap-3 sm:grid-cols-2">
+              {c.tasks.map((t) => (
+                <li key={t} className="flex gap-2 leading-relaxed" style={{ color: 'var(--muted)' }}>
+                  <span aria-hidden="true">✓</span><span>{t}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
 
           <section aria-labelledby="use-heading" className="grid gap-6 md:grid-cols-2">
             <div className="card p-5 sm:p-6">

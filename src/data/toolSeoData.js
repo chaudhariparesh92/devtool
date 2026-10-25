@@ -43,7 +43,7 @@ export const TOOL_SEO_DATA = {
   }),
   '/json-minifier': S({
     title: 'JSON Minifier Online - Compress JSON to One Line',
-    description: 'Minify JSON online. Remove spaces and line breaks to get compact single-line JSON without changing the data. Runs in your browser, nothing to install.',
+    description: 'Minify JSON online. Remove unnecessary spaces and line breaks to produce compact single-line JSON. Runs in your browser; large numbers and duplicate keys follow JavaScript parsing rules.',
     h1: 'JSON Minifier Online',
     primary: 'json minifier online',
     secondary: ['json minifier', 'minify json', 'compress json', 'json minify online', 'json to one line'],

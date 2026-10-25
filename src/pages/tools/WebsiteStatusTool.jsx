@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import CopyButton from '../../components/CopyButton';
+import DownloadButton from '../../components/DownloadButton';
 import { MAX_TARGETS, checkSite, formatResultsText, parseTargets } from '../../utils/siteCheck';
 
 // Colour is never the only signal: every status also has a glyph and a text label.
@@ -98,11 +99,17 @@ export default function WebsiteStatusTool({ path }) {
           >
             Clear
           </button>
-          <CopyButton
-            text={results.length ? formatResultsText(results) : ''}
-            label="Copy results"
-            className="ml-auto"
-          />
+          <div className="ml-auto flex gap-2">
+            <CopyButton
+              text={results.length ? formatResultsText(results) : ''}
+              label="Copy results"
+            />
+            <DownloadButton
+              text={results.length ? formatResultsText(results) : ''}
+              filename="website-status-results.txt"
+              label="Download"
+            />
+          </div>
         </div>
 
         <p className="text-xs text-gray-500 dark:text-gray-400">
