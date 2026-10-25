@@ -48,7 +48,18 @@ export default function ToolLayout({ title, desc, path, children }) {
         <section aria-labelledby="search-tasks-heading" className="card p-5 sm:p-6">
           <h2 id="search-tasks-heading" className={h2}>Common {name} tasks</h2>
           <p className="leading-relaxed" style={{ color: 'var(--muted)' }}>
-            This page is designed for practical developer tasks such as {seo.cfg.longTail.slice(0, 4).join(', ')}, and similar day-to-day work with {name.toLowerCase()}.
+            Developers typically reach for this page when they need to {seo.cfg.longTail.slice(0, 3).join('; ')}.
+            The tool is built for quick, practical work rather than a generic demo.
+          </p>
+        </section>
+      )}
+
+      {research && (
+        <section aria-labelledby="workflow-heading" className="card p-5 sm:p-6">
+          <h2 id="workflow-heading" className={h2}>What matters in a {name.toLowerCase()} workflow</h2>
+          <p className="leading-relaxed" style={{ color: 'var(--muted)' }}>
+            When developers compare online tools for this job, the useful capabilities tend to center on {research.focus}.
+            This page keeps those practical needs in mind while linking to related tools when a different workflow is a better fit.
           </p>
         </section>
       )}

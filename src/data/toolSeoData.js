@@ -72,7 +72,7 @@ export const TOOL_SEO_DATA = {
     related: ['/json-formatter', '/json-validator', '/json-to-csharp', '/json-to-java', '/json-to-python', '/json-to-go'],
   }),
   '/json-to-java': S({
-    title: 'JSON to Java Converter - Generate Java Classes Online',
+    title: 'JSON to Java Class Converter Online - Generate Java Classes',
     description: 'Convert JSON to a Java class online. Paste a JSON object to create a starting POJO with private fields, getters, and setters for your application models.',
     h1: 'JSON to Java Converter',
     primary: 'json to java class',
@@ -82,7 +82,7 @@ export const TOOL_SEO_DATA = {
     related: ['/json-formatter', '/json-validator', '/json-to-kotlin', '/json-to-csharp', '/json-to-typescript', '/json-to-go'],
   }),
   '/json-to-python': S({
-    title: 'JSON to Python Converter - Generate Dataclasses Online',
+    title: 'JSON to Python Dataclass Converter Online - Generate Python Models',
     description: 'Convert JSON to a Python dataclass online. Paste a JSON object and get a dataclass with type hints (str, float, bool) to start from. Runs in your browser.',
     h1: 'JSON to Python Converter',
     primary: 'json to python dataclass',
@@ -276,7 +276,7 @@ export const TOOL_SEO_DATA = {
     related: ['/sha256-generator', '/sha512-generator', '/md5-generator', '/base64-encoder', '/jwt-generator', '/uuid-generator'],
   }),
   '/sha256-generator': S({
-    title: 'SHA-256 Generator Online - SHA256 Hash from Text',
+    title: 'SHA-256 Hash Generator Online - Generate SHA256 Hash',
     description: 'Generate a SHA-256 hash online. Type or paste text and get the 64-character hex SHA256 digest as you type. Runs in your browser.',
     h1: 'SHA-256 Generator Online',
     primary: 'sha256 generator online',
@@ -286,7 +286,7 @@ export const TOOL_SEO_DATA = {
     related: ['/sha512-generator', '/md5-generator', '/hash-generator', '/jwt-generator', '/base64-encoder'],
   }),
   '/sha512-generator': S({
-    title: 'SHA-512 Generator Online - SHA512 Hash from Text',
+    title: 'SHA-512 Hash Generator Online - Generate SHA512 Hash',
     description: 'Generate a SHA-512 hash online. Type or paste text and get the 128-character hex SHA512 digest as you type. Runs in your browser.',
     h1: 'SHA-512 Generator Online',
     primary: 'sha512 generator online',
