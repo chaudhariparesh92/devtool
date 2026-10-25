@@ -1,35 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import OutputBox from '../../components/OutputBox';
 
 export default function TimestampTool({ path }) {
-  const [inp, setInp] = useState('');
-  const [out, setOut] = useState('');
-
-  useEffect(() => {
-    setInp(Math.floor(Date.now() / 1000).toString());
-  }, []);
-
-  useEffect(() => {
-    try {
-      if (!inp) { setOut(''); return; }
-      let d;
-      if (/^\d+$/.test(inp)) {
-        d = new Date(parseInt(inp) * (inp.length > 11 ? 1 : 1000));
-      } else {
-        d = new Date(inp);
-      }
-      if (isNaN(d.getTime())) throw new Error();
-      setOut(`UTC: ${d.toUTCString()}\nLocal: ${d.toString()}\nISO: ${d.toISOString()}\nUnix (ms): ${d.getTime()}\nUnix (s): ${Math.floor(d.getTime()/1000)}`);
-    } catch(e) { setOut('Invalid Date / Timestamp'); }
-  }, [inp]);
-
-  return (
-    <ToolLayout title={path.replace('/','').replace(/-/g, ' ').toUpperCase()} desc="Convert timestamps to dates and vice versa." path={path}>
-      <div className="p-6 space-y-4">
-        <input type="text" className="w-full p-4 font-mono bg-gray-50 dark:bg-gray-900 border rounded" value={inp} onChange={e=>setInp(e.target.value)} placeholder="Enter Unix timestamp or date string..." />
-        <OutputBox value={out} label="Converted date and time" placeholder="Result..." className="h-48" textareaClassName="break-all" copyDisabled={out === 'Invalid Date / Timestamp'} />
-      </div>
-    </ToolLayout>
-  );
+  const [inp,setInp]=useState(''); const [unit,setUnit]=useState('auto'); const [out,setOut]=useState('');
+  useEffect(()=>setInp(Math.floor(Date.now()/1000).toString()),[]);
+  useEffect(()=>{try{if(!inp){setOut('');return;}let d;if(/^\d+$/.test(inp)){const n=Number(inp);const ms=unit==='seconds'?n*1000:unit==='milliseconds'?n:unit==='microseconds'?n/1000:unit==='nanoseconds'?n/1e6:inp.length>13?n/1e3:n<1e11?n*1000:n;d=new Date(ms);}else d=new Date(inp);if(isNaN(d.getTime()))throw new Error();setOut(`UTC: ${d.toUTCString()}\nLocal: ${d.toString()}\nISO 8601: ${d.toISOString()}\nUnix (ms): ${d.getTime()}\nUnix (s): ${Math.floor(d.getTime()/1000)}\nUnix (µs): ${Math.floor(d.getTime()*1000)}\nUnix (ns): ${d.getTime()*1000000}`);}catch{setOut('Invalid Date / Timestamp');}},[inp,unit]);
+  return <ToolLayout title={path.replace('/','').replace(/-/g,' ').toUpperCase()} desc="Convert Unix timestamps in seconds, milliseconds, microseconds or nanoseconds to dates and back." path={path}><div className="p-6 space-y-4"><div className="flex flex-wrap gap-3 items-center"><input type="text" className="flex-1 min-w-[240px] p-4 font-mono bg-gray-50 dark:bg-gray-900 border rounded" value={inp} onChange={e=>setInp(e.target.value)} placeholder="Enter Unix timestamp or ISO date…"/><select value={unit} onChange={e=>setUnit(e.target.value)} className="p-3 border rounded bg-white dark:bg-gray-900"><option value="auto">Auto detect</option><option value="seconds">Seconds</option><option value="milliseconds">Milliseconds</option><option value="microseconds">Microseconds</option><option value="nanoseconds">Nanoseconds</option></select></div><OutputBox value={out} label="Converted date and time" placeholder="Result…" className="min-h-[220px]" copyDisabled={out==='Invalid Date / Timestamp'}/><button onClick={()=>setInp('')} className="px-4 py-2 bg-red-100 text-red-700 rounded">Clear</button></div></ToolLayout>;
 }

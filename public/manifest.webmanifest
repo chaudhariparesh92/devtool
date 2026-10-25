@@ -1,0 +1,10 @@
+{
+  "name": "OnlineDeveloperTool - Free Developer Tools",
+  "short_name": "Developer Tools",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0e0b16",
+  "theme_color": "#0e0b16",
+  "description": "Free browser-based developer tools for JSON, encoding, hashing, UUIDs, regex, timestamps and more.",
+  "icons": [{"src":"/favicon.ico","sizes":"any","type":"image/x-icon"}]
+}

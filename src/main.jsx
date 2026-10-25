@@ -5,6 +5,8 @@ import App, { AppRoutes } from './App.jsx';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 
+if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {})); }
+
 const container = document.getElementById('root');
 // /tools uses a query parameter to filter its visible list. That content differs
 // from the canonical /tools prerender, so render it client-side instead of hydrating mismatched markup.

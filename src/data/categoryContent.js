@@ -40,14 +40,14 @@ export const CATEGORY_PAGES = {
   'Generators & Hashes': {
     slug: 'generators-hashes',
     title: 'UUID, JWT and Hash Generators - Free Online Tools',
-    description: 'Free browser-based tools to generate UUID v4 values, validate and parse UUIDs, create HS256 JWT test tokens, and calculate SHA-256, SHA-512 or MD5 hashes.',
+    description: 'Free browser-based tools to generate UUID v4 and v7 values, validate and parse UUIDs, create HS256 JWT test tokens, and calculate SHA-256, SHA-512 or MD5 hashes.',
     h1: 'UUID, JWT and Hash Generators',
     intro: [
       'These tools create or check the identifiers and digests that show up in everyday development. The UUID generator makes random version 4 UUIDs in bulk, and the validator and parser check a UUID\'s format, version and variant. The JWT generator signs a test token with HS256, which is handy for trying an API or a decoder.',
       'The hash tools return the SHA-256, SHA-512 or MD5 digest of the text you type. Hashes are one-way and are not encryption. MD5 is only suitable for non-security checksums, and no plain hash is a safe way to store passwords.',
     ],
     guide: [
-      { need: 'You need unique IDs for test data or keys', to: '/uuid-generator', text: 'Generate 1 to 100 random v4 UUIDs at once.' },
+      { need: 'You need unique IDs for test data or keys', to: '/uuid-generator', text: 'Generate 1 to 100 random v4 or v7 UUIDs at once.' },
       { need: 'You are not sure a UUID string is valid', to: '/uuid-validator', text: 'Check the format, or use the UUID parser to read its version and variant.' },
       { need: 'You need a quick test token for an API', to: '/jwt-generator', text: 'Sign a JSON payload with HS256 and a test secret. Do not use production secrets.' },
       { need: 'You need a checksum or digest of some text', to: '/sha256-generator', text: 'SHA-256 is a good default. Use the SHA-512 page for a longer digest, or MD5 only for non-security checksums.' },
