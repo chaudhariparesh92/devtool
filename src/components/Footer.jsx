@@ -173,6 +173,48 @@ export default function Footer() {
                 />
               </a>
             </div>
+
+            <div>
+              <a
+                href="https://indielineup.com/product/online-developer-tool?ref=badge"
+                rel="dofollow"
+              >
+                <img
+                  src="https://indielineup.com/badge/online-developer-tool.svg"
+                  alt="Featured on IndieLineup"
+                  width="160"
+                  height="44"
+                />
+              </a>
+            </div>
+
+            <div>
+              <a
+                href="https://saaslineup.com/product/online-developer-tool?ref=badge"
+                rel="dofollow"
+              >
+                <img
+                  src="https://saaslineup.com/badge/online-developer-tool.svg"
+                  alt="Featured on SaaSLineup"
+                  width="160"
+                  height="44"
+                />
+              </a>
+            </div>
+
+            <div>
+              <a
+                href="https://theaitoolsdir.com/product/online-developer-tool?ref=badge"
+                rel="dofollow"
+              >
+                <img
+                  src="https://theaitoolsdir.com/badge/online-developer-tool.svg"
+                  alt="Featured on TheAIToolsDir"
+                  width="160"
+                  height="44"
+                />
+              </a>
+            </div>
           </div>
 
           <button
