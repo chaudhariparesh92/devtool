@@ -6,6 +6,7 @@
 //   useCases, tasks, faqs, relatedGroup } or null when a path has no copy.
 
 import { EXTRA_MORE } from './toolExtra.js';
+import { TOOL_GAP } from './toolGapContent.js';
 
 const BT = '`';
 const SAMPLE_USER = '{"id":1,"name":"Ada"}';
@@ -818,5 +819,15 @@ export function getToolContent(path, name) {
   if (!g) return null;
   const base = { group: g.id, ...g.build(name, path) };
   const x = EXTRA[path] || EXTRA_MORE[path];
-  return x ? { ...base, sections: x.sections, faqs: [...base.faqs, ...x.faqs] } : base;
+  const merged = x ? { ...base, sections: x.sections, faqs: [...base.faqs, ...x.faqs] } : base;
+  // Competitor-gap additions (data/toolGapContent.js): extra long-tail tasks and question-intent FAQs.
+  const gap = TOOL_GAP[path];
+  if (!gap) return merged;
+  const seenQ = new Set(merged.faqs.map((f) => f.q.toLowerCase()));
+  const seenT = new Set(merged.tasks.map((t) => t.toLowerCase()));
+  return {
+    ...merged,
+    tasks: [...merged.tasks, ...gap.tasks.filter((t) => !seenT.has(t.toLowerCase()))],
+    faqs: [...merged.faqs, ...gap.faqs.filter((f) => !seenQ.has(f.q.toLowerCase()))],
+  };
 }

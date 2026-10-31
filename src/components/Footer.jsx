@@ -140,7 +140,7 @@ export default function Footer() {
               Checker makes requests to the URLs you enter.
             </p>
             <br />
-            <div className="inline-flex items-center mr-4">
+            <div className="hidden inline-flex items-center mr-4">
               <a
                 href="https://thedevtoolsdir.com/product/online-developer-tools?ref=badge"
                 rel="dofollow"
@@ -154,7 +154,7 @@ export default function Footer() {
               </a>
             </div>
 
-            <div className="inline-flex items-center mr-4">
+            <div className="hidden inline-flex items-center mr-4">
               <a
                 class="hypestar-badge hypestar-badge--auto"
                 data-hypestar-theme="auto"
@@ -174,7 +174,7 @@ export default function Footer() {
               </a>
             </div>
 
-            <div className="inline-flex items-center mr-4">
+            <div className="hidden inline-flex items-center mr-4">
               <a
                 href="https://indielineup.com/product/online-developer-tool?ref=badge"
                 rel="dofollow"
@@ -188,7 +188,7 @@ export default function Footer() {
               </a>
             </div>
 
-            <div className="inline-flex items-center mr-4">
+            <div className="hidden inline-flex items-center mr-4">
               <a
                 href="https://saaslineup.com/product/online-developer-tool?ref=badge"
                 rel="dofollow"
@@ -202,7 +202,7 @@ export default function Footer() {
               </a>
             </div>
 
-            <div className="inline-flex items-center mr-4">
+            <div className="hidden inline-flex items-center mr-4">
               <a
                 href="https://theaitoolsdir.com/product/online-developer-tool?ref=badge"
                 rel="dofollow"

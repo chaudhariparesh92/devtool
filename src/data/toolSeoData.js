@@ -43,7 +43,7 @@ export const TOOL_SEO_DATA = {
   }),
   '/json-minifier': S({
     title: 'JSON Minifier Online - Compress JSON to One Line',
-    description: 'Minify JSON online. Remove unnecessary spaces and line breaks to produce compact single-line JSON. Runs in your browser; large numbers and duplicate keys follow JavaScript parsing rules.',
+    description: 'Minify JSON online. Remove spaces and line breaks to get compact single-line JSON for a request body or env var. Runs in your browser, no signup.',
     h1: 'JSON Minifier Online',
     primary: 'json minifier online',
     secondary: ['json minifier', 'minify json', 'compress json', 'json compressor', 'compact json'],
@@ -82,7 +82,7 @@ export const TOOL_SEO_DATA = {
     related: ['/json-formatter', '/json-validator', '/json-to-kotlin', '/json-to-csharp', '/json-to-typescript', '/json-to-go'],
   }),
   '/json-to-python': S({
-    title: 'JSON to Python Dataclass Converter Online - Generate Python Models',
+    title: 'JSON to Python Dataclass Converter - Generate Models',
     description: 'Convert JSON to a Python dataclass online. Paste a JSON object and get a dataclass with type hints (str, float, bool) to start from. Runs in your browser.',
     h1: 'JSON to Python Converter',
     primary: 'json to python dataclass',

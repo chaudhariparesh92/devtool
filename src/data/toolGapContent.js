@@ -1,0 +1,403 @@
+// Competitor-gap content for every tool page. Pure data, merged by getToolContent() in toolContent.js.
+//
+// What this adds, per tool:
+//   tasks - extra long-tail "what you can do" phrases (rendered in the existing task list + chips)
+//   faqs  - extra question-intent FAQs (rendered in the existing FAQ block and FAQPage JSON-LD)
+//
+// Rules: every claim was checked against the component in src/pages/tools/. No keyword lists are
+// rendered, no meta keywords, no invented features. Phrases come from questions and task wording that
+// competing tool pages answer (see seo-reports/competitor-analysis.csv).
+
+const f = (q, a) => ({ q, a });
+
+export const TOOL_GAP = {
+  // ------------------------------------------------------------------ JSON tools
+  '/json-formatter': {
+    tasks: ['Format JSON with 2 spaces, 4 spaces or tabs', 'Sort JSON keys alphabetically', 'Format JSON from a file or an HTTPS URL', 'Find the line and column of a JSON error'],
+    faqs: [
+      f('How do I sort JSON keys alphabetically?', 'Tick Sort keys before you format. Keys in every nested object are sorted A to Z. The order of items inside arrays is not changed.'),
+      f('Can I format JSON from a URL or a file?', 'Yes. Drop a .json file onto the page, or enter an HTTPS address in the optional URL field and load it. A URL only loads if the server allows requests from other sites (CORS). If it does not, open the URL yourself and paste the response.'),
+    ],
+  },
+  '/json-validator': {
+    tasks: ['Check if JSON is valid before an API request', 'Find a trailing comma in JSON', 'Spot single quotes and unquoted keys in JSON', 'Debug a JSON parse error from a config file'],
+    faqs: [
+      f('How do I fix "Unexpected token" in JSON?', 'The parser stopped at a character JSON does not allow there. The usual causes are a trailing comma, single quotes instead of double quotes, an unquoted key, a comment, or text before the first brace. Fix the character the message points to and validate again.'),
+      f('Does the validator show the line and column of the error?', 'It shows the message your browser\'s JSON parser returns. When that message includes a position, the tool turns it into a line and column. The wording and level of detail differ between browsers.'),
+    ],
+  },
+  '/json-beautifier': {
+    tasks: ['Beautify JSON copied from the browser network tab', 'Make minified API response JSON readable', 'Pretty print JSON with tab indentation', 'Prepare JSON for a code review or bug report'],
+    faqs: [
+      f('How do I beautify JSON copied from browser dev tools?', 'Copy the response body from the Network tab, paste it into the input box and press the format button. The tool re-prints it with one item per line and the indentation you pick.'),
+      f('What is the difference between beautifying and validating JSON?', 'Beautifying changes only the whitespace so the structure is easier to read. Validating only tells you whether the text parses. This page does both in one step: valid JSON is re-printed, invalid JSON returns the parser error.'),
+    ],
+  },
+  '/json-minifier': {
+    tasks: ['Minify JSON to a single line', 'Remove whitespace from JSON for a request body', 'Shrink JSON before putting it in an environment variable', 'Compress JSON for a quick payload test'],
+    faqs: [
+      f('How much smaller does minified JSON get?', 'It depends on how much whitespace the original had. Deeply indented, pretty-printed JSON shrinks the most. JSON that is already compact barely changes.'),
+      f('Is minifying the same as compressing with gzip?', 'No. Minifying only removes spaces and line breaks and the result is still plain JSON. Gzip is a separate compression step applied by a server or build tool, and it works on top of minified or pretty-printed JSON.'),
+    ],
+  },
+  '/json-to-csharp': {
+    tasks: ['Convert JSON to a C# class online', 'Generate a C# model from an API response', 'Create C# classes for nested JSON objects', 'Set the root class name for generated C# code'],
+    faqs: [
+      f('How do I convert a JSON array to a C# class?', 'Paste a single object from the array. The tool expects the root value to be a JSON object and returns an error for a bare array. Arrays of objects inside that object become List<T> properties with their own generated class.'),
+      f('Can I rename the root class or mark properties nullable?', 'Yes. Use the root type name field to change the name from Root. The Optional / nullable properties checkbox adds a ? to each property type so missing values are allowed.'),
+    ],
+  },
+  '/json-to-typescript': {
+    tasks: ['Convert JSON to a TypeScript interface', 'Type an API response in TypeScript', 'Generate TypeScript interfaces for nested objects', 'Make TypeScript properties optional'],
+    faqs: [
+      f('How do I type a JSON API response in TypeScript?', 'Paste a sample response object, generate the interfaces and copy them into your project. Then review them against the API documentation: one sample cannot show which fields are optional or which values can be null.'),
+      f('How do I make the TypeScript properties optional?', 'Tick Optional / nullable properties. Each property then gets a ? so it may be missing. Null values are typed as unknown, so narrow them by hand where you know the real type.'),
+    ],
+  },
+  '/json-to-java': {
+    tasks: ['Convert JSON to a Java class online', 'Generate Java classes for Jackson or Gson from JSON', 'Create nested Java classes from a JSON object', 'Map a JSON array to List in Java'],
+    faqs: [
+      f('How do I convert JSON to a Java class for Jackson or Gson?', 'Paste a sample object and generate the class. JSON arrays become List<T> and the output starts with the java.util.List import. Treat the result as a first draft and add whatever your mapper needs, such as annotations, before using it.'),
+      f('How are JSON arrays and nested objects written in Java?', 'A nested object becomes its own class named after its key. An array of objects becomes List<ThatClass>. An array of plain values becomes a List of the matching type, for example List<String>.'),
+    ],
+  },
+  '/json-to-python': {
+    tasks: ['Convert JSON to a Python dataclass', 'Generate Python classes from a JSON object', 'Create typed Python models from an API response', 'Mark Python dataclass fields as optional'],
+    faqs: [
+      f('How do I use the generated Python dataclass?', 'Load your JSON with json.loads, then pass the values into the class. For a flat object, Root(**data) works. For nested objects the values stay as dictionaries until you build the nested dataclasses yourself.'),
+      f('How are optional fields written in the Python output?', 'With Optional / nullable properties ticked, each field type gets | None appended. The output header imports dataclass and the typing helpers it uses.'),
+    ],
+  },
+  '/json-to-go': {
+    tasks: ['Convert JSON to a Go struct', 'Generate Go struct tags from a JSON object', 'Create nested Go structs from JSON', 'Unmarshal JSON into a generated Go struct'],
+    faqs: [
+      f('What are the json tags in the Go struct?', 'Each field gets a tag such as `json:"user_id"`. The field name is capitalized so Go exports it, and the tag keeps the original JSON key so encoding/json can match them.'),
+      f('How do I unmarshal JSON into the generated struct?', 'Copy the struct into your program, then call json.Unmarshal([]byte(data), &root) with a variable of the root type. Check the field types first: numbers are generated as float64 and null values as interface{}.'),
+    ],
+  },
+  '/json-to-php': {
+    tasks: ['Convert JSON to a PHP class', 'Generate PHP properties from a JSON object', 'Create a PHP model for an API response', 'Map JSON arrays to PHP array properties'],
+    faqs: [
+      f('How do I use the generated PHP class with json_decode?', 'json_decode returns an object or an array, not an instance of your class. Decode the JSON, then copy each value into the generated class yourself or write a small constructor or hydrator.'),
+      f('How are JSON arrays typed in the PHP output?', 'Arrays are written with the array type. Nested objects become their own classes, and the property uses that class name as its type.'),
+    ],
+  },
+  '/json-to-kotlin': {
+    tasks: ['Convert JSON to a Kotlin data class', 'Generate Kotlin data classes from an API response', 'Create nested Kotlin data classes from JSON', 'Make Kotlin properties nullable'],
+    faqs: [
+      f('How do I use the Kotlin data class with kotlinx.serialization, Moshi or Gson?', 'Copy the data class into your project and add what your library requires, for example @Serializable for kotlinx.serialization. The tool writes plain val properties without library annotations.'),
+      f('How are nullable values written in the Kotlin output?', 'A JSON null becomes Any?. With Optional / nullable properties ticked, every property type also gets a ? so it can be missing or null.'),
+    ],
+  },
+  '/yaml-to-json': {
+    tasks: ['Convert YAML to JSON online', 'Turn a Kubernetes or Docker Compose YAML file into JSON', 'Check YAML syntax by converting it to JSON', 'Convert a YAML config file to JSON for an API'],
+    faqs: [
+      f('Does YAML to JSON support multiple documents separated by ---?', 'The converter reads one YAML document. If your input contains several documents separated by ---, split them and convert each one on its own.'),
+      f('What happens to comments when I convert YAML to JSON?', 'They are dropped. JSON has no comment syntax, so the output contains only the data.'),
+    ],
+  },
+  '/csv-to-json': {
+    tasks: ['Convert CSV to a JSON array of objects', 'Convert a semicolon or tab separated file to JSON', 'Turn a spreadsheet export into JSON', 'Convert a CSV file to JSON for an API or mock data'],
+    faqs: [
+      f('What happens to empty header cells?', 'An empty header is named column1, column2 and so on, by position, so every value still has a key in the JSON.'),
+      f('How do I convert a CSV file to a JSON array?', 'Paste the CSV or load the file, pick the delimiter, make sure the first row holds the column names and press convert. Each following row becomes one object in the array.'),
+    ],
+  },
+  '/json-to-csv': {
+    tasks: ['Convert a JSON array to CSV', 'Export JSON data to a spreadsheet', 'Convert JSON to comma-separated CSV with a header row', 'Download JSON as a CSV file'],
+    faqs: [
+      f('What if the objects in my array have different keys?', 'The header row is the union of all keys found in the array, in order of first appearance. An object that lacks a key gets an empty cell in that column.'),
+      f('How do I open the converted CSV in Excel?', 'Download the converted file and open it in Excel or Google Sheets. The output is comma-separated with a header row, so each column lines up with a key from your JSON.'),
+    ],
+  },
+
+  // ------------------------------------------------------------------ Encoders and decoders
+  '/url-encoder': {
+    tasks: ['Percent-encode a query parameter value', 'Encode spaces and special characters for a URL', 'Encode Unicode text for a URL', 'Escape & and = inside a query string value'],
+    faqs: [
+      f('What is the difference between encodeURI and encodeURIComponent?', 'This tool applies encodeURIComponent, which also encodes characters such as / ? & = : #. encodeURI leaves those alone so a whole URL keeps its structure. Use component encoding for a single value and never run it over a complete URL.'),
+      f('Does a space become %20 or +?', 'This tool writes a space as %20. The + form for spaces comes from HTML form encoding and is only meaningful in query strings.'),
+    ],
+  },
+  '/url-decoder': {
+    tasks: ['Decode a percent-encoded URL', 'Read %20 and %3A in a link', 'Decode an encoded query string from a log file', 'Decode a UTF-8 URL parameter'],
+    faqs: [
+      f('What do %20, %3A and %2F mean in a URL?', '%20 is a space, %3A is a colon and %2F is a slash. Each % sequence is the hexadecimal value of one byte, and UTF-8 characters use several of them in a row.'),
+      f('Why does the URL decoder return nothing for my text?', 'A stray % that is not followed by two hexadecimal digits is not valid percent-encoding, so the browser refuses to decode it and the output stays empty. Fix or remove that character and try again.'),
+    ],
+  },
+  '/base64-encoder': {
+    tasks: ['Base64 encode a string online', 'Encode UTF-8 text with emoji to Base64', 'Convert text to Base64 for a Basic auth header', 'Encode a JSON payload as Base64'],
+    faqs: [
+      f('How do I Base64 encode a string in JavaScript, Python or C#?', 'In the browser use btoa on UTF-8 bytes. In Node.js use Buffer.from(text).toString("base64"). In Python use base64.b64encode(text.encode()). In C# use Convert.ToBase64String(Encoding.UTF8.GetBytes(text)).'),
+      f('What does the == at the end of Base64 mean?', 'It is padding. Base64 works in groups of three bytes, and one or two = characters fill the last group when the input length is not a multiple of three.'),
+    ],
+  },
+  '/base64-decoder': {
+    tasks: ['Base64 decode a string online', 'Decode a Base64 API response to text', 'Decode Base64 UTF-8 text', 'Read a Base64 value from a config file'],
+    faqs: [
+      f('What does the Base64 string SGVsbG8sIFdvcmxkIQ== decode to?', 'It decodes to Hello, World!. The two = characters at the end are padding.'),
+      f('How do I decode Base64 in JavaScript, Python or C#?', 'In the browser use atob. In Node.js use Buffer.from(value, "base64").toString(). In Python use base64.b64decode(value). In C# use Convert.FromBase64String(value) and read the bytes with Encoding.UTF8.GetString.'),
+    ],
+  },
+  '/html-encoder': {
+    tasks: ['Escape HTML special characters', 'Convert < and > to HTML entities', 'Encode HTML for display inside a web page', 'Escape an ampersand as &amp;'],
+    faqs: [
+      f('Is HTML encoding enough to prevent XSS?', 'No. Escaping & < > is one part of output encoding, and the right escaping depends on where the text lands: element content, an attribute value, JavaScript or a URL. Use your framework\'s built-in escaping, and add a Content Security Policy for defense in depth.'),
+      f('What is the difference between &lt; and &#60;?', 'They are two spellings of the same character. &lt; is a named entity and &#60; is a numeric one. This tool writes the named forms &amp;, &lt; and &gt;.'),
+    ],
+  },
+  '/html-decoder': {
+    tasks: ['Decode HTML entities to text', 'Convert &amp; and &lt; back to characters', 'Decode numeric and hex HTML entities', 'Turn escaped HTML back into readable markup'],
+    faqs: [
+      f('Does it decode numeric and hex entities like &#169; and &#xA9;?', 'Yes. Decoding uses the browser\'s own HTML parser, so named entities, decimal entities and hexadecimal entities all decode to their characters.'),
+      f('Why does &amp;amp; decode to &amp; instead of &?', 'Decoding runs one pass. &amp;amp; is an ampersand that was escaped twice, so one pass leaves &amp;. Run the output through the decoder again to remove the second layer.'),
+    ],
+  },
+  '/jwt-decoder': {
+    tasks: ['Decode a JWT online', 'Read the claims inside a JSON Web Token', 'Check the exp claim of an access token', 'Inspect a Bearer token from an Authorization header'],
+    faqs: [
+      f('What are the three parts of a JWT?', 'A JWT is header.payload.signature, separated by dots. The header names the signing algorithm, the payload holds the claims, and the signature lets a server check that nothing was changed. The first two parts are Base64URL-encoded JSON.'),
+      f('What do iss, sub, aud, nbf, iat and jti mean?', 'iss is the issuer, sub the subject (usually the user id) and aud the audience the token is meant for. nbf is the time before which the token is not valid, iat is when it was issued and jti is a unique token id. Times are Unix timestamps in seconds.'),
+    ],
+  },
+
+  // ------------------------------------------------------------------ Generators and hashes
+  '/uuid-generator': {
+    tasks: ['Generate UUID v4 online', 'Generate UUID v7 online', 'Generate 100 UUIDs at once', 'Create random UUIDs for test data or database keys'],
+    faqs: [
+      f('What is the difference between UUID v4 and UUID v7?', 'UUID v4 is almost entirely random. UUID v7 starts with a millisecond timestamp followed by random bits, so values created later sort after earlier ones. That makes v7 friendlier to database indexes. Both are available here.'),
+      f('How do I generate a UUID in JavaScript, C# or Python?', 'Use crypto.randomUUID() in JavaScript, Guid.NewGuid() in C# and uuid.uuid4() in Python.'),
+    ],
+  },
+  '/uuid-validator': {
+    tasks: ['Check if a string is a valid UUID', 'Validate a GUID format', 'Check a UUID before saving it to a database', 'Test whether an id matches the 8-4-4-4-12 pattern'],
+    faqs: [
+      f('What does a valid UUID look like?', 'Thirty-two hexadecimal digits in five groups of 8-4-4-4-12 separated by hyphens, for example 123e4567-e89b-12d3-a456-426614174000. The validator also checks the version digit and the variant.'),
+      f('Is the nil UUID 00000000-0000-0000-0000-000000000000 valid here?', 'No. The nil UUID is a special reserved value, but this validator only accepts UUIDs with a version digit from 1 to 8, so it reports the nil UUID as invalid.'),
+    ],
+  },
+  '/uuid-parser': {
+    tasks: ['Find the version of a UUID', 'Check the UUID variant', 'Check whether a UUID contains a timestamp', 'Inspect a GUID from a log or database'],
+    faqs: [
+      f('Where is the version digit in a UUID?', 'It is the first character of the third group. In 123e4567-e89b-12d3-a456-426614174000 it is 1. The tool reports that version and the RFC 9562 variant.'),
+      f('Can the parser read the timestamp out of a UUID?', 'The parser tells you whether the UUID is a version 7 value, which carries a millisecond timestamp in its first 48 bits. It does not convert that timestamp into a date.'),
+    ],
+  },
+  '/jwt-generator': {
+    tasks: ['Generate a JWT with an HS256 secret', 'Create a test JSON Web Token', 'Build a JWT from a JSON payload', 'Add an exp claim to a test token'],
+    faqs: [
+      f('How do I add an expiry to a generated JWT?', 'Add an exp claim to the payload JSON as a Unix timestamp in seconds, for example "exp": 1893456000. You can get that number from the Timestamp Converter.'),
+      f('What secret should I use?', 'Any text works for a test token, and the tool falls back to the word secret if you leave the field empty. For real systems use a long random secret that only your server knows, and generate production tokens on your server rather than in a browser page.'),
+    ],
+  },
+  '/hash-generator': {
+    tasks: ['Generate a hash from text online', 'Create a file checksum in the browser', 'Hash a string without uploading it', 'Compare a hash with a published checksum'],
+    faqs: [
+      f('How do I check a file checksum?', 'Choose or drop the file, copy the generated hash and compare it with the checksum the publisher lists. If every character matches, the file is the same. Use SHA-256 or SHA-512 pages when the publisher lists those.'),
+      f('Is hashing the same as encryption?', 'No. A hash is a one-way fingerprint and cannot be turned back into the original data. Encryption is reversible with a key.'),
+    ],
+  },
+  '/sha256-generator': {
+    tasks: ['Generate a SHA-256 hash online', 'Calculate the SHA-256 checksum of a file', 'Create a 64-character hex digest from text', 'Verify a SHA-256 checksum'],
+    faqs: [
+      f('How do I generate a SHA-256 hash in JavaScript, Python or Linux?', 'In JavaScript use crypto.subtle.digest("SHA-256", bytes). In Python use hashlib.sha256(data).hexdigest(). On Linux use sha256sum file or echo -n text | sha256sum.'),
+      f('Why does one extra space or newline change the whole hash?', 'A hash depends on every byte of the input. Adding a space, a trailing newline or changing letter case produces a completely different digest.'),
+    ],
+  },
+  '/sha512-generator': {
+    tasks: ['Generate a SHA-512 hash online', 'Calculate the SHA-512 checksum of a file', 'Create a 128-character hex digest from text', 'Compare SHA-512 hashes'],
+    faqs: [
+      f('How long is a SHA-512 hash?', 'It is 512 bits, written as 128 hexadecimal characters.'),
+      f('What is the difference between SHA-256 and SHA-512?', 'Both belong to the SHA-2 family. SHA-256 produces a 256-bit digest (64 hex characters) and SHA-512 a 512-bit digest (128 hex characters). Both are suitable for checksums; pick the one your system or publisher uses.'),
+    ],
+  },
+  '/md5-generator': {
+    tasks: ['Generate an MD5 hash online', 'Create a 32-character MD5 checksum', 'Calculate the MD5 of a file', 'Check a legacy MD5 checksum'],
+    faqs: [
+      f('How long is an MD5 hash?', 'It is 128 bits, written as 32 hexadecimal characters.'),
+      f('Can I still use MD5 for file checksums?', 'MD5 can still reveal accidental corruption in a download. It cannot be trusted to stop deliberate tampering, because different inputs with the same MD5 can be crafted. Use SHA-256 when integrity matters.'),
+    ],
+  },
+
+  // ------------------------------------------------------------------ Web tools
+  '/timestamp-converter': {
+    tasks: ['Convert a Unix timestamp to a date', 'Convert a date to a Unix timestamp', 'Convert milliseconds, microseconds or nanoseconds to a date', 'Convert an ISO 8601 date to epoch time'],
+    faqs: [
+      f('How do I get the current Unix timestamp?', 'The input opens with the current time in seconds already filled in. In JavaScript the same value is Math.floor(Date.now() / 1000).'),
+      f('What is the Year 2038 problem?', 'Systems that store Unix time in a signed 32-bit integer overflow on 19 January 2038. JavaScript dates use larger numbers, so the dates this tool converts are not affected.'),
+    ],
+  },
+  '/unix-timestamp': {
+    tasks: ['Convert epoch time to a human-readable date', 'Check whether a timestamp is in seconds or milliseconds', 'Convert a date string to epoch time', 'Read a timestamp from a log line or API response'],
+    faqs: [
+      f('What is epoch time?', 'Epoch time, also called Unix time or POSIX time, counts the time since 1 January 1970 at 00:00:00 UTC. The same moment is the same number everywhere, whatever the local time zone.'),
+      f('Can I convert a date like 2026-10-31T10:00:00Z to a Unix timestamp?', 'Yes. Type an ISO 8601 date into the input instead of a number. The result shows the Unix time in seconds, milliseconds, microseconds and nanoseconds.'),
+    ],
+  },
+  '/color-converter': {
+    tasks: ['Convert HEX to RGB', 'Convert RGB to HEX', 'Use a 3-digit hex color code', 'Preview a color while converting'],
+    faqs: [
+      f('Does it convert HSL or named colors like red?', 'No. The converter handles HEX and RGB only. Named colors and HSL values return the unsupported format message.'),
+      f('What is a 3-digit hex color?', 'A shorthand where each digit is doubled. #FFF means #FFFFFF and #0AF means #00AAFF. The converter expands it before converting.'),
+    ],
+  },
+  '/hex-to-rgb': {
+    tasks: ['Convert a HEX color code to RGB', 'Convert #3B82F6 to rgb()', 'Convert a 3-digit hex color to RGB', 'Get RGB values for CSS from a design hex code'],
+    faqs: [
+      f('How do I convert #3B82F6 to RGB?', 'Read the hex code in pairs: 3B is 59, 82 is 130 and F6 is 246, so #3B82F6 is rgb(59, 130, 246).'),
+      f('Does it support 8-digit hex codes with alpha?', 'Only the first six digits are read, so the alpha pair is ignored and you get a plain rgb() value. Enter the code with its leading # sign.'),
+    ],
+  },
+  '/rgb-to-hex': {
+    tasks: ['Convert RGB to a HEX color code', 'Convert rgb(59, 130, 246) to hex', 'Turn CSS rgb values into a hex code', 'Get an uppercase hex code for a design tool'],
+    faqs: [
+      f('How do I convert rgb(59, 130, 246) to hex?', 'Convert each channel to two hex digits: 59 is 3B, 130 is 82 and 246 is F6. Together that is #3B82F6.'),
+      f('What range should each RGB value be in?', 'Each channel is 0 to 255. The tool does not clamp values, so a number above 255 produces a malformed hex code. Check your values first.'),
+    ],
+  },
+  '/query-string-parser': {
+    tasks: ['Parse a URL query string into JSON', 'Read the parameters of a URL', 'Decode %20 and + in query values', 'Turn ?a=1&b=2 into an object'],
+    faqs: [
+      f('Can I paste a full URL instead of just the query string?', 'Yes. The text before the question mark is ignored, so a complete URL works the same as the part after it.'),
+      f('Does it decode %20 and + in values?', 'Yes. The parser decodes percent-encoded characters and treats + as a space, which is how browsers read query strings.'),
+    ],
+  },
+  '/query-string-generator': {
+    tasks: ['Build a query string from JSON', 'Encode URL parameters from an object', 'Create ?key=value&key2=value2 from key value pairs', 'Generate encoded query parameters for an API call'],
+    faqs: [
+      f('How do I send an array in a query string?', 'The generator turns an array into one comma-separated value, so {"ids":[1,2]} becomes ids=1%2C2. If your API expects repeated keys such as ids=1&ids=2, build those pairs by hand.'),
+      f('Are special characters encoded in the output?', 'Yes. Values are percent-encoded, and spaces are written as +, which is the standard form for query strings.'),
+    ],
+  },
+  '/cron-expression-generator': {
+    tasks: ['Write a cron expression for every 5 minutes', 'Schedule a cron job at midnight', 'Run a cron job on weekdays at 9 AM', 'Check what a cron schedule means in plain English'],
+    faqs: [
+      f('What does */5 * * * * mean?', 'It runs every 5 minutes. The */5 in the minute field means every fifth minute, and the stars mean every hour, day, month and weekday.'),
+      f('How do I run a cron job every day at midnight or at 9 AM on weekdays?', 'Use 0 0 * * * for every day at midnight and 0 9 * * 1-5 for 9:00 AM from Monday to Friday. Paste either one into the field to see it described in plain English.'),
+    ],
+  },
+  '/cron-expression-parser': {
+    tasks: ['Translate a cron expression into plain English', 'Check a crontab schedule before deploying', 'Understand a cron schedule from a CI or Kubernetes config', 'Find out what 0 9 * * 1-5 means'],
+    faqs: [
+      f('What does 0 9 * * 1-5 mean?', 'It describes a job that runs at 9:00 AM from Monday through Friday. The fields are minute 0, hour 9, any day of the month, any month, and weekdays 1 to 5.'),
+      f('Can I use the description to check a schedule for a different scheduler?', 'Use it as a readable check of the five standard fields. Schedulers such as Kubernetes CronJobs, GitHub Actions and cloud services have their own details, for example time zone handling, so confirm those in the scheduler\'s documentation.'),
+    ],
+  },
+
+  // ------------------------------------------------------------------ Text and data
+  '/xml-formatter': {
+    tasks: ['Pretty print XML online', 'Format minified XML', 'Indent an XML response for readability', 'Make an XML config file readable'],
+    faqs: [
+      f('How do I pretty print XML?', 'Paste the XML, press the format button and copy the indented result. Each element starts on its own line, nested by depth.'),
+      f('Does formatting change the meaning of my XML?', 'Formatting only adds whitespace between elements, which XML readers normally ignore. Text inside elements is kept as it is.'),
+    ],
+  },
+  '/xml-validator': {
+    tasks: ['Check if XML is well-formed', 'Find a mismatched XML tag', 'Validate XML before sending it to an API', 'Debug an XML parse error'],
+    faqs: [
+      f('What are the most common XML errors?', 'Mismatched or unclosed tags, an unescaped & or < inside text, more than one root element and attribute values without quotes. The validator shows your browser\'s parser message so you can find the spot.'),
+      f('What is the difference between well-formed and valid XML?', 'Well-formed means the document follows the XML syntax rules. Valid means it also matches a schema such as a DTD or XSD. This page checks that the XML is well-formed.'),
+    ],
+  },
+  '/yaml-formatter': {
+    tasks: ['Format and clean up YAML online', 'Fix YAML indentation', 'Re-print a YAML config file consistently', 'Check that YAML parses'],
+    faqs: [
+      f('Can YAML use tabs for indentation?', 'No. YAML requires spaces for indentation, and a tab causes a parse error. The formatter re-prints your data with consistent space indentation.'),
+      f('How do I convert YAML to JSON?', 'Use the YAML to JSON page. It parses the same YAML and prints it as indented JSON.'),
+    ],
+  },
+  '/text-counter': {
+    tasks: ['Count characters, words and lines', 'Check the length of a meta description', 'Count words in a pasted text', 'Count lines in a log or list'],
+    faqs: [
+      f('How are words counted?', 'Words are runs of text separated by spaces, tabs or line breaks. Two words joined by a hyphen count as one.'),
+      f('Do blank lines count in the line total?', 'Yes. Lines are counted by line breaks, so an empty line between paragraphs is included in the total.'),
+    ],
+  },
+  '/case-converter': {
+    tasks: ['Convert text to uppercase', 'Convert text to lowercase', 'Convert text to title case', 'Fix text typed with caps lock on'],
+    faqs: [
+      f('How does the title case output work?', 'The first letter of every word is capitalized and the rest is lowercased. Small words such as of or the are capitalized too, so edit them by hand if your style guide differs.'),
+      f('Which cases does the tool produce?', 'It shows UPPERCASE, lowercase and Title Case together for whatever you paste. For code styles such as camelCase or snake_case, convert them by hand.'),
+    ],
+  },
+  '/text-to-slug': {
+    tasks: ['Turn a title into a URL slug', 'Convert text to a lowercase hyphenated slug', 'Remove special characters from a URL', 'Create a slug for a blog post title'],
+    faqs: [
+      f('What slug does "Hello, World! 2026" produce?', 'hello-world-2026. The text is lowercased, runs of other characters become a single hyphen, and hyphens at the start or end are trimmed.'),
+      f('Are underscores kept in the slug?', 'No. Anything that is not a lowercase letter or a digit, including underscores, turns into a hyphen.'),
+    ],
+  },
+  '/slug-generator': {
+    tasks: ['Generate an SEO-friendly URL slug', 'Make a slug from an article title', 'Create a clean permalink', 'Convert a product name to a URL slug'],
+    faqs: [
+      f('Should a slug use hyphens or underscores?', 'Use hyphens. Search engines read hyphens as word separators, and Google\'s URL guidance recommends them over underscores.'),
+      f('How long should a URL slug be?', 'There is no fixed limit, but short and descriptive works best. Keep the main words of the title and drop filler words when the slug would otherwise run long.'),
+    ],
+  },
+  '/regex-tester': {
+    tasks: ['Test a regular expression online', 'Find and replace with a regex', 'Test an email regex', 'Check a JavaScript regex against sample text'],
+    faqs: [
+      f('How do I do a regex find and replace?', 'Enter the pattern and flags, paste your text and type the replacement in the replacement box. You can use $1 for a capture group and $& for the whole match. The replaced text appears below the matches.'),
+      f('What do the g, i and m flags do?', 'g finds every match instead of just the first, i ignores letter case, and m makes ^ and $ match at the start and end of each line.'),
+    ],
+  },
+  '/regex-generator': {
+    tasks: ['Try a ready-made email, URL or digits regex', 'Build and test a regex pattern', 'Copy a regex with its flags', 'Check a regex against example text'],
+    faqs: [
+      f('How do I make a regex case-insensitive or match across lines?', 'Add the i flag to ignore letter case and the m flag so ^ and $ match at each line. Type the letters into the flags box, for example gi or gm, then run the test.'),
+      f('How do I match digits, words or URLs?', 'Load one of the built-in examples as a starting point. \\d+ matches digits, \\b[A-Za-z]+\\b matches words and https?://[^\\s]+ matches simple web addresses. Then edit the pattern and test it.'),
+    ],
+  },
+  '/diff-checker': {
+    tasks: ['Compare two texts and see the differences', 'Compare two code files', 'Ignore whitespace when comparing text', 'Compare by line, word or character'],
+    faqs: [
+      f('How do I ignore whitespace differences?', 'Tick the ignore whitespace option before you compare. Runs of spaces and line breaks are treated as a single space, so formatting-only changes disappear from the result.'),
+      f('Can I compare two files?', 'Yes. Drop a file into each side, or paste the text, then press compare. The file is read in your browser and is not uploaded.'),
+    ],
+  },
+  '/number-base-converter': {
+    tasks: ['Convert between binary, octal, decimal and hex', 'Convert an octal number to decimal', 'Convert a number to another base online', 'Check a number in two bases'],
+    faqs: [
+      f('Which number bases can I convert between?', 'Binary (2), octal (8), decimal (10) and hexadecimal (16). Pick a From base and a To base from the two menus.'),
+      f('Why is the result in capital letters?', 'Hexadecimal digits above 9 are shown as A to F in uppercase. 255 in hex is shown as FF.'),
+    ],
+  },
+  '/binary-to-decimal': {
+    tasks: ['Convert binary to decimal', 'Convert 8-bit binary to a number', 'Convert 1010 to decimal', 'Check a binary value by hand'],
+    faqs: [
+      f('What is 1010 in decimal?', '10. Reading from the right, 1010 is 0 + 2 + 0 + 8.'),
+      f('What is 11111111 in decimal?', '255, the largest value that fits in 8 bits.'),
+    ],
+  },
+  '/decimal-to-binary': {
+    tasks: ['Convert decimal to binary', 'Convert 255 to binary', 'Convert a number to 8-bit binary', 'Check a decimal to binary conversion'],
+    faqs: [
+      f('What is 255 in binary?', '11111111, which is eight ones.'),
+      f('What is 10 in binary?', '1010.'),
+    ],
+  },
+  '/hex-to-decimal': {
+    tasks: ['Convert hex to decimal', 'Convert FF to decimal', 'Convert a hex color channel to a number', 'Check a hexadecimal value'],
+    faqs: [
+      f('What is hex FF in decimal?', '255. F is 15, so FF is 15 x 16 + 15.'),
+      f('Is hexadecimal case sensitive?', 'No. ff, FF and Ff all mean the same value, and the tool returns the same decimal number for each.'),
+    ],
+  },
+  '/decimal-to-hex': {
+    tasks: ['Convert decimal to hex', 'Convert 255 to hexadecimal', 'Convert RGB decimal values to hex', 'Check a decimal to hex conversion'],
+    faqs: [
+      f('What is 255 in hex?', 'FF.'),
+      f('How do I convert RGB decimal values to hex?', 'Convert each channel separately and join the pairs. For example 59, 130 and 246 become 3B, 82 and F6, which gives #3B82F6. The RGB to HEX page does this in one step.'),
+    ],
+  },
+
+  // ------------------------------------------------------------------ Website checking
+  '/website-status-checker': {
+    tasks: ['Check if a website is down', 'Check several sites at once', 'See the HTTP status code of a URL', 'Test whether a domain or path responds'],
+    faqs: [
+      f('What do HTTP 200, 301, 404 and 503 mean?', '200 means the request succeeded. 301 is a permanent redirect to another address. 404 means the page was not found. 503 means the server is temporarily unavailable.'),
+      f('How do I check whether my own website is down?', 'Enter the domain here and read the result, then compare with how the site behaves on another network. This check runs from your browser, so a site that responds here can still be blocked for visitors in other places.'),
+    ],
+  },
+};

@@ -19,7 +19,7 @@ export const OG_IMAGE_PATH = '/images/og-onlinedevelopertool.webp';
 export const DEFAULT_IMAGE = `${SITE_URL}${OG_IMAGE_PATH}`;
 
 // Bump this when page content genuinely changes. It feeds <lastmod> in sitemap.xml.
-export const CONTENT_LAST_MODIFIED = '2026-10-25';
+export const CONTENT_LAST_MODIFIED = '2026-10-31';
 
 // ---------------------------------------------------------------- Homepage
 export const HOME_TITLE = 'Online Developer Tools - Free JSON, JWT, Base64 & More';
