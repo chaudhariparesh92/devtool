@@ -120,6 +120,11 @@ export default function Footer() {
               OnlineDeveloperTool is built and maintained by DevTransition. Most tool inputs are processed in your browser; the Website Status Checker makes requests to the URLs you enter.
             </p>
           </div>
+          <div>
+          <a href="https://thedevtoolsdir.com/product/online-developer-tools?ref=badge" rel="dofollow">
+            <img src="https://thedevtoolsdir.com/badge/online-developer-tools.svg" alt="Featured on TheDevToolsDir" width="160" height="44" />
+          </a>
+          </div>
           <button
             type="button"
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
