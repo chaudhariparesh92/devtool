@@ -29,7 +29,7 @@ export const TOOL_SEO_DATA = {
     secondary: ['json validator', 'validate json', 'json syntax checker', 'json lint', 'check json'],
     longTail: ['check if JSON is valid online', 'find a JSON syntax error', 'fix trailing comma in JSON', 'validate JSON before an API request', 'why is my JSON invalid'],
     intent: 'utility + troubleshooting',
-    related: ['/json-formatter', '/json-beautifier', '/json-minifier', '/yaml-to-json', '/json-to-typescript', '/diff-checker'],
+    related: ['/json-formatter', '/json-beautifier', '/json-minifier', '/yaml-to-json', '/json-to-typescript', '/diff-checker', '/xml-validator'],
   }),
   '/json-beautifier': S({
     title: 'JSON Beautifier Online - Pretty Print Minified JSON',
@@ -69,7 +69,7 @@ export const TOOL_SEO_DATA = {
     secondary: ['json to typescript', 'json to ts', 'json typescript converter', 'json interface generator', 'typescript interface from json'],
     longTail: ['generate TypeScript interfaces from JSON', 'convert API response JSON to TypeScript', 'create TypeScript types from JSON', 'JSON to TypeScript interfaces online', 'infer types from a JSON sample'],
     intent: 'utility + developer workflow',
-    related: ['/json-formatter', '/json-validator', '/json-to-csharp', '/json-to-java', '/json-to-python', '/json-to-go'],
+    related: ['/json-formatter', '/json-validator', '/json-to-csharp', '/json-to-java', '/json-to-python', '/json-to-go', '/json-to-kotlin'],
   }),
   '/json-to-java': S({
     title: 'JSON to Java Class Converter Online - Generate Java Classes',
@@ -79,7 +79,7 @@ export const TOOL_SEO_DATA = {
     secondary: ['json to java', 'json to java class', 'json java pojo generator', 'json to pojo', 'json converter java'],
     longTail: ['generate Java classes from JSON', 'create Java POJO from JSON', 'convert API response to Java model', 'generate Java fields from JSON', 'JSON to Java class online'],
     intent: 'utility + developer workflow',
-    related: ['/json-formatter', '/json-validator', '/json-to-kotlin', '/json-to-csharp', '/json-to-typescript', '/json-to-go'],
+    related: ['/json-formatter', '/json-validator', '/json-to-kotlin', '/json-to-csharp', '/json-to-typescript', '/json-to-go', '/json-to-php'],
   }),
   '/json-to-python': S({
     title: 'JSON to Python Dataclass Converter - Generate Models',
@@ -89,7 +89,7 @@ export const TOOL_SEO_DATA = {
     secondary: ['json to python', 'json python converter', 'json to dataclass', 'json to python class', 'json to pydantic'],
     longTail: ['generate Python classes from JSON', 'convert JSON to Python dataclass', 'create Python model from API JSON', 'generate Pydantic-style fields from JSON', 'JSON to Python code online'],
     intent: 'utility + developer workflow',
-    related: ['/json-formatter', '/json-validator', '/yaml-to-json', '/json-to-typescript', '/json-to-go', '/json-to-java'],
+    related: ['/json-formatter', '/json-validator', '/yaml-to-json', '/json-to-typescript', '/json-to-go', '/json-to-java', '/json-to-php', '/json-to-kotlin'],
   }),
   '/json-to-go': S({
     title: 'JSON to Go Struct Converter - Generate Go Structs Online',
@@ -99,7 +99,7 @@ export const TOOL_SEO_DATA = {
     secondary: ['json to go', 'json to go struct', 'json go converter', 'json struct generator', 'json to golang'],
     longTail: ['generate Go structs from JSON', 'convert API response JSON to Go struct', 'create Go types with JSON tags', 'generate nested Go structs from JSON', 'JSON to Go struct online'],
     intent: 'utility + developer workflow',
-    related: ['/json-formatter', '/json-validator', '/json-to-typescript', '/json-to-python', '/json-to-java', '/json-to-csharp'],
+    related: ['/json-formatter', '/json-validator', '/json-to-typescript', '/json-to-python', '/json-to-java', '/json-to-csharp', '/json-to-php'],
   }),
   '/json-to-php': S({
     title: 'JSON to PHP Class Converter - Generate PHP Classes',
@@ -161,7 +161,7 @@ export const TOOL_SEO_DATA = {
     secondary: ['url encoder', 'url encode', 'percent encoder', 'url encoding tool', 'encode url'],
     longTail: ['encode URL query parameters online', 'percent-encode a URL value', 'encode text for a URL', 'encode a query string component', 'URL encode Unicode text'],
     intent: 'utility',
-    related: ['/url-decoder', '/query-string-parser', '/query-string-generator', '/base64-encoder', '/html-encoder'],
+    related: ['/url-decoder', '/query-string-parser', '/query-string-generator', '/base64-encoder', '/html-encoder', '/website-status-checker'],
   }),
   '/url-decoder': S({
     title: 'URL Decoder Online - Decode Percent-Encoded URLs',
@@ -171,7 +171,7 @@ export const TOOL_SEO_DATA = {
     secondary: ['url decoder', 'url decode', 'percent decoder', 'decode url', 'decode url encoded text'],
     longTail: ['decode percent-encoded URL online', 'decode URL query parameters', 'turn %20 into spaces', 'decode encoded query strings', 'URL decode Unicode text'],
     intent: 'utility',
-    related: ['/url-encoder', '/query-string-parser', '/query-string-generator', '/base64-decoder', '/html-decoder'],
+    related: ['/url-encoder', '/query-string-parser', '/query-string-generator', '/base64-decoder', '/html-decoder', '/website-status-checker'],
   }),
   '/base64-encoder': S({
     title: 'Base64 Encoder Online - Encode Text to Base64',
@@ -315,7 +315,7 @@ export const TOOL_SEO_DATA = {
     secondary: ['timestamp converter', 'date timestamp converter', 'epoch converter', 'timestamp to date', 'date to timestamp'],
     longTail: ['convert Unix timestamp to date', 'convert date to Unix timestamp', 'convert seconds and milliseconds timestamps', 'read timestamp values from logs', 'convert ISO date to Unix time'],
     intent: 'utility',
-    related: ['/unix-timestamp', '/jwt-decoder', '/cron-expression-parser', '/number-base-converter', '/uuid-generator'],
+    related: ['/unix-timestamp', '/jwt-decoder', '/cron-expression-parser', '/number-base-converter', '/uuid-generator', '/cron-expression-generator'],
   }),
   '/unix-timestamp': S({
     title: 'Unix Timestamp Online - Current Epoch Time and Converter',
@@ -325,7 +325,7 @@ export const TOOL_SEO_DATA = {
     secondary: ['unix timestamp', 'unix timestamp converter', 'epoch time converter', 'epoch converter', 'unix time'],
     longTail: ['convert Unix time to a date', 'convert a date to Unix timestamp', 'convert Unix seconds to milliseconds', 'get the current Unix timestamp', 'decode an epoch timestamp'],
     intent: 'informational + utility',
-    related: ['/timestamp-converter', '/jwt-decoder', '/cron-expression-parser', '/number-base-converter', '/uuid-generator'],
+    related: ['/timestamp-converter', '/jwt-decoder', '/cron-expression-parser', '/number-base-converter', '/uuid-generator', '/cron-expression-generator'],
   }),
   '/color-converter': S({
     title: 'Color Converter Online - Convert HEX and RGB Colors',
@@ -427,7 +427,7 @@ export const TOOL_SEO_DATA = {
     secondary: ['yaml formatter', 'yaml beautifier', 'format yaml', 'yaml validator', 'pretty print yaml'],
     longTail: ['format YAML online', 'beautify Kubernetes YAML', 'format Docker Compose YAML', 'validate YAML indentation', 'format GitHub Actions YAML'],
     intent: 'utility + troubleshooting',
-    related: ['/yaml-to-json', '/json-formatter', '/json-validator', '/xml-formatter', '/diff-checker'],
+    related: ['/yaml-to-json', '/json-formatter', '/json-validator', '/xml-formatter', '/diff-checker', '/xml-validator'],
   }),
   '/text-counter': S({
     title: 'Text Counter Online - Count Characters, Words and Lines',
@@ -447,7 +447,7 @@ export const TOOL_SEO_DATA = {
     secondary: ['case converter', 'text case converter', 'uppercase converter', 'lowercase converter', 'camel case converter'],
     longTail: ['convert text to uppercase or lowercase', 'convert text to title case', 'convert text to camelCase', 'convert text to snake_case', 'change text case online'],
     intent: 'utility',
-    related: ['/text-counter', '/text-to-slug', '/slug-generator', '/diff-checker', '/regex-tester'],
+    related: ['/text-counter', '/text-to-slug', '/slug-generator', '/diff-checker', '/regex-tester', '/regex-generator'],
   }),
   '/text-to-slug': S({
     title: 'Text to Slug Converter - Turn Titles into URL Slugs',

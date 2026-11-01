@@ -16,6 +16,7 @@ const POPULAR = [
 const SITE_LINKS = [
   { name: "All Tools", path: "/tools" },
   { name: "Browse Categories", path: "/categories" },
+  { name: "Guides", path: "/guides" },
   { name: "About", path: "/about" },
   { name: "Privacy", path: "/privacy" },
   { name: "Terms", path: "/terms" },

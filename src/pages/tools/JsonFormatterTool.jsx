@@ -15,6 +15,16 @@ function parserLocation(message, input) {
   return { position, line: before.split('\n').length, column: position - before.lastIndexOf('\n') };
 }
 
+function depthOf(v) {
+  if (Array.isArray(v)) return 1 + v.reduce((m, x) => Math.max(m, depthOf(x)), 0);
+  if (v && typeof v === 'object') return 1 + Object.values(v).reduce((m, x) => Math.max(m, depthOf(x)), 0);
+  return 0;
+}
+function validSummary(value, raw) {
+  const type = Array.isArray(value) ? 'array' : value === null ? 'null' : typeof value;
+  const size = Array.isArray(value) ? `Items: ${value.length}` : value && typeof value === 'object' ? `Top-level keys: ${Object.keys(value).length}` : null;
+  return [`Valid JSON!`, `Root type: ${type}`, size, `Nesting depth: ${depthOf(value)}`, `Size: ${raw.length.toLocaleString()} characters`].filter(Boolean).join('\n');
+}
 function parseIndent(value) { return value === 'tab' ? '\t' : Number(value); }
 function sortKeys(value) {
   if (Array.isArray(value)) return value.map(sortKeys);
@@ -47,8 +57,9 @@ export default function JsonFormatterTool({ path }) {
 
   const isMinify = path.includes('minifi');
   const isValidate = path.includes('validat');
-  const actionLabel = isValidate ? 'Validate JSON' : isMinify ? 'Minify JSON' : 'Format JSON';
-  const outputLabel = isValidate ? 'Validation result' : isMinify ? 'Minified JSON' : 'Formatted JSON';
+  const isBeautify = path.includes('beautif');
+  const actionLabel = isValidate ? 'Validate JSON' : isMinify ? 'Minify JSON' : isBeautify ? 'Beautify JSON' : 'Format JSON';
+  const outputLabel = isValidate ? 'Validation result' : isMinify ? 'Minified JSON' : isBeautify ? 'Beautified JSON' : 'Formatted JSON';
 
   const process = () => {
     if (!inp.trim()) { setErr('Paste JSON into the input box first.'); setOut(''); setParsed(null); return; }
@@ -57,7 +68,7 @@ export default function JsonFormatterTool({ path }) {
       const working = sort ? sortKeys(value) : value;
       setParsed(working);
       if (isMinify) setOut(JSON.stringify(working));
-      else if (isValidate) setOut('Valid JSON!');
+      else if (isValidate) setOut(validSummary(working, inp));
       else setOut(JSON.stringify(working, null, parseIndent(indent)));
       setErr('');
     } catch (e) {
@@ -124,6 +135,7 @@ export default function JsonFormatterTool({ path }) {
 
         {err && <pre role="alert" className="whitespace-pre-wrap p-4 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded border border-red-200 dark:border-red-800">JSON error: {err}</pre>}
         {out && <OutputBox value={out} label={outputLabel} className="min-h-[220px]" textareaClassName={isValidate ? 'text-green-600 font-bold' : ''} downloadFilename={isValidate ? 'json-validation.txt' : isMinify ? 'formatted.min.json' : 'formatted.json'} />}
+        {isMinify && out && inp.length > 0 && <p className="text-sm" role="status">Size: {inp.length.toLocaleString()} characters before, {out.length.toLocaleString()} after ({inp.length > 0 ? Math.max(0, Math.round((1 - out.length / inp.length) * 100)) : 0}% smaller).</p>}
         {parsed != null && !isValidate && <div className="grid gap-4 md:grid-cols-2">
           <div className="p-4 border rounded bg-gray-50 dark:bg-gray-900"><h3 className="font-bold mb-2">JSON statistics</h3><pre className="text-sm whitespace-pre-wrap">{stats(parsed, inp)}</pre></div>
           {tree && <div className="p-4 border rounded bg-gray-50 dark:bg-gray-900"><div className="flex justify-between gap-2 mb-2"><h3 className="font-bold">Tree / structured view</h3><CopyButton text={treeText} /></div><pre className="text-sm overflow-auto max-h-72 whitespace-pre-wrap">{treeText}</pre></div>}

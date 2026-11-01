@@ -74,9 +74,9 @@ const enc = {
 
 // ---- UUID -----------------------------------------------------------------
 const uuid = {
-  '/uuid-generator': { lede: 'Generate random UUIDs (v4) in bulk and copy them.', what: 'UUID Generator creates random UUIDs using your browser\'s crypto.randomUUID(), the same kind of ID used for database keys and request IDs.', ex: ['Count: 3', '3b241101-e2bb-4255-8caf-4136c566a962\n(three random UUIDs, different every time)'], steps: ['Choose how many UUIDs you need.', 'Press generate.', 'Copy the list.'], tasks: ['Generate a UUID online', 'Create random GUIDs', 'Bulk UUID generator'] },
-  '/uuid-validator': { lede: 'Check whether a string is a correctly formatted UUID.', what: 'UUID Validator tests a string against the standard 8-4-4-4-12 hex layout, with a version digit of 1-5 and an RFC 4122 variant.', ex: ['123e4567-e89b-12d3-a456-426614174000', 'Valid UUID'], steps: ['Paste the UUID.', 'Press the validate button.', 'Read the result: Valid UUID or Invalid UUID.'], tasks: ['Validate a UUID', 'Check GUID format', 'Is this a valid UUID?'] },
-  '/uuid-parser': { lede: 'Read the version and variant of a UUID.', what: 'UUID Parser checks the UUID format and reports its version digit and variant.', ex: ['123e4567-e89b-12d3-a456-426614174000', 'Version: 1\nVariant: RFC 4122 (Leach-Salz)'], steps: ['Paste the UUID.', 'Press the parse button.', 'Read the version and variant.'], tasks: ['Parse a UUID', 'Find UUID version', 'Inspect a GUID'] },
+  '/uuid-generator': { lede: 'Generate UUID v4 or v7 in bulk, in the format you need, and copy them.', what: 'UUID Generator creates random UUIDs using your browser\'s crypto.randomUUID(), the same kind of ID used for database keys and request IDs.', ex: ['Count: 3', '3b241101-e2bb-4255-8caf-4136c566a962\n(three random UUIDs, different every time)'], steps: ['Choose how many UUIDs you need and pick version 4 (random) or version 7 (time-ordered).', 'Pick an output format: standard, UPPERCASE, no hyphens or {braces}.', 'Press generate and copy the list.'], tasks: ['Generate a UUID online', 'Create random GUIDs', 'Bulk UUID generator'] },
+  '/uuid-validator': { lede: 'Check whether a string is a correctly formatted UUID.', what: 'UUID Validator tests a string against the standard 8-4-4-4-12 hex layout, with a version digit of 1-8 and an RFC 4122 / RFC 9562 variant. The nil and max UUIDs are recognised as special values.', ex: ['123e4567-e89b-12d3-a456-426614174000', 'Valid UUID (version 1)'], steps: ['Paste the UUID (curly braces are fine).', 'Press the validate button.', 'Read the result: Valid UUID with its version, or Invalid UUID.'], tasks: ['Validate a UUID', 'Check GUID format', 'Is this a valid UUID?'] },
+  '/uuid-parser': { lede: 'Decode a UUID: version, variant and, for v1, v6 and v7, the embedded timestamp.', what: 'UUID Parser checks the UUID format, reports its version and variant, and converts the creation time stored in version 1, 6 and 7 UUIDs into a readable date.', ex: ['123e4567-e89b-12d3-a456-426614174000', 'Version: 1\nVariant: RFC 4122 / RFC 9562 (variant 1)\nKind: Time-based\nTimestamp: 2228-06-25T20:01:28.545Z'], steps: ['Paste the UUID.', 'Press the parse button.', 'Read the version, variant and any timestamp.'], tasks: ['Parse a UUID', 'Find UUID version', 'Inspect a GUID'] },
 };
 
 // ---- JWT ------------------------------------------------------------------
@@ -465,7 +465,7 @@ const GROUPS = [
     id: 'website',
     test: (p) => p === '/website-status-checker',
     build: (n) => ({
-      lede: 'Check whether a website or URL is reachable from your browser.',
+      lede: 'Is a site down for everyone or just you? Check whether a website or URL is reachable from your own browser and network.',
       meta: `${n}: check if a website is up by domain name or URL. Free, runs from your browser.`,
       what: `${n} sends a lightweight request from your browser to each address you enter and reports whether it answered, the HTTP status when the site allows it, any redirect and the response time.`,
       problem: 'When a page will not load you want to know whether it is the site, your network or a typo, without opening five different "is it down" sites.',
@@ -529,6 +529,28 @@ const EXTRA = {
   '/json-validator': {
     sections: [
       {
+        "h": "Validate JSON in your own code",
+        "paras": [
+          "Use the same strict rules in your application. Parsing is validation: if the parser throws, the JSON is invalid."
+        ],
+        "code": "// JavaScript\ntry { JSON.parse(text); } catch (e) { console.error(e.message); }\n\n// Python\nimport json\njson.loads(text)  # raises json.JSONDecodeError with line and column\n\n// C#\nusing var doc = System.Text.Json.JsonDocument.Parse(text);",
+        "links": [
+          [
+            "JSON Formatter",
+            "/json-formatter"
+          ],
+          [
+            "XML Validator",
+            "/xml-validator"
+          ],
+          [
+            "JSON to C#",
+            "/json-to-csharp"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
+      {
         h: 'What counts as valid JSON',
         paras: [
           'JSON (defined in RFC 8259) has seven kinds of value: object, array, string, number, true, false and null. Strings and keys use double quotes, items are separated by commas with no trailing comma, and comments are not allowed.',
@@ -560,6 +582,28 @@ const EXTRA = {
 
   '/json-beautifier': {
     sections: [
+      {
+        "h": "Beautify JSON in code and in the terminal",
+        "paras": [
+          "When a log line or API response is one long line, these commands expand it with 2-space indentation."
+        ],
+        "code": "// JavaScript\nJSON.stringify(JSON.parse(text), null, 2)\n\n# Python (terminal)\npython -m json.tool response.json\n\n# jq (terminal)\njq . response.json",
+        "links": [
+          [
+            "JSON Formatter",
+            "/json-formatter"
+          ],
+          [
+            "JSON Minifier",
+            "/json-minifier"
+          ],
+          [
+            "Diff Checker",
+            "/diff-checker"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
       {
         h: 'When to beautify JSON',
         list: [
@@ -597,6 +641,28 @@ const EXTRA = {
   '/json-minifier': {
     sections: [
       {
+        "h": "Minify JSON in code and see the size saved",
+        "paras": [
+          "Minifying removes whitespace outside strings and keeps the data the same. After you minify here, the page shows the character count before and after."
+        ],
+        "code": "// JavaScript\nJSON.stringify(JSON.parse(text))\n\n# jq (terminal)\njq -c . input.json\n\n# Python\nimport json\njson.dumps(json.loads(text), separators=(',', ':'))",
+        "links": [
+          [
+            "JSON Formatter",
+            "/json-formatter"
+          ],
+          [
+            "Base64 Encoder",
+            "/base64-encoder"
+          ],
+          [
+            "URL Encoder",
+            "/url-encoder"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
+      {
         h: 'What minifying removes',
         paras: [
           'The minifier removes spaces, tabs and line breaks that sit between JSON tokens. Whitespace inside a string value is part of the data, so it is kept.',
@@ -633,7 +699,7 @@ const EXTRA = {
         list: [
           'The class is named Root and gets one property for each top-level key.',
           'Numbers become double, true/false becomes bool and text becomes string.',
-          'Nested objects, arrays and null values become object, so refine those by hand.',
+          'Nested objects become their own classes, arrays become List<T>, and null values become object, so refine those by hand.',
           'Property names have their first letter capitalized: "name" becomes Name.',
         ],
       },
@@ -642,14 +708,14 @@ const EXTRA = {
         list: [
           'Rename Root to something meaningful such as OrderDto.',
           'Change double to int, long or decimal where the data calls for it. One sample cannot tell them apart.',
-          'Replace object with a real nested class or a List<T>.',
+          'Replace object (used for null values) with a real type once you know it.',
           'Mark properties nullable if a field can be missing.',
         ],
       },
       {
         h: 'Matching property names when you deserialize',
         paras: [
-          'System.Text.Json matches property names case-sensitively by default, so a JSON key "name" will not fill a property called Name unless you allow it. Either enable case-insensitive matching or add an attribute such as [JsonPropertyName("name")]. Newtonsoft.Json matches case-insensitively by default.',
+          'System.Text.Json matches property names case-sensitively by default, so a JSON key "name" will not fill a property called Name unless you allow it. Either enable case-insensitive matching or add an attribute such as [JsonPropertyName("name")]. Pick System.Text.Json or Newtonsoft.Json in the Property attributes menu and the generator adds the matching attribute to every property. Newtonsoft.Json matches case-insensitively by default.',
         ],
         code: 'var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };\nvar root = JsonSerializer.Deserialize<Root>(json, options);',
         links: [['JSON to TypeScript', '/json-to-typescript'], ['JSON Formatter', '/json-formatter'], ['JSON Validator', '/json-validator']],
@@ -657,9 +723,9 @@ const EXTRA = {
       },
     ],
     faqs: [
-      q('Can it generate nested classes?', 'No. It maps top-level keys only. Nested objects and arrays are typed as object, and you create the nested classes yourself.'),
+      q('Can it generate nested classes?', 'Yes. Each nested object becomes its own class and arrays of objects become List<T>. Only null values fall back to object.'),
       q('Why are all numbers double?', 'A JSON sample does not show whether a number is an integer or a decimal, so the tool uses double for every number. Change it to int, long or decimal where appropriate.'),
-      q('Does the output work with System.Text.Json and Newtonsoft.Json?', 'Yes. The output is a plain class with get/set properties. Check the property-name matching described above before you deserialize.'),
+      q('Does the output work with System.Text.Json and Newtonsoft.Json?', 'Yes. Choose the attribute style in the Property attributes menu: [JsonPropertyName] for System.Text.Json, [JsonProperty] for Newtonsoft.Json, or none for a plain class.'),
     ],
   },
 
@@ -781,20 +847,20 @@ const EXTRA = {
         h: 'What a UUID looks like',
         paras: [
           'A UUID is a 128-bit identifier written as 32 hexadecimal digits in five groups, 8-4-4-4-12, for example 3b241101-e2bb-4255-8caf-4136c566a962. In .NET and some databases it is called a GUID.',
-          'This tool generates version 4 UUIDs, which are made of random bits. The version digit 4 appears at the start of the third group, and the first digit of the fourth group is 8, 9, a or b.',
+          'This tool generates version 4 UUIDs (random bits) or version 7 UUIDs (a millisecond timestamp followed by random bits). The version digit appears at the start of the third group, and the first digit of the fourth group is 8, 9, a or b.',
         ],
       },
       {
         h: 'How the UUIDs are generated',
         paras: [
-          'Each UUID comes from your browser\'s crypto.randomUUID(), which uses a cryptographically secure random source. You can generate 1, 5, 10, 25, 50 or 100 at a time. Nothing is stored or sent anywhere.',
+          'Version 4 UUIDs come from your browser\'s crypto.randomUUID(), which uses a cryptographically secure random source; version 7 UUIDs combine the current time with secure random bytes. You can generate 1, 5, 10, 25, 50 or 100 at a time and choose standard, UPPERCASE, no-hyphen or {braces} output. Nothing is stored or sent anywhere.',
         ],
       },
       {
         h: 'When to use UUIDs, and when to think twice',
         list: [
           'Good for: primary keys created on the client, request and correlation IDs, test fixtures and unique file names.',
-          'Random UUIDs make poor clustered index keys in some databases, because new rows land at random positions and cause page splits. Time-ordered UUIDs such as version 7 are designed for that case. This tool does not generate them.',
+          'Random UUIDs make poor clustered index keys in some databases, because new rows land at random positions and cause page splits. Time-ordered UUIDs such as version 7 are designed for that case, and you can generate them here.',
           'A UUID is an identifier, not a secret. Do not use one as a password or an authorization token.',
         ],
         links: [['UUID Validator', '/uuid-validator'], ['UUID Parser', '/uuid-parser'], ['Hash Generator', '/hash-generator'], ['Timestamp Converter', '/timestamp-converter']],

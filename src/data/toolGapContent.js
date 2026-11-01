@@ -166,7 +166,7 @@ export const TOOL_GAP = {
   '/uuid-generator': {
     tasks: ['Generate UUID v4 online', 'Generate UUID v7 online', 'Generate 100 UUIDs at once', 'Create random UUIDs for test data or database keys'],
     faqs: [
-      f('What is the difference between UUID v4 and UUID v7?', 'UUID v4 is almost entirely random. UUID v7 starts with a millisecond timestamp followed by random bits, so values created later sort after earlier ones. That makes v7 friendlier to database indexes. Both are available here.'),
+      f('What is the difference between UUID v4 and UUID v7?', 'UUID v4 is almost entirely random. UUID v7 starts with a millisecond timestamp followed by random bits, so values created later sort after earlier ones. That makes v7 friendlier to database indexes. Both are available here, in standard, UPPERCASE, no-hyphen and {braces} formats.'),
       f('How do I generate a UUID in JavaScript, C# or Python?', 'Use crypto.randomUUID() in JavaScript, Guid.NewGuid() in C# and uuid.uuid4() in Python.'),
     ],
   },
@@ -174,14 +174,14 @@ export const TOOL_GAP = {
     tasks: ['Check if a string is a valid UUID', 'Validate a GUID format', 'Check a UUID before saving it to a database', 'Test whether an id matches the 8-4-4-4-12 pattern'],
     faqs: [
       f('What does a valid UUID look like?', 'Thirty-two hexadecimal digits in five groups of 8-4-4-4-12 separated by hyphens, for example 123e4567-e89b-12d3-a456-426614174000. The validator also checks the version digit and the variant.'),
-      f('Is the nil UUID 00000000-0000-0000-0000-000000000000 valid here?', 'No. The nil UUID is a special reserved value, but this validator only accepts UUIDs with a version digit from 1 to 8, so it reports the nil UUID as invalid.'),
+      f('Is the nil UUID 00000000-0000-0000-0000-000000000000 valid here?', 'Yes. The nil UUID is a special reserved value and the validator recognises it, along with the all-ones max UUID. Other UUIDs must have a version digit from 1 to 8.'),
     ],
   },
   '/uuid-parser': {
     tasks: ['Find the version of a UUID', 'Check the UUID variant', 'Check whether a UUID contains a timestamp', 'Inspect a GUID from a log or database'],
     faqs: [
       f('Where is the version digit in a UUID?', 'It is the first character of the third group. In 123e4567-e89b-12d3-a456-426614174000 it is 1. The tool reports that version and the RFC 9562 variant.'),
-      f('Can the parser read the timestamp out of a UUID?', 'The parser tells you whether the UUID is a version 7 value, which carries a millisecond timestamp in its first 48 bits. It does not convert that timestamp into a date.'),
+      f('Can the parser read the timestamp out of a UUID?', 'Yes for versions 1, 6 and 7. It converts the embedded time into a UTC date. Versions 3, 4 and 5 carry no creation time, and the parser says so.'),
     ],
   },
   '/jwt-generator': {
@@ -246,14 +246,15 @@ export const TOOL_GAP = {
     tasks: ['Convert a HEX color code to RGB', 'Convert #3B82F6 to rgb()', 'Convert a 3-digit hex color to RGB', 'Get RGB values for CSS from a design hex code'],
     faqs: [
       f('How do I convert #3B82F6 to RGB?', 'Read the hex code in pairs: 3B is 59, 82 is 130 and F6 is 246, so #3B82F6 is rgb(59, 130, 246).'),
-      f('Does it support 8-digit hex codes with alpha?', 'Only the first six digits are read, so the alpha pair is ignored and you get a plain rgb() value. Enter the code with its leading # sign.'),
+      f('Does it support 8-digit hex codes with alpha?', 'Yes. An 8-digit code such as #3B82F680 converts to rgba(59, 130, 246, 0.5), where the last two digits become the alpha value.'),
     ],
   },
   '/rgb-to-hex': {
     tasks: ['Convert RGB to a HEX color code', 'Convert rgb(59, 130, 246) to hex', 'Turn CSS rgb values into a hex code', 'Get an uppercase hex code for a design tool'],
     faqs: [
       f('How do I convert rgb(59, 130, 246) to hex?', 'Convert each channel to two hex digits: 59 is 3B, 130 is 82 and 246 is F6. Together that is #3B82F6.'),
-      f('What range should each RGB value be in?', 'Each channel is 0 to 255. The tool does not clamp values, so a number above 255 produces a malformed hex code. Check your values first.'),
+      f('What range should each RGB value be in?', 'Each channel is a whole number from 0 to 255. A value outside that range shows an error instead of a hex code.'),
+      f('Does RGB to HEX support alpha (rgba)?', 'Yes. rgba(59, 130, 246, 0.5) becomes the 8-digit code #3B82F680, where the last two digits are the alpha value.'),
     ],
   },
   '/query-string-parser': {
@@ -274,6 +275,7 @@ export const TOOL_GAP = {
     tasks: ['Write a cron expression for every 5 minutes', 'Schedule a cron job at midnight', 'Run a cron job on weekdays at 9 AM', 'Check what a cron schedule means in plain English'],
     faqs: [
       f('What does */5 * * * * mean?', 'It runs every 5 minutes. The */5 in the minute field means every fifth minute, and the stars mean every hour, day, month and weekday.'),
+      f('Can I pick a schedule instead of typing one?', 'Yes. Use the common-schedule buttons (every minute, every 5 minutes, hourly, daily at midnight, weekdays at 9:00, Mondays at 8:30, 1st of the month) and edit the result to fit your job.'),
       f('How do I run a cron job every day at midnight or at 9 AM on weekdays?', 'Use 0 0 * * * for every day at midnight and 0 9 * * 1-5 for 9:00 AM from Monday to Friday. Paste either one into the field to see it described in plain English.'),
     ],
   },

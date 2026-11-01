@@ -18,6 +18,7 @@ export default function JsonConverterTool({ path }) {
   const [err, setErr] = useState('');
   const [rootName, setRootName] = useState('Root');
   const [optional, setOptional] = useState(false);
+  const [csStyle, setCsStyle] = useState('none');
   const lang = path.split('-to-')[1];
 
   const convert = () => {
@@ -53,7 +54,10 @@ export default function JsonConverterTool({ path }) {
       buildClass(rootName || 'Root', root);
 
       const render = (cls) => {
-        if (lang === 'csharp') return `public class ${cls.name} {\n${cls.props.map(p=>`    public ${p.type}${optional?'?':''} ${pascal(p.key)} { get; set; }`).join('\n')}\n}`;
+        if (lang === 'csharp') {
+          const attr = (key) => csStyle === 'newtonsoft' ? `    [JsonProperty(${JSON.stringify(key)})]\n` : csStyle === 'stj' ? `    [JsonPropertyName(${JSON.stringify(key)})]\n` : '';
+          return `public class ${cls.name} {\n${cls.props.map(p=>`${attr(p.key)}    public ${p.type}${optional?'?':''} ${pascal(p.key)} { get; set; }`).join('\n')}\n}`;
+        }
         if (lang === 'typescript') return `export interface ${cls.name} {\n${cls.props.map(p=>`    ${safeProp(p.key)}${optional?'?':''}: ${p.type};`).join('\n')}\n}`;
         if (lang === 'java') return `public class ${cls.name} {\n${cls.props.map(p=>`    private ${p.type} ${p.key};`).join('\n')}\n}`;
         if (lang === 'python') return `@dataclass\nclass ${cls.name}:\n${cls.props.map(p=>`    ${p.key}: ${p.type}${optional?' | None':''}`).join('\n') || '    pass'}`;
@@ -65,7 +69,7 @@ export default function JsonConverterTool({ path }) {
       let header = '';
       if (lang === 'python') header = 'from dataclasses import dataclass\nfrom typing import Any, Optional, List\n\n';
       if (lang === 'java') header = 'import java.util.List;\n\n';
-      if (lang === 'csharp') header = 'using System.Collections.Generic;\n\n';
+      if (lang === 'csharp') header = 'using System.Collections.Generic;\n' + (csStyle === 'newtonsoft' ? 'using Newtonsoft.Json;\n' : csStyle === 'stj' ? 'using System.Text.Json.Serialization;\n' : '') + '\n';
       setOut(header + classes.reverse().map(render).join('\n\n'));
       setErr('');
     } catch (e) { setErr(e.message || 'Could not convert JSON.'); setOut(''); }
@@ -80,6 +84,16 @@ export default function JsonConverterTool({ path }) {
           <label className="text-sm font-medium" htmlFor="root-name">Root type name</label>
           <input id="root-name" value={rootName} onChange={e=>setRootName(e.target.value)} className="px-3 py-2 border rounded bg-white dark:bg-gray-900" />
           <label className="flex items-center gap-2 text-sm"><input type="checkbox" checked={optional} onChange={e=>setOptional(e.target.checked)} /> Optional / nullable properties</label>
+          {lang === 'csharp' && (
+            <>
+              <label className="text-sm font-medium" htmlFor="cs-style">Property attributes</label>
+              <select id="cs-style" value={csStyle} onChange={e=>setCsStyle(e.target.value)} className="px-3 py-2 border rounded bg-white dark:bg-gray-900">
+                <option value="none">None</option>
+                <option value="stj">System.Text.Json ([JsonPropertyName])</option>
+                <option value="newtonsoft">Newtonsoft.Json ([JsonProperty])</option>
+              </select>
+            </>
+          )}
         </div>
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-3">

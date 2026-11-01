@@ -9,6 +9,7 @@ import { getToolContent } from './toolContent.js';
 import { TOOL_SEO_DATA } from './toolSeoData.js';
 import { SEO_RESEARCH } from './seoResearch.js';
 import { CATEGORY_PAGES, categoryPath } from './categoryContent.js';
+import { GUIDES, GUIDE_ROUTES, GUIDES_UPDATED, getGuide } from './guides.js';
 
 export const SITE_URL = 'https://onlinedevelopertool.com';
 export const SITE_NAME = 'OnlineDeveloperTool';
@@ -19,7 +20,29 @@ export const OG_IMAGE_PATH = '/images/og-onlinedevelopertool.webp';
 export const DEFAULT_IMAGE = `${SITE_URL}${OG_IMAGE_PATH}`;
 
 // Bump this when page content genuinely changes. It feeds <lastmod> in sitemap.xml.
-export const CONTENT_LAST_MODIFIED = '2026-10-31';
+export const CONTENT_LAST_MODIFIED = '2026-11-01'; // newest change anywhere on the site
+
+// Per-page dates feed the visible "Updated" line, JSON-LD dateModified and sitemap <lastmod>.
+// Add a route to a list below only when its content or behaviour really changes, and bump
+// CONTENT_LAST_MODIFIED to match. Everything else keeps the baseline date.
+const BASELINE_MODIFIED = '2026-10-25';
+const MODIFIED_ON = {
+  '2026-10-31': [
+    '/', '/categories',
+    '/uuid-generator', '/uuid-validator', '/uuid-parser', '/rgb-to-hex', '/hex-to-rgb', '/color-converter',
+    '/json-to-csharp', '/json-validator', '/json-beautifier', '/json-minifier', '/website-status-checker',
+    '/cron-expression-generator', '/cron-expression-parser',
+    '/json-to-typescript', '/json-to-java', '/json-to-python', '/json-to-go', '/url-encoder', '/url-decoder',
+    '/html-encoder', '/html-decoder', '/timestamp-converter', '/unix-timestamp', '/xml-formatter', '/xml-validator',
+    '/yaml-formatter', '/case-converter', '/text-to-slug', '/slug-generator', '/number-base-converter',
+    '/binary-to-decimal', '/decimal-to-binary', '/hex-to-decimal', '/decimal-to-hex',
+  ],
+};
+export function getLastModified(path) {
+  if (path === '/guides' || path.startsWith('/guides/')) return GUIDES_UPDATED;
+  for (const [date, paths] of Object.entries(MODIFIED_ON)) if (paths.includes(path)) return date;
+  return BASELINE_MODIFIED;
+}
 
 // ---------------------------------------------------------------- Homepage
 export const HOME_TITLE = 'Online Developer Tools - Free JSON, JWT, Base64 & More';
@@ -148,6 +171,11 @@ export function getHomeJsonLd() {
 
 // ------------------------------------------------------- Non-tool pages
 export const PAGE_SEO = {
+  '/guides': {
+    title: 'Developer Guides: JSON, JWT, UUID, Cron and More',
+    description: 'Practical developer tutorials with working code: check if a site is down, read UUIDs and JWTs, convert RGB to HEX, fix JSON errors and more.',
+    h1: 'Developer Guides',
+  },
   '/tools': {
     title: 'All Free Developer Tools - JSON, JWT, Base64, UUID & More',
     description: 'Complete list of free online developer tools: JSON, Base64, URL and HTML encoding, JWT, UUID, hashes, timestamps, regex, cron, diff and more.',
@@ -188,11 +216,49 @@ for (const c of Object.values(CATEGORY_PAGES)) {
 }
 
 // Link target for a category: its real page when one exists, otherwise the filtered tools list.
-export const categoryLink = (category) => categoryPath(category) || `/tools?category=${encodeURIComponent(category)}`;
+// A category with exactly one tool and no page of its own links straight to that tool, so the
+// link goes to a real, canonical, indexable URL instead of a client-rendered ?category= filter.
+export const categoryLink = (category) => {
+  const own = categoryPath(category);
+  if (own) return own;
+  const only = TOOLS.filter((t) => t.category === category);
+  return only.length === 1 ? only[0].path : `/tools?category=${encodeURIComponent(category)}`;
+};
 
 export function getCategoryByPath(path) {
   const entry = Object.entries(CATEGORY_PAGES).find(([, c]) => `/category/${c.slug}` === path);
   return entry ? { category: entry[0], ...entry[1] } : null;
+}
+
+export function getGuideJsonLd(guide) {
+  const url = `${SITE_URL}/guides/${guide.slug}`;
+  const org = { '@type': 'Organization', name: SITE_NAME, url: `${SITE_URL}/` };
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+          { '@type': 'ListItem', position: 2, name: 'Guides', item: `${SITE_URL}/guides` },
+          { '@type': 'ListItem', position: 3, name: guide.h1, item: url },
+        ],
+      },
+      {
+        '@type': 'Article',
+        '@id': `${url}#article`,
+        headline: guide.h1,
+        description: guide.description,
+        datePublished: GUIDES_UPDATED,
+        dateModified: GUIDES_UPDATED,
+        author: org,
+        publisher: org,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+        image: DEFAULT_IMAGE,
+        inLanguage: 'en',
+      },
+    ],
+  };
 }
 
 export function getCategoryJsonLd(category) {
@@ -269,7 +335,7 @@ export function getToolSeo(path, fallbackName, fallbackDesc) {
         url: `${SITE_URL}${path}`,
         name,
         description,
-        dateModified: CONTENT_LAST_MODIFIED,
+        dateModified: getLastModified(path),
         isPartOf: { '@id': `${SITE_URL}/#website` },
         mainEntity: { '@id': `${SITE_URL}${path}#application` },
       },
@@ -303,13 +369,17 @@ export const CATEGORY_ROUTES = Object.values(CATEGORY_PAGES).map((c) => `/catego
 // Every indexable URL, in sitemap order. App.jsx's route list must stay in sync with this
 // (scripts/prerender.mjs fails the build if a route here is missing from App.jsx).
 export function getIndexableRoutes() {
-  return [...STATIC_ROUTES.slice(0, 3), ...CATEGORY_ROUTES, ...STATIC_ROUTES.slice(3), ...TOOLS.map((t) => t.path)];
+  return [...STATIC_ROUTES.slice(0, 3), ...CATEGORY_ROUTES, ...STATIC_ROUTES.slice(3), '/guides', ...GUIDE_ROUTES, ...TOOLS.map((t) => t.path)];
 }
 
 // One lookup used by the prerender script: head values + JSON-LD for ANY indexable route.
 export function getRouteSeo(path) {
   if (path === '/') {
     return { kind: 'home', title: HOME_TITLE, description: HOME_DESC, social: HOME_SOCIAL_DESC, h1: HOME_H1, jsonLd: getHomeJsonLd() };
+  }
+  const guide = getGuide(path);
+  if (guide) {
+    return { kind: 'guide', title: guide.title, description: guide.description, h1: guide.h1, jsonLd: getGuideJsonLd(guide), guide };
   }
   const cat = getCategoryByPath(path);
   if (cat) {
