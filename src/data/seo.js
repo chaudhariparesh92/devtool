@@ -10,6 +10,7 @@ import { TOOL_SEO_DATA } from './toolSeoData.js';
 import { SEO_RESEARCH } from './seoResearch.js';
 import { CATEGORY_PAGES, categoryPath } from './categoryContent.js';
 import { GUIDES, GUIDE_ROUTES, GUIDES_UPDATED, getGuide } from './guides.js';
+import { GUIDES, GUIDE_ROUTES, GUIDES_UPDATED, getGuide } from './guides.js';
 
 export const SITE_URL = 'https://onlinedevelopertool.com';
 export const SITE_NAME = 'OnlineDeveloperTool';

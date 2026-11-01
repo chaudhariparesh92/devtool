@@ -172,6 +172,25 @@ export const EXTRA_MORE = {
         "linksLabel": "Related"
       },
       {
+        "h": "Pretty print XML in code and the terminal",
+        "code": "# xmllint (terminal)\nxmllint --format input.xml\n# Python\nimport xml.dom.minidom\nxml.dom.minidom.parseString(text).toprettyxml()\n// C#\nSystem.Xml.Linq.XDocument.Parse(text).ToString()",
+        "links": [
+          [
+            "XML Validator",
+            "/xml-validator"
+          ],
+          [
+            "YAML Formatter",
+            "/yaml-formatter"
+          ],
+          [
+            "Diff Checker",
+            "/diff-checker"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
+      {
         h: 'XML formatter example',
         code: '<root><user id="1"><name>Ada</name></user></root>\n\n// formatted output\n<root>\n    <user id="1">\n        <name>Ada</name>\n    </user>\n</root>',
       },
@@ -589,6 +608,7 @@ export const EXTRA_MORE = {
       },
       {
         h: 'RGB to HEX in this tool',
+        list: ['Type rgb(255, 87, 51), rgba(255, 87, 51, 0.5) or just 255, 87, 51. Whole numbers from 0 to 255 are accepted.', 'Results are uppercase with a leading #. An alpha value adds a two-digit alpha pair (8-digit HEX).', 'A value above 255 shows an error message instead of a malformed code.'],
         list: ['Type rgb(255, 87, 51), rgba(255, 87, 51, 0.5) or just 255, 87, 51. Whole numbers from 0 to 255 are accepted.', 'Results are uppercase with a leading #. An alpha value adds a two-digit alpha pair (8-digit HEX).', 'A value above 255 shows an error message instead of a malformed code.'],
         links: [['HEX to RGB Converter', '/hex-to-rgb'], ['Color Converter', '/color-converter'], ['Decimal to Hex Converter', '/decimal-to-hex']],
         linksLabel: 'Related',
