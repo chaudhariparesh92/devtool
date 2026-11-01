@@ -1,12 +1,11 @@
 import { useMemo, useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
-import * as Diff from 'diff';
 import CopyButton from '../../components/CopyButton';
 import FileDropZone from '../../components/FileDropZone';
 
 export default function DiffTool({ path }) {
   const [t1,setT1]=useState(''); const [t2,setT2]=useState(''); const [diffRes,setDiffRes]=useState([]); const [mode,setMode]=useState('lines'); const [ignoreWhitespace,setIgnoreWhitespace]=useState(false);
-  const compare=()=>{ const a=ignoreWhitespace?t1.replace(/\s+/g,' ').trim():t1; const b=ignoreWhitespace?t2.replace(/\s+/g,' ').trim():t2; setDiffRes(mode==='words'?Diff.diffWords(a,b):mode==='chars'?Diff.diffChars(a,b):Diff.diffLines(a,b)); };
+  const compare=async()=>{ const Diff=await import('diff'); const a=ignoreWhitespace?t1.replace(/\s+/g,' ').trim():t1; const b=ignoreWhitespace?t2.replace(/\s+/g,' ').trim():t2; setDiffRes(mode==='words'?Diff.diffWords(a,b):mode==='chars'?Diff.diffChars(a,b):Diff.diffLines(a,b)); };
   const diffText=useMemo(()=>diffRes.map(p=>(p.added?'+ ':p.removed?'- ':'  ')+p.value).join(''),[diffRes]);
   const load=(setter)=>(file)=>{if(!file)return;const r=new FileReader();r.onload=()=>setter(String(r.result||''));r.readAsText(file);};
   return <ToolLayout title="Diff Checker" desc="Compare text, code or files with line, word and character differences." path={path}><div className="p-6 space-y-4">

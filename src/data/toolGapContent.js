@@ -41,8 +41,10 @@ export const TOOL_GAP = {
     ],
   },
   '/json-to-csharp': {
-    tasks: ['Convert JSON to a C# class online', 'Generate a C# model from an API response', 'Create C# classes for nested JSON objects', 'Set the root class name for generated C# code'],
+    tasks: ['Convert JSON to a C# class online', 'Generate a C# model from an API response', 'Create C# classes for nested JSON objects', 'Add System.Text.Json or Newtonsoft attributes', 'Set the root class name for generated C# code'],
     faqs: [
+      f('Is this a JSON to C# model generator?', 'Yes. Paste a JSON object and it generates C# classes: a root class, a class for each nested object and List<T> for arrays. You can choose System.Text.Json or Newtonsoft.Json attributes and mark properties nullable.'),
+      f('How do I convert JSON to C# in Visual Studio?', 'Visual Studio has Edit > Paste Special > Paste JSON as Classes. This page does the same job in the browser, with attribute and nullable options, when you are not in the IDE.'),
       f('How do I convert a JSON array to a C# class?', 'Paste a single object from the array. The tool expects the root value to be a JSON object and returns an error for a bare array. Arrays of objects inside that object become List<T> properties with their own generated class.'),
       f('Can I rename the root class or mark properties nullable?', 'Yes. Use the root type name field to change the name from Root. The Optional / nullable properties checkbox adds a ? to each property type so missing values are allowed.'),
     ],
@@ -141,8 +143,10 @@ export const TOOL_GAP = {
     ],
   },
   '/html-encoder': {
-    tasks: ['Escape HTML special characters', 'Convert < and > to HTML entities', 'Encode HTML for display inside a web page', 'Escape an ampersand as &amp;'],
+    tasks: ['HTML encode a string online', 'Online HTML encoder tool', 'Escape HTML special characters', 'Convert < and > to HTML entities', 'Encode HTML for display inside a web page', 'Escape an ampersand as &amp;'],
     faqs: [
+      f('How do I HTML encode a string online?', 'Paste or type the string into the input box. The encoded text appears as you type, with & written as &amp;, < as &lt; and > as &gt;. Press Copy and paste the result into your page.'),
+      f('Is this HTML encoder tool free?', 'Yes. It is free, needs no account and runs in your browser, so the text you enter is not sent to a server.'),
       f('Is HTML encoding enough to prevent XSS?', 'No. Escaping & < > is one part of output encoding, and the right escaping depends on where the text lands: element content, an attribute value, JavaScript or a URL. Use your framework\'s built-in escaping, and add a Content Security Policy for defense in depth.'),
       f('What is the difference between &lt; and &#60;?', 'They are two spellings of the same character. &lt; is a named entity and &#60; is a numeric one. This tool writes the named forms &amp;, &lt; and &gt;.'),
     ],
@@ -164,24 +168,28 @@ export const TOOL_GAP = {
 
   // ------------------------------------------------------------------ Generators and hashes
   '/uuid-generator': {
-    tasks: ['Generate UUID v4 online', 'Generate UUID v7 online', 'Generate 100 UUIDs at once', 'Create random UUIDs for test data or database keys'],
+    tasks: ['Generate a random UUID', 'Online UUID generator tool', 'Custom UUID format: uppercase, no hyphens, braces', 'Generate UUID v4 online', 'Generate UUID v7 online', 'Generate 100 UUIDs at once', 'Create random UUIDs for test data or database keys'],
     faqs: [
-      f('What is the difference between UUID v4 and UUID v7?', 'UUID v4 is almost entirely random. UUID v7 starts with a millisecond timestamp followed by random bits, so values created later sort after earlier ones. That makes v7 friendlier to database indexes. Both are available here.'),
+      f('How do I generate a random UUID online?', 'Choose how many you need, pick version 4 (random) or version 7 (time-ordered), press generate and copy the list. Version 4 values come from your browser\'s secure random source, and nothing is sent to a server.'),
+      f('Can I customize the UUID format?', 'Yes. Output can be standard lowercase, UPPERCASE, without hyphens, or wrapped in {braces} for GUID style. The version (v4 or v7) is selectable, and the layout is always the standard 8-4-4-4-12 one.'),
+      f('What is the difference between UUID v4 and UUID v7?', 'UUID v4 is almost entirely random. UUID v7 starts with a millisecond timestamp followed by random bits, so values created later sort after earlier ones. That makes v7 friendlier to database indexes. Both are available here, in standard, UPPERCASE, no-hyphen and {braces} formats.'),
       f('How do I generate a UUID in JavaScript, C# or Python?', 'Use crypto.randomUUID() in JavaScript, Guid.NewGuid() in C# and uuid.uuid4() in Python.'),
     ],
   },
   '/uuid-validator': {
-    tasks: ['Check if a string is a valid UUID', 'Validate a GUID format', 'Check a UUID before saving it to a database', 'Test whether an id matches the 8-4-4-4-12 pattern'],
+    tasks: ['UUID version checker', 'Validate a GUID', 'Check if a string is a valid UUID', 'Validate a GUID format', 'Check a UUID before saving it to a database', 'Test whether an id matches the 8-4-4-4-12 pattern'],
     faqs: [
+      f('How do I check the version of a UUID?', 'Paste it and press validate: the result states the version, for example Valid UUID (version 4). The version is the first digit of the third group. For the variant and any embedded timestamp, use the UUID Parser.'),
+      f('Is there a difference between a GUID validator and a UUID validator?', 'No. GUID is the Microsoft name for the same 128-bit identifier, so a GUID such as 123e4567-e89b-12d3-a456-426614174000 is checked the same way. Curly braces around it are accepted.'),
       f('What does a valid UUID look like?', 'Thirty-two hexadecimal digits in five groups of 8-4-4-4-12 separated by hyphens, for example 123e4567-e89b-12d3-a456-426614174000. The validator also checks the version digit and the variant.'),
-      f('Is the nil UUID 00000000-0000-0000-0000-000000000000 valid here?', 'No. The nil UUID is a special reserved value, but this validator only accepts UUIDs with a version digit from 1 to 8, so it reports the nil UUID as invalid.'),
+      f('Is the nil UUID 00000000-0000-0000-0000-000000000000 valid here?', 'Yes. The nil UUID is a special reserved value and the validator recognises it, along with the all-ones max UUID. Other UUIDs must have a version digit from 1 to 8.'),
     ],
   },
   '/uuid-parser': {
     tasks: ['Find the version of a UUID', 'Check the UUID variant', 'Check whether a UUID contains a timestamp', 'Inspect a GUID from a log or database'],
     faqs: [
       f('Where is the version digit in a UUID?', 'It is the first character of the third group. In 123e4567-e89b-12d3-a456-426614174000 it is 1. The tool reports that version and the RFC 9562 variant.'),
-      f('Can the parser read the timestamp out of a UUID?', 'The parser tells you whether the UUID is a version 7 value, which carries a millisecond timestamp in its first 48 bits. It does not convert that timestamp into a date.'),
+      f('Can the parser read the timestamp out of a UUID?', 'Yes for versions 1, 6 and 7. It converts the embedded time into a UTC date. Versions 3, 4 and 5 carry no creation time, and the parser says so.'),
     ],
   },
   '/jwt-generator': {
@@ -229,8 +237,10 @@ export const TOOL_GAP = {
     ],
   },
   '/unix-timestamp': {
-    tasks: ['Convert epoch time to a human-readable date', 'Check whether a timestamp is in seconds or milliseconds', 'Convert a date string to epoch time', 'Read a timestamp from a log line or API response'],
+    tasks: ['Get the current Unix timestamp', 'See Unix time today', 'Convert epoch time to a human-readable date', 'Check whether a timestamp is in seconds or milliseconds', 'Convert a date string to epoch time', 'Read a timestamp from a log line or API response'],
     faqs: [
+      f('What is the current Unix timestamp?', 'The live value is shown at the top of the page in seconds and milliseconds and updates every second, together with the current UTC date. Copy it with the buttons next to it.'),
+      f('How do I get the Unix timestamp for today or another date?', 'The live panel gives the timestamp for right now. For any other date, type an ISO 8601 date such as 2026-11-01T00:00:00Z into the converter and read the seconds value.'),
       f('What is epoch time?', 'Epoch time, also called Unix time or POSIX time, counts the time since 1 January 1970 at 00:00:00 UTC. The same moment is the same number everywhere, whatever the local time zone.'),
       f('Can I convert a date like 2026-10-31T10:00:00Z to a Unix timestamp?', 'Yes. Type an ISO 8601 date into the input instead of a number. The result shows the Unix time in seconds, milliseconds, microseconds and nanoseconds.'),
     ],
@@ -246,14 +256,15 @@ export const TOOL_GAP = {
     tasks: ['Convert a HEX color code to RGB', 'Convert #3B82F6 to rgb()', 'Convert a 3-digit hex color to RGB', 'Get RGB values for CSS from a design hex code'],
     faqs: [
       f('How do I convert #3B82F6 to RGB?', 'Read the hex code in pairs: 3B is 59, 82 is 130 and F6 is 246, so #3B82F6 is rgb(59, 130, 246).'),
-      f('Does it support 8-digit hex codes with alpha?', 'Only the first six digits are read, so the alpha pair is ignored and you get a plain rgb() value. Enter the code with its leading # sign.'),
+      f('Does it support 8-digit hex codes with alpha?', 'Yes. An 8-digit code such as #3B82F680 converts to rgba(59, 130, 246, 0.5), where the last two digits become the alpha value.'),
     ],
   },
   '/rgb-to-hex': {
-    tasks: ['Convert RGB to a HEX color code', 'Convert rgb(59, 130, 246) to hex', 'Turn CSS rgb values into a hex code', 'Get an uppercase hex code for a design tool'],
+    tasks: ['Convert RGB to a HEX color code', 'Convert rgb(59, 130, 246) to hex', 'Change RGB to hex for CSS', 'Turn CSS rgb values into a hex code', 'Get an uppercase hex code for a design tool', 'Convert RGB to hexadecimal'],
     faqs: [
       f('How do I convert rgb(59, 130, 246) to hex?', 'Convert each channel to two hex digits: 59 is 3B, 130 is 82 and 246 is F6. Together that is #3B82F6.'),
-      f('What range should each RGB value be in?', 'Each channel is 0 to 255. The tool does not clamp values, so a number above 255 produces a malformed hex code. Check your values first.'),
+      f('What range should each RGB value be in?', 'Each channel is a whole number from 0 to 255. A value outside that range shows an error instead of a hex code.'),
+      f('Does RGB to HEX support alpha (rgba)?', 'Yes. rgba(59, 130, 246, 0.5) becomes the 8-digit code #3B82F680, where the last two digits are the alpha value.'),
     ],
   },
   '/query-string-parser': {
@@ -274,6 +285,7 @@ export const TOOL_GAP = {
     tasks: ['Write a cron expression for every 5 minutes', 'Schedule a cron job at midnight', 'Run a cron job on weekdays at 9 AM', 'Check what a cron schedule means in plain English'],
     faqs: [
       f('What does */5 * * * * mean?', 'It runs every 5 minutes. The */5 in the minute field means every fifth minute, and the stars mean every hour, day, month and weekday.'),
+      f('Can I pick a schedule instead of typing one?', 'Yes. Use the common-schedule buttons (every minute, every 5 minutes, hourly, daily at midnight, weekdays at 9:00, Mondays at 8:30, 1st of the month) and edit the result to fit your job.'),
       f('How do I run a cron job every day at midnight or at 9 AM on weekdays?', 'Use 0 0 * * * for every day at midnight and 0 9 * * 1-5 for 9:00 AM from Monday to Friday. Paste either one into the field to see it described in plain English.'),
     ],
   },
@@ -394,7 +406,7 @@ export const TOOL_GAP = {
 
   // ------------------------------------------------------------------ Website checking
   '/website-status-checker': {
-    tasks: ['Check if a website is down', 'Check several sites at once', 'See the HTTP status code of a URL', 'Test whether a domain or path responds'],
+    tasks: ['Check if a website is down', 'Check if a site is down', 'Test website status', 'Check several sites at once', 'See the HTTP status code of a URL', 'Check whether a URL is working or not', 'Test whether a domain or path responds'],
     faqs: [
       f('What do HTTP 200, 301, 404 and 503 mean?', '200 means the request succeeded. 301 is a permanent redirect to another address. 404 means the page was not found. 503 means the server is temporarily unavailable.'),
       f('How do I check whether my own website is down?', 'Enter the domain here and read the result, then compare with how the site behaves on another network. This check runs from your browser, so a site that responds here can still be blocked for visitors in other places.'),

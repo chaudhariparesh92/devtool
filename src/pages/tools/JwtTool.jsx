@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
-import CryptoJS from 'crypto-js';
+// crypto-js is loaded on demand (only the JWT generator needs it).
+let cryptoLib;
+const loadCrypto = () => (cryptoLib ??= import('crypto-js').then((m) => m.default));
 import OutputBox from '../../components/OutputBox';
 import CopyButton from '../../components/CopyButton';
 
@@ -20,10 +22,10 @@ export default function JwtTool({ path }) {
     } catch(e) { alert("Invalid JWT"); setOut(null); }
   };
 
-  const base64url = (source) => CryptoJS.enc.Base64.stringify(source).replace(/=+$/, '').replace(/\+/g, '-').replace(/\//g, '_');
-
-  const generate = () => {
+  const generate = async () => {
     try {
+      const CryptoJS = await loadCrypto();
+      const base64url = (source) => CryptoJS.enc.Base64.stringify(source).replace(/=+$/, '').replace(/\+/g, '-').replace(/\//g, '_');
       const header = { alg: "HS256", typ: "JWT" };
       const strH = base64url(CryptoJS.enc.Utf8.parse(JSON.stringify(header)));
       const strP = base64url(CryptoJS.enc.Utf8.parse(JSON.stringify(JSON.parse(genPayload))));

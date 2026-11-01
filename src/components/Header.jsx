@@ -34,11 +34,12 @@ export default function Header() {
   };
 
   // Any tool page counts as "All Tools" so the menu always shows where you are.
-  const isToolPage = !STATIC_PATHS.includes(pathname);
+  const isToolPage = !STATIC_PATHS.includes(pathname) && !pathname.startsWith('/guides');
   const items = [
     { to: '/', label: 'Home', active: pathname === '/' },
     { to: '/tools', label: 'All Tools', active: pathname === '/tools' || isToolPage },
     { to: '/categories', label: 'Categories', active: pathname === '/categories' },
+    { to: '/guides', label: 'Guides', active: pathname.startsWith('/guides') },
   ];
 
   const links = items.map((i) => (

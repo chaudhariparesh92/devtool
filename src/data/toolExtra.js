@@ -153,6 +153,25 @@ export const EXTRA_MORE = {
   '/xml-formatter': {
     sections: [
       {
+        "h": "Pretty print XML in code and the terminal",
+        "code": "# xmllint (terminal)\nxmllint --format input.xml\n# Python\nimport xml.dom.minidom\nxml.dom.minidom.parseString(text).toprettyxml()\n// C#\nSystem.Xml.Linq.XDocument.Parse(text).ToString()",
+        "links": [
+          [
+            "XML Validator",
+            "/xml-validator"
+          ],
+          [
+            "YAML Formatter",
+            "/yaml-formatter"
+          ],
+          [
+            "Diff Checker",
+            "/diff-checker"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
+      {
         h: 'XML formatter example',
         code: '<root><user id="1"><name>Ada</name></user></root>\n\n// formatted output\n<root>\n    <user id="1">\n        <name>Ada</name>\n    </user>\n</root>',
       },
@@ -167,6 +186,34 @@ export const EXTRA_MORE = {
   },
   '/xml-validator': {
     sections: [
+      {
+        "h": "Well-formed versus valid XML",
+        "paras": [
+          "A well-formed document follows the XML syntax rules. A valid document also matches a schema (XSD) or DTD. This page checks well-formedness only; it does not validate against a schema."
+        ],
+        "list": [
+          "There is exactly one root element.",
+          "Every start tag has a matching end tag, nested correctly.",
+          "Tag and attribute names are case-sensitive.",
+          "Attribute values are quoted.",
+          "The characters & and < are escaped as &amp; and &lt; in text."
+        ],
+        "links": [
+          [
+            "XML Formatter",
+            "/xml-formatter"
+          ],
+          [
+            "JSON Validator",
+            "/json-validator"
+          ],
+          [
+            "YAML Formatter",
+            "/yaml-formatter"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
       {
         h: 'What counts as valid XML here',
         paras: ['The tool uses your browser\'s XML parser and reports a parser error if the document is not well-formed. That covers syntax, not meaning.'],
@@ -217,6 +264,35 @@ export const EXTRA_MORE = {
   '/html-encoder': {
     sections: [
       {
+        "h": "Encode in code, and why it matters for security",
+        "paras": [
+          "Escaping user input before placing it in a page is a core defence against cross-site scripting. Prefer your framework escaping or textContent over building HTML strings by hand."
+        ],
+        "code": "// JavaScript\nel.textContent = userInput;   // safe, no manual escaping\n// C#\nSystem.Net.WebUtility.HtmlEncode(text)\n# Python\nimport html; html.escape(text)"
+      },
+      {
+        "h": "HTML entity reference",
+        "paras": [
+          "These five characters are the ones that matter when you put text into HTML."
+        ],
+        "code": "&   ->  &amp;\n<   ->  &lt;\n>   ->  &gt;\n\"   ->  &quot;\n'   ->  &#39;",
+        "links": [
+          [
+            "HTML Decoder",
+            "/html-decoder"
+          ],
+          [
+            "URL Encoder",
+            "/url-encoder"
+          ],
+          [
+            "Base64 Encoder",
+            "/base64-encoder"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
+      {
         h: 'HTML encoding example',
         code: '<p class="note">Fish & chips</p>\n\n// encoded\n&lt;p class="note"&gt;Fish &amp; chips&lt;/p&gt;',
       },
@@ -231,6 +307,32 @@ export const EXTRA_MORE = {
   },
   '/html-decoder': {
     sections: [
+      {
+        "h": "Decode HTML entities in code",
+        "code": "# Python\nimport html; html.unescape(text)\n// C#\nSystem.Net.WebUtility.HtmlDecode(text)\n// JavaScript (browser)\nnew DOMParser().parseFromString(text, 'text/html').documentElement.textContent"
+      },
+      {
+        "h": "Named and numeric entities",
+        "paras": [
+          "An entity can be written by name, by decimal number or by hex number. All three below mean the same character."
+        ],
+        "code": "&copy;   &#169;   &#xA9;   ->  (c) symbol\n&amp;    &#38;    &#x26;   ->  &\n&nbsp;   &#160;            ->  non-breaking space",
+        "links": [
+          [
+            "HTML Encoder",
+            "/html-encoder"
+          ],
+          [
+            "URL Decoder",
+            "/url-decoder"
+          ],
+          [
+            "Base64 Decoder",
+            "/base64-decoder"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
       {
         h: 'HTML decoding example',
         code: '&lt;p&gt;Fish &amp; chips&lt;/p&gt; &copy; 2026\n\n// decoded\n<p>Fish & chips</p> © 2026',
@@ -250,27 +352,27 @@ export const EXTRA_MORE = {
     sections: [
       {
         h: 'What the UUID validator accepts',
-        list: ['32 hex digits in the 8-4-4-4-12 layout, upper or lower case.', 'A version digit from 1 to 5 at the start of the third group.', 'A variant digit of 8, 9, a or b at the start of the fourth group.', 'Version 6, 7 and 8 UUIDs and the all-zero nil UUID are reported as invalid by this tool.'],
+        list: ['32 hex digits in the 8-4-4-4-12 layout, upper or lower case.', 'A version digit from 1 to 8 at the start of the third group.', 'A variant digit of 8, 9, a or b at the start of the fourth group.', 'Version 6, 7 and 8 UUIDs are accepted, and the all-zero nil UUID and all-ones max UUID are recognised as special values.'],
       },
       {
         h: 'UUID validation examples',
-        code: '123e4567-e89b-12d3-a456-426614174000  ->  Valid UUID\n123e4567-e89b-62d3-a456-426614174000  ->  Invalid UUID (version digit 6)\n123e4567e89b12d3a456426614174000      ->  Invalid UUID (no hyphens)',
+        code: '123e4567-e89b-12d3-a456-426614174000  ->  Valid UUID (version 1)\n123e4567-e89b-92d3-a456-426614174000  ->  Invalid UUID (version digit 9)\n123e4567e89b12d3a456426614174000      ->  Invalid UUID (no hyphens)',
         links: [['UUID Parser', '/uuid-parser'], ['UUID Generator', '/uuid-generator'], ['Regex Tester', '/regex-tester']],
         linksLabel: 'Related',
       },
     ],
-    faqs: [q('Why is my UUID v7 reported invalid?', 'This validator only allows version digits 1 to 5. A version 7 UUID is a valid format elsewhere, but this tool does not accept it.')],
+    faqs: [q('Is a UUID v7 valid here?', 'Yes. Versions 1 to 8 are accepted, so a version 7 UUID is reported as valid with its version shown.')],
   },
   '/uuid-parser': {
     sections: [
       {
         h: 'What the UUID parser shows',
-        paras: ['After a format check, the tool reads the version digit (the first character of the third group) and reports the RFC 4122 variant.'],
-        code: '123e4567-e89b-12d3-a456-426614174000\n\n// result\nVersion: 1\nVariant: RFC 4122 (Leach-Salz)',
+        paras: ['After a format check, the tool reads the version digit (the first character of the third group), reports the variant, and for version 1, 6 and 7 UUIDs converts the embedded time into a UTC date.'],
+        code: '123e4567-e89b-12d3-a456-426614174000\n\n// result\nVersion: 1\nVariant: RFC 4122 / RFC 9562 (variant 1)\nKind: Time-based\nTimestamp: 2228-06-25T20:01:28.545Z',
       },
       {
         h: 'Reading a UUID by eye',
-        list: ['In xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx, M is the version and N starts with 8, 9, a or b for the RFC 4122 variant.', 'The parser does not extract a timestamp or MAC address, only the version and variant.'],
+        list: ['In xxxxxxxx-xxxx-Mxxx-Nxxx-xxxxxxxxxxxx, M is the version and N starts with 8, 9, a or b for the RFC 4122 variant.', 'Version 1 and 6 timestamps count 100-nanosecond ticks since 15 October 1582; version 7 stores Unix milliseconds in its first 48 bits. The parser does not show the node (MAC) field.'],
         links: [['UUID Validator', '/uuid-validator'], ['UUID Generator', '/uuid-generator'], ['Number Base Converter', '/number-base-converter']],
         linksLabel: 'Related',
       },
@@ -360,6 +462,34 @@ export const EXTRA_MORE = {
   '/timestamp-converter': {
     sections: [
       {
+        "h": "Seconds, milliseconds and microseconds",
+        "paras": [
+          "Count the digits before you convert: the wrong unit gives a date in 1970 or in the far future."
+        ],
+        "list": [
+          "10 digits: seconds (for example 1700000000)",
+          "13 digits: milliseconds (JavaScript Date.now())",
+          "16 digits: microseconds",
+          "19 digits: nanoseconds"
+        ],
+        "code": "1700000000 seconds  -> 2023-11-14T22:13:20Z\n// JavaScript\nnew Date(1700000000 * 1000).toISOString()\n# Python\nfrom datetime import datetime, timezone\ndatetime.fromtimestamp(1700000000, timezone.utc)",
+        "links": [
+          [
+            "Unix Timestamp",
+            "/unix-timestamp"
+          ],
+          [
+            "JWT Decoder",
+            "/jwt-decoder"
+          ],
+          [
+            "Cron Expression Parser",
+            "/cron-expression-parser"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
+      {
         h: 'Convert a Unix timestamp to a date',
         paras: ['Enter a number or a date string. The input starts with the current time in seconds. Digit-only values longer than 11 digits are read as milliseconds, shorter ones as seconds.'],
         code: '1700000000\n\n// output\nUTC: Tue, 14 Nov 2023 22:13:20 GMT\nISO: 2023-11-14T22:13:20.000Z\nUnix (ms): 1700000000000\nUnix (s): 1700000000',
@@ -377,6 +507,29 @@ export const EXTRA_MORE = {
   '/unix-timestamp': {
     sections: [
       {
+        "h": "Notable Unix timestamps",
+        "code": "0           1970-01-01T00:00:00Z  (the epoch)\n1000000000  2001-09-09T01:46:40Z\n2147483647  2038-01-19T03:14:07Z  (largest signed 32-bit value)"
+      },
+      {
+        "h": "Get the current Unix timestamp in code",
+        "code": "// JavaScript (seconds)\nMath.floor(Date.now() / 1000)\n# Python\nimport time; int(time.time())\n// C#\nDateTimeOffset.UtcNow.ToUnixTimeSeconds()\n# Bash\ndate +%s\n-- PostgreSQL\nSELECT EXTRACT(EPOCH FROM now());",
+        "links": [
+          [
+            "Timestamp Converter",
+            "/timestamp-converter"
+          ],
+          [
+            "Cron Expression Generator",
+            "/cron-expression-generator"
+          ],
+          [
+            "JWT Decoder",
+            "/jwt-decoder"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
+      {
         h: 'What is a Unix timestamp?',
         paras: ['A Unix timestamp, or epoch time, counts the time elapsed since 1 January 1970 00:00:00 UTC. It has no time zone, which is why APIs, databases and JWT claims such as exp and iat use it.', 'The page opens with the current time in seconds already filled in, so you can copy the current Unix timestamp right away.'],
       },
@@ -393,7 +546,7 @@ export const EXTRA_MORE = {
     sections: [
       {
         h: 'What the color converter supports',
-        list: ['HEX to RGB: enter a value starting with #, in 3 or 6 digits (#FFF or #FFFFFF).', 'RGB to HEX: enter rgb(r, g, b) and get an uppercase HEX code.', 'A color preview swatch appears next to the result.', 'HSL, alpha and named colors are not supported, and a HEX code without the # sign is rejected.'],
+        list: ['HEX to RGB: enter a value starting with #, in 3 or 6 digits (#FFF or #FFFFFF).', 'RGB to HEX: enter rgb(r, g, b) and get an uppercase HEX code.', 'A color preview swatch appears next to the result.', 'HSL and named colors are not supported. 6-digit and 8-digit HEX codes are also accepted without the # sign, and 8-digit (alpha) HEX converts to rgba().'],
       },
       {
         h: 'Color conversion examples',
@@ -413,7 +566,7 @@ export const EXTRA_MORE = {
       },
       {
         h: 'HEX to RGB in this tool',
-        list: ['Type the code with the # sign. Three-digit shorthand is expanded for you.', 'Alpha values (8-digit HEX) are not supported.', 'The same panel converts rgb() values back to HEX if you type one.'],
+        list: ['Type the code with the # sign. Three-digit shorthand is expanded for you.', '8-digit HEX with an alpha pair (such as #3B82F680) converts to rgba(59, 130, 246, 0.5).', 'The same panel converts rgb() values back to HEX if you type one.'],
         links: [['RGB to HEX Converter', '/rgb-to-hex'], ['Color Converter', '/color-converter'], ['Hex to Decimal Converter', '/hex-to-decimal']],
         linksLabel: 'Related',
       },
@@ -428,13 +581,20 @@ export const EXTRA_MORE = {
         code: 'rgb(255, 87, 51)  ->  255 = FF, 87 = 57, 51 = 33  ->  #FF5733',
       },
       {
+        h: 'RGB to hex in CSS',
+        paras: ['CSS accepts both notations, so rgb(59, 130, 246) and #3B82F6 draw the same blue. Hex is shorter and is what design tools and style guides usually list; rgb() and rgba() are handy when you need to change a single channel or the opacity.'],
+        code: 'color: rgb(59, 130, 246);  /* same as */  color: #3B82F6;\nbackground: rgba(59, 130, 246, 0.5);  /* same as */  background: #3B82F680;',
+        links: [['Guide: RGB to HEX conversion, formula and code', '/guides/rgb-to-hex-conversion']],
+        linksLabel: 'Read more',
+      },
+      {
         h: 'RGB to HEX in this tool',
-        list: ['Type the value as rgb(255, 87, 51). The first three numbers are used.', 'Results are uppercase with a leading #.', 'Channel values above 255 are not checked, so keep each between 0 and 255.'],
+        list: ['Type rgb(255, 87, 51), rgba(255, 87, 51, 0.5) or just 255, 87, 51. Whole numbers from 0 to 255 are accepted.', 'Results are uppercase with a leading #. An alpha value adds a two-digit alpha pair (8-digit HEX).', 'A value above 255 shows an error message instead of a malformed code.'],
         links: [['HEX to RGB Converter', '/hex-to-rgb'], ['Color Converter', '/color-converter'], ['Decimal to Hex Converter', '/decimal-to-hex']],
         linksLabel: 'Related',
       },
     ],
-    faqs: [q('Can I paste the numbers without rgb()?', 'The input must start with rgb. Type it as rgb(255, 87, 51).')],
+    faqs: [q('Is there a free online RGB to HEX converter without signup?', 'Yes. This one is free, needs no account and runs in your browser. Type the RGB values and the hex code and a color preview appear as you type.'), q('How do I calculate RGB to hex by hand?', 'Convert each channel to base 16 and join the three pairs: divide by 16 for the first digit and take the remainder for the second, using A to F for 10 to 15. The guide linked above shows a worked example with code.'), q('How do I change RGB to hex in CSS?', 'Replace rgb(59, 130, 246) with #3B82F6. Both work in CSS. For transparency, rgba(59, 130, 246, 0.5) becomes the 8-digit value #3B82F680.'), q('Can I paste the numbers without rgb()?', 'Yes. 255, 87, 51 or 255 87 51 works the same as rgb(255, 87, 51).')],
   },
 
   // -------------------------------------------------------- Query strings, cron
@@ -488,6 +648,30 @@ export const EXTRA_MORE = {
   '/cron-expression-parser': {
     sections: [
       {
+        "h": "Cron gotchas that cause surprises",
+        "list": [
+          "Fields are minute, hour, day of month, month, day of week, in that order.",
+          "In classic cron, if both day of month and day of week are set, the job runs when either one matches.",
+          "Schedules run in the server time zone, which is often UTC.",
+          "Quartz and some cloud schedulers add a seconds field and use different syntax."
+        ],
+        "links": [
+          [
+            "Cron Expression Generator",
+            "/cron-expression-generator"
+          ],
+          [
+            "Unix Timestamp",
+            "/unix-timestamp"
+          ],
+          [
+            "Timestamp Converter",
+            "/timestamp-converter"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
+      {
         h: 'How to read a cron expression',
         paras: ['Paste a crontab schedule to see it in plain English. The five fields are, in order, minute, hour, day of month, month and day of week.'],
         code: '30 9 * * 1-5\n\n// description\nAt 09:30 AM, Monday through Friday',
@@ -537,6 +721,25 @@ export const EXTRA_MORE = {
   '/text-to-slug': {
     sections: [
       {
+        "h": "Slugify a title in code",
+        "code": "// JavaScript\ntitle.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')\n# Python (python-slugify package)\nfrom slugify import slugify; slugify(title)",
+        "links": [
+          [
+            "Slug Generator",
+            "/slug-generator"
+          ],
+          [
+            "Case Converter",
+            "/case-converter"
+          ],
+          [
+            "Text Counter",
+            "/text-counter"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
+      {
         h: 'Text to slug example',
         code: 'Hello, World! Café 2026\n\n// slug\nhello-world-caf-2026',
       },
@@ -551,6 +754,31 @@ export const EXTRA_MORE = {
   },
   '/slug-generator': {
     sections: [
+      {
+        "h": "What makes a good URL slug",
+        "list": [
+          "Lowercase letters, numbers and hyphens only.",
+          "Short and readable: keep the words that describe the page.",
+          "Hyphens between words, not underscores or spaces.",
+          "Stable: avoid dates and version numbers you will have to change."
+        ],
+        "code": "Best Free JSON Tools in 2026!  ->  best-free-json-tools-in-2026",
+        "links": [
+          [
+            "Text to Slug",
+            "/text-to-slug"
+          ],
+          [
+            "Case Converter",
+            "/case-converter"
+          ],
+          [
+            "URL Encoder",
+            "/url-encoder"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
       {
         h: 'Slug generator example',
         code: 'How to Format JSON in 2026\n\n// slug\nhow-to-format-json-in-2026',
@@ -615,6 +843,28 @@ export const EXTRA_MORE = {
   '/number-base-converter': {
     sections: [
       {
+        "h": "Number base prefixes and a quick table",
+        "paras": [
+          "Source code marks the base with a prefix: 0x for hex, 0b for binary and 0o for octal in JavaScript and Python. C# supports 0x and 0b."
+        ],
+        "code": "Decimal  Binary  Octal  Hex\n8        1000    10     8\n10       1010    12     A\n15       1111    17     F\n16       10000   20     10\n255      11111111 377    FF",
+        "links": [
+          [
+            "Binary to Decimal",
+            "/binary-to-decimal"
+          ],
+          [
+            "Decimal to Hex",
+            "/decimal-to-hex"
+          ],
+          [
+            "Hex to Decimal",
+            "/hex-to-decimal"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
+      {
         h: 'Converting between binary, octal, decimal and hex',
         list: ['Choose the From base and the To base from Binary (2), Octal (8), Decimal (10) or Hex (16).', 'Type a whole number. Hex digits are accepted in upper or lower case, and the result is uppercase.', 'Fractions are not supported and anything after a decimal point is ignored.', 'Very large integers lose precision beyond what JavaScript numbers can hold exactly.'],
       },
@@ -629,6 +879,28 @@ export const EXTRA_MORE = {
   },
   '/binary-to-decimal': {
     sections: [
+      {
+        "h": "Binary to decimal: powers of two",
+        "paras": [
+          "Each binary digit is worth a power of two, starting at 1 on the right. Add the values of the digits that are 1."
+        ],
+        "code": "1101 = 1x8 + 1x4 + 0x2 + 1x1 = 13\n11111111 = 255\n\n// JavaScript\nparseInt('1101', 2)            // 13\n# Python\nint('1101', 2)                 # 13",
+        "links": [
+          [
+            "Decimal to Binary",
+            "/decimal-to-binary"
+          ],
+          [
+            "Hex to Decimal",
+            "/hex-to-decimal"
+          ],
+          [
+            "Number Base Converter",
+            "/number-base-converter"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
       {
         h: 'How to convert binary to decimal',
         paras: ['Each binary digit is a power of 2, counted from the right starting at 0. Add up the powers where the digit is 1.'],
@@ -646,6 +918,28 @@ export const EXTRA_MORE = {
   '/decimal-to-binary': {
     sections: [
       {
+        "h": "Decimal to binary: method and code",
+        "paras": [
+          "Divide by 2 repeatedly and read the remainders from last to first."
+        ],
+        "code": "13 / 2 = 6 remainder 1\n6 / 2 = 3 remainder 0\n3 / 2 = 1 remainder 1\n1 / 2 = 0 remainder 1\nRead upwards: 1101\n\n// JavaScript\n(13).toString(2)               // '1101'\n# Python\nbin(13)                        # '0b1101'",
+        "links": [
+          [
+            "Binary to Decimal",
+            "/binary-to-decimal"
+          ],
+          [
+            "Decimal to Hex",
+            "/decimal-to-hex"
+          ],
+          [
+            "Number Base Converter",
+            "/number-base-converter"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
+      {
         h: 'How to convert decimal to binary',
         paras: ['Divide the number by 2 repeatedly and write down the remainders. Read them from last to first.'],
         code: '13 / 2 = 6 r 1\n 6 / 2 = 3 r 0\n 3 / 2 = 1 r 1\n 1 / 2 = 0 r 1\n\nRead upward: 1101   (255 in decimal is 11111111 in binary)',
@@ -662,6 +956,28 @@ export const EXTRA_MORE = {
   '/hex-to-decimal': {
     sections: [
       {
+        "h": "Hex to decimal: method and code",
+        "paras": [
+          "Multiply each hex digit by a power of 16, starting from 16^0 on the right, and add the results."
+        ],
+        "code": "2F = 2 x 16 + 15 x 1 = 47\nFF = 15 x 16 + 15 x 1 = 255\n\n// JavaScript\nparseInt('ff', 16)             // 255\n// C#\nConvert.ToInt32(\"FF\", 16)      // 255\n# Python\nint('ff', 16)                  # 255",
+        "links": [
+          [
+            "Decimal to Hex",
+            "/decimal-to-hex"
+          ],
+          [
+            "Number Base Converter",
+            "/number-base-converter"
+          ],
+          [
+            "HEX to RGB",
+            "/hex-to-rgb"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
+      {
         h: 'How to convert hex to decimal',
         paras: ['Each hex digit is a power of 16, from the right. The letters A to F stand for 10 to 15.'],
         code: 'FF = 15x16 + 15x1 = 255\n1A = 1x16 + 10x1 = 26',
@@ -677,6 +993,32 @@ export const EXTRA_MORE = {
   },
   '/decimal-to-hex': {
     sections: [
+      {
+        "h": "Decimal and hex reference",
+        "code": "Decimal  Hex    Decimal  Hex\n0        0      16       10\n9        9      32       20\n10       A      64       40\n11       B      100      64\n12       C      128      80\n13       D      255      FF\n14       E      256      100\n15       F      4095     FFF"
+      },
+      {
+        "h": "Decimal to hex: method and code",
+        "paras": [
+          "Divide the number by 16 repeatedly and read the remainders from last to first. Remainders 10 to 15 are written A to F."
+        ],
+        "code": "255 / 16 = 15 remainder 15 (F)\n15 / 16 = 0  remainder 15 (F)\nRead upwards: FF\n\n// JavaScript\n(255).toString(16)            // 'ff'\n// C#\nConvert.ToString(255, 16)      // \"ff\"\n# Python\nhex(255)                       # '0xff'",
+        "links": [
+          [
+            "Hex to Decimal",
+            "/hex-to-decimal"
+          ],
+          [
+            "Number Base Converter",
+            "/number-base-converter"
+          ],
+          [
+            "RGB to HEX",
+            "/rgb-to-hex"
+          ]
+        ],
+        "linksLabel": "Related"
+      },
       {
         h: 'How to convert decimal to hex',
         paras: ['Divide by 16 repeatedly and write the remainders as hex digits, then read them from last to first.'],
@@ -696,6 +1038,16 @@ export const EXTRA_MORE = {
   '/website-status-checker': {
     sections: [
       {
+        h: 'Check if a website is down: a quick checklist',
+        list: ['Enter the domain or full URL and press Check status. Up means the site answered; a timeout or Unreachable result means your browser could not connect.', 'If a site is down here, test the same address on another network, such as mobile data, to see whether the problem is only on your side.', 'If it is up here but will not open in your usual browser, clear the DNS cache, turn off any VPN and try a private window.', 'Read the status code when one is shown: 5xx means the server has a problem, 4xx means the server is up but refused or could not find that address.'],
+        links: [['Guide: how to check if a website is down', '/guides/check-if-a-website-is-down']],
+        linksLabel: 'Read more',
+      },
+      {
+        h: 'What common HTTP status codes mean',
+        list: ['200 OK: the server returned the page.', '301 or 302: the address redirects somewhere else.', '403 Forbidden: the server is up but refused the request.', '404 Not Found: the server is up but that path does not exist.', '500 Internal Server Error: the server is up but failing.', '503 Service Unavailable: the server is overloaded or down for maintenance.'],
+      },
+      {
         h: 'How the website status checker works',
         paras: ['Your browser sends a HEAD request to each address you enter, up to 10 at a time, and waits up to 12 seconds. There is no server of ours in between, so the result reflects what your own network can reach.'],
         list: ['Up: the server answered with a normal status code.', 'Online (client error): the server answered with a 4xx code, so the site is alive but that address returned an error.', 'Server error: a 5xx code, so the server is reachable but reporting a problem.', 'Unreachable or timeout: the browser could not connect, or the request took too long.'],
@@ -707,6 +1059,6 @@ export const EXTRA_MORE = {
         linksLabel: 'Related',
       },
     ],
-    faqs: [q('Is it down for everyone or just me?', 'The tool only tests from your own browser and network. Try it from another network or device to compare.')],
+    faqs: [q('Is my website up right now?', 'Enter your domain and press Check status. A result of Up means your browser got an answer from the server a moment ago. Check again from another network to see whether visitors elsewhere get the same result.'), q('Is this URL working?', 'Paste the full address, including the path. Up means the server answered normally. Online (client error) means the server is alive but that address returned a 4xx error such as 404, and Server error means it returned a 5xx code.'), q('Where do I find a website status page?', 'Many services publish an official status page, often at a status subdomain such as status.example.com. This tool does not read those pages; it tests whether the address responds from your browser.'), q('Does it work for https sites?', 'Yes. Enter the domain or an https:// address. Plain http:// addresses cannot be tested from this https:// page because browsers block them.'), q('Is it down for everyone or just me?', 'The tool only tests from your own browser and network. Try it from another network or device to compare.'), q('How do I check if a website is down?', 'Enter the domain or URL and press Check status. If it is reachable here but not in your usual browser, the problem is likely local: try another network, clear the DNS cache or turn off a VPN.'), q('Why does it say reachable without a status code?', 'Many sites do not let other pages read their response. The browser can still tell that the server answered, so the tool reports reachable without the exact code.')],
   },
 };
