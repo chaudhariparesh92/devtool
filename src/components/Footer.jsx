@@ -132,7 +132,7 @@ export default function Footer() {
           <div className="space-y-1">
             <p>
               &copy; {new Date().getFullYear()}{" "}
-              <strong style={{ color: "var(--ink)" }}>DevTransition</strong>.
+              <strong style={{ color: "var(--ink)" }}>OnlineDeveloperTool.com</strong>.
               All rights reserved.
             </p>
             <p className="text-xs">
