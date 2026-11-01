@@ -2,8 +2,6 @@ import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import OutputBox from '../../components/OutputBox';
 import FileDropZone from '../../components/FileDropZone';
-import { load, dump } from 'js-yaml';
-import formatXml from 'xml-formatter';
 
 function parseCsvLine(line, delimiter) {
   const cells = []; let cell = ''; let quoted = false;
@@ -16,15 +14,15 @@ function csvEscape(v, delimiter) { const s = v == null ? '' : String(v); return 
 export default function DataFormatTool({ path }) {
   const [inp, setInp] = useState(''); const [out, setOut] = useState(''); const [err, setErr] = useState(''); const [delimiter, setDelimiter] = useState(',');
   const isCsv = path.includes('csv-');
-  const process = () => {
+  const process = async () => {
     setErr('');
     try {
       if (!inp.trim()) throw new Error('Paste input first.');
-      if (path === '/yaml-formatter') setOut(dump(load(inp), { noRefs: true }));
-      else if (path === '/yaml-to-json') setOut(JSON.stringify(load(inp), null, 2));
+      if (path === '/yaml-formatter') { const { load, dump } = await import('js-yaml'); setOut(dump(load(inp), { noRefs: true })); }
+      else if (path === '/yaml-to-json') { const { load } = await import('js-yaml'); setOut(JSON.stringify(load(inp), null, 2)); }
       else if (path === '/csv-to-json') { const rows=csvRows(inp,delimiter); if(rows.length<1) throw new Error('CSV needs a header row.'); const headers=rows[0].map((h,i)=>h.trim()||`column${i+1}`); const res=rows.slice(1).map(row=>Object.fromEntries(headers.map((h,i)=>[h,row[i] ?? '']))); setOut(JSON.stringify(res,null,2)); }
       else if (path === '/json-to-csv') { const arr=JSON.parse(inp); if(!Array.isArray(arr)||!arr.length||arr.some(x=>!x||typeof x!=='object'||Array.isArray(x))) throw new Error('JSON to CSV expects an array of objects.'); const headers=[...new Set(arr.flatMap(o=>Object.keys(o)))]; setOut(headers.join(delimiter)+'\n'+arr.map(o=>headers.map(h=>csvEscape(o[h],delimiter)).join(delimiter)).join('\n')); }
-      else if (path === '/xml-formatter') setOut(formatXml(inp, { collapseContent: true }));
+      else if (path === '/xml-formatter') { const { default: formatXml } = await import('xml-formatter'); setOut(formatXml(inp, { collapseContent: true })); }
       else if (path === '/xml-validator') { const dom=new DOMParser().parseFromString(inp,'application/xml'); const pe=dom.querySelector('parsererror'); if(pe) throw new Error(pe.textContent.replace(/\s+/g,' ').trim()); setOut('Valid XML!'); }
     } catch(e) { setErr(e.message || 'Could not process input.'); setOut(''); }
   };

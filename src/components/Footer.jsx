@@ -16,6 +16,7 @@ const POPULAR = [
 const SITE_LINKS = [
   { name: "All Tools", path: "/tools" },
   { name: "Browse Categories", path: "/categories" },
+  { name: "Guides", path: "/guides" },
   { name: "About", path: "/about" },
   { name: "Privacy", path: "/privacy" },
   { name: "Terms", path: "/terms" },
@@ -150,20 +151,22 @@ export default function Footer() {
                   alt="Featured on TheDevToolsDir"
                   width="160"
                   height="44"
+                  loading="lazy"
+                  decoding="async"
                 />
               </a>
             </div>
 
             <div className="hidden inline-flex items-center mr-4">
               <a
-                class="hypestar-badge hypestar-badge--auto"
+                className="hypestar-badge hypestar-badge--auto"
                 data-hypestar-theme="auto"
                 href="https://hypestar.org/?utm_source=supporter_badge&amp;utm_medium=referral&amp;utm_campaign=hype_star_badge"
                 target="_blank"
                 rel="noopener nofollow"
               >
                 <img
-                  class="hypestar-badge__image"
+                  className="hypestar-badge__image"
                   src="https://hypestar.org/badges/support-hype-star-auto-v2.svg"
                   alt="Verified"
                   width="140"
@@ -184,6 +187,8 @@ export default function Footer() {
                   alt="Featured on IndieLineup"
                   width="160"
                   height="44"
+                  loading="lazy"
+                  decoding="async"
                 />
               </a>
             </div>
@@ -198,6 +203,8 @@ export default function Footer() {
                   alt="Featured on SaaSLineup"
                   width="160"
                   height="44"
+                  loading="lazy"
+                  decoding="async"
                 />
               </a>
             </div>
@@ -212,6 +219,8 @@ export default function Footer() {
                   alt="Featured on TheAIToolsDir"
                   width="160"
                   height="44"
+                  loading="lazy"
+                  decoding="async"
                 />
               </a>
             </div>

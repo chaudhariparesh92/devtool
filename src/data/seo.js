@@ -9,6 +9,8 @@ import { getToolContent } from './toolContent.js';
 import { TOOL_SEO_DATA } from './toolSeoData.js';
 import { SEO_RESEARCH } from './seoResearch.js';
 import { CATEGORY_PAGES, categoryPath } from './categoryContent.js';
+import { GUIDES, GUIDE_ROUTES, GUIDES_UPDATED, getGuide } from './guides.js';
+import { KEYWORD_BOOST } from './keywordBoost.js';
 
 export const SITE_URL = 'https://onlinedevelopertool.com';
 export const SITE_NAME = 'OnlineDeveloperTool';
@@ -19,7 +21,31 @@ export const OG_IMAGE_PATH = '/images/og-onlinedevelopertool.webp';
 export const DEFAULT_IMAGE = `${SITE_URL}${OG_IMAGE_PATH}`;
 
 // Bump this when page content genuinely changes. It feeds <lastmod> in sitemap.xml.
-export const CONTENT_LAST_MODIFIED = '2026-10-31';
+export const CONTENT_LAST_MODIFIED = '2026-11-01'; // newest change anywhere on the site
+
+// Per-page dates feed the visible "Updated" line, JSON-LD dateModified and sitemap <lastmod>.
+// Add a route to a list below only when its content or behaviour really changes, and bump
+// CONTENT_LAST_MODIFIED to match. Everything else keeps the baseline date.
+const BASELINE_MODIFIED = '2026-10-25';
+const MODIFIED_ON = {
+  '2026-11-01': ['/', '/website-status-checker', '/rgb-to-hex', '/json-to-csharp', '/uuid-generator', '/html-encoder', '/unix-timestamp', '/uuid-validator'],
+  '2026-10-31': [
+    '/', '/categories',
+    '/uuid-generator', '/uuid-validator', '/uuid-parser', '/rgb-to-hex', '/hex-to-rgb', '/color-converter',
+    '/json-to-csharp', '/json-validator', '/json-beautifier', '/json-minifier', '/website-status-checker',
+    '/cron-expression-generator', '/cron-expression-parser',
+    '/json-to-typescript', '/json-to-java', '/json-to-python', '/json-to-go', '/url-encoder', '/url-decoder',
+    '/html-encoder', '/html-decoder', '/timestamp-converter', '/unix-timestamp', '/xml-formatter', '/xml-validator',
+    '/yaml-formatter', '/case-converter', '/text-to-slug', '/slug-generator', '/number-base-converter',
+    '/binary-to-decimal', '/decimal-to-binary', '/hex-to-decimal', '/decimal-to-hex',
+  ],
+};
+export function getLastModified(path) {
+  if (path === '/guides' || path.startsWith('/guides/')) return GUIDES_UPDATED;
+  if (KEYWORD_BOOST[path]) return '2026-11-01';
+  for (const [date, paths] of Object.entries(MODIFIED_ON)) if (paths.includes(path)) return date;
+  return BASELINE_MODIFIED;
+}
 
 // ---------------------------------------------------------------- Homepage
 export const HOME_TITLE = 'Online Developer Tools - Free JSON, JWT, Base64 & More';
@@ -96,6 +122,8 @@ export const HOME_FAQS = [
   { q: 'Is my data uploaded anywhere?', a: 'The tools run in your browser, so what you paste is processed locally. The one thing to know: the Website Status Checker sends a request from your browser to the sites you type in, so those sites will see it.' },
   { q: 'Does the JWT decoder verify the signature?', a: 'No. It splits the token and shows the decoded header and payload. Verifying a signature needs the signing key and should happen on your server.' },
   { q: 'Is Base64 a form of encryption?', a: 'No. Base64 is an encoding that anyone can reverse. It makes data about one third larger and does not protect secrets.' },
+  { q: 'Can I edit a JWT online?', a: 'You can read a token with the JWT Decoder, change the claims, and build a new HS256 token from your payload and secret with the JWT Generator. Both run in your browser. Editing a token invalidates its original signature, so a changed token only works where you control the key.' },
+  { q: 'Is there an online json_decode?', a: 'json_decode is PHP\'s function for parsing JSON. To see how a JSON string parses, paste it into the JSON Validator or JSON Formatter, which show the parser error or the indented result. The JSON to PHP tool can also draft a class from a sample.' },
   { q: 'Which tools are included?', a: 'JSON tools (format, validate, beautify, minify and convert to C#, TypeScript, Java, Python, Go, PHP and Kotlin), URL/Base64/HTML encoders and decoders, JWT, UUID and hash tools, timestamp, color, number base, regex, diff, query string and cron tools, XML/YAML/CSV converters, text tools and a website status checker.' },
   { q: 'Does it work on a phone or tablet?', a: 'Yes. The layout adapts to small screens, though pasting big payloads is still easier on a keyboard.' },
 ];
@@ -148,6 +176,11 @@ export function getHomeJsonLd() {
 
 // ------------------------------------------------------- Non-tool pages
 export const PAGE_SEO = {
+  '/guides': {
+    title: 'Developer Guides: JSON, JWT, UUID, Cron and More',
+    description: 'Practical developer tutorials with working code: check if a site is down, read UUIDs and JWTs, convert RGB to HEX, fix JSON errors and more.',
+    h1: 'Developer Guides',
+  },
   '/tools': {
     title: 'All Free Developer Tools - JSON, JWT, Base64, UUID & More',
     description: 'Complete list of free online developer tools: JSON, Base64, URL and HTML encoding, JWT, UUID, hashes, timestamps, regex, cron, diff and more.',
@@ -188,11 +221,49 @@ for (const c of Object.values(CATEGORY_PAGES)) {
 }
 
 // Link target for a category: its real page when one exists, otherwise the filtered tools list.
-export const categoryLink = (category) => categoryPath(category) || `/tools?category=${encodeURIComponent(category)}`;
+// A category with exactly one tool and no page of its own links straight to that tool, so the
+// link goes to a real, canonical, indexable URL instead of a client-rendered ?category= filter.
+export const categoryLink = (category) => {
+  const own = categoryPath(category);
+  if (own) return own;
+  const only = TOOLS.filter((t) => t.category === category);
+  return only.length === 1 ? only[0].path : `/tools?category=${encodeURIComponent(category)}`;
+};
 
 export function getCategoryByPath(path) {
   const entry = Object.entries(CATEGORY_PAGES).find(([, c]) => `/category/${c.slug}` === path);
   return entry ? { category: entry[0], ...entry[1] } : null;
+}
+
+export function getGuideJsonLd(guide) {
+  const url = `${SITE_URL}/guides/${guide.slug}`;
+  const org = { '@type': 'Organization', name: SITE_NAME, url: `${SITE_URL}/` };
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+          { '@type': 'ListItem', position: 2, name: 'Guides', item: `${SITE_URL}/guides` },
+          { '@type': 'ListItem', position: 3, name: guide.h1, item: url },
+        ],
+      },
+      {
+        '@type': 'Article',
+        '@id': `${url}#article`,
+        headline: guide.h1,
+        description: guide.description,
+        datePublished: GUIDES_UPDATED,
+        dateModified: GUIDES_UPDATED,
+        author: org,
+        publisher: org,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+        image: DEFAULT_IMAGE,
+        inLanguage: 'en',
+      },
+    ],
+  };
 }
 
 export function getCategoryJsonLd(category) {
@@ -248,8 +319,26 @@ export function getRelatedTools(path, group, category) {
 export function getToolSeo(path, fallbackName, fallbackDesc) {
   const tool = TOOLS.find((t) => t.path === path);
   const name = tool ? tool.name : fallbackName;
-  const c = getToolContent(path, name);
-  const cfg = TOOL_SEO_DATA[path];
+  const boost = KEYWORD_BOOST[path];
+  const base = getToolContent(path, name);
+  // Merge the per-page keyword wording (tasks + FAQs) into the content without mutating the shared object.
+  const c = base && boost
+    ? {
+        ...base,
+        tasks: [...base.tasks, ...(boost.tasks || []).filter((t) => !base.tasks.some((x) => x.toLowerCase() === t.toLowerCase()))],
+        faqs: [...base.faqs, ...(boost.faqs || []).map(([q, a]) => ({ q, a })).filter((f) => !base.faqs.some((x) => x.q === f.q))],
+      }
+    : base;
+  const rawCfg = TOOL_SEO_DATA[path];
+  const cfg = rawCfg && boost
+    ? {
+        ...rawCfg,
+        ...(boost.t ? { title: boost.t } : {}),
+        ...(boost.d ? { description: boost.d } : {}),
+        ...(boost.s ? { secondary: boost.s } : {}),
+        ...(boost.l ? { longTail: boost.l } : {}),
+      }
+    : rawCfg;
   const title = cfg ? cfg.title : `${name} Online - Free Browser-Based Tool`;
   const description = cfg ? cfg.description : c ? c.meta : fallbackDesc;
   const h1 = cfg ? cfg.h1 : name;
@@ -269,7 +358,7 @@ export function getToolSeo(path, fallbackName, fallbackDesc) {
         url: `${SITE_URL}${path}`,
         name,
         description,
-        dateModified: CONTENT_LAST_MODIFIED,
+        dateModified: getLastModified(path),
         isPartOf: { '@id': `${SITE_URL}/#website` },
         mainEntity: { '@id': `${SITE_URL}${path}#application` },
       },
@@ -303,13 +392,17 @@ export const CATEGORY_ROUTES = Object.values(CATEGORY_PAGES).map((c) => `/catego
 // Every indexable URL, in sitemap order. App.jsx's route list must stay in sync with this
 // (scripts/prerender.mjs fails the build if a route here is missing from App.jsx).
 export function getIndexableRoutes() {
-  return [...STATIC_ROUTES.slice(0, 3), ...CATEGORY_ROUTES, ...STATIC_ROUTES.slice(3), ...TOOLS.map((t) => t.path)];
+  return [...STATIC_ROUTES.slice(0, 3), ...CATEGORY_ROUTES, ...STATIC_ROUTES.slice(3), '/guides', ...GUIDE_ROUTES, ...TOOLS.map((t) => t.path)];
 }
 
 // One lookup used by the prerender script: head values + JSON-LD for ANY indexable route.
 export function getRouteSeo(path) {
   if (path === '/') {
     return { kind: 'home', title: HOME_TITLE, description: HOME_DESC, social: HOME_SOCIAL_DESC, h1: HOME_H1, jsonLd: getHomeJsonLd() };
+  }
+  const guide = getGuide(path);
+  if (guide) {
+    return { kind: 'guide', title: guide.title, description: guide.description, h1: guide.h1, jsonLd: getGuideJsonLd(guide), guide };
   }
   const cat = getCategoryByPath(path);
   if (cat) {

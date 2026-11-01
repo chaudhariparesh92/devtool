@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import OutputBox from '../../components/OutputBox';
+import { convertColor } from '../../utils/color';
 
 export default function ColorTool({ path }) {
   const [inp, setInp] = useState('');
@@ -8,30 +9,16 @@ export default function ColorTool({ path }) {
 
   const process = (val) => {
     setInp(val);
-    try {
-      if (val.startsWith('#')) {
-        let hex = val.replace('#', '');
-        if (hex.length === 3) hex = hex.split('').map(c=>c+c).join('');
-        const r = parseInt(hex.substring(0, 2), 16);
-        const g = parseInt(hex.substring(2, 4), 16);
-        const b = parseInt(hex.substring(4, 6), 16);
-        setOut(`rgb(${r}, ${g}, ${b})`);
-      } else if (val.startsWith('rgb')) {
-        const match = val.match(/\d+/g);
-        if (match && match.length >= 3) {
-          const hex = "#" + match.slice(0,3).map(x => parseInt(x).toString(16).padStart(2, '0')).join('');
-          setOut(hex.toUpperCase());
-        }
-      } else {
-        setOut('Unsupported format. Try #FFF, #FFFFFF, or rgb(255, 255, 255)');
-      }
-    } catch(e) { setOut(''); }
+    const res = convertColor(val);
+    if (res.empty) setOut('');
+    else if (res.error) setOut(res.error);
+    else setOut(res.value);
   };
 
   return (
     <ToolLayout title={path.replace('/','').replace(/-/g, ' ').toUpperCase()} desc="Convert colors between HEX and RGB." path={path}>
       <div className="p-6 space-y-4">
-        <input type="text" className="w-full p-4 font-mono bg-gray-50 dark:bg-gray-900 border rounded" value={inp} onChange={e=>process(e.target.value)} placeholder="e.g. #3B82F6 or rgb(59, 130, 246)" />
+        <input type="text" className="w-full p-4 font-mono bg-gray-50 dark:bg-gray-900 border rounded" value={inp} onChange={e=>process(e.target.value)} placeholder="e.g. #3B82F6, rgb(59, 130, 246) or 59, 130, 246" />
         <div className="flex items-center gap-4">
           <OutputBox value={out} label="Converted color" placeholder="Result" downloadFilename="color-result.txt" className="flex-1 min-w-0" textareaClassName="h-16" copyDisabled={!(out.startsWith('#') || out.startsWith('rgb'))} />
           {out && (out.startsWith('#') || out.startsWith('rgb')) && (

@@ -8,6 +8,9 @@ import CategoriesIndex from './pages/CategoriesIndex';
 import CategoryPage from './pages/CategoryPage';
 import { CATEGORY_ROUTES } from './data/seo';
 import StaticPage from './pages/StaticPage';
+import GuidesIndex from './pages/GuidesIndex';
+import GuidePage from './pages/GuidePage';
+import { GUIDE_ROUTES } from './data/guides';
 import JsonFormatterTool from './pages/tools/JsonFormatterTool';
 import JsonConverterTool from './pages/tools/JsonConverterTool';
 import EncoderTool from './pages/tools/EncoderTool';
@@ -39,6 +42,8 @@ export const routes = [
   { path: '/tools', component: ToolsIndex },
   { path: '/categories', component: CategoriesIndex },
   ...CATEGORY_ROUTES.map((path) => ({ path, component: CategoryPage })),
+  { path: '/guides', component: GuidesIndex },
+  ...GUIDE_ROUTES.map((path) => ({ path, component: GuidePage })),
   { path: '/about', component: StaticPage },
   { path: '/privacy', component: StaticPage },
   { path: '/terms', component: StaticPage },

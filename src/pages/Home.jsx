@@ -59,7 +59,7 @@ export default function Home() {
           </h1>
           <p className="h-section">Stop wasting time on tiny developer tasks.</p>
           <p className="lede">
-            Free browser-based tools for developers including JSON Formatter, JSON Validator, JWT Decoder, Base64 Encoder and UUID Generator.
+            Free developer tools online, including JSON Formatter, JSON Validator, JWT Decoder, Base64 Encoder and UUID Generator.
             Format JSON, decode a token, convert a timestamp or generate a UUID in seconds at{' '}
             <b>{SITE_DOMAIN}</b>, with no signup required.
           </p>
