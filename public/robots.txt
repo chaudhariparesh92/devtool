@@ -1,4 +1,128 @@
+
+# ==========================================
+# OnlineDeveloperTool.com
+# Search Engine and AI Crawler Permissions
+# ==========================================
+
+# Default: Allow all public website pages
 User-agent: *
 Allow: /
+
+# ==========================================
+# OPENAI - ChatGPT
+# ==========================================
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+# ==========================================
+# ANTHROPIC - CLAUDE
+# ==========================================
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# ==========================================
+# PERPLEXITY AI
+# ==========================================
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# ==========================================
+# GOOGLE - SEARCH AND GEMINI
+# ==========================================
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: GoogleOther
+Allow: /
+
+# ==========================================
+# MICROSOFT - BING AND COPILOT
+# ==========================================
+
+User-agent: Bingbot
+Allow: /
+
+# ==========================================
+# APPLE
+# ==========================================
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# ==========================================
+# META AI
+# ==========================================
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: meta-externalfetcher
+Allow: /
+
+# ==========================================
+# AMAZON AI
+# ==========================================
+
+User-agent: Amazonbot
+Allow: /
+
+# ==========================================
+# MISTRAL AI
+# ==========================================
+
+User-agent: MistralAI-User
+Allow: /
+
+# ==========================================
+# COMMON CRAWL
+# ==========================================
+
+User-agent: CCBot
+Allow: /
+
+# ==========================================
+# OTHER AI AND SEARCH CRAWLERS
+# ==========================================
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: YouBot
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+# ==========================================
+# XML SITEMAP
+# ==========================================
 
 Sitemap: https://onlinedevelopertool.com/sitemap.xml
