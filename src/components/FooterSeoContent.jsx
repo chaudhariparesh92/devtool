@@ -1,10 +1,8 @@
-import { Link } from 'react-router-dom';
 import { CATEGORIES, CATEGORY_INFO, TOOLS } from '../data/tools';
 import { SITE_DOMAIN } from './SeoHead';
 import { categoryLink } from '../data/seo';
 
-// Helpful reference copy shown just above the footer. Every statement here is
-// factual and describes what the site really does (no invented numbers or claims).
+// Helpful reference copy shown just above the footer.
 const TIPS = [
   { h: 'JSON', p: 'Keys and strings must use double quotes, and trailing commas and comments are not allowed. Those are the three most common reasons a payload fails to parse.', to: '/json-validator', link: 'Validate JSON' },
   { h: 'JWT', p: 'A JSON Web Token is three Base64URL parts joined by dots: header, payload and signature. Decoding shows the claims but does not prove the token is genuine; only signature verification does.', to: '/jwt-decoder', link: 'Decode a JWT' },
@@ -70,9 +68,11 @@ export default function FooterSeoContent() {
           {CATEGORIES.map((c) => (
             <li key={c} className="card p-5">
               <h4 className="font-black mb-1">
-                <Link to={categoryLink(c)} className="a-link">{c}</Link>
+                <a href={categoryLink(c)} className="a-link">{c}</a>
               </h4>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{CATEGORY_INFO[c]}</p>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
+                {CATEGORY_INFO[c]}
+              </p>
             </li>
           ))}
         </ul>
@@ -84,17 +84,21 @@ export default function FooterSeoContent() {
           {TIPS.map((t) => (
             <li key={t.h} className="card p-5 flex flex-col gap-2">
               <h4 className="font-black">{t.h}</h4>
-              <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>{t.p}</p>
-              <Link to={t.to} className="a-link text-sm mt-auto">{t.link}</Link>
+              <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
+                {t.p}
+              </p>
+              <a href={t.to} className="a-link text-sm mt-auto">{t.link}</a>
             </li>
           ))}
         </ul>
       </div>
 
       <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
-        Missing a tool you need? Visit <Link to="/contact" className="a-link">the contact page</Link> and tell us what you
-        reach for most often. You can also <Link to="/tools" className="a-link">browse every tool</Link> or read the{' '}
-        <Link to="/about" className="a-link">About page</Link> to see how the site is built and what it does with your data.
+        Missing a tool you need? Visit{' '}
+        <a href="/contact" className="a-link">the contact page</a> and tell us what you
+        reach for most often. You can also{' '}
+        <a href="/tools" className="a-link">browse every tool</a> or read the{' '}
+        <a href="/about" className="a-link">About page</a> to see how the site is built and what it does with your data.
       </p>
     </section>
   );
