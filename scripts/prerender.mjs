@@ -1,4 +1,3 @@
-
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -63,8 +62,7 @@ function getHelmetHead(helmet) {
 
 // Normalize canonical URLs to use trailing slashes.
 function normalizeCanonicalHref(head, expectedCanonical, route) {
-  const canonicalRegex =
-    /<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>/i;
+  const canonicalRegex = /<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>/i;
 
   const match = head.match(canonicalRegex);
 
@@ -77,15 +75,12 @@ function normalizeCanonicalHref(head, expectedCanonical, route) {
   const canonicalTag = match[0];
 
   if (!/\bhref=["'][^"']*["']/i.test(canonicalTag)) {
-    throw new Error(
-      `${route}: canonical link is missing its href attribute.`,
-    );
+    throw new Error(`${route}: canonical link is missing its href attribute.`);
   }
 
   const normalizedTag = canonicalTag.replace(
     /(\bhref=["'])[^"']*(["'])/i,
-    (_match, prefix, suffix) =>
-      `${prefix}${expectedCanonical}${suffix}`,
+    (_match, prefix, suffix) => `${prefix}${expectedCanonical}${suffix}`,
   );
 
   return head.replace(canonicalRegex, normalizedTag);
@@ -174,9 +169,7 @@ function validatePrerenderedHtml(html, route, expectedUrl) {
     );
   }
 
-  const cleanTitle = decodeHtmlEntities(
-    title.replace(/<[^>]+>/g, "").trim(),
-  );
+  const cleanTitle = decodeHtmlEntities(title.replace(/<[^>]+>/g, "").trim());
 
   const cleanDescription = decodeHtmlEntities(description.trim());
 
@@ -191,9 +184,7 @@ function validatePrerenderedHtml(html, route, expectedUrl) {
   const h1Count = [...html.matchAll(/<h1\b/gi)].length;
 
   if (h1Count !== 1) {
-    console.warn(
-      `[SEO audit] ${route}: expected one H1, found ${h1Count}.`,
-    );
+    console.warn(`[SEO audit] ${route}: expected one H1, found ${h1Count}.`);
   }
 
   if (
@@ -231,10 +222,7 @@ function validatePrerenderedHtml(html, route, expectedUrl) {
       /<meta\s+[^>]*property=["']og:description["']/gi,
     ],
     ["Twitter title", /<meta\s+[^>]*name=["']twitter:title["']/gi],
-    [
-      "Twitter description",
-      /<meta\s+[^>]*name=["']twitter:description["']/gi,
-    ],
+    ["Twitter description", /<meta\s+[^>]*name=["']twitter:description["']/gi],
   ]) {
     const count = [...html.matchAll(regex)].length;
 
@@ -295,15 +283,12 @@ function generateSitemap(seo, routes) {
   const normalizedSiteUrl = seo.SITE_URL.replace(/\/+$/, "");
 
   const urls = routes.map((route) => {
-    const loc =
-      `${normalizedSiteUrl}${route === "/" ? "/" : `${route}/`}`;
+    const loc = `${normalizedSiteUrl}${route === "/" ? "/" : `${route}/`}`;
 
     const lastmod = seo.getLastModified(route);
 
     if (!/^\d{4}-\d{2}-\d{2}$/.test(lastmod)) {
-      throw new Error(
-        `Invalid sitemap lastmod date for ${route}: ${lastmod}`,
-      );
+      throw new Error(`Invalid sitemap lastmod date for ${route}: ${lastmod}`);
     }
 
     return `  <url>
@@ -333,8 +318,7 @@ function validateSitemap(sitemap, seo, routes) {
   const normalizedSiteUrl = seo.SITE_URL.replace(/\/+$/, "");
 
   for (const route of routes) {
-    const expectedUrl =
-      `${normalizedSiteUrl}${route === "/" ? "/" : `${route}/`}`;
+    const expectedUrl = `${normalizedSiteUrl}${route === "/" ? "/" : `${route}/`}`;
 
     if (!locs.includes(expectedUrl)) {
       throw new Error(`Sitemap is missing URL: ${expectedUrl}`);
@@ -345,9 +329,9 @@ function validateSitemap(sitemap, seo, routes) {
     throw new Error("Sitemap contains duplicate URLs.");
   }
 
-  const lastmods = [
-    ...sitemap.matchAll(/<lastmod>(.*?)<\/lastmod>/g),
-  ].map((match) => match[1]);
+  const lastmods = [...sitemap.matchAll(/<lastmod>(.*?)<\/lastmod>/g)].map(
+    (match) => match[1],
+  );
 
   if (lastmods.length !== routes.length) {
     throw new Error("Sitemap contains missing or extra lastmod values.");
@@ -417,9 +401,7 @@ async function main() {
 
     const appPaths = new Set(app.routes.map((route) => route.path));
 
-    const missingAppRoutes = routes.filter(
-      (route) => !appPaths.has(route),
-    );
+    const missingAppRoutes = routes.filter((route) => !appPaths.has(route));
 
     if (missingAppRoutes.length) {
       throw new Error(
@@ -438,8 +420,7 @@ async function main() {
       const { markup, helmet } = renderPage(route);
 
       // Canonical URLs use trailing slashes for every page route.
-      const expectedCanonical =
-        `${normalizedSiteUrl}${route === "/" ? "/" : `${route}/`}`;
+      const expectedCanonical = `${normalizedSiteUrl}${route === "/" ? "/" : `${route}/`}`;
 
       // Normalize the React Helmet canonical before validation.
       const head = normalizeCanonicalHref(
@@ -448,10 +429,7 @@ async function main() {
         route,
       );
 
-      const html = injectMarkup(
-        replaceHead(template, head),
-        markup,
-      );
+      const html = injectMarkup(replaceHead(template, head), markup);
 
       const pageMetadata = validatePrerenderedHtml(
         html,
@@ -498,13 +476,9 @@ async function main() {
 
       auditInternalLinks(html, route, routeSet);
 
-      const outputDir =
-        route === "/" ? dist : path.join(dist, route.slice(1));
+      const outputDir = route === "/" ? dist : path.join(dist, route.slice(1));
 
-      await writeFileAndVerify(
-        path.join(outputDir, "index.html"),
-        html,
-      );
+      await writeFileAndVerify(path.join(outputDir, "index.html"), html);
 
       renderedCount++;
     }
@@ -531,10 +505,7 @@ async function main() {
       throw new Error("404.html must not include a canonical URL.");
     }
 
-    await writeFileAndVerify(
-      path.join(dist, "404.html"),
-      notFoundHtml,
-    );
+    await writeFileAndVerify(path.join(dist, "404.html"), notFoundHtml);
 
     // Generate sitemap with trailing slashes.
     const sitemap = generateSitemap(seo, routes);
@@ -546,23 +517,24 @@ async function main() {
     await writeFileAndVerify(sitemapPath, sitemap);
 
     // Generate robots.txt.
-    const robots = [
-      "User-agent: *",
-      "Allow: /",
-      `Sitemap: ${normalizedSiteUrl}/sitemap.xml`,
-      "",
-    ].join("\n");
+    const robotsPath = path.join(projectRoot, "public", "robots.txt");
 
-    // Update both source and deployment copies.
-    await writeFileAndVerify(
-      path.join(root, "public", "robots.txt"),
-      robots,
-    );
+    const existingRobots = fs.existsSync(robotsPath)
+      ? fs.readFileSync(robotsPath, "utf8")
+      : "";
 
-    await writeFileAndVerify(
-      path.join(dist, "robots.txt"),
-      robots,
-    );
+    const sitemapLine = `Sitemap: ${normalizedSiteUrl}/sitemap.xml`;
+
+    const robots = existingRobots
+      .replace(/^\s*Sitemap:\s*.*$/gim, "")
+      .trimEnd();
+
+    const updatedRobots = [robots, sitemapLine, ""].filter(Boolean).join("\n");
+
+    fs.writeFileSync(robotsPath, updatedRobots, "utf8");
+    fs.writeFileSync(path.join(distDir, "robots.txt"), updatedRobots, "utf8");
+
+    await writeFileAndVerify(path.join(dist, "robots.txt"), robots);
 
     // Final verification of generated output.
     const finalSitemap = await fs.readFile(sitemapPath, "utf8");
