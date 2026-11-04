@@ -93,7 +93,13 @@ function injectMarkup(template, markup) {
 }
 
 function extractTag(html, regex, label, route) {
-  const matches = [...html.matchAll(regex)];
+  // matchAll() requires a global regular expression.
+  const globalRegex = new RegExp(
+    regex.source,
+    regex.flags.includes('g') ? regex.flags : `${regex.flags}g`
+  );
+
+  const matches = [...html.matchAll(globalRegex)];
 
   if (matches.length !== 1) {
     throw new Error(
