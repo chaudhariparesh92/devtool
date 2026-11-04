@@ -1,3 +1,4 @@
+
 // Single source of truth for SEO metadata.
 // Pure data + pure functions (no React) so the same values feed:
 //   1. the React pages (SeoHead / ToolLayout / Home), and
@@ -15,44 +16,95 @@ import { KEYWORD_BOOST } from './keywordBoost.js';
 export const SITE_URL = 'https://onlinedevelopertool.com';
 export const SITE_NAME = 'OnlineDeveloperTool';
 export const SITE_DOMAIN = 'onlinedevelopertool.com';
-// Local asset path (file lives in public/images). The absolute URL below is built from the central
-// SITE_URL only because og:image / twitter:image / JSON-LD require absolute URLs.
+
 export const OG_IMAGE_PATH = '/images/og-onlinedevelopertool.webp';
 export const DEFAULT_IMAGE = `${SITE_URL}${OG_IMAGE_PATH}`;
 
-// Bump this when page content genuinely changes. It feeds <lastmod> in sitemap.xml.
-export const CONTENT_LAST_MODIFIED = '2026-11-01'; // newest change anywhere on the site
+// Latest genuine content modification anywhere on the site.
+// Update this whenever content is genuinely changed.
+export const CONTENT_LAST_MODIFIED = '2026-11-04';
 
-// Per-page dates feed the visible "Updated" line, JSON-LD dateModified and sitemap <lastmod>.
-// Add a route to a list below only when its content or behaviour really changes, and bump
-// CONTENT_LAST_MODIFIED to match. Everything else keeps the baseline date.
+// Per-page dates feed:
+// - Visible "Updated" line
+// - JSON-LD dateModified
+// - Sitemap <lastmod>
+//
+// Only add routes here when their content or functionality genuinely changes.
+// Unlisted routes retain the baseline date.
 const BASELINE_MODIFIED = '2026-10-25';
+
 const MODIFIED_ON = {
-  '2026-11-01': ['/', '/website-status-checker', '/rgb-to-hex', '/json-to-csharp', '/uuid-generator', '/html-encoder', '/unix-timestamp', '/uuid-validator'],
+  '2026-11-04': [
+    '/',
+    '/website-status-checker',
+    '/rgb-to-hex',
+    '/json-to-csharp',
+    '/uuid-generator',
+    '/html-encoder',
+    '/unix-timestamp',
+    '/uuid-validator',
+  ],
+
   '2026-10-31': [
-    '/', '/categories',
-    '/uuid-generator', '/uuid-validator', '/uuid-parser', '/rgb-to-hex', '/hex-to-rgb', '/color-converter',
-    '/json-to-csharp', '/json-validator', '/json-beautifier', '/json-minifier', '/website-status-checker',
-    '/cron-expression-generator', '/cron-expression-parser',
-    '/json-to-typescript', '/json-to-java', '/json-to-python', '/json-to-go', '/url-encoder', '/url-decoder',
-    '/html-encoder', '/html-decoder', '/timestamp-converter', '/unix-timestamp', '/xml-formatter', '/xml-validator',
-    '/yaml-formatter', '/case-converter', '/text-to-slug', '/slug-generator', '/number-base-converter',
-    '/binary-to-decimal', '/decimal-to-binary', '/hex-to-decimal', '/decimal-to-hex',
+    '/categories',
+    '/uuid-parser',
+    '/hex-to-rgb',
+    '/color-converter',
+    '/json-validator',
+    '/json-beautifier',
+    '/json-minifier',
+    '/cron-expression-generator',
+    '/cron-expression-parser',
+    '/json-to-typescript',
+    '/json-to-java',
+    '/json-to-python',
+    '/json-to-go',
+    '/url-encoder',
+    '/url-decoder',
+    '/html-decoder',
+    '/timestamp-converter',
+    '/xml-formatter',
+    '/xml-validator',
+    '/yaml-formatter',
+    '/case-converter',
+    '/text-to-slug',
+    '/slug-generator',
+    '/number-base-converter',
+    '/binary-to-decimal',
+    '/decimal-to-binary',
+    '/hex-to-decimal',
+    '/decimal-to-hex',
   ],
 };
-export function getLastModified(path) {
-  if (path === '/guides' || path.startsWith('/guides/')) return GUIDES_UPDATED;
-  if (KEYWORD_BOOST[path]) return '2026-11-01';
-  for (const [date, paths] of Object.entries(MODIFIED_ON)) if (paths.includes(path)) return date;
+
+export function getLastModified(routePath) {
+  if (routePath === '/guides' || routePath.startsWith('/guides/')) {
+    return GUIDES_UPDATED;
+  }
+
+  if (KEYWORD_BOOST[routePath]) {
+    return CONTENT_LAST_MODIFIED;
+  }
+
+  for (const [date, paths] of Object.entries(MODIFIED_ON)) {
+    if (paths.includes(routePath)) {
+      return date;
+    }
+  }
+
   return BASELINE_MODIFIED;
 }
 
 // ---------------------------------------------------------------- Homepage
+
 export const HOME_TITLE = 'Online Developer Tools - Free JSON, JWT, Base64 & More';
+
 export const HOME_DESC =
   'Free online developer tools for JSON, JWT, Base64, UUID, hashing, URLs, timestamps, regex, XML, YAML and more. Fast browser-based utilities with no signup.';
+
 export const HOME_SOCIAL_DESC =
   'Free browser-based developer tools for JSON, JWT, Base64, UUID, hashing, timestamps, regex, XML, YAML and more. No signup required.';
+
 export const HOME_H1 = 'Free Online Developer Tools';
 
 export const HOME_POPULAR = [
@@ -152,7 +204,7 @@ export function getHomeJsonLd() {
       {
         '@type': 'ImageObject',
         '@id': `${SITE_URL}/#primaryimage`,
-        url: `${SITE_URL}${OG_IMAGE_PATH}`, 
+        url: `${SITE_URL}${OG_IMAGE_PATH}`,
         width: 1200,
         height: 630,
         caption: 'Free online developer tools: JSON formatter, JWT decoder, UUID generator and Base64 tools',
@@ -168,13 +220,18 @@ export function getHomeJsonLd() {
       },
       {
         '@type': 'FAQPage',
-        mainEntity: HOME_FAQS.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+        mainEntity: HOME_FAQS.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
       },
     ],
   };
 }
 
 // ------------------------------------------------------- Non-tool pages
+
 export const PAGE_SEO = {
   '/guides': {
     title: 'Developer Guides: JSON, JWT, UUID, Cron and More',
@@ -214,30 +271,41 @@ export const PAGE_SEO = {
 };
 
 // ------------------------------------------------------ Category pages
-// /category/<slug> pages are defined in data/categoryContent.js. Their title/description are
-// registered here so every non-tool page is looked up the same way.
+
 for (const c of Object.values(CATEGORY_PAGES)) {
-  PAGE_SEO[`/category/${c.slug}`] = { title: c.title, description: c.description, h1: c.h1 };
+  PAGE_SEO[`/category/${c.slug}`] = {
+    title: c.title,
+    description: c.description,
+    h1: c.h1,
+  };
 }
 
-// Link target for a category: its real page when one exists, otherwise the filtered tools list.
-// A category with exactly one tool and no page of its own links straight to that tool, so the
-// link goes to a real, canonical, indexable URL instead of a client-rendered ?category= filter.
 export const categoryLink = (category) => {
   const own = categoryPath(category);
   if (own) return own;
+
   const only = TOOLS.filter((t) => t.category === category);
-  return only.length === 1 ? only[0].path : `/tools?category=${encodeURIComponent(category)}`;
+  return only.length === 1
+    ? only[0].path
+    : `/tools?category=${encodeURIComponent(category)}`;
 };
 
 export function getCategoryByPath(path) {
-  const entry = Object.entries(CATEGORY_PAGES).find(([, c]) => `/category/${c.slug}` === path);
+  const entry = Object.entries(CATEGORY_PAGES).find(
+    ([, c]) => `/category/${c.slug}` === path
+  );
+
   return entry ? { category: entry[0], ...entry[1] } : null;
 }
 
 export function getGuideJsonLd(guide) {
   const url = `${SITE_URL}/guides/${guide.slug}`;
-  const org = { '@type': 'Organization', name: SITE_NAME, url: `${SITE_URL}/` };
+  const org = {
+    '@type': 'Organization',
+    name: SITE_NAME,
+    url: `${SITE_URL}/`,
+  };
+
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -270,6 +338,7 @@ export function getCategoryJsonLd(category) {
   const c = CATEGORY_PAGES[category];
   const url = `${SITE_URL}/category/${c.slug}`;
   const tools = TOOLS.filter((t) => t.category === category);
+
   return {
     '@context': 'https://schema.org',
     '@graph': [
@@ -290,7 +359,12 @@ export function getCategoryJsonLd(category) {
         isPartOf: { '@id': `${SITE_URL}/#website` },
         mainEntity: {
           '@type': 'ItemList',
-          itemListElement: tools.map((t, i) => ({ '@type': 'ListItem', position: i + 1, name: t.name, url: `${SITE_URL}${t.path}` })),
+          itemListElement: tools.map((t, i) => ({
+            '@type': 'ListItem',
+            position: i + 1,
+            name: t.name,
+            url: `${SITE_URL}${t.path}`,
+          })),
         },
       },
     ],
@@ -298,38 +372,56 @@ export function getCategoryJsonLd(category) {
 }
 
 // -------------------------------------------------------------- Tool pages
-// Per-tool title, description, H1 and keyword cluster live in data/toolSeoData.js.
-// TOOL_SEO is kept as an alias so older imports keep working.
+
 export const TOOL_SEO = TOOL_SEO_DATA;
 
-// Curated related tools (3-8) from the tool's `related` list; falls back to same group / category.
 export function getRelatedTools(path, group, category) {
   const cfg = TOOL_SEO_DATA[path];
+
   if (cfg && cfg.related && cfg.related.length) {
-    return cfg.related.map((p) => TOOLS.find((t) => t.path === p)).filter((t) => t && t.path !== path).slice(0, 8);
+    return cfg.related
+      .map((p) => TOOLS.find((t) => t.path === p))
+      .filter((t) => t && t.path !== path)
+      .slice(0, 8);
   }
-  const same = (t) => t.path !== path && getToolContent(t.path, t.name)?.group === group;
+
+  const same = (t) =>
+    t.path !== path && getToolContent(t.path, t.name)?.group === group;
+
   const first = TOOLS.filter(same);
-  const more = TOOLS.filter((t) => t.path !== path && t.category === category && !first.includes(t));
+  const more = TOOLS.filter(
+    (t) => t.path !== path && t.category === category && !first.includes(t)
+  );
+
   return [...first, ...more].slice(0, 6);
 }
 
-// Returns everything a tool page needs for <head> and for the page body. `fallbackName` /
-// `fallbackDesc` are only used if a path is not listed in data/tools.js or has no content entry.
 export function getToolSeo(path, fallbackName, fallbackDesc) {
   const tool = TOOLS.find((t) => t.path === path);
   const name = tool ? tool.name : fallbackName;
   const boost = KEYWORD_BOOST[path];
   const base = getToolContent(path, name);
-  // Merge the per-page keyword wording (tasks + FAQs) into the content without mutating the shared object.
+
   const c = base && boost
     ? {
         ...base,
-        tasks: [...base.tasks, ...(boost.tasks || []).filter((t) => !base.tasks.some((x) => x.toLowerCase() === t.toLowerCase()))],
-        faqs: [...base.faqs, ...(boost.faqs || []).map(([q, a]) => ({ q, a })).filter((f) => !base.faqs.some((x) => x.q === f.q))],
+        tasks: [
+          ...base.tasks,
+          ...(boost.tasks || []).filter(
+            (t) => !base.tasks.some((x) => x.toLowerCase() === t.toLowerCase())
+          ),
+        ],
+        faqs: [
+          ...base.faqs,
+          ...(boost.faqs || [])
+            .map(([q, a]) => ({ q, a }))
+            .filter((f) => !base.faqs.some((x) => x.q === f.q)),
+        ],
       }
     : base;
+
   const rawCfg = TOOL_SEO_DATA[path];
+
   const cfg = rawCfg && boost
     ? {
         ...rawCfg,
@@ -339,14 +431,31 @@ export function getToolSeo(path, fallbackName, fallbackDesc) {
         ...(boost.l ? { longTail: boost.l } : {}),
       }
     : rawCfg;
+
   const title = cfg ? cfg.title : `${name} Online - Free Browser-Based Tool`;
   const description = cfg ? cfg.description : c ? c.meta : fallbackDesc;
   const h1 = cfg ? cfg.h1 : name;
   const catPath = tool ? categoryPath(tool.category) : null;
 
-  const crumbs = [{ '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` }];
-  if (catPath) crumbs.push({ '@type': 'ListItem', position: crumbs.length + 1, name: tool.category, item: `${SITE_URL}${catPath}` });
-  crumbs.push({ '@type': 'ListItem', position: crumbs.length + 1, name, item: `${SITE_URL}${path}` });
+  const crumbs = [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+  ];
+
+  if (catPath) {
+    crumbs.push({
+      '@type': 'ListItem',
+      position: crumbs.length + 1,
+      name: tool.category,
+      item: `${SITE_URL}${catPath}`,
+    });
+  }
+
+  crumbs.push({
+    '@type': 'ListItem',
+    position: crumbs.length + 1,
+    name,
+    item: `${SITE_URL}${path}`,
+  });
 
   const jsonLd = c && {
     '@context': 'https://schema.org',
@@ -377,40 +486,113 @@ export function getToolSeo(path, fallbackName, fallbackDesc) {
       },
       {
         '@type': 'FAQPage',
-        mainEntity: c.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+        mainEntity: c.faqs.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
       },
     ],
   };
 
-  return { tool, name, content: c, title, description, h1, cfg, research: SEO_RESEARCH[path] || null, categoryPath: catPath, jsonLd };
+  return {
+    tool,
+    name,
+    content: c,
+    title,
+    description,
+    h1,
+    cfg,
+    research: SEO_RESEARCH[path] || null,
+    categoryPath: catPath,
+    jsonLd,
+  };
 }
 
 // ---------------------------------------------------- Routes for build scripts
-export const STATIC_ROUTES = ['/', '/tools', '/categories', '/about', '/contact', '/privacy', '/terms'];
-export const CATEGORY_ROUTES = Object.values(CATEGORY_PAGES).map((c) => `/category/${c.slug}`);
 
-// Every indexable URL, in sitemap order. App.jsx's route list must stay in sync with this
-// (scripts/prerender.mjs fails the build if a route here is missing from App.jsx).
+export const STATIC_ROUTES = [
+  '/',
+  '/tools',
+  '/categories',
+  '/about',
+  '/contact',
+  '/privacy',
+  '/terms',
+];
+
+export const CATEGORY_ROUTES = Object.values(CATEGORY_PAGES).map(
+  (c) => `/category/${c.slug}`
+);
+
+// Every indexable URL, in sitemap order.
 export function getIndexableRoutes() {
-  return [...STATIC_ROUTES.slice(0, 3), ...CATEGORY_ROUTES, ...STATIC_ROUTES.slice(3), '/guides', ...GUIDE_ROUTES, ...TOOLS.map((t) => t.path)];
+  return [
+    ...STATIC_ROUTES.slice(0, 3),
+    ...CATEGORY_ROUTES,
+    ...STATIC_ROUTES.slice(3),
+    '/guides',
+    ...GUIDE_ROUTES,
+    ...TOOLS.map((t) => t.path),
+  ];
 }
 
-// One lookup used by the prerender script: head values + JSON-LD for ANY indexable route.
 export function getRouteSeo(path) {
   if (path === '/') {
-    return { kind: 'home', title: HOME_TITLE, description: HOME_DESC, social: HOME_SOCIAL_DESC, h1: HOME_H1, jsonLd: getHomeJsonLd() };
+    return {
+      kind: 'home',
+      title: HOME_TITLE,
+      description: HOME_DESC,
+      social: HOME_SOCIAL_DESC,
+      h1: HOME_H1,
+      jsonLd: getHomeJsonLd(),
+    };
   }
+
   const guide = getGuide(path);
+
   if (guide) {
-    return { kind: 'guide', title: guide.title, description: guide.description, h1: guide.h1, jsonLd: getGuideJsonLd(guide), guide };
+    return {
+      kind: 'guide',
+      title: guide.title,
+      description: guide.description,
+      h1: guide.h1,
+      jsonLd: getGuideJsonLd(guide),
+      guide,
+    };
   }
+
   const cat = getCategoryByPath(path);
+
   if (cat) {
-    return { kind: 'category', title: cat.title, description: cat.description, h1: cat.h1, jsonLd: getCategoryJsonLd(cat.category), category: cat };
+    return {
+      kind: 'category',
+      title: cat.title,
+      description: cat.description,
+      h1: cat.h1,
+      jsonLd: getCategoryJsonLd(cat.category),
+      category: cat,
+    };
   }
+
   if (PAGE_SEO[path]) {
-    return { kind: 'page', title: PAGE_SEO[path].title, description: PAGE_SEO[path].description, h1: PAGE_SEO[path].h1, jsonLd: null };
+    return {
+      kind: 'page',
+      title: PAGE_SEO[path].title,
+      description: PAGE_SEO[path].description,
+      h1: PAGE_SEO[path].h1,
+      jsonLd: null,
+    };
   }
+
   const t = getToolSeo(path);
-  return { kind: 'tool', title: t.title, description: t.description, h1: t.h1, jsonLd: t.jsonLd, tool: t };
+
+  return {
+    kind: 'tool',
+    title: t.title,
+    description: t.description,
+    h1: t.h1,
+    jsonLd: t.jsonLd,
+    tool: t,
+  };
 }
