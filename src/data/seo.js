@@ -23,7 +23,6 @@ export const DEFAULT_IMAGE = `${SITE_URL}${OG_IMAGE_PATH}`;
 // Latest genuine content modification anywhere on the site.
 // Update this whenever content is genuinely changed.
 export const CONTENT_LAST_MODIFIED = '2026-11-05';
-export const CONTENT_LAST_MODIFIED = '2026-11-05';
 
 // Per-page dates feed:
 // - Visible "Updated" line
