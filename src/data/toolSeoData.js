@@ -52,14 +52,14 @@ export const TOOL_SEO_DATA = {
     related: ['/json-formatter', '/json-beautifier', '/json-validator', '/query-string-generator', '/url-encoder', '/base64-encoder'],
   }),
   '/json-to-csharp': S({
-    title: 'JSON to C# Converter - C# Class and Model Generator',
-    description: 'Convert JSON to C# online: paste a JSON object and generate C# classes with nested types and System.Text.Json or Newtonsoft attributes. Free, in your browser.',
-    h1: 'JSON to C# Converter',
-    primary: 'json to c# class',
-    secondary: ['json to c#', 'json to csharp', 'json 2 csharp', 'json c# model generator', 'convert json to c#'],
+    title: 'Convert JSON to C# Classes Online - Free Generator',
+    description: 'Convert JSON to C# (CSharp) classes online. Paste JSON, get public classes with { get; set; } properties, nested types and attributes. Free, in-browser.',
+    h1: 'Convert JSON to C# Classes Online',
+    primary: 'convert json to c#',
+    secondary: ['json to c#', 'convert json to csharp', 'json to csharp', 'json 2 csharp', 'json c# model generator', 'json to c# class'],
     longTail: ['json to c# converter', 'generate C# classes from JSON', 'convert API JSON to C# classes', 'create C# model from JSON', 'JSON to C# POCO online'],
     intent: 'utility + developer workflow',
-    related: ['/json-formatter', '/json-validator', '/json-to-typescript', '/json-to-java', '/json-to-kotlin', '/json-to-python', '/json-to-go'],
+    related: ['/json-formatter', '/json-validator', '/json-beautifier', '/json-to-typescript', '/json-to-java', '/json-to-kotlin', '/json-to-python', '/json-to-go'],
   }),
   '/json-to-typescript': S({
     title: 'JSON to TypeScript Converter - Generate Interfaces Online',
@@ -315,7 +315,7 @@ export const TOOL_SEO_DATA = {
     secondary: ['timestamp converter', 'date timestamp converter', 'epoch converter', 'timestamp to date', 'date to timestamp'],
     longTail: ['convert Unix timestamp to date', 'convert date to Unix timestamp', 'convert seconds and milliseconds timestamps', 'read timestamp values from logs', 'convert ISO date to Unix time'],
     intent: 'utility',
-    related: ['/unix-timestamp', '/jwt-decoder', '/cron-expression-parser', '/number-base-converter', '/uuid-generator', '/cron-expression-generator'],
+    related: ['/unix-timestamp', '/jwt-decoder', '/cron-expression-parser', '/number-base-converter', '/uuid-generator', '/uuid-parser', '/cron-expression-generator'],
   }),
   '/unix-timestamp': S({
     title: 'Current Unix Timestamp Online - Epoch Time Converter',
@@ -325,7 +325,7 @@ export const TOOL_SEO_DATA = {
     secondary: ['current unix timestamp', 'get unix timestamp', 'unix timestamp online', 'unix time today', 'epoch time converter'],
     longTail: ['current date unix timestamp', 'convert Unix time to a date', 'convert a date to Unix timestamp', 'convert Unix seconds to milliseconds', 'decode an epoch timestamp'],
     intent: 'informational + utility',
-    related: ['/timestamp-converter', '/jwt-decoder', '/cron-expression-parser', '/number-base-converter', '/uuid-generator', '/cron-expression-generator'],
+    related: ['/timestamp-converter', '/jwt-decoder', '/cron-expression-parser', '/number-base-converter', '/uuid-generator', '/uuid-parser', '/cron-expression-generator'],
   }),
   '/color-converter': S({
     title: 'Color Converter Online - Convert HEX and RGB Colors',

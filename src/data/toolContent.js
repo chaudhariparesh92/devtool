@@ -10,6 +10,9 @@ import { TOOL_GAP } from './toolGapContent.js';
 
 const BT = '`';
 const SAMPLE_USER = '{"id":1,"name":"Ada"}';
+// JSON to C# page example. The output below is exactly what the converter writes for this input.
+const CSHARP_SAMPLE = '{"id":1,"first_name":"Ada","active":true,"address":{"city":"Pune","zip":"411001"},"tags":["admin","dev"],"orders":[{"id":7,"total":19.5}]}';
+const CSHARP_OUTPUT = 'using System.Collections.Generic;\n\npublic class Root {\n    public double Id { get; set; }\n    public string FirstName { get; set; }\n    public bool Active { get; set; }\n    public Address Address { get; set; }\n    public List<string> Tags { get; set; }\n    public List<Orders> Orders { get; set; }\n}\n\npublic class Orders {\n    public double Id { get; set; }\n    public double Total { get; set; }\n}\n\npublic class Address {\n    public string City { get; set; }\n    public string Zip { get; set; }\n}';
 
 // ---- JSON formatter / validator / minifier --------------------------------
 const jsonFmt = {
@@ -168,10 +171,10 @@ const GROUPS = [
       return {
         lede: cs ? 'Convert JSON to C# online: paste a JSON object and get ready-to-use classes with public properties, nested types and optional attributes.' : `Paste JSON, get a ${L.label} model for it.`,
         meta: `${n}: generate a ${L.label} class or type from a JSON sample. Free and runs in your browser.`,
-        what: cs ? `This page generates C# model classes from a sample JSON object. It writes a root class with one public property per key (each with a { get; set; } accessor pair), a separate class for each nested object and List<T> for arrays. ${L.note}` : `${n} reads a JSON object and writes a ${L.label} type with one field per top-level key. ${L.note}`,
+        what: cs ? `This page generates C# model classes from a sample JSON object. It writes a root class with one public property per JSON key (each with a { get; set; } accessor pair), a separate class for each nested object and List<T> for arrays. ${L.note}` : `${n} reads a JSON object and writes a ${L.label} type with one field per top-level key. ${L.note}`,
         problem: `Typing out model classes by hand for every API response is repetitive. Generating the first draft from a real JSON sample saves the boring part.`,
         steps: ['Paste a JSON object into the input box.', 'Press the convert button.', `Copy the generated ${L.label} code and adjust names or types to fit your project.`],
-        example: { inLabel: 'Input', input: SAMPLE_USER, outLabel: `${L.label} output`, output: L.output },
+        example: cs ? { inLabel: 'JSON input', input: CSHARP_SAMPLE, outLabel: 'C# output', output: CSHARP_OUTPUT } : { inLabel: 'Input', input: SAMPLE_USER, outLabel: `${L.label} output`, output: L.output },
         useCases: ['Creating models for a new API integration', 'Mocking a type from a sample response', 'Starting a DTO without typing every property'],
         tasks: cs ? ['Convert JSON to csharp', 'C# model generator from JSON', 'Create C# DTOs from JSON', 'Generate a POCO class from an API response'] : [`JSON to ${L.label}`, `Generate ${L.label} class from JSON`, `${L.label} model from JSON`],
         faqs: cs ? [LOCAL] : [
@@ -707,6 +710,13 @@ const EXTRA = {
         ],
       },
       {
+        h: 'How JSON keys map to C# properties',
+        paras: [
+          'Each JSON key becomes one public C# property. The generator drops characters that are not letters or digits and capitalizes the next letter, so first_name and user-id become FirstName and UserId, and name becomes Name. If you pick System.Text.Json or Newtonsoft.Json in the Property attributes menu, the original key is kept in a [JsonPropertyName] or [JsonProperty] attribute, so serialization still uses the JSON key.',
+          'Nested objects and arrays follow the same idea, as in the example above. The class is named after the key (address becomes Address, orders becomes Orders) and an array of objects becomes List<Orders>. An array of plain values becomes a list of that type, such as List<string>. Keys are not singularized, so rename Orders to Order by hand if you prefer.',
+        ],
+      },
+      {
         h: 'Public properties and get/set accessors',
         paras: [
           'Every generated property is public and has a get and a set accessor, which is what most C# serializers need to fill an object from JSON. System.Text.Json, for example, ignores properties whose setter is not public unless you mark them with [JsonInclude].',
@@ -722,6 +732,7 @@ const EXTRA = {
           'Replace object (used for null values) with a real type once you know it.',
           'Mark properties nullable if a field can be missing.',
           'If you want immutable models, change { get; set; } to { get; init; } or turn the class into a record by hand. The generator itself always writes public get and set.',
+          'Check unusual keys. A key that starts with a digit (such as "2fa") gives an invalid C# name, so rename it. For an array, only the first element is used to infer the item class, and if two nested objects share a key name only the first class is generated.',
         ],
       },
       {
