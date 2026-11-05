@@ -7,22 +7,30 @@
 
 export const KEYWORD_BOOST = {
   '/json-formatter': {
-    d: 'Format JSON online: paste minified or messy JSON and get readable, indented output. Free online JSON formatter and pretty printer that runs in your browser.',
-    s: ['online json formatter', 'json formatter online', 'format json', 'json pretty print', 'json beautify'],
+    d: 'Free online JSON formatter and viewer. Paste minified JSON, get indented output with key sorting, a tree view and parser errors. Runs in your browser.',
+    s: ['online json formatter', 'json formatter online', 'free json formatter', 'format json', 'json pretty print', 'json viewer online', 'view json'],
     l: ['how to write a json file', 'make json readable', 'json formatter no signup', 'format json in browser', 'json indent online'],
-    tasks: ['Online JSON formatter', 'Make minified JSON readable', 'JSON pretty print online'],
+    tasks: ['Online JSON formatter', 'Free JSON formatter', 'Make minified JSON readable', 'JSON pretty print online', 'View JSON online', 'Align and indent JSON'],
     faqs: [
       ['How do I format JSON online?', 'Paste your JSON into the input box and the formatted, indented result appears in the output. If the JSON is invalid, the parser error is shown instead so you can fix it first.'],
       ['How do I write a JSON file?', 'A JSON file is a plain text file, usually saved with the .json extension, that holds one JSON value: normally an object in curly braces or an array in square brackets. Keys and strings need double quotes, items are separated by commas, and there are no comments or trailing commas. Paste what you wrote here to format it, or into the JSON Validator to check it.'],
+      ['Can I use this as a JSON viewer?', 'Yes, for reading JSON. Paste it, drop a .json file onto the page or load it from an HTTPS URL, and you get indented output, optional key sorting, counts of keys, objects and arrays, and a tree / structured view. It is not an interactive collapsible tree, and very large files can be slow in a browser tab.'],
+      ['What is JSON and what does a JSON file look like?', 'JSON (JavaScript Object Notation) is a text format for structured data. Objects use curly braces, arrays use square brackets, and values are strings, numbers, true, false or null. A JSON file is a plain text file, usually ending in .json, that holds one such value, for example {"name":"Ada","tags":["dev","math"],"active":true}. Paste it into the formatter above to see it indented.'],
+      ['How do I open a JSON file?', 'A .json file is plain text, so any text editor opens it (Notepad, TextEdit, VS Code), and so does a web browser. To read it comfortably, choose the file in the file box on this page or drag it in. It is read and formatted in your browser and is not uploaded.'],
+      ['How do I format JSON in Notepad++, Visual Studio, VS Code or Vim?', 'Notepad++ needs a plugin such as JSTool or JSON Viewer. Visual Studio and VS Code have a Format Document command that works on .json files. In Vim you can pipe the buffer through a tool such as jq or python -m json.tool. On any command line, json_pp, jq . and python -m json.tool all pretty print JSON. For a quick one-off, paste the JSON here instead.'],
+      ['How do I put JSON inside JSON?', 'Either nest it as an object or array value, or store it as an escaped string, where every quote inside it has a backslash in front. A string-encoded value appears as one long string when you format the outer JSON. Copy its contents, remove the escaping and paste it into the formatter to read it as JSON.'],
+      ['Do I need to download a JSON formatter?', 'No. It runs in your browser, so there is nothing to install, whether you are on Windows, macOS or Linux. Use the Download button on the output to save the formatted result as a .json file.'],
     ],
   },
   '/json-validator': {
-    s: ['online json validator', 'json syntax checker', 'check json', 'json lint', 'validate json'],
+    s: ['online json validator', 'json syntax checker', 'check json', 'json lint', 'validate json', 'verify json online', 'json analyzer'],
     l: ['validate json file online', 'find json errors', 'why is my json invalid', 'json error checker', 'json syntax error finder'],
-    tasks: ['Online JSON validator', 'Validate a JSON file', 'Find the error in my JSON'],
+    tasks: ['Online JSON validator', 'Validate a JSON file', 'Find the error in my JSON', 'Verify JSON online', 'Check if JSON is valid or not', 'See JSON root type, size and depth'],
     faqs: [
       ['How do I validate a JSON file online?', 'Open the file in a text editor, copy its contents and paste them into the validator. If the JSON is valid you see a success message; if not, you see the parser error and can use its position to find the problem.'],
       ['Why does my JSON fail validation?', 'The usual causes are a trailing comma, single quotes instead of double quotes, unquoted keys, comments, or values such as undefined and NaN that JSON does not allow.'],
+      ['Can the validator fix my JSON?', 'No. It does not repair JSON automatically. It shows the parser error and, when the browser gives a position, the line and column, so you can correct the problem yourself. After fixing it, validate again.'],
+      ['What does the validator tell me about valid JSON?', 'When the JSON is valid you see the root type (object or array), the number of top-level keys or items, the nesting depth and the size in characters. To re-print the same JSON with indentation, use the JSON Formatter.'],
     ],
   },
   '/json-beautifier': {
@@ -30,10 +38,12 @@ export const KEYWORD_BOOST = {
     d: 'Free JSON beautifier: beautify minified JSON online into readable, indented text. Pretty print JSON in your browser with no signup.',
     s: ['json beautifier online', 'json beautify', 'beautify json online', 'json pretty print', 'unminify json'],
     l: ['json beautifier', 'beautify minified json', 'online json beautifier', 'make json pretty', 'expand one line json'],
-    tasks: ['JSON beautify online', 'Online JSON beautifier', 'Unminify JSON'],
+    tasks: ['JSON beautify online', 'Online JSON beautifier', 'Unminify JSON', 'Expand one-line JSON', 'Beautify a JSON array', 'Align JSON online'],
     faqs: [
       ['What is the difference between a JSON beautifier and a JSON formatter?', 'Nothing important: both add line breaks and indentation so JSON is easy to read. The names are used interchangeably, along with pretty printer.'],
       ['How do I beautify minified JSON?', 'Paste the one-line JSON into the input. The beautified version appears immediately, with each key on its own line and nested objects indented.'],
+      ['How do I beautify JSON in JavaScript?', 'Parse the text and stringify it with an indent argument: JSON.stringify(JSON.parse(text), null, 2). This page does the same thing and lets you pick 1 to 8 spaces or tabs, with optional key sorting.'],
+      ['Can it beautify a JSON array?', 'Yes. The root can be an object or an array. An array is printed with one item per line and nested objects indented under it.'],
     ],
   },
   '/json-minifier': {
@@ -42,7 +52,6 @@ export const KEYWORD_BOOST = {
     tasks: ['Minify JSON online', 'Compress JSON to one line', 'Remove whitespace from JSON'],
     faqs: [
       ['How do I minify JSON?', 'Paste your JSON and the minified version appears as a single line with all spaces and line breaks outside strings removed. Copy it into your request, config or test fixture.'],
-      ['Does minifying JSON change my data?', 'No. Only whitespace is removed. Keys, values, order and types stay the same, so the minified JSON parses to the same result.'],
     ],
   },
   '/json-to-typescript': {
