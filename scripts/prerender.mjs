@@ -516,25 +516,43 @@ async function main() {
 
     await writeFileAndVerify(sitemapPath, sitemap);
 
-    // Generate robots.txt.
-    const robotsPath = path.join(projectRoot, "public", "robots.txt");
+    
+    // Generate robots.txt while preserving all existing directives.
+    const robotsPath = path.join(root, "public", "robots.txt");
 
-    const existingRobots = fs.existsSync(robotsPath)
-      ? fs.readFileSync(robotsPath, "utf8")
-      : "";
+    let existingRobots = "";
+
+    try {
+      existingRobots = await fs.readFile(robotsPath, "utf8");
+    } catch (error) {
+      if (error.code !== "ENOENT") {
+        throw error;
+      }
+    }
 
     const sitemapLine = `Sitemap: ${normalizedSiteUrl}/sitemap.xml`;
 
-    const robots = existingRobots
-      .replace(/^\s*Sitemap:\s*.*$/gim, "")
+    // Remove old Sitemap directives only; preserve every other rule.
+    const robotsWithoutSitemap = existingRobots
+      .split(/\r?\n/)
+      .filter((line) => !/^\s*Sitemap\s*:/i.test(line))
+      .join("\n")
       .trimEnd();
 
-    const updatedRobots = [robots, sitemapLine, ""].filter(Boolean).join("\n");
+    const updatedRobots = [
+      robotsWithoutSitemap,
+      sitemapLine,
+    ]
+      .filter(Boolean)
+      .join("\n") + "\n";
 
-    fs.writeFileSync(robotsPath, updatedRobots, "utf8");
-    fs.writeFileSync(path.join(distDir, "robots.txt"), updatedRobots, "utf8");
+    // Update source robots.txt.
+    await writeFileAndVerify(robotsPath, updatedRobots);
 
-    await writeFileAndVerify(path.join(dist, "robots.txt"), robots);
+    // Copy the same verified content into the production build.
+    const distRobotsPath = path.join(dist, "robots.txt");
+
+    await writeFileAndVerify(distRobotsPath, updatedRobots);
 
     // Final verification of generated output.
     const finalSitemap = await fs.readFile(sitemapPath, "utf8");
