@@ -162,7 +162,7 @@ export const KEYWORD_BOOST = {
     l: ['base64decoder', 'base64 translator', 'decode base64 string', 'base64 decode utf-8', 'convert base64 to text'],
     tasks: ['Decode Base64 online', 'Base64 to text', 'Read an encoded Base64 string'],
     faqs: [
-      ['How do I decode a Base64 string?', 'Paste the Base64 text and the decoded text appears. Remove spaces or line breaks and any data: prefix first. If the output is empty, the input is not valid Base64.'],
+      ['How do I decode a Base64 string?', 'Paste the Base64 text and the decoded text appears. Spaces and line breaks are ignored, but a data: prefix must be removed first. If the output is empty, the input is not valid Base64.'],
       ['Can it decode URL-safe Base64 (Base64URL)?', 'Base64URL uses - and _ instead of + and /. Replace them with + and / before pasting, because this decoder expects the standard alphabet.'],
     ],
   },

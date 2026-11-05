@@ -186,7 +186,7 @@ export const TOOL_SEO_DATA = {
   '/base64-decoder': S({
     title: 'Base64 Decoder Online - Decode Base64 to Text',
     description: 'Decode Base64 online. Turn a Base64 string back into readable UTF-8 text in your browser. Standard Base64 only; invalid input gives an empty result.',
-    h1: 'Base64 Decoder Online',
+    h1: 'Base64 Decoder Online: Decode Base64 to Plain Text',
     primary: 'base64 decoder online',
     secondary: ['base64 decoder', 'decode base64', 'base64 decode online', 'base64 to text', 'base64 converter'],
     longTail: ['decode Base64 to text online', 'decode UTF-8 Base64 strings', 'decode a Base64 API value', 'convert Base64 back to readable text', 'Base64 decode online free'],
@@ -206,7 +206,7 @@ export const TOOL_SEO_DATA = {
   '/html-decoder': S({
     title: 'HTML Decoder Online - Decode HTML Entities to Text',
     description: 'HTML decode text online. Turn entities such as &amp;, &lt;, &gt; and &quot; back into the characters they stand for. Runs in your browser.',
-    h1: 'HTML Decoder Online',
+    h1: 'Online HTML Decoder: Decode HTML Entities',
     primary: 'html decoder online',
     secondary: ['html decoder', 'html entity decoder', 'decode html entities', 'html unescape', 'html entities decoder'],
     longTail: ['decode HTML entities online', 'convert &amp; and &lt; back to text', 'HTML unescape encoded text', 'decode numeric HTML entities', 'HTML entity decode online'],
@@ -410,9 +410,9 @@ export const TOOL_SEO_DATA = {
     related: ['/xml-validator', '/yaml-formatter', '/json-formatter', '/html-encoder', '/diff-checker'],
   }),
   '/xml-validator': S({
-    title: 'XML Validator Online - Check if XML Is Well-Formed',
+    title: 'XML Validator Online - Free XML Format Checker',
     description: 'Validate XML online. Check that a document is well-formed and read the parser error if it is not. Checks syntax only, not an XSD schema.',
-    h1: 'XML Validator Online',
+    h1: 'XML Validator Online: Free XML Format Checker',
     primary: 'xml validator online',
     secondary: ['xml validator', 'validate xml', 'xml checker', 'xml syntax checker', 'xml lint'],
     longTail: ['check if XML is well formed', 'validate XML syntax online', 'find an XML parsing error', 'validate sitemap XML syntax', 'check XML before importing it'],
@@ -480,9 +480,9 @@ export const TOOL_SEO_DATA = {
     related: ['/regex-generator', '/text-counter', '/diff-checker', '/query-string-parser', '/uuid-validator'],
   }),
   '/regex-generator': S({
-    title: 'Regex Generator Online - Write and Try Regex Patterns',
+    title: 'Regex Generator & Pattern Maker - Build and Test Regex',
     description: 'Write a regex pattern and try it on sample text. Includes common JavaScript patterns to start from. This page uses the same matcher as the Regex Tester.',
-    h1: 'Regex Generator Online',
+    h1: 'Regex Pattern Maker: Build and Test a Regex Online',
     primary: 'regex generator online',
     secondary: ['regex generator', 'regular expression generator', 'regex builder', 'regex pattern generator', 'generate regex'],
     longTail: ['generate a regex for a text pattern', 'create a regular expression online', 'build a regex from an example', 'generate regex for email or URL patterns', 'create a regex pattern for validation'],

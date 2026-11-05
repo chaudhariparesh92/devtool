@@ -67,9 +67,9 @@ const enc = {
   '/url-encoder': { what: 'URL Encoder percent-encodes text so it is safe inside a URL or query string (spaces become %20, & becomes %26).', lede: 'Turn text into a URL-safe string. Spaces, ampersands and special characters get percent-encoded.', ex: ['a b&c=d', 'a%20b%26c%3Dd'], tasks: ['URL encode online', 'Percent-encode a query value', 'Escape special characters in a URL'] },
   '/url-decoder': { what: 'URL Decoder turns percent-encoded text such as %20 or %26 back into readable characters.', lede: 'Decode percent-encoded URLs and query values back into plain text.', ex: ['a%20b%26c%3Dd', 'a b&c=d'], tasks: ['URL decode online', 'Decode %20 in a URL', 'Read an encoded query string'] },
   '/base64-encoder': { what: 'Base64 Encoder converts text (including UTF-8 characters) into a Base64 string.', lede: 'Encode text to Base64 in your browser. Handles UTF-8 input.', ex: ['hello', 'aGVsbG8='], tasks: ['Base64 encode a string', 'Encode text to Base64', 'Base64 online encoder'] },
-  '/base64-decoder': { what: 'Base64 Decoder converts a Base64 string back into the original text.', lede: 'Decode Base64 strings back into readable text, right in your browser.', ex: ['aGVsbG8=', 'hello'], tasks: ['Base64 decode online', 'Decode a Base64 string', 'Read Base64 encoded text'] },
+  '/base64-decoder': { what: 'Base64 Decoder converts a Base64 string back into plain text. Paste the encoded value and the original text appears straight away. It reads the result as UTF-8, so accented letters and emoji decode correctly.', lede: 'Online decode Base64: paste a Base64 string and read the plain text inside it, right in your browser.', problem: 'Base64 data turns up in API responses, config files, HTTP headers and emails. It looks like random letters, so you cannot read it without decoding it first.', ex: ['aGVsbG8=', 'hello'], tasks: ['Base64 decode online', 'Decode a Base64 string', 'Read Base64 encoded text'] },
   '/html-encoder': { what: 'HTML Encoder replaces &, < and > with their HTML entities so markup shows up as text instead of being rendered.', lede: 'Free HTML encoder: encode a string online so tags display as text. Converts &, < and > to HTML entities.', ex: ['<b>Tom & Jerry</b>', '&lt;b&gt;Tom &amp; Jerry&lt;/b&gt;'], tasks: ['HTML encode a string online', 'HTML escape online', 'Encode HTML entities', 'Show HTML tags as text'] },
-  '/html-decoder': { what: 'HTML Decoder turns HTML entities such as &lt; and &amp; back into the characters they stand for.', lede: 'Decode HTML entities like &lt; and &amp; back into plain characters.', ex: ['&lt;b&gt;Tom &amp; Jerry&lt;/b&gt;', '<b>Tom & Jerry</b>'], tasks: ['HTML decode online', 'Unescape HTML entities', 'Convert &amp; back to &'] },
+  '/html-decoder': { what: 'HTML Decoder turns HTML entities such as &lt; and &amp; back into the characters they stand for. Use it on encoded text copied from HTML documents, page source, feeds or database fields.', lede: 'Online decode HTML: paste text containing entities like &lt; and &amp; and get the plain characters back.', problem: 'Text copied from HTML documents, scraped pages, RSS feeds or API responses often arrives full of entities such as &quot; and &#39;. Reading it that way is tedious, and replacing each one by hand is easy to get wrong.', ex: ['&lt;b&gt;Tom &amp; Jerry&lt;/b&gt;', '<b>Tom & Jerry</b>'], tasks: ['HTML decode online', 'Unescape HTML entities', 'Convert &amp; back to &'] },
 };
 
 // ---- UUID -----------------------------------------------------------------
@@ -166,15 +166,15 @@ const GROUPS = [
       const L = LANGS[p.split('-to-')[1]];
       const cs = p === '/json-to-csharp';
       return {
-        lede: cs ? 'Convert JSON to C# online: paste a JSON object and get C# classes for your model, with nested types and optional attributes.' : `Paste JSON, get a ${L.label} model for it.`,
+        lede: cs ? 'Convert JSON to C# online: paste a JSON object and get ready-to-use classes with public properties, nested types and optional attributes.' : `Paste JSON, get a ${L.label} model for it.`,
         meta: `${n}: generate a ${L.label} class or type from a JSON sample. Free and runs in your browser.`,
-        what: cs ? `${n} is a JSON to C# class and model generator. It reads a JSON object and writes a root class with one property per key, a separate class for each nested object and List<T> for arrays. ${L.note}` : `${n} reads a JSON object and writes a ${L.label} type with one field per top-level key. ${L.note}`,
+        what: cs ? `This page generates C# model classes from a sample JSON object. It writes a root class with one public property per key (each with a { get; set; } accessor pair), a separate class for each nested object and List<T> for arrays. ${L.note}` : `${n} reads a JSON object and writes a ${L.label} type with one field per top-level key. ${L.note}`,
         problem: `Typing out model classes by hand for every API response is repetitive. Generating the first draft from a real JSON sample saves the boring part.`,
         steps: ['Paste a JSON object into the input box.', 'Press the convert button.', `Copy the generated ${L.label} code and adjust names or types to fit your project.`],
         example: { inLabel: 'Input', input: SAMPLE_USER, outLabel: `${L.label} output`, output: L.output },
         useCases: ['Creating models for a new API integration', 'Mocking a type from a sample response', 'Starting a DTO without typing every property'],
-        tasks: cs ? ['JSON to C#', 'Convert JSON to C#', 'JSON to C# class', 'C# model generator from JSON', 'JSON to C# converter', 'JSON to csharp'] : [`JSON to ${L.label}`, `Generate ${L.label} class from JSON`, `${L.label} model from JSON`],
-        faqs: [
+        tasks: cs ? ['Convert JSON to csharp', 'C# model generator from JSON', 'Create C# DTOs from JSON', 'Generate a POCO class from an API response'] : [`JSON to ${L.label}`, `Generate ${L.label} class from JSON`, `${L.label} model from JSON`],
+        faqs: cs ? [LOCAL] : [
           q('Does it handle nested objects and arrays?', 'It maps top-level keys. Nested objects and arrays come out as a generic type (such as object or any), so you will want to refine those by hand.'),
           q('How are field types chosen?', 'From the sample values: numbers, booleans and strings get matching types, anything else falls back to a generic type. One sample cannot show whether a field is optional.'),
           LOCAL,
@@ -191,13 +191,13 @@ const GROUPS = [
         lede: v.lede,
         meta: `${n} online: ${v.lede} Free, instant, and it runs in your browser.`,
         what: v.what,
-        problem: 'Encoded values show up in URLs, headers, tokens and logs. Decoding or encoding them by hand is slow, and one wrong character breaks the whole string.',
+        problem: v.problem || 'Encoded values show up in URLs, headers, tokens and logs. Decoding or encoding them by hand is slow, and one wrong character breaks the whole string.',
         steps: ['Type or paste your input on the left.', 'The result appears on the right as you type.', 'Press Copy to grab the output.'],
         example: { inLabel: 'Input', input: v.ex[0], outLabel: 'Output', output: v.ex[1] },
         useCases: ['Debugging query strings and redirect URLs', 'Reading values from HTTP headers or config files', 'Preparing text to embed in a URL or HTML page'],
         tasks: v.tasks,
         faqs: [
-          q('What if the output is empty?', 'The tool shows nothing when the input cannot be converted, for example malformed Base64 or a stray % in a URL. Check the input for typos or cut-off characters.'),
+          ...(p === '/html-decoder' ? [] : [q('What if the output is empty?', 'The tool shows nothing when the input cannot be converted, for example malformed Base64 or a stray % in a URL. Check the input for typos or cut-off characters.')]),
           q('Is encoding the same as encryption?', 'No. Encoding only changes the representation, and anyone can reverse it. Never use it to protect secrets.'),
           LOCAL,
         ],
@@ -707,12 +707,21 @@ const EXTRA = {
         ],
       },
       {
+        h: 'Public properties and get/set accessors',
+        paras: [
+          'Every generated property is public and has a get and a set accessor, which is what most C# serializers need to fill an object from JSON. System.Text.Json, for example, ignores properties whose setter is not public unless you mark them with [JsonInclude].',
+          'Here is the shape of the output for {"name":"Ada","active":true,"score":9.5}:',
+        ],
+        code: 'public class Root {\n    public string Name { get; set; }\n    public bool Active { get; set; }\n    public double Score { get; set; }\n}',
+      },
+      {
         h: 'What to adjust after generating',
         list: [
           'Rename Root to something meaningful such as OrderDto.',
           'Change double to int, long or decimal where the data calls for it. One sample cannot tell them apart.',
           'Replace object (used for null values) with a real type once you know it.',
           'Mark properties nullable if a field can be missing.',
+          'If you want immutable models, change { get; set; } to { get; init; } or turn the class into a record by hand. The generator itself always writes public get and set.',
         ],
       },
       {
@@ -727,6 +736,7 @@ const EXTRA = {
     ],
     faqs: [
       q('Can it generate nested classes?', 'Yes. Each nested object becomes its own class and arrays of objects become List<T>. Only null values fall back to object.'),
+      q('What does { get; set; } mean in the generated code?', 'It declares an auto-implemented property with a public getter and a public setter. Deserializers call the setter to fill each property from the JSON value, so the generator makes every property public with both accessors.'),
       q('Why are all numbers double?', 'A JSON sample does not show whether a number is an integer or a decimal, so the tool uses double for every number. Change it to int, long or decimal where appropriate.'),
       q('Does the output work with System.Text.Json and Newtonsoft.Json?', 'Yes. Choose the attribute style in the Property attributes menu: [JsonPropertyName] for System.Text.Json, [JsonProperty] for Newtonsoft.Json, or none for a plain class.'),
     ],
@@ -774,6 +784,15 @@ const EXTRA = {
   '/base64-decoder': {
     sections: [
       {
+        h: 'How to decode a Base64 string',
+        list: [
+          'Paste the Base64 string into the input box.',
+          'The plain text appears in the output as you type.',
+          'Press Copy to take the result.',
+        ],
+        code: 'SGVsbG8sIFdvcmxkIQ==   ->   Hello, World!\ndXNlcjpwYXNzd29yZA==   ->   user:password\naMOpbGxv               ->   héllo',
+      },
+      {
         h: 'What Base64 is',
         paras: [
           'Base64 represents binary data using 64 printable characters: A-Z, a-z, 0-9, + and /, with = used for padding. It turns bytes into text that can travel safely through systems built for text, at the cost of making the data about one third larger.',
@@ -783,6 +802,22 @@ const EXTRA = {
         h: 'Standard and URL-safe Base64',
         paras: [
           'This decoder expects the standard alphabet. URL-safe Base64, used in JWTs and some URLs, swaps + for - and / for _. To decode a URL-safe string here, replace - with + and _ with / first.',
+        ],
+      },
+      {
+        h: 'Where you will meet Base64 data',
+        list: [
+          'The user:password pair in an HTTP Basic Authorization header.',
+          'Values in Kubernetes Secret manifests and other config files.',
+          'The header and payload of a JWT, which use the URL-safe variant.',
+          'Small files or text embedded in JSON, XML or email (MIME).',
+        ],
+        paras: ['If the decoded result is readable text, you are done. If it looks like gibberish, the Base64 data holds a file or other binary content rather than text.'],
+      },
+      {
+        h: 'Spaces, padding and prefixes',
+        paras: [
+          'Spaces and line breaks inside the string are ignored, and a missing = at the end is usually accepted. A data: prefix such as data:text/plain;base64, is not part of the Base64 itself, so delete it and paste only what follows the comma.',
         ],
       },
       {
@@ -804,6 +839,8 @@ const EXTRA = {
       q('Can I decode an image or file here?', 'No. This tool decodes Base64 into text. Binary data such as images will not display correctly.'),
       q('Why does the decoded text look like gibberish?', 'The underlying bytes are probably not UTF-8 text. Base64 can hold any kind of data, not only text.'),
       q('Does it decode URL-safe Base64?', 'Not directly. Replace - with + and _ with / in the input first, then decode.'),
+      q('Does it need the = padding at the end?', 'Usually not. A string such as SGVsbG8 decodes to Hello even without the padding. Spaces and line breaks inside the string are also ignored.'),
+      q('Why does a string starting with data: fail to decode?', 'The data:...;base64, part is a URI prefix, not Base64. Remove everything up to and including the comma and paste only the encoded data.'),
     ],
   },
 

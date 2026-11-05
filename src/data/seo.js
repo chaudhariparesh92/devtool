@@ -34,11 +34,19 @@ export const CONTENT_LAST_MODIFIED = '2026-11-04';
 const BASELINE_MODIFIED = '2026-10-25';
 
 const MODIFIED_ON = {
+  '2026-11-05': [
+    '/json-to-csharp',
+    '/html-decoder',
+    '/base64-decoder',
+    '/rgb-to-hex',
+    '/regex-generator',
+    '/xml-validator',
+  ],
+
   '2026-11-04': [
     '/',
     '/website-status-checker',
     '/rgb-to-hex',
-    '/json-to-csharp',
     '/uuid-generator',
     '/html-encoder',
     '/unix-timestamp',
@@ -82,17 +90,15 @@ export function getLastModified(routePath) {
     return GUIDES_UPDATED;
   }
 
-  if (KEYWORD_BOOST[routePath]) {
-    return CONTENT_LAST_MODIFIED;
-  }
+  let latest = KEYWORD_BOOST[routePath] ? CONTENT_LAST_MODIFIED : null;
 
   for (const [date, paths] of Object.entries(MODIFIED_ON)) {
-    if (paths.includes(routePath)) {
-      return date;
+    if (paths.includes(routePath) && (!latest || date > latest)) {
+      latest = date;
     }
   }
 
-  return BASELINE_MODIFIED;
+  return latest || BASELINE_MODIFIED;
 }
 
 // ---------------------------------------------------------------- Homepage

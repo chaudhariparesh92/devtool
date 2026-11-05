@@ -43,7 +43,7 @@ export const TOOL_GAP = {
   '/json-to-csharp': {
     tasks: ['Convert JSON to a C# class online', 'Generate a C# model from an API response', 'Create C# classes for nested JSON objects', 'Add System.Text.Json or Newtonsoft attributes', 'Set the root class name for generated C# code'],
     faqs: [
-      f('Is this a JSON to C# model generator?', 'Yes. Paste a JSON object and it generates C# classes: a root class, a class for each nested object and List<T> for arrays. You can choose System.Text.Json or Newtonsoft.Json attributes and mark properties nullable.'),
+      f('Can I generate C# model classes from a JSON sample?', 'Yes. Paste a JSON object and it generates C# classes with public get/set properties: a root class, a class for each nested object and List<T> for arrays. You can choose System.Text.Json or Newtonsoft.Json attributes and mark properties nullable.'),
       f('How do I convert JSON to C# in Visual Studio?', 'Visual Studio has Edit > Paste Special > Paste JSON as Classes. This page does the same job in the browser, with attribute and nullable options, when you are not in the IDE.'),
       f('How do I convert a JSON array to a C# class?', 'Paste a single object from the array. The tool expects the root value to be a JSON object and returns an error for a bare array. Arrays of objects inside that object become List<T> properties with their own generated class.'),
       f('Can I rename the root class or mark properties nullable?', 'Yes. Use the root type name field to change the name from Root. The Optional / nullable properties checkbox adds a ? to each property type so missing values are allowed.'),
@@ -155,6 +155,7 @@ export const TOOL_GAP = {
     tasks: ['Decode HTML entities to text', 'Convert &amp; and &lt; back to characters', 'Decode numeric and hex HTML entities', 'Turn escaped HTML back into readable markup'],
     faqs: [
       f('Does it decode numeric and hex entities like &#169; and &#xA9;?', 'Yes. Decoding uses the browser\'s own HTML parser, so named entities, decimal entities and hexadecimal entities all decode to their characters.'),
+      f('Is an HTML entity the same as URL encoding?', 'No. HTML entities such as &amp; and &#39; escape characters inside HTML documents, while URL encoding uses percent codes such as %26. Use the URL Decoder for percent-encoded text and this tool for entities.'),
       f('Why does &amp;amp; decode to &amp; instead of &?', 'Decoding runs one pass. &amp;amp; is an ampersand that was escaped twice, so one pass leaves &amp;. Run the output through the decoder again to remove the second layer.'),
     ],
   },
@@ -262,6 +263,7 @@ export const TOOL_GAP = {
   '/rgb-to-hex': {
     tasks: ['Convert RGB to a HEX color code', 'Convert rgb(59, 130, 246) to hex', 'Change RGB to hex for CSS', 'Turn CSS rgb values into a hex code', 'Get an uppercase hex code for a design tool', 'Convert RGB to hexadecimal'],
     faqs: [
+      f('Is it RGB to HEX or GRB to HEX?', 'CSS, design tools and this converter all use RGB order: red, green, blue. GRB is usually a typo. Some LED strips (WS2812, for example) do expect bytes in green, red, blue order. If you are working with one, swap the first two numbers before converting, then enter them as RGB.'),
       f('How do I convert rgb(59, 130, 246) to hex?', 'Convert each channel to two hex digits: 59 is 3B, 130 is 82 and 246 is F6. Together that is #3B82F6.'),
       f('What range should each RGB value be in?', 'Each channel is a whole number from 0 to 255. A value outside that range shows an error instead of a hex code.'),
       f('Does RGB to HEX support alpha (rgba)?', 'Yes. rgba(59, 130, 246, 0.5) becomes the 8-digit code #3B82F680, where the last two digits are the alpha value.'),

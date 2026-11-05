@@ -215,6 +215,13 @@ export const EXTRA_MORE = {
         "linksLabel": "Related"
       },
       {
+        h: 'What XML is and why the format matters',
+        paras: [
+          'XML (Extensible Markup Language) is a markup language for storing and sending structured data. An XML document is human readable text, which is why it is still common for data exchange between systems, in sitemaps, RSS feeds, SOAP messages and configuration files.',
+          'Parsers are strict about the format. One missing closing tag makes the whole XML data unusable, so checking the document first saves a failed import or API call. This XML format checker tells you whether the document is well-formed. It does not compare the document with a document type definition (DTD) or an XML Schema.',
+        ],
+      },
+      {
         h: 'What counts as valid XML here',
         paras: ['The tool uses your browser\'s XML parser and reports a parser error if the document is not well-formed. That covers syntax, not meaning.'],
         list: ['Every opening tag has a matching closing tag, in the right order.', 'There is exactly one root element.', 'Attribute values are quoted, and & is written as &amp;.'],
@@ -332,6 +339,15 @@ export const EXTRA_MORE = {
           ]
         ],
         "linksLabel": "Related"
+      },
+      {
+        h: 'When you need to decode encoded text',
+        paras: [
+          'Entities appear when text has been escaped so it can sit safely inside HTML documents. You meet them in page source, scraped content, RSS and API responses, CMS exports and database fields, where a quote shows up as &quot; or an apostrophe as &#39;.',
+          'HTML entities are not the same thing as percent-encoding. A value like %20 or %3D comes from a URL encoder, so use the URL Decoder for that. Going the other way, the HTML Encoder escapes characters and the URL Encoder percent-encodes them.',
+        ],
+        links: [['URL Decoder', '/url-decoder'], ['URL Encoder', '/url-encoder'], ['HTML Encoder', '/html-encoder']],
+        linksLabel: 'Related',
       },
       {
         h: 'HTML decoding example',
@@ -813,6 +829,27 @@ export const EXTRA_MORE = {
         h: 'Common regex patterns to start from',
         paras: ['This page does not build patterns for you. It runs the same matcher as the Regex Tester, so you write or paste a pattern, add flags and check it against sample text. These patterns work in JavaScript and can be pasted in:'],
         code: 'Digits:            \\d+\nISO date:          \\d{4}-\\d{2}-\\d{2}\nEmail (simple):    \\b[\\w.+-]+@[\\w-]+\\.[\\w.]+\\b\nWord characters:   \\w+',
+      },
+      {
+        h: 'What a regular expression is',
+        paras: [
+          'A regular expression (regex) is a sequence of characters that describes a search pattern. Regular expressions let you find, extract or check text without writing a loop for every case, for example pulling email addresses or order numbers out of a log file.',
+          'Use this page as a regex pattern maker and regex builder: write the pattern in small parts, run it after each change and watch the matches list update. A complex regex is much easier to debug when you grow it one piece at a time.',
+        ],
+      },
+      {
+        h: 'Regex generator from a string: build the pattern by hand',
+        paras: [
+          'To turn a sample string into a regex, start with the string itself and escape the characters that have a special meaning: . * + ? ^ $ { } ( ) | [ ] and the backslash. Then swap the variable parts for classes such as \\d for a digit or \\w for a word character.',
+        ],
+        code: 'String:        price: $5.00 (USD)\nEscaped regex: price: \\$5\\.00 \\(USD\\)\nGeneral regex: price: \\$\\d+\\.\\d{2} \\([A-Z]{3}\\)',
+      },
+      {
+        h: 'Find and replace with a regex',
+        paras: [
+          'Fill in the replacement box to see the text after a find and replace. Wrap parts of the pattern in parentheses to make groups, then refer to them as $1, $2 and so on.',
+        ],
+        code: 'Pattern:      (\\w+)@(\\w+)\\.com   Flags: g\nReplacement:  $2: $1\nText:         ada@example.com, bob@site.com\nResult:       example: ada, site: bob',
       },
       {
         h: 'Test a pattern before you ship it',
