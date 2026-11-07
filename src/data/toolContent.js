@@ -44,7 +44,7 @@ const jsonFmt = {
     tasks: ['Beautify JSON online', 'Pretty print JSON', 'Make minified JSON readable'],
   },
   '/json-minifier': {
-    lede: 'Strip JSON whitespace to produce compact one-line output, while preserving the caveats of JavaScript JSON parsing.',
+    lede: 'Minify JSON online: remove spaces and line breaks to get compact one-line JSON, and see how many characters it saved.',
     what: 'JSON Minifier parses your JSON and prints it back on a single line with no extra spaces or line breaks.',
     problem: 'Pretty-printed JSON carries whitespace you do not need in a request body, a query parameter or an environment variable.',
     steps: ['Paste formatted JSON into the input box.', 'Press Process.', 'Copy the single-line output.'],
@@ -58,11 +58,11 @@ const jsonFmt = {
 const LANGS = {
   csharp: { label: 'C#', output: 'public class Root {\n    public double Id { get; set; }\n    public string Name { get; set; }\n}', note: 'Numbers become double, text becomes string, true/false becomes bool.' },
   typescript: { label: 'TypeScript', output: 'export interface Root {\n    id: number;\n    name: string;\n}', note: 'Output is a TypeScript interface named Root.' },
-  java: { label: 'Java', output: 'public class Root {\n    private Double id;\n    public Double getId() { return id; }\n    public void setId(Double id) { this.id = id; }\n    private String name;\n    public String getName() { return name; }\n    public void setName(String name) { this.name = name; }\n}', note: 'Fields come with getters and setters.' },
-  python: { label: 'Python', output: 'from typing import Any\nfrom dataclasses import dataclass\n\n@dataclass\nclass Root:\n    id: float\n    name: str', note: 'Output is a dataclass with type hints.' },
+  java: { label: 'Java', output: 'import java.util.List;\n\npublic class Root {\n    private Double id;\n    private String name;\n}', note: 'Fields are private. Getters and setters are not generated.' },
+  python: { label: 'Python', output: 'from dataclasses import dataclass\nfrom typing import Any, Optional, List\n\n@dataclass\nclass Root:\n    id: float\n    name: str', note: 'Output is a dataclass with type hints.' },
   go: { label: 'Go', output: `type Root struct {\n    Id float64 ${BT}json:"id"${BT}\n    Name string ${BT}json:"name"${BT}\n}`, note: 'Each field gets a json struct tag.' },
-  php: { label: 'PHP', output: 'class Root {\n    public $id;\n    public $name;\n}', note: 'Output is a class with public properties.' },
-  kotlin: { label: 'Kotlin', output: 'data class Root(\n    val id: Double?\n    val name: String?\n)', note: 'Output is a data class with nullable properties.' },
+  php: { label: 'PHP', output: 'class Root {\n    public float $id;\n    public string $name;\n}', note: 'Output is a class with typed public properties.' },
+  kotlin: { label: 'Kotlin', output: 'data class Root(\n    val id: Double,\n    val name: String\n)', note: 'Output is a data class. Properties are non-nullable unless you tick Optional / nullable properties.' },
 };
 
 // ---- Encoders / decoders --------------------------------------------------
@@ -93,9 +93,9 @@ const dataFmt = {
   '/xml-formatter': { lede: 'Indent and tidy XML so you can read it.', what: 'XML Formatter re-prints XML with consistent indentation.', ex: ['<a><b>1</b></a>', '<a>\n    <b>1</b>\n</a>'], tasks: ['Format XML online', 'Pretty print XML', 'Beautify XML'] },
   '/xml-validator': { lede: 'Check whether XML is well-formed and see the error if it is not.', what: 'XML Validator parses your XML with the browser\'s XML parser and reports whether it is well-formed.', ex: ['<a><b></a>', 'Error: XML Validation Error (parser message)'], tasks: ['Validate XML online', 'Check XML is well-formed', 'Find an XML syntax error'] },
   '/yaml-formatter': { lede: 'Parse YAML and print it back in a clean, consistent style.', what: 'YAML Formatter loads your YAML and writes it out again in standard block style.', ex: ['name: Ada\ntags: [a, b]', 'name: Ada\ntags:\n  - a\n  - b'], tasks: ['Format YAML online', 'Clean up YAML', 'Normalize YAML'] },
-  '/yaml-to-json': { lede: 'Convert YAML to JSON.', what: 'YAML to JSON loads your YAML and prints the same data as formatted JSON.', ex: ['name: Ada', '{\n  "name": "Ada"\n}'], tasks: ['Convert YAML to JSON', 'YAML to JSON online', 'Turn a YAML config into JSON'] },
-  '/csv-to-json': { lede: 'Convert CSV rows into a JSON array of objects.', what: 'CSV to JSON uses the first line as headers and turns each following line into an object. Values come out as strings.', ex: ['id,name\n1,Ada', '[\n  {\n    "id": "1",\n    "name": "Ada"\n  }\n]'], tasks: ['Convert CSV to JSON', 'CSV to JSON online', 'Turn spreadsheet rows into JSON'] },
-  '/json-to-csv': { lede: 'Convert a JSON array of objects into CSV.', what: 'JSON to CSV takes an array of objects, uses the first object\'s keys as the header row and prints one line per object.', ex: ['[{"id":1,"name":"Ada"}]', 'id,name\n1,Ada'], tasks: ['Convert JSON to CSV', 'JSON to CSV online', 'Export JSON as CSV'] },
+  '/yaml-to-json': { lede: 'Paste YAML and get formatted JSON back instantly, or see the parse error if the YAML is invalid.', what: 'YAML to JSON loads one YAML document with js-yaml and prints the same data as JSON with 2-space indentation. Comments are dropped, because JSON has no comment syntax.', ex: ['name: Ada', '{\n  "name": "Ada"\n}'], tasks: ['Convert YAML to JSON', 'YAML to JSON online', 'Turn a YAML config into JSON'] },
+  '/csv-to-json': { lede: 'Convert CSV rows into a JSON array of objects.', what: 'CSV to JSON uses the first line as headers and turns each following line into an object. Choose a comma or semicolon delimiter. Quoted values are supported, and every value comes out as a string.', ex: ['id,name\n1,Ada', '[\n  {\n    "id": "1",\n    "name": "Ada"\n  }\n]'], tasks: ['Convert CSV to JSON', 'CSV to JSON online', 'Turn spreadsheet rows into JSON'] },
+  '/json-to-csv': { lede: 'Paste an array of JSON objects and get CSV with a header row, ready for Excel or Google Sheets.', what: 'JSON to CSV takes an array of objects, uses every key found across the objects as the header row and prints one line per object. Values that contain commas or quotes are wrapped in quotes.', ex: ['[{"id":1,"name":"Ada"}]', 'id,name\n1,Ada'], tasks: ['Convert JSON to CSV', 'JSON to CSV online', 'Export JSON as CSV'] },
 };
 
 // ---- Text -----------------------------------------------------------------
@@ -171,15 +171,15 @@ const GROUPS = [
       return {
         lede: cs ? 'Convert JSON to C# online: paste a JSON object and get ready-to-use classes with public properties, nested types and optional attributes.' : `Paste JSON, get a ${L.label} model for it.`,
         meta: `${n}: generate a ${L.label} class or type from a JSON sample. Free and runs in your browser.`,
-        what: cs ? `This page generates C# model classes from a sample JSON object. It writes a root class with one public property per JSON key (each with a { get; set; } accessor pair), a separate class for each nested object and List<T> for arrays. ${L.note}` : `${n} reads a JSON object and writes a ${L.label} type with one field per top-level key. ${L.note}`,
+        what: cs ? `This page generates C# model classes from a sample JSON object. It writes a root class with one public property per JSON key (each with a { get; set; } accessor pair), a separate class for each nested object and List<T> for arrays. ${L.note}` : `${n} reads a JSON object and writes a ${L.label} type with one field per key, a separate type for each nested object and a list type for arrays. ${L.note}`,
         problem: `Typing out model classes by hand for every API response is repetitive. Generating the first draft from a real JSON sample saves the boring part.`,
         steps: ['Paste a JSON object into the input box.', 'Press the convert button.', `Copy the generated ${L.label} code and adjust names or types to fit your project.`],
         example: cs ? { inLabel: 'JSON input', input: CSHARP_SAMPLE, outLabel: 'C# output', output: CSHARP_OUTPUT } : { inLabel: 'Input', input: SAMPLE_USER, outLabel: `${L.label} output`, output: L.output },
         useCases: ['Creating models for a new API integration', 'Mocking a type from a sample response', 'Starting a DTO without typing every property'],
         tasks: cs ? ['Convert JSON to csharp', 'C# model generator from JSON', 'Create C# DTOs from JSON', 'Generate a POCO class from an API response'] : [`JSON to ${L.label}`, `Generate ${L.label} class from JSON`, `${L.label} model from JSON`],
         faqs: cs ? [LOCAL] : [
-          q('Does it handle nested objects and arrays?', 'It maps top-level keys. Nested objects and arrays come out as a generic type (such as object or any), so you will want to refine those by hand.'),
-          q('How are field types chosen?', 'From the sample values: numbers, booleans and strings get matching types, anything else falls back to a generic type. One sample cannot show whether a field is optional.'),
+          q('Does it handle nested objects and arrays?', 'Yes. Each nested object becomes its own type named after its key, and an array becomes a list of the matching type. Only the first array item is used to work out the item type.'),
+          q('How are field types chosen?', 'From the sample values: numbers, booleans and strings get matching types, and null falls back to a generic type. One sample cannot show whether a field is optional or whether a number is a whole number.'),
           LOCAL,
         ],
       };
@@ -269,8 +269,8 @@ const GROUPS = [
         tasks: v.tasks,
         faqs: p.includes('csv')
           ? [
-              q('Does it handle quoted fields or commas inside values?', 'No. It splits on commas, so a value that contains a comma will be split. Use it for simple, flat data.'),
-              q('Why are numbers strings in the JSON?', 'CSV has no types, and this tool keeps every value as text.'),
+              p === '/csv-to-json' ? q('Does it handle quoted fields or commas inside values?', 'Yes. A quoted value can contain the delimiter, and a doubled quote inside it becomes one quote. A quoted value that spans several lines is not supported.') : q('Does it quote values that contain commas?', 'Yes. A value with a comma, quote or line break is wrapped in quotes, with inner quotes doubled, so the columns stay aligned.'),
+              p === '/csv-to-json' ? q('Why are numbers strings in the JSON?', 'CSV has no types, and this tool keeps every value as text.') : q('Can it flatten nested JSON?', 'No. Nested objects are written as [object Object] and arrays are joined with commas, so flatten the data first.'),
               LOCAL,
             ]
           : [
@@ -408,16 +408,16 @@ const GROUPS = [
     id: 'diff',
     test: (p) => p === '/diff-checker',
     build: (n) => ({
-      lede: 'Paste two versions of a text and see what was added or removed, line by line.',
+      lede: 'Paste two versions of a text or JSON and see what was added or removed, by line, word or character.',
       meta: `${n}: compare two texts and see added and removed lines. Free, runs in your browser.`,
-      what: `${n} compares two blocks of text line by line and marks lines that were added (+), removed (-) or unchanged.`,
+      what: `${n} compares two texts and marks what was added (+) and removed (-). Compare by line, word or character, and optionally ignore whitespace.`,
       problem: 'When two configs, responses or snippets look the same but behave differently, reading them side by side by eye misses things.',
-      steps: ['Paste the original text on one side and the changed text on the other.', 'Press compare.', 'Read the result and copy it if you need to share it.'],
+      steps: ['Paste the original text on one side and the changed text on the other.', 'Choose Lines, Words or Characters, and tick Ignore whitespace if formatting should not count.', 'Press Compare, read the result and copy it if you need to share it.'],
       example: { inLabel: 'Original vs changed', input: 'host=localhost\nport=80\n\nhost=localhost\nport=8080', outLabel: 'Result', output: '  host=localhost\n- port=80\n+ port=8080' },
       useCases: ['Spotting what changed between two config files', 'Comparing an expected and an actual API response', 'Checking edits before pasting them back'],
-      tasks: ['Diff checker online', 'Compare two texts', 'Find differences between two files'],
+      tasks: ['Diff checker online', 'Compare two texts', 'Compare two JSON files', 'Find differences between two files'],
       faqs: [
-        q('Is the comparison by line or by character?', 'By line.'),
+        q('Can it compare by word or character?', 'Yes. Choose Lines, Words or Characters in the Diff mode menu.'),
         LOCAL,
       ],
     }),
@@ -471,7 +471,7 @@ const GROUPS = [
     id: 'website',
     test: (p) => p === '/website-status-checker',
     build: (n) => ({
-      lede: 'Is my website up? Check website status for any domain or URL and see whether the site is down for everyone or only for you, straight from your browser.',
+      lede: 'Is my website up? Check the status of any domain or URL from your browser, then compare from another network to see whether the site is down for everyone or only for you.',
       meta: `${n}: check if a website is up by domain name or URL. Free, runs from your browser.`,
       what: `${n} is a website up checker: it sends a lightweight request from your browser to each address you enter and reports whether the site answered, the HTTP status when the site allows it, any redirect and the response time. Use it to check whether a URL is working or a site is down.`,
       problem: 'When a page will not load you want to know whether it is the site, your network or a typo, without opening five different "is it down" sites.',
@@ -555,6 +555,15 @@ const EXTRA = {
           ]
         ],
         "linksLabel": "Related"
+      },
+      {
+        h: 'Using this page as an online JSON parser',
+        paras: [
+          'The validator runs your text through the JSON parser built into your browser. If it parses, you see the root type, the number of top-level keys or items, the nesting depth and the size. If it does not, you see the parser message and, when the browser gives a position, the line and column.',
+          'That makes it a quick way to check how a parser will treat a string before you use it in code. Parsing turns the text into objects, arrays, strings, numbers, booleans and null. It does not check the values against a schema.',
+        ],
+        links: [['Guide: fix JSON parse errors', '/guides/fix-json-parse-errors'], ['JSON Formatter', '/json-formatter']],
+        linksLabel: 'Read more',
       },
       {
         h: 'What counts as valid JSON',

@@ -31,6 +31,7 @@ export const KEYWORD_BOOST = {
       ['Why does my JSON fail validation?', 'The usual causes are a trailing comma, single quotes instead of double quotes, unquoted keys, comments, or values such as undefined and NaN that JSON does not allow.'],
       ['Can the validator fix my JSON?', 'No. It does not repair JSON automatically. It shows the parser error and, when the browser gives a position, the line and column, so you can correct the problem yourself. After fixing it, validate again.'],
       ['What does the validator tell me about valid JSON?', 'When the JSON is valid you see the root type (object or array), the number of top-level keys or items, the nesting depth and the size in characters. To re-print the same JSON with indentation, use the JSON Formatter.'],
+      ['Is this a JSON parser?', 'It uses the JSON parser built into your browser, so it tells you whether a string parses and shows either a structure summary or the error. To parse JSON in your own code, use JSON.parse in JavaScript, json.loads in Python or JsonSerializer.Deserialize in C#.'],
     ],
   },
   '/json-beautifier': {
@@ -49,7 +50,7 @@ export const KEYWORD_BOOST = {
   '/json-minifier': {
     s: ['json minifier online', 'minify json', 'compress json', 'json compressor', 'remove whitespace from json'],
     l: ['minify json online', 'json to one line', 'reduce json size', 'strip json whitespace', 'compact json'],
-    tasks: ['Minify JSON online', 'Compress JSON to one line', 'Remove whitespace from JSON'],
+    tasks: ['Minify JSON online', 'JSON minify online', 'Compress JSON to one line', 'Remove whitespace from JSON'],
     faqs: [
       ['How do I minify JSON?', 'Paste your JSON and the minified version appears as a single line with all spaces and line breaks outside strings removed. Copy it into your request, config or test fixture.'],
     ],
@@ -116,6 +117,7 @@ export const KEYWORD_BOOST = {
     faqs: [
       ['How do I convert YAML to JSON?', 'Paste the YAML into the input and the JSON appears formatted in the output. Invalid YAML shows the parser error with its line so you can fix it.'],
       ['What happens to YAML comments?', 'They are dropped. JSON has no comment syntax, so only the data is converted.'],
+      ['How do I convert YAML to JSON in Python or JavaScript?', 'In Python, load the text with yaml.safe_load from PyYAML and print it with json.dumps(data, indent=2). In JavaScript, use load from the js-yaml package and JSON.stringify(data, null, 2). This page does the same thing in your browser.'],
     ],
   },
   '/csv-to-json': {
@@ -133,6 +135,7 @@ export const KEYWORD_BOOST = {
     tasks: ['JSON to CSV online', 'Convert a JSON array to CSV', 'Open JSON in a spreadsheet'],
     faqs: [
       ['What JSON can I convert to CSV?', 'An array of flat objects, such as [{"name":"Ada","age":36}]. Each object becomes a row and the keys become the header. Other shapes show an error asking for an array of objects.'],
+      ['How do I convert nested JSON to CSV?', 'This page does not flatten nested objects: they are written as [object Object]. Flatten the data first. In Python, pandas.json_normalize turns nested records into flat columns. In JavaScript, map each object to a flat one before converting.'],
       ['How do I open the result in Excel?', 'Download the CSV or copy it into a file ending in .csv, then open it in Excel or Google Sheets.'],
     ],
   },
@@ -398,10 +401,10 @@ export const KEYWORD_BOOST = {
     ],
   },
   '/diff-checker': {
-    d: 'Diff checker online: compare two texts by line, word or character, with an option to ignore whitespace. Free text compare tool in your browser.',
+    d: 'Diff checker online: compare two texts or JSON files by line, word or character, and ignore whitespace. Free, runs in your browser.',
     s: ['diff checker', 'text compare', 'compare two texts', 'online diff tool', 'text difference checker'],
     l: ['diff checker online', 'compare two text files online', 'find differences between two texts', 'code diff online', 'line by line comparison'],
-    tasks: ['Compare two texts', 'Find differences between two files', 'Line-by-line diff'],
+    tasks: ['Compare two texts', 'Compare two JSON files', 'Find differences between two files', 'Line-by-line diff'],
     faqs: [
       ['How do I compare two texts?', 'Paste the original on one side and the changed version on the other, choose line, word or character mode, and compare. Added and removed parts are highlighted.'],
       ['Can I ignore whitespace differences?', 'Yes. Turn on the ignore whitespace option and runs of spaces and line breaks are normalised before comparing.'],

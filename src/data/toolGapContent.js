@@ -99,7 +99,7 @@ export const TOOL_GAP = {
     ],
   },
   '/csv-to-json': {
-    tasks: ['Convert CSV to a JSON array of objects', 'Convert a semicolon or tab separated file to JSON', 'Turn a spreadsheet export into JSON', 'Convert a CSV file to JSON for an API or mock data'],
+    tasks: ['Convert CSV to a JSON array of objects', 'Convert a semicolon separated file to JSON', 'Turn a spreadsheet export into JSON', 'Convert a CSV file to JSON for an API or mock data'],
     faqs: [
       f('What happens to empty header cells?', 'An empty header is named column1, column2 and so on, by position, so every value still has a key in the JSON.'),
       f('How do I convert a CSV file to a JSON array?', 'Paste the CSV or load the file, pick the delimiter, make sure the first row holds the column names and press convert. Each following row becomes one object in the array.'),

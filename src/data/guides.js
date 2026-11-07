@@ -54,11 +54,30 @@ export const GUIDES = [
         code: 'import urllib.request, urllib.error\n\ndef status(url):\n    req = urllib.request.Request(url, method="HEAD")\n    try:\n        with urllib.request.urlopen(req, timeout=10) as r:\n            return r.status\n    except urllib.error.HTTPError as e:\n        return e.code          # the server answered with 4xx or 5xx\n    except Exception as e:\n        return str(e)          # DNS, TLS or timeout problem',
       },
       {
+        h: 'What "server down" errors mean',
+        paras: ['The message you see points to the layer that failed. Reading it correctly saves time.'],
+        list: ['DNS error (domain not found, NXDOMAIN): the name does not resolve. Check for a typo, an expired domain or a DNS change that has not spread yet.', 'Connection timed out: no answer came back. A firewall, an overloaded server or a routing problem is likely.', 'Connection refused: the machine answered but nothing is listening on that port.', 'TLS or certificate error: the site is reachable, but its certificate is expired, mismatched or not trusted.', '5xx status codes: the server is reachable and its application or a gateway failed.'],
+        code: 'dig +short example.com                      # empty output usually means the name does not resolve\ncurl -sv https://example.com -o /dev/null   # shows connection and TLS errors',
+      },
+      {
+        h: 'When a bank, government or app site will not load',
+        paras: ['Banking, tax and government portals often slow down at peak times or go offline for planned maintenance, so a failure is not always a problem on your side.'],
+        list: ['Test the address from another network, such as mobile data, and in a private window.', 'Check the organisation official notices page or its official app or channels for maintenance announcements.', 'Use the address you typed or a saved bookmark. Avoid entering credentials on a lookalike page found by searching for a site that is down.'],
+      },
+      {
+        h: 'Is a big service like Instagram or ChatGPT down?',
+        paras: ['One browser cannot answer that. A check from your connection only shows what your connection can reach.'],
+        list: ['Look for the provider official status page first.', 'Try another network and another device. If it works there, the cause is local.', 'Treat posts on social media as reports, not confirmation. They can reflect a regional issue or a single problem.'],
+      },
+      {
         h: 'What a browser-based checker can and cannot tell you',
         paras: ['A checker that runs in your browser can only report what your own connection can reach. Many sites do not let other pages read their response, so the tool may confirm that the server answered without showing the exact status code. It is a quick first check, not a worldwide uptime monitor. For continuous monitoring from several regions, use a dedicated uptime service.'],
       },
     ],
     faqs: [
+      { q: 'What does "server down" mean?', a: 'The server that hosts the site is not answering or is failing. That can mean no connection at all, such as a timeout or refused connection, or a 5xx error from a server that is running but broken.' },
+      { q: 'Why is my bank or government website not working?', a: 'These sites often slow down at peak times or go offline for maintenance. Test the address from another network, check the organisation official notices, and avoid entering credentials on lookalike pages.' },
+      { q: 'Can a browser tool tell me if Instagram or ChatGPT is down for everyone?', a: 'Not reliably. A browser check shows only what your own connection can reach. Use the provider status page and compare networks.' },
       { q: 'Why does a site load for others but not for me?', a: 'The cause is usually local: a stale DNS cache, a VPN or proxy, a blocked route at your ISP, or a firewall rule. Test from another network to confirm.' },
       { q: 'What does a 503 error mean?', a: 'The server is reachable but cannot handle the request right now, usually because of overload or maintenance. It is normally temporary.' },
       { q: 'What is the difference between a 502 and a 504?', a: 'Both come from a gateway or proxy. A 502 means it received an invalid answer from the application behind it; a 504 means that application did not answer in time.' },

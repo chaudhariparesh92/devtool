@@ -143,7 +143,7 @@ export const TOOL_SEO_DATA = {
   }),
   '/json-to-csv': S({
     title: 'JSON to CSV Converter Online - Array of Objects to CSV',
-    description: 'Convert a JSON array of objects to CSV online. Use keys from the first object as headers, then copy the output for spreadsheets or data imports.',
+    description: 'Convert a JSON array of objects to CSV online. Keys from every object become the header row, with quoting for commas. Copy it into Excel or Google Sheets.',
     h1: 'JSON to CSV Converter',
     primary: 'json to csv',
     secondary: ['json to csv', 'json csv converter', 'convert json to csv', 'json to excel csv', 'json array to csv'],
@@ -490,7 +490,7 @@ export const TOOL_SEO_DATA = {
     related: ['/regex-tester', '/text-counter', '/diff-checker', '/query-string-parser', '/uuid-validator'],
   }),
   '/diff-checker': S({
-    title: 'Diff Checker Online - Compare Two Texts Line by Line',
+    title: 'Diff Checker Online - Compare Text, Code and JSON',
     description: 'Compare two texts online and see added and removed lines highlighted. Copy the result as a plain-text diff. Runs in your browser.',
     h1: 'Diff Checker Online',
     primary: 'diff checker online',
