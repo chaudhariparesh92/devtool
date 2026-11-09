@@ -2,11 +2,21 @@ import { useState } from 'react';
 import ToolLayout from '../../components/ToolLayout';
 import OutputBox from '../../components/OutputBox';
 
+// Each focused page opens on its own bases. The default depends only on the path,
+// so the prerendered HTML and the first client render match.
+const DEFAULT_BASES = {
+  '/binary-to-decimal': [2, 10],
+  '/decimal-to-binary': [10, 2],
+  '/hex-to-decimal': [16, 10],
+  '/decimal-to-hex': [10, 16],
+};
+
 export default function NumberBaseTool({ path }) {
+  const [defFrom, defTo] = DEFAULT_BASES[path] || [10, 2];
   const [inp, setInp] = useState('');
   const [out, setOut] = useState('');
-  const [fromBase, setFromBase] = useState(10);
-  const [toBase, setToBase] = useState(2);
+  const [fromBase, setFromBase] = useState(defFrom);
+  const [toBase, setToBase] = useState(defTo);
 
   const convert = (val, fb, tb) => {
     setInp(val);

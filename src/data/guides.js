@@ -1,6 +1,7 @@
 // Long-form guides. Plain data with no imports, so seo.js, the pages and the prerender script can all share it.
 // Each guide: one primary tool (CTA + contextual link), related tools, sections, FAQs.
 // Every statement should describe real behaviour of the standard, the language or the tool.
+// A section may carry links: [[label, path], ...] and linksLabel (rendered by GuidePage.jsx).
 
 export const GUIDES_UPDATED = '2026-11-01';
 
@@ -54,30 +55,11 @@ export const GUIDES = [
         code: 'import urllib.request, urllib.error\n\ndef status(url):\n    req = urllib.request.Request(url, method="HEAD")\n    try:\n        with urllib.request.urlopen(req, timeout=10) as r:\n            return r.status\n    except urllib.error.HTTPError as e:\n        return e.code          # the server answered with 4xx or 5xx\n    except Exception as e:\n        return str(e)          # DNS, TLS or timeout problem',
       },
       {
-        h: 'What "server down" errors mean',
-        paras: ['The message you see points to the layer that failed. Reading it correctly saves time.'],
-        list: ['DNS error (domain not found, NXDOMAIN): the name does not resolve. Check for a typo, an expired domain or a DNS change that has not spread yet.', 'Connection timed out: no answer came back. A firewall, an overloaded server or a routing problem is likely.', 'Connection refused: the machine answered but nothing is listening on that port.', 'TLS or certificate error: the site is reachable, but its certificate is expired, mismatched or not trusted.', '5xx status codes: the server is reachable and its application or a gateway failed.'],
-        code: 'dig +short example.com                      # empty output usually means the name does not resolve\ncurl -sv https://example.com -o /dev/null   # shows connection and TLS errors',
-      },
-      {
-        h: 'When a bank, government or app site will not load',
-        paras: ['Banking, tax and government portals often slow down at peak times or go offline for planned maintenance, so a failure is not always a problem on your side.'],
-        list: ['Test the address from another network, such as mobile data, and in a private window.', 'Check the organisation official notices page or its official app or channels for maintenance announcements.', 'Use the address you typed or a saved bookmark. Avoid entering credentials on a lookalike page found by searching for a site that is down.'],
-      },
-      {
-        h: 'Is a big service like Instagram or ChatGPT down?',
-        paras: ['One browser cannot answer that. A check from your connection only shows what your connection can reach.'],
-        list: ['Look for the provider official status page first.', 'Try another network and another device. If it works there, the cause is local.', 'Treat posts on social media as reports, not confirmation. They can reflect a regional issue or a single problem.'],
-      },
-      {
         h: 'What a browser-based checker can and cannot tell you',
         paras: ['A checker that runs in your browser can only report what your own connection can reach. Many sites do not let other pages read their response, so the tool may confirm that the server answered without showing the exact status code. It is a quick first check, not a worldwide uptime monitor. For continuous monitoring from several regions, use a dedicated uptime service.'],
       },
     ],
     faqs: [
-      { q: 'What does "server down" mean?', a: 'The server that hosts the site is not answering or is failing. That can mean no connection at all, such as a timeout or refused connection, or a 5xx error from a server that is running but broken.' },
-      { q: 'Why is my bank or government website not working?', a: 'These sites often slow down at peak times or go offline for maintenance. Test the address from another network, check the organisation official notices, and avoid entering credentials on lookalike pages.' },
-      { q: 'Can a browser tool tell me if Instagram or ChatGPT is down for everyone?', a: 'Not reliably. A browser check shows only what your own connection can reach. Use the provider status page and compare networks.' },
       { q: 'Why does a site load for others but not for me?', a: 'The cause is usually local: a stale DNS cache, a VPN or proxy, a blocked route at your ISP, or a firewall rule. Test from another network to confirm.' },
       { q: 'What does a 503 error mean?', a: 'The server is reachable but cannot handle the request right now, usually because of overload or maintenance. It is normally temporary.' },
       { q: 'What is the difference between a 502 and a 504?', a: 'Both come from a gateway or proxy. A 502 means it received an invalid answer from the application behind it; a 504 means that application did not answer in time.' },
@@ -330,45 +312,100 @@ export const GUIDES = [
   },
   {
     slug: 'decimal-to-hex-conversion',
-    title: 'Decimal to Hex: Step-by-Step Method With Code',
-    description: 'Convert decimal to hexadecimal by repeated division, use the 0 to 15 table, and do it in JavaScript, Python and C# including large numbers.',
+    title: 'How to Convert Decimal to Hexadecimal (Step-by-Step + Table)',
+    description: 'Convert decimal (denary) to hexadecimal by dividing by 16. Worked examples, a conversion table, negative numbers and code for JavaScript, Python and C#.',
     h1: 'How to Convert Decimal to Hexadecimal',
-    lede: 'Hexadecimal is base 16. Divide by 16 repeatedly and read the remainders backwards.',
+    lede: 'Hexadecimal is base 16. Divide the decimal number by 16 again and again, then read the remainders from last to first. This guide shows the method, worked examples, a lookup table, negative numbers and code.',
     tool: '/decimal-to-hex',
     toolName: 'Decimal to Hex Converter',
-    related: ['/hex-to-decimal', '/number-base-converter', '/rgb-to-hex'],
+    related: ['/hex-to-decimal', '/number-base-converter', '/decimal-to-binary', '/rgb-to-hex'],
     sections: [
+      {
+        h: 'Quick answer',
+        paras: ['To convert a decimal number to hex, divide it by 16, write down the remainder (10 to 15 become A to F), divide the quotient by 16 again, and stop when the quotient is 0. The hex number is the remainders read from last to first.'],
+        code: '255  ->  FF\n258  ->  102\n3054 ->  BEE',
+        links: [['Decimal to Hex Converter', '/decimal-to-hex']],
+        linksLabel: 'Instant converter',
+      },
       {
         h: 'The digits',
         paras: ['Base 16 needs sixteen symbols, so after 9 it continues with the letters A to F.'],
         code: 'Decimal:  0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15\nHex:      0 1 2 3 4 5 6 7 8 9 A  B  C  D  E  F',
       },
       {
-        h: 'Method: repeated division',
+        h: 'Method: repeated division by 16',
         paras: ['Divide the number by 16, write down the remainder, then divide the quotient by 16 again. Stop when the quotient is 0. The hex number is the remainders read from last to first.'],
         code: '3054 / 16 = 190 remainder 14  (E)\n 190 / 16 =  11 remainder 14  (E)\n  11 / 16 =   0 remainder 11  (B)\n\nread backwards: BEE   ->   3054 = 0xBEE\n\n255 / 16 = 15 remainder 15 (F), 15 / 16 = 0 remainder 15 (F)  ->  FF',
       },
       {
+        h: 'A second worked example: 35631 to hex',
+        paras: ['A larger number just needs more rounds. Each row divides the previous quotient by 16.'],
+        code: 'Division     Quotient  Remainder  Hex digit\n35631 / 16   2226      15         F\n 2226 / 16   139       2          2\n  139 / 16   8         11         B\n    8 / 16   0         8          8\n\nread backwards: 8B2F   ->   35631 = 0x8B2F',
+      },
+      {
         h: 'Check it by converting back',
-        paras: ['Multiply each digit by a power of 16 and add: BEE = 11 * 256 + 14 * 16 + 14 = 2816 + 224 + 14 = 3054.'],
+        paras: ['Multiply each digit by a power of 16 and add: BEE = 11 * 256 + 14 * 16 + 14 = 2816 + 224 + 14 = 3054. For 8B2F: 8 * 4096 + 11 * 256 + 2 * 16 + 15 = 32768 + 2816 + 32 + 15 = 35631.'],
+        links: [['Hex to Decimal Converter', '/hex-to-decimal']],
+        linksLabel: 'Go the other way',
+      },
+      {
+        h: 'Common decimal numbers in hex',
+        paras: ['These are the values people search for most often. Use them to check your own working.'],
+        code: 'Decimal  Hex     Decimal  Hex\n16       10      100      64\n20       14      164      A4\n25       19      240      F0\n30       1E      255      FF\n40       28      256      100\n64       40      258      102\n                 1000     3E8\n                 4095     FFF\n                 65535    FFFF',
+      },
+      {
+        h: 'Shortcut: go through binary',
+        paras: ['One hex digit is exactly four bits. If you already know a number in binary, split it into groups of four from the right and convert each group. 164 is 10100100 in binary, which splits into 1010 and 0100, so it is A4.'],
+        code: '1010 = A    0100 = 4    ->   10100100 = A4 = 164',
+        links: [['Decimal to Binary Converter', '/decimal-to-binary'], ['Number Base Converter', '/number-base-converter']],
+        linksLabel: 'Related',
+      },
+      {
+        h: 'Denary to hexadecimal',
+        paras: ['Denary is another name for decimal, and it is common in UK school courses (GCSE and A level computer science). Converting denary to hexadecimal is exactly the same method as above: divide by 16 and read the remainders backwards.'],
       },
       {
         h: 'Code',
-        code: '// JavaScript\n(255).toString(16);              // "ff"\nparseInt("ff", 16);              // 255\nBigInt("18446744073709551615").toString(16);   // "ffffffffffffffff"\n\n# Python\nhex(255)                         # "0xff"\nint("ff", 16)                    # 255\n\n// C#\n255.ToString("X");               // "FF"\nConvert.ToInt32("FF", 16);       // 255',
+        code: '// JavaScript\n(255).toString(16);              // "ff"\n(255).toString(16).toUpperCase();// "FF"\nparseInt("ff", 16);              // 255\nBigInt("18446744073709551615").toString(16);   // "ffffffffffffffff"\n\n# Python\nhex(255)                         # "0xff"\nformat(255, "X")                 # "FF"\nint("ff", 16)                    # 255\n\n// C#\n255.ToString("X");               // "FF"\nConvert.ToInt32("FF", 16);       // 255',
         paras: ['JavaScript numbers lose precision above 2^53 - 1 (9007199254740991), so use BigInt for large values.'],
       },
       {
-        h: 'Negative numbers and prefixes',
+        h: 'Negative numbers and fixed width',
+        paras: ['Hex has no minus sign of its own. Signed integers are shown in two\'s complement for a fixed width, so the same negative number gives a different hex value in 8, 16 and 32 bits. Pick the width first.'],
+        code: '-1   as 8 bits   ->  FF\n-1   as 32 bits  ->  FFFFFFFF\n-5   as 16 bits  ->  FFFB\n-255 as 32 bits  ->  FFFFFF01\n\n// JavaScript (32-bit)\n(-255 >>> 0).toString(16);       // "ffffff01"\n# Python (32-bit)\nhex(-255 & 0xFFFFFFFF)           # "0xffffff01"\n// C#\n(-255).ToString("X");            // "FFFFFF01"  (int is 32-bit)',
+        links: [['Number Base Converter', '/number-base-converter']],
+        linksLabel: 'Related',
+      },
+      {
+        h: 'Prefixes and padding',
         list: [
-          'Hex has no sign of its own. Negative integers are shown in two\'s complement for a fixed width: -1 as a 32-bit value is FFFFFFFF.',
-          'Code usually writes hex with a prefix: 0xFF in C, C#, Java and JavaScript, #FF in CSS colours.',
-          'Pad to a fixed width when you need it, for example 0A rather than A for one byte.',
+          'Code usually writes hex with a prefix: 0xFF in C, C#, Java, JavaScript and Python, #FF in CSS colours.',
+          'Pad to a fixed width when you need it, for example 0A rather than A for one byte. In Python, format(255, "04X") gives 00FF.',
+          'Upper and lower case mean the same value. FF and ff are both 255.',
         ],
-        paras: ['Use the Decimal to Hex Converter for quick checks, or the Number Base Converter to see binary, octal, decimal and hex together.'],
+      },
+      {
+        h: 'Decimal fractions to hex',
+        paras: ['For the part after the decimal point, multiply by 16 instead of dividing. The whole-number part of each result is the next hex digit, and you carry on with what is left. 0.625 is exact in hex because the first step lands on a whole number.'],
+        code: '0.625 * 16 = 10.0  ->  A   (nothing left)\n0.625 = 0.A in hex\n\n0.1 * 16 = 1.6 -> 1, then 0.6 * 16 = 9.6 -> 9 ...  0.1 = 0.19999... (it never ends)',
+      },
+      {
+        h: 'Where hex is used',
+        list: [
+          'Colour codes: rgb(255, 87, 51) is #FF5733.',
+          'Memory addresses and byte values in debuggers and hex editors.',
+          'Bit flags, masks and permissions, because one hex digit is four bits.',
+          'Hashes and UUIDs, which are written as hexadecimal digits.',
+        ],
+        links: [['RGB to HEX Converter', '/rgb-to-hex'], ['HEX to RGB Converter', '/hex-to-rgb'], ['UUID Parser', '/uuid-parser']],
+        linksLabel: 'Related tools',
       },
     ],
     faqs: [
       { q: 'What is 255 in hex?', a: 'FF. It is 15 * 16 + 15, and it is the largest value of one byte.' },
+      { q: 'What is 258 in hex?', a: '102. 258 divided by 16 is 16 remainder 2, and 16 divided by 16 is 1 remainder 0, so the digits read backwards are 1, 0, 2.' },
+      { q: 'What is the difference between denary and decimal?', a: 'Nothing. Both mean base 10. Denary is the term used in many UK exam syllabuses.' },
+      { q: 'How do I convert a negative decimal number to hex?', a: 'Choose a width such as 8, 16 or 32 bits and write the number in two\'s complement. For example -1 is FF in 8 bits and FFFFFFFF in 32 bits.' },
       { q: 'Why do programmers use hex?', a: 'One hex digit is exactly four bits, so a byte is always two digits. That makes memory values, colours and hashes compact and easy to read.' },
       { q: 'How do I convert hex to decimal?', a: 'Multiply each digit by a power of 16 and add the results, or use parseInt(value, 16) in JavaScript.' },
     ],

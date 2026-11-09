@@ -47,6 +47,14 @@ export default function GuidePage({ path }) {
             </ul>
           )}
           {sec.code && <pre className="code-block">{sec.code}</pre>}
+          {sec.links && (
+            <p className="text-sm">
+              {sec.linksLabel || 'Related'}:{' '}
+              {sec.links.map(([label, to], i) => (
+                <span key={to}>{i > 0 && ', '}<Link to={to} className="a-link">{label}</Link></span>
+              ))}
+            </p>
+          )}
         </section>
       ))}
 

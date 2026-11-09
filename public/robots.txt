@@ -25,5 +25,4 @@ Allow: /
 # Apple Search
 User-agent: Applebot
 Allow: /
-
 Sitemap: https://onlinedevelopertool.com/sitemap.xml

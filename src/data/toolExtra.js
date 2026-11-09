@@ -11,7 +11,7 @@ const jsonToCode = (label, kind, mapping, code, extraList, links, faqs) => ({
   sections: [
     {
       h: `How JSON maps to ${label} types`,
-      paras: [`The tool reads a JSON object and writes one ${kind} for each key. Types come from the sample values you paste:`],
+      paras: [`The tool reads the top-level keys of a JSON object and writes one ${kind} per key. Types come from the sample values you paste:`],
       list: mapping,
     },
     {
@@ -22,11 +22,9 @@ const jsonToCode = (label, kind, mapping, code, extraList, links, faqs) => ({
     {
       h: `What to review before you use the ${label} output`,
       list: [
-        'Paste a JSON object. A bare array at the top level shows the message "The root JSON value should be an object." Paste one element of the array instead.',
-        'Nested objects get their own type, named after the key (address becomes Address). An array of objects becomes a list of that type, and only the first item is used to work out the item type.',
-        'If two nested objects use the same key name, only the first type is generated. Rename one by hand.',
-        'One sample cannot show which fields are optional or which numbers are whole numbers. Numbers map to a floating-point type and JSON null maps to a generic type.',
-        'The Root type name box renames Root. The Optional / nullable properties box changes the TypeScript, Python and Kotlin output only.',
+        'Paste a JSON object, not a bare array. The tool walks the top-level keys, so an array root produces meaningless index names.',
+        'Nested objects and arrays are not expanded into their own types. In the example, address and tags both fall back to a generic type, so write those types by hand.',
+        'One sample cannot show which fields are optional or which numbers are integers. Numbers are always mapped to a floating-point type.',
         ...extraList,
       ],
       links,
@@ -40,51 +38,51 @@ export const EXTRA_MORE = {
   // ------------------------------------------------------------ JSON to code
   '/json-to-typescript': jsonToCode(
     'TypeScript', 'interface member',
-    ['number, string and boolean values become number, string and boolean.', 'A nested object becomes its own exported interface, and an array becomes Type[] (for example string[]).', 'null becomes unknown.', 'Keys are kept exactly as written. A key that is not a valid identifier is written in quotes.'],
-    'export interface Root {\n    id: number;\n    name: string;\n    active: boolean;\n    address: Address;\n    tags: string[];\n}\n\nexport interface Address {\n    city: string;\n}',
-    ['Replace unknown, which is used for null values, with the real type once you know it.'],
+    ['number, string and boolean values become number, string and boolean.', 'null, arrays and nested objects become any.', 'Keys are kept exactly as written, with no camelCase conversion.'],
+    'export interface Root {\n    id: number;\n    name: string;\n    active: boolean;\n    address: any;\n    tags: any;\n}',
+    ['The interface is always named Root. Rename it and replace any with real types, for example string[] for tags.'],
     [['JSON Validator', '/json-validator'], ['JSON to C#', '/json-to-csharp'], ['JSON to Python', '/json-to-python'], ['JSON Formatter', '/json-formatter']],
-    [q('Can I use the interface straight from an API response?', 'Use it as a first draft. Check the types against the API documentation, mark optional fields with ?, and replace unknown where you know the real type.')],
+    [q('Can I use the interface straight from an API response?', 'Use it as a first draft. Replace the any fields, mark optional fields with ? and check the names against the API documentation.')],
   ),
   '/json-to-java': jsonToCode(
-    'Java', 'private field',
-    ['number becomes Double, boolean becomes Boolean and string becomes String.', 'A nested object becomes its own class, and an array becomes List<Type>. The output starts with import java.util.List;.', 'null becomes Object.', 'Fields are private. Getters and setters are not generated.'],
-    'import java.util.List;\n\npublic class Root {\n    private Double id;\n    private String name;\n    private Boolean active;\n    private Address address;\n    private List<String> tags;\n}\n\npublic class Address {\n    private String city;\n}',
-    ['Add getters and setters, and any Jackson or Gson annotations, yourself. A key that is not a valid Java identifier, such as first-name, is written as-is and will not compile, so rename it.'],
+    'Java', 'private field with a getter and setter',
+    ['number becomes Double, boolean becomes Boolean and string becomes String.', 'null, arrays and nested objects become Object.', 'Getter and setter names capitalize the first letter of the key (key id gives getId and setId).'],
+    'public class Root {\n    private Double id;\n    public Double getId() { return id; }\n    public void setId(Double id) { this.id = id; }\n    private String name;\n    public String getName() { return name; }\n    public void setName(String name) { this.name = name; }\n    // ...the same pattern for active (Boolean), address (Object) and tags (Object)\n}',
+    ['Keys that are not valid Java identifiers, such as first-name, are written as-is and will not compile. Rename them.', 'The tool does not add Jackson or Gson annotations or package and import lines.'],
     [['JSON to Kotlin', '/json-to-kotlin'], ['JSON to C#', '/json-to-csharp'], ['JSON Validator', '/json-validator'], ['JSON Formatter', '/json-formatter']],
-    [q('Why are numbers Double instead of Integer?', 'A single JSON number does not say whether it is an integer, so the tool picks Double. Change it to Integer or Long if your data is whole numbers.'), q('Does it generate getters and setters?', 'No. It writes private fields only. Add getters and setters, or use a library such as Lombok, in your own project.')],
+    [q('Why are numbers Double instead of Integer?', 'A single JSON number does not say whether it is an integer, so the tool picks Double. Change it to Integer or Long if your data is whole numbers.')],
   ),
   '/json-to-python': jsonToCode(
     'Python', 'dataclass field',
-    ['number becomes float, boolean becomes bool and string becomes str.', 'A nested object becomes its own dataclass, and an array becomes list[Type].', 'null becomes Any.', 'The output starts with the dataclass and typing imports. With Optional / nullable properties ticked, each field type gets | None.'],
-    'from dataclasses import dataclass\nfrom typing import Any, Optional, List\n\n@dataclass\nclass Root:\n    id: float\n    name: str\n    active: bool\n    address: Address\n    tags: list[str]\n\n@dataclass\nclass Address:\n    city: str',
-    ['Nested dataclasses are written after Root. Depending on your Python version, a field annotated with a class defined later raises a NameError, so move Address above Root or add from __future__ import annotations at the top of the file.', 'A key such as first-name or class is not a valid field name and needs renaming. The dataclass does not parse JSON by itself: load the JSON with json.loads and build the objects from the values.'],
+    ['number becomes float, boolean becomes bool and string becomes str.', 'null, arrays and nested objects become Any.', 'The output includes the dataclass and typing imports. An empty object produces a class with pass.'],
+    'from typing import Any\nfrom dataclasses import dataclass\n\n@dataclass\nclass Root:\n    id: float\n    name: str\n    active: bool\n    address: Any\n    tags: Any',
+    ['Keys are used as field names unchanged. A key such as first-name or class is not a valid Python field name and needs renaming.', 'The dataclass does not parse JSON by itself. Load the JSON with json.loads and pass the values in.'],
     [['JSON to TypeScript', '/json-to-typescript'], ['JSON to Go', '/json-to-go'], ['YAML to JSON', '/yaml-to-json'], ['JSON Validator', '/json-validator']],
-    [q('Does this generate Pydantic models?', 'No. It generates a standard-library dataclass with type hints. You can adapt the fields to Pydantic yourself.'), q('Why do I get a NameError for a nested class?', 'The nested dataclass is written after Root, so the name does not exist yet when Root is defined. Move the nested class above Root, or add from __future__ import annotations as the first import.')],
+    [q('Does this generate Pydantic models?', 'No. It generates a standard-library dataclass with type hints. You can adapt the fields to Pydantic yourself.')],
   ),
   '/json-to-go': jsonToCode(
     'Go', 'struct field',
-    ['number becomes float64, boolean becomes bool and string becomes string.', 'A nested object becomes its own struct, and an array becomes []Type.', 'null becomes interface{}.', 'Field names are capitalized so they are exported, and each field gets a json tag with the original key.'],
-    'type Root struct {\n    Id float64 `json:"id"`\n    Name string `json:"name"`\n    Active bool `json:"active"`\n    Address Address `json:"address"`\n    Tags []string `json:"tags"`\n}\n\ntype Address struct {\n    City string `json:"city"`\n}',
-    ['The json tags let encoding/json match keys correctly even after capitalization. Run gofmt on the result to align the fields.'],
+    ['number becomes float64, boolean becomes bool and string becomes string.', 'null, arrays and nested objects become interface{}.', 'Field names are capitalized so they are exported, and each field gets a json tag with the original key.'],
+    'type Root struct {\n    Id float64 `json:"id"`\n    Name string `json:"name"`\n    Active bool `json:"active"`\n    Address interface{} `json:"address"`\n    Tags interface{} `json:"tags"`\n}',
+    ['The json tags let encoding/json match keys correctly even after capitalization. Run gofmt on the result to align the fields.', 'Replace interface{} with real struct or slice types for nested data.'],
     [['JSON to Java', '/json-to-java'], ['JSON to TypeScript', '/json-to-typescript'], ['JSON Formatter', '/json-formatter'], ['JSON Validator', '/json-validator']],
     [q('Why is every number a float64?', 'encoding/json decodes JSON numbers into float64 by default and a sample cannot show whether a value is a whole number. Change it to int where appropriate.')],
   ),
   '/json-to-php': jsonToCode(
     'PHP', 'public property',
-    ['number becomes float, boolean becomes bool and string becomes string.', 'A nested object becomes its own class, and an array becomes the array type.', 'null becomes mixed.', 'Every property is public and typed, for example public float $id;.'],
-    'class Root {\n    public float $id;\n    public string $name;\n    public bool $active;\n    public Address $address;\n    public array $tags;\n}\n\nclass Address {\n    public string $city;\n}',
-    ['Typed properties need PHP 7.4 or later, and mixed needs PHP 8.0. Add a constructor or a hydrator yourself if you need one.'],
+    ['Every key becomes a public property named after the key, for example public $id;.', 'No types are written, so number, string, boolean, array and nested object values are all untyped.'],
+    'class Root {\n    public $id;\n    public $name;\n    public $active;\n    public $address;\n    public $tags;\n}',
+    ['Add property types and a constructor yourself if your PHP version and coding style call for them.'],
     [['JSON to Java', '/json-to-java'], ['JSON to Python', '/json-to-python'], ['JSON to CSV', '/json-to-csv'], ['JSON Validator', '/json-validator']],
-    [q('Does it generate typed properties or getters?', 'It generates typed public properties and one class per nested object. It does not write getters, setters or a constructor.')],
+    [q('Does it generate typed properties or getters?', 'No. The output is a plain class with untyped public properties, which you can extend by hand.')],
   ),
   '/json-to-kotlin': jsonToCode(
     'Kotlin', 'constructor parameter',
-    ['number becomes Double, boolean becomes Boolean and string becomes String.', 'A nested object becomes its own data class, and an array becomes List<Type>.', 'null becomes Any?.', 'Parameters are separated with commas. They are non-nullable unless you tick Optional / nullable properties, which adds ? to each one.'],
-    'data class Root(\n    val id: Double,\n    val name: String,\n    val active: Boolean,\n    val address: Address,\n    val tags: List<String>\n)\n\ndata class Address(\n    val city: String\n)',
-    ['Add @Serializable, or whatever annotation your JSON library needs. If you ticked Optional, remove the ? from properties that are always present.'],
+    ['number becomes Double, boolean becomes Boolean and string becomes String.', 'null, arrays and nested objects become Any.', 'Every parameter is a nullable val, for example val id: Double?.'],
+    'data class Root(\n    val id: Double?\n    val name: String?\n    val active: Boolean?\n    val address: Any?\n    val tags: Any?\n)',
+    ['The tool writes one parameter per line without commas between them. Add a comma after each parameter except the last before you compile.', 'Remove the ? from parameters that are always present, and add a serialization annotation if your library needs one.'],
     [['JSON to Java', '/json-to-java'], ['JSON to C#', '/json-to-csharp'], ['JSON to TypeScript', '/json-to-typescript'], ['JSON Formatter', '/json-formatter']],
-    [q('Are the Kotlin properties nullable?', 'Only if you tick Optional / nullable properties. Without it every property is non-nullable, except values that are null in the sample, which become Any?.')],
+    [q('Why does the generated Kotlin not compile?', 'The parameter lines are printed without commas. Add a comma at the end of every parameter line except the last one.')],
   ),
 
   // --------------------------------------------------- YAML / CSV / JSON data
@@ -109,32 +107,32 @@ export const EXTRA_MORE = {
       {
         h: 'CSV to JSON example',
         paras: ['The first line is used as the keys. Each later line becomes one object, and all values come out as strings.'],
-        code: 'id,name,city\n1,Ada,London\n2,Linus,Helsinki\n\n// JSON output\n[\n  {\n    "id": "1",\n    "name": "Ada",\n    "city": "London"\n  },\n  {\n    "id": "2",\n    "name": "Linus",\n    "city": "Helsinki"\n  }\n]',
+        code: 'id,name,city\n1,Ada,London\n2,Linus,Helsinki\n\n// JSON output\n[\n  { "id": "1", "name": "Ada", "city": "London" },\n  { "id": "2", "name": "Linus", "city": "Helsinki" }\n]',
       },
       {
-        h: 'What the CSV to JSON converter supports',
-        list: ['Pick a comma or a semicolon in the Delimiter menu. Comma is the default.', 'A quoted value can contain the delimiter, and two quotes in a row inside it become one quote.', 'A quoted value that spans several lines is not supported, because the input is split into lines first.', 'Every value is a string, so 1 stays "1". Empty header cells are named column1, column2 and so on, and empty lines are skipped.'],
+        h: 'Limits of this CSV to JSON converter',
+        list: ['Lines are split on every comma, so a quoted value that contains a comma is split in two.', 'Quotes are not removed and multi-line quoted fields are not supported.', 'Numbers and booleans are not detected, so 1 stays the text "1".', 'Empty lines are skipped.'],
         links: [['JSON to CSV', '/json-to-csv'], ['JSON Formatter', '/json-formatter'], ['YAML to JSON', '/yaml-to-json']],
         linksLabel: 'Related',
       },
     ],
-    faqs: [q('Can it use a semicolon delimiter?', 'Yes. Pick Semicolon in the Delimiter menu. The default is a comma.'), q('Does it handle quoted values that contain commas?', 'Yes. A quoted value can contain the delimiter. Quoted values that span several lines are not supported.')],
+    faqs: [q('Can it use a semicolon or tab delimiter?', 'No. The delimiter is always a comma.')],
   },
   '/json-to-csv': {
     sections: [
       {
         h: 'JSON to CSV example',
-        paras: ['Paste an array of objects. Every key found across the objects becomes a column in the header row.'],
+        paras: ['Paste an array of objects. The keys of the first object become the header row.'],
         code: '[{"id":1,"name":"Ada"},{"id":2,"name":"Linus"}]\n\n// CSV output\nid,name\n1,Ada\n2,Linus',
       },
       {
         h: 'What to know before exporting to CSV',
-        list: ['The input must be a non-empty array of objects. Anything else shows "JSON to CSV expects an array of objects."', 'The header row lists every key in order of first appearance. An object that lacks a key gets an empty cell in that column.', 'A value that contains a comma, a quote or a line break is wrapped in quotes, with inner quotes doubled, so the columns stay aligned.', 'Nested objects are written as [object Object], and arrays are joined with commas. Flatten the data first if you need those values.', 'The delimiter is always a comma.'],
+        list: ['The input must be a non-empty array. A single object shows the error "Need an array of objects".', 'Only the keys of the first object are used, so keys that appear only in later objects are dropped.', 'Values are joined with commas without quoting or escaping, so a value that contains a comma will shift the columns.', 'Nested objects are written as [object Object].'],
         links: [['CSV to JSON', '/csv-to-json'], ['JSON Validator', '/json-validator'], ['JSON Formatter', '/json-formatter']],
         linksLabel: 'Related',
       },
     ],
-    faqs: [q('Can it flatten nested JSON?', 'No. Nested values are not flattened. Flatten the data first or convert only the top-level fields.'), q('Are values with commas quoted?', 'Yes. A value with a comma, quote or line break is wrapped in quotes and inner quotes are doubled.')],
+    faqs: [q('Can it flatten nested JSON?', 'No. Nested values are not flattened. Flatten the data first or convert only the top-level fields.')],
   },
   '/yaml-formatter': {
     sections: [
@@ -866,23 +864,16 @@ export const EXTRA_MORE = {
     sections: [
       {
         h: 'Diff checker example',
-        code: 'Original:      Modified:\nname: api      name: api\nport: 80       port: 8080\n\n// result (Lines mode)\n  name: api\n- port: 80\n+ port: 8080',
+        code: 'Original:      Modified:\nname: api      name: api\nport: 80       port: 8080\n\n// result\n  name: api\n- port: 80\n+ port: 8080',
       },
       {
-        h: 'Diff modes and options',
-        list: ['Lines compares whole lines. A changed line shows as one removed line and one added line.', 'Words and Characters mark the exact words or characters that changed inside a line.', 'Ignore whitespace treats runs of spaces and line breaks as a single space before comparing. That joins the text into one line, so it works best together with Words mode.', 'Press Compare to run it. Added text is green, removed text is red and unchanged text is grey.', 'Copy diff copies a plain-text version with + before added text and - before removed text. The marker sits at the start of each changed block, so in a multi-line block only the first line carries it.'],
+        h: 'How the comparison works',
+        list: ['It compares the two texts line by line. Changed lines show as one removed line and one added line.', 'Removed lines are red, added lines are green and unchanged lines are grey.', 'Copy diff copies a plain-text version with + and - prefixes.', 'It does not highlight changes inside a line.'],
         links: [['JSON Formatter', '/json-formatter'], ['YAML Formatter', '/yaml-formatter'], ['XML Formatter', '/xml-formatter']],
         linksLabel: 'Format first for cleaner diffs',
       },
-      {
-        h: 'Compare two JSON files',
-        paras: ['JSON from different sources often lists keys in a different order, which makes a plain text diff noisy. Format both versions the same way first, then compare them.'],
-        list: ['Paste each version into the JSON Formatter, tick Sort keys and copy the result.', 'Paste the two formatted versions into the left and right boxes here and press Compare in Lines mode.', 'Each key now sits on its own line, so changed values stand out. Switch to Words mode to see exactly which value changed.'],
-        links: [['JSON Formatter', '/json-formatter'], ['JSON Validator', '/json-validator']],
-        linksLabel: 'Related',
-      },
     ],
-    faqs: [q('How do I compare two JSON files?', 'Format both with the JSON Formatter and tick Sort keys, so every key sits on its own line in the same order. Then paste them into the two boxes here, press Compare in Lines mode and read the red and green lines.'), q('Does it compare JSON by meaning?', 'No. It compares text, so a reordered object shows up as changes. Sort the keys in the JSON Formatter first.')],
+    faqs: [q('How do I compare two JSON files?', 'Format both with the JSON Formatter so each key is on its own line, then paste them into the two boxes.')],
   },
 
   // ---------------------------------------------------------- Number bases
@@ -954,12 +945,12 @@ export const EXTRA_MORE = {
       },
       {
         h: 'Binary to decimal in this tool',
-        list: ['Set From to Binary (2) and To to Decimal (10), then type the binary number.', 'Only 0 and 1 belong in a binary number. A value that starts with another digit shows Invalid number for base 2, but otherwise the tool stops reading at the first bad digit, so 1021 is read as 10. Check your digits.'],
+        list: ['The page opens with From set to Binary (2) and To set to Decimal (10). Type the binary number.', 'Only 0 and 1 belong in a binary number. A value that starts with another digit shows Invalid number for base 2, but otherwise the tool stops reading at the first bad digit, so 1021 is read as 10. Check your digits.'],
         links: [['Decimal to Binary', '/decimal-to-binary'], ['Number Base Converter', '/number-base-converter'], ['Hex to Decimal', '/hex-to-decimal']],
         linksLabel: 'Related',
       },
     ],
-    faqs: [q('Why does the tool open with Decimal to Binary selected?', 'The number base tool starts at From Decimal, To Binary on every page. Change the two selectors to Binary and Decimal.')],
+    faqs: [q('What happens if I type a 2 in a binary number?', 'The tool reads digits until the first one that is not valid for the base, so 1021 is read as 10. A value that starts with an invalid digit shows an "Invalid number for base 2" message.')],
   },
   '/decimal-to-binary': {
     sections: [
@@ -992,7 +983,7 @@ export const EXTRA_MORE = {
       },
       {
         h: 'Decimal to binary in this tool',
-        list: ['The default selectors are already From Decimal (10) and To Binary (2). Type your number.', 'Whole numbers only, and negative numbers keep a minus sign instead of showing two\'s complement.'],
+        list: ['The page opens with From set to Decimal (10) and To set to Binary (2). Type your number.', 'Whole numbers only, and negative numbers keep a minus sign instead of showing two\'s complement.'],
         links: [['Binary to Decimal', '/binary-to-decimal'], ['Number Base Converter', '/number-base-converter'], ['Decimal to Hex', '/decimal-to-hex']],
         linksLabel: 'Related',
       },
@@ -1030,7 +1021,7 @@ export const EXTRA_MORE = {
       },
       {
         h: 'Hex to decimal in this tool',
-        list: ['Set From to Hex (16) and To to Decimal (10), then type the hex number.', 'Upper and lower case digits both work.', 'Hex color codes are three separate bytes, so use the HEX to RGB converter for colors.'],
+        list: ['The page opens with From set to Hex (16) and To set to Decimal (10). Type the hex number.', 'Upper and lower case digits both work.', 'Hex color codes are three separate bytes, so use the HEX to RGB converter for colors.'],
         links: [['Decimal to Hex', '/decimal-to-hex'], ['HEX to RGB Converter', '/hex-to-rgb'], ['Number Base Converter', '/number-base-converter']],
         linksLabel: 'Related',
       },
@@ -1072,8 +1063,8 @@ export const EXTRA_MORE = {
       },
       {
         h: 'Decimal to hex in this tool',
-        list: ['Set From to Decimal (10) and To to Hex (16), then type your number.', 'The result is uppercase and has no 0x prefix.', 'To turn RGB channel values into a color code, use the RGB to HEX converter.'],
-        links: [['Hex to Decimal', '/hex-to-decimal'], ['RGB to HEX Converter', '/rgb-to-hex'], ['Number Base Converter', '/number-base-converter']],
+        list: ['The page opens with From set to Decimal (10) and To set to Hex (16). Type your number.', 'The result is uppercase and has no 0x prefix.', 'To turn RGB channel values into a color code, use the RGB to HEX converter.'],
+        links: [['Guide: how to convert decimal to hex, with worked examples and a table', '/guides/decimal-to-hex-conversion'], ['Hex to Decimal', '/hex-to-decimal'], ['RGB to HEX Converter', '/rgb-to-hex'], ['Number Base Converter', '/number-base-converter']],
         linksLabel: 'Related',
       },
     ],
@@ -1088,20 +1079,6 @@ export const EXTRA_MORE = {
         list: ['Enter the domain or full URL and press Check status. Up means the site answered; a timeout or Unreachable result means your browser could not connect.', 'If a site is down here, test the same address on another network, such as mobile data, to see whether the problem is only on your side.', 'If it is up here but will not open in your usual browser, clear the DNS cache, turn off any VPN and try a private window.', 'Read the status code when one is shown: 5xx means the server has a problem, 4xx means the server is up but refused or could not find that address.'],
         links: [['Guide: how to check if a website is down', '/guides/check-if-a-website-is-down']],
         linksLabel: 'Read more',
-      },
-      {
-        h: 'What "server down" and "not working" messages mean',
-        paras: ['Most "server down" or "site not working" messages come down to one of four things. The checker reports each one with its own label.'],
-        list: ['Timed out: no answer within 12 seconds. The server may be down, overloaded or blocked on your network.', 'Unreachable: your browser could not connect at all. Common causes are a domain that does not exist, a DNS problem, an invalid TLS certificate, or a VPN, firewall or ad blocker in the way.', 'Server error (5xx): the server answered, but its application failed or is overloaded. The site is up but not working properly.', 'Online (client error, 4xx): the server answered but refused the request or could not find that address. The site itself is alive.'],
-        links: [['Guide: how to check if a website is down', '/guides/check-if-a-website-is-down']],
-        linksLabel: 'Read more',
-      },
-      {
-        h: 'When a bank, government or app site will not load',
-        paras: ['Portals for banks, tax filing and government services often slow down at peak times or go offline for maintenance. This tool shows whether the address answers from your own connection. It cannot tell you whether the service is down for everyone.'],
-        list: ['If the result is Up here but the page still fails, the problem is more likely your browser, a saved login or a network setting. Try a private window or another network.', 'If it is Timed out or Unreachable on more than one network, the service may be down or in maintenance. Check the organisation official notices page or its official app or channels.', 'Type the address yourself or use a saved bookmark. Do not enter credentials on a lookalike page you found by searching for a site that is down.'],
-        links: [['Guide: how to check if a website is down', '/guides/check-if-a-website-is-down']],
-        linksLabel: 'Related',
       },
       {
         h: 'What common HTTP status codes mean',
@@ -1119,6 +1096,6 @@ export const EXTRA_MORE = {
         linksLabel: 'Related',
       },
     ],
-    faqs: [q('Is this a website checker for SEO?', 'No. It checks whether an address answers from your browser, and shows the status code, redirect and response time when the site allows it. It does not audit SEO, page speed or security.'), q('Can it tell me if Instagram, ChatGPT or a bank site is down for everyone?', 'No. It tests from your own browser and network only. For a service-wide outage, check the provider official status page and compare with another network or device.'), q('Is my website up right now?', 'Enter your domain and press Check status. A result of Up means your browser got an answer from the server a moment ago. Check again from another network to see whether visitors elsewhere get the same result.'), q('Is this URL working?', 'Paste the full address, including the path. Up means the server answered normally. Online (client error) means the server is alive but that address returned a 4xx error such as 404, and Server error means it returned a 5xx code.'), q('Where do I find a website status page?', 'Many services publish an official status page, often at a status subdomain such as status.example.com. This tool does not read those pages; it tests whether the address responds from your browser.'), q('Does it work for https sites?', 'Yes. Enter the domain or an https:// address. Plain http:// addresses cannot be tested from this https:// page because browsers block them.'), q('Is it down for everyone or just me?', 'The tool only tests from your own browser and network. Try it from another network or device to compare.'), q('How do I check if a website is down?', 'Enter the domain or URL and press Check status. If it is reachable here but not in your usual browser, the problem is likely local: try another network, clear the DNS cache or turn off a VPN.'), q('Why does it say reachable without a status code?', 'Many sites do not let other pages read their response. The browser can still tell that the server answered, so the tool reports reachable without the exact code.')],
+    faqs: [q('Is my website up right now?', 'Enter your domain and press Check status. A result of Up means your browser got an answer from the server a moment ago. Check again from another network to see whether visitors elsewhere get the same result.'), q('Is this URL working?', 'Paste the full address, including the path. Up means the server answered normally. Online (client error) means the server is alive but that address returned a 4xx error such as 404, and Server error means it returned a 5xx code.'), q('Where do I find a website status page?', 'Many services publish an official status page, often at a status subdomain such as status.example.com. This tool does not read those pages; it tests whether the address responds from your browser.'), q('Does it work for https sites?', 'Yes. Enter the domain or an https:// address. Plain http:// addresses cannot be tested from this https:// page because browsers block them.'), q('Is it down for everyone or just me?', 'The tool only tests from your own browser and network. Try it from another network or device to compare.'), q('How do I check if a website is down?', 'Enter the domain or URL and press Check status. If it is reachable here but not in your usual browser, the problem is likely local: try another network, clear the DNS cache or turn off a VPN.'), q('Why does it say reachable without a status code?', 'Many sites do not let other pages read their response. The browser can still tell that the server answered, so the tool reports reachable without the exact code.')],
   },
 };
