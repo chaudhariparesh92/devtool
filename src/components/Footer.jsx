@@ -132,8 +132,10 @@ export default function Footer() {
           <div className="space-y-1">
             <p>
               &copy; {new Date().getFullYear()}{" "}
-              <strong style={{ color: "var(--ink)" }}>OnlineDeveloperTool.com</strong>.
-              All rights reserved.
+              <strong style={{ color: "var(--ink)" }}>
+                OnlineDeveloperTool.com
+              </strong>
+              . All rights reserved.
             </p>
             <p className="text-xs">
               OnlineDeveloperTool is built and maintained by DevTransition. Most
@@ -221,6 +223,16 @@ export default function Footer() {
                   height="44"
                   loading="lazy"
                   decoding="async"
+                />
+              </a>
+            </div>
+            <div className="inline-flex items-center mr-4">
+              <a href="https://www.betterlaunch.co/product/online-developer-tool">
+                <img
+                  src="https://www.betterlaunch.co/badge-launching-dark.svg"
+                  alt="betterlaunch.co"
+                  width="200"
+                  height="56"
                 />
               </a>
             </div>
