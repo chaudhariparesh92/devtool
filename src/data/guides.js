@@ -1,6 +1,7 @@
 // Long-form guides. Plain data with no imports, so seo.js, the pages and the prerender script can all share it.
 // Each guide: one primary tool (CTA + contextual link), related tools, sections, FAQs.
 // Every statement should describe real behaviour of the standard, the language or the tool.
+// A guide may carry updated: 'YYYY-MM-DD' (falls back to GUIDES_UPDATED).
 // A section may carry links: [[label, path], ...] and linksLabel (rendered by GuidePage.jsx).
 
 export const GUIDES_UPDATED = '2026-11-01';
@@ -8,6 +9,7 @@ export const GUIDES_UPDATED = '2026-11-01';
 export const GUIDES = [
   {
     slug: 'check-if-a-website-is-down',
+    updated: '2026-11-09',
     title: 'Check If a Website Is Down: Status Codes and Fixes',
     description: 'Find out whether a site is down for everyone or just you. Read HTTP status codes, test with curl, and rule out DNS and network problems.',
     h1: 'How to Check If a Website Is Down',
@@ -19,6 +21,8 @@ export const GUIDES = [
       {
         h: 'Step 1: separate a typo from an outage',
         paras: ['Check the address first. A wrong subdomain, a missing letter or http:// on a site that only serves https:// looks exactly like an outage. Paste the address into the Website Status Checker, which tests it from your own browser and network and shows whether the server answered.'],
+        links: [['Website Status Checker', '/website-status-checker']],
+        linksLabel: 'Try it',
       },
       {
         h: 'Step 2: is it down for everyone or only for you?',
@@ -312,6 +316,7 @@ export const GUIDES = [
   },
   {
     slug: 'decimal-to-hex-conversion',
+    updated: '2026-11-09',
     title: 'How to Convert Decimal to Hexadecimal (Step-by-Step + Table)',
     description: 'Convert decimal (denary) to hexadecimal by dividing by 16. Worked examples, a conversion table, negative numbers and code for JavaScript, Python and C#.',
     h1: 'How to Convert Decimal to Hexadecimal',

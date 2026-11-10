@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import ToolLayout from '../../components/ToolLayout';
 import CopyButton from '../../components/CopyButton';
 import DownloadButton from '../../components/DownloadButton';
@@ -15,6 +16,9 @@ const STATUS_STYLES = {
   invalid: { glyph: '\u2013', box: 'border-gray-300 bg-gray-50 dark:border-gray-700 dark:bg-gray-900', badge: 'text-gray-700 dark:text-gray-300' },
   untestable: { glyph: '\u2013', box: 'border-gray-300 bg-gray-50 dark:border-gray-700 dark:bg-gray-900', badge: 'text-gray-700 dark:text-gray-300' },
 };
+
+// Results after which the "what to try next" help is useful.
+const NEEDS_HELP = new Set(['unreachable', 'timeout', 'server-error']);
 
 export default function WebsiteStatusTool({ path }) {
   const [inp, setInp] = useState('');
@@ -58,6 +62,8 @@ export default function WebsiteStatusTool({ path }) {
   const onKeyDown = (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && !checking) run();
   };
+
+  const showHelp = !checking && results.some((r) => NEEDS_HELP.has(r.status));
 
   return (
     <ToolLayout
@@ -140,6 +146,22 @@ export default function WebsiteStatusTool({ path }) {
               </div>
             );
           })}
+
+          {showHelp && (
+            <div className="p-4 text-sm border rounded bg-gray-50 dark:bg-gray-900 space-y-2">
+              <p className="font-bold">Is it down for everyone or just you? Try this next</p>
+              <ol className="list-decimal pl-5 space-y-1">
+                <li>Check the spelling of the address, and that it uses https://.</li>
+                <li>Open the same address on another network, such as mobile data, or on another device.</li>
+                <li>Turn off any VPN, proxy or ad blocker, then check again.</li>
+                <li>Clear your DNS cache, or switch to another DNS resolver.</li>
+              </ol>
+              <p>
+                If it loads on another network, the problem is on your side. If it fails everywhere, the site or its host is probably down.{' '}
+                <Link to="/guides/check-if-a-website-is-down" className="a-link">Read the step-by-step guide</Link>.
+              </p>
+            </div>
+          )}
         </div>
 
         <div className="p-4 text-sm bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 rounded space-y-2">

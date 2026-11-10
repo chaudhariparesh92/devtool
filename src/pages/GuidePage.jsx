@@ -10,6 +10,7 @@ export default function GuidePage({ path }) {
   if (!g) return null;
   const tool = TOOLS.find((t) => t.path === g.tool);
   const related = g.related.map((p) => TOOLS.find((t) => t.path === p)).filter(Boolean);
+  const updated = g.updated || GUIDES_UPDATED;
   const more = GUIDES.filter((x) => x.slug !== g.slug).slice(0, 4);
 
   return (
@@ -28,7 +29,7 @@ export default function GuidePage({ path }) {
         <span className="sticker lime">Guide</span>
         <h1 className="h-display text-4xl sm:text-5xl break-words">{g.h1}</h1>
         <p className="lede">{g.lede}</p>
-        <p className="text-xs" style={{ color: 'var(--muted)' }}>Updated <time dateTime={GUIDES_UPDATED}>{GUIDES_UPDATED}</time></p>
+        <p className="text-xs" style={{ color: 'var(--muted)' }}>Updated <time dateTime={updated}>{updated}</time></p>
       </header>
 
       {tool && (

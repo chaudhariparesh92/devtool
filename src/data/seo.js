@@ -22,7 +22,9 @@ export const DEFAULT_IMAGE = `${SITE_URL}${OG_IMAGE_PATH}`;
 
 // Latest genuine content modification anywhere on the site.
 // Update this whenever content is genuinely changed.
-export const CONTENT_LAST_MODIFIED = '2026-11-07';
+// NOTE: every route listed in KEYWORD_BOOST inherits this date, so only change it
+// when all of those pages really changed.
+export const CONTENT_LAST_MODIFIED = '2026-11-05';
 
 // Per-page dates feed:
 // - Visible "Updated" line
@@ -31,24 +33,14 @@ export const CONTENT_LAST_MODIFIED = '2026-11-07';
 //
 // Only add routes here when their content or functionality genuinely changes.
 // Unlisted routes retain the baseline date.
+// Guides carry their own optional `updated` field in data/guides.js.
 const BASELINE_MODIFIED = '2026-10-25';
 
 const MODIFIED_ON = {
-  '2026-11-07': [
-    '/csv-to-json',
-    '/json-to-csv',
-    '/diff-checker',
-    '/yaml-to-json',
-    '/json-validator',
-    '/json-minifier',
-    '/json-to-typescript',
-    '/json-to-java',
-    '/json-to-python',
-    '/json-to-go',
-    '/json-to-php',
-    '/json-to-kotlin',
+  '2026-11-09': [
     '/website-status-checker',
   ],
+
   '2026-11-05': [
     '/json-to-csharp',
     '/html-decoder',
@@ -106,9 +98,15 @@ const MODIFIED_ON = {
   ],
 };
 
+const guideDate = (g) => (g && g.updated) || GUIDES_UPDATED;
+
 export function getLastModified(routePath) {
-  if (routePath === '/guides' || routePath.startsWith('/guides/')) {
-    return GUIDES_UPDATED;
+  if (routePath === '/guides') {
+    return GUIDES.reduce((latest, g) => (guideDate(g) > latest ? guideDate(g) : latest), GUIDES_UPDATED);
+  }
+
+  if (routePath.startsWith('/guides/')) {
+    return guideDate(getGuide(routePath));
   }
 
   let latest = KEYWORD_BOOST[routePath] ? CONTENT_LAST_MODIFIED : null;
@@ -350,7 +348,7 @@ export function getGuideJsonLd(guide) {
         headline: guide.h1,
         description: guide.description,
         datePublished: GUIDES_UPDATED,
-        dateModified: GUIDES_UPDATED,
+        dateModified: guideDate(guide),
         author: org,
         publisher: org,
         mainEntityOfPage: { '@type': 'WebPage', '@id': url },
