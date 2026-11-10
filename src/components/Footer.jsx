@@ -236,6 +236,16 @@ export default function Footer() {
                 />
               </a>
             </div>
+            <div className="hidden inline-flex items-center mr-4">
+              <a href="https://ledepress.com">
+                <img
+                  src="https://ledepress.com/ledepress-badge.svg"
+                  width="120"
+                  height="44"
+                  alt="Published on Lede Press"
+                />
+              </a>
+            </div>
           </div>
 
           <button
