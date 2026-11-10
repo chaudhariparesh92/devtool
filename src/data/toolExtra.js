@@ -227,13 +227,38 @@ export const EXTRA_MORE = {
         list: ['Every opening tag has a matching closing tag, in the right order.', 'There is exactly one root element.', 'Attribute values are quoted, and & is written as &amp;.'],
       },
       {
+        h: 'Common XML errors and how to fix them',
+        paras: ['Most XML syntax errors come from a short list of mistakes. Each line below shows the broken XML, then the fix:'],
+        code: 'Mismatched tag        <root><item>one</root>     ->  <root><item>one</item></root>\nUnescaped ampersand   <to>Tom & Jerry</to>       ->  <to>Tom &amp; Jerry</to>\nTwo root elements     <a>1</a><b>2</b>         ->  <root><a>1</a><b>2</b></root>\nUnquoted attribute    <item id=5>x</item>        ->  <item id="5">x</item>\nCase mismatch         <Item>x</item>             ->  <Item>x</Item>',
+        list: ['A missing or misspelled end tag is the most common cause.', 'Text that contains & or < must be escaped, or wrapped in a CDATA section.', 'The XML declaration, if you use one, must be the very first thing in the file, with no blank line or space before it.'],
+      },
+      {
+        h: 'How to read the error message',
+        paras: [
+          'When the XML is not well-formed, the page shows the parser message. If your browser reports a position, it also shows the line and column with a caret under the spot. Browsers word these messages differently.',
+          'The parser stops at the first error, so fix it and validate again to find the next one. The reported spot is where the parser noticed the problem, which can be just after the real mistake: a missing end tag is usually reported at the next tag that does not match. For minified XML on a single line, use the column number.',
+        ],
+      },
+      {
         h: 'XML validator example',
-        code: '<root><item>one</root>\n\n// Result: an error from the XML parser (wording depends on your browser)\n\n<root><item>one</item></root>\n\n// Result: Valid XML!',
+        code: '<root><item>one</root>\n\n// Result: an error from the XML parser, with the line and column when your browser reports them (wording depends on your browser)\n\n<root><item>one</item></root>\n\n// Result:\nValid XML!\nRoot element: root\nElements: 2\nAttributes: 0\nNesting depth: 2\nSize: 29 characters',
         links: [['XML Formatter', '/xml-formatter'], ['HTML Encoder', '/html-encoder'], ['JSON Validator', '/json-validator']],
         linksLabel: 'Related',
       },
+      {
+        h: 'Validate XML in code, or against an XSD',
+        paras: ['Browsers cannot check XML against an XSD or DTD, so this page checks well-formedness only. For schema validation, use xmllint or the schema support in your language\'s XML library. These commands check the same syntax rules in code:'],
+        code: '# xmllint (libxml2): well-formedness\nxmllint --noout file.xml\n\n# xmllint: validate against an XSD schema\nxmllint --noout --schema schema.xsd file.xml\n\n# Python\nimport xml.dom.minidom\nxml.dom.minidom.parseString(text)      # raises ExpatError with line and column\n\n// C#\nSystem.Xml.Linq.XDocument.Parse(text);  // throws XmlException with LineNumber and LinePosition',
+        links: [['XML Formatter', '/xml-formatter'], ['Diff Checker', '/diff-checker'], ['YAML to JSON', '/yaml-to-json']],
+        linksLabel: 'Related',
+      },
     ],
-    faqs: [q('Does it check a DTD or XSD schema?', 'No. It only checks that the XML is well-formed.')],
+    faqs: [
+      q('Does it check a DTD or XSD schema?', 'No. It only checks that the XML is well-formed.'),
+      q('How do I validate XML against an XSD schema?', 'Browsers cannot do this, so this page does not. Use xmllint (xmllint --noout --schema schema.xsd file.xml) or the schema validation built into your language\'s XML library.'),
+      q('Can I upload an XML file to validate?', 'Yes. Choose or drop an .xml file under the input box. It is read in your browser and is not uploaded to a server. Then press Process.'),
+      q('Why is the error reported after the real mistake?', 'The parser reports where it noticed the problem, not where you made it. A missing end tag, for example, is found at the next tag that does not match it, so look at the line before the reported position too.'),
+    ],
   },
 
   // -------------------------------------------------------- Encoders / URL
