@@ -276,6 +276,20 @@ export default function Footer() {
                 />
               </a>
             </div>
+            <div className="inline-flex items-center mr-4">
+              <a
+                href="https://nicklaunches.com/products/online-developer-tools/"
+                target="_blank"
+                rel="noopener"
+              >
+                <img
+                  src="https://nicklaunches.com/badges/featured.png"
+                  alt="Online Developer Tools on Nick Launches"
+                  width="244"
+                  height="56"
+                />
+              </a>
+            </div>
           </div>
 
           <button
