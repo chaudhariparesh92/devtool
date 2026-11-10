@@ -246,6 +246,36 @@ export default function Footer() {
                 />
               </a>
             </div>
+            <div className="inline-flex items-center mr-4">
+              <a href="https://hedpress.com">
+                <img
+                  src="https://hedpress.com/hedpress-badge.svg"
+                  width="125"
+                  height="44"
+                  alt="Published on Hed Press"
+                />
+              </a>
+            </div>
+            <div className="inline-flex items-center mr-4">
+              <a href="https://listedpress.com">
+                <img
+                  src="https://listedpress.com/listedpress-badge.svg"
+                  width="120"
+                  height="44"
+                  alt="Published on Listed Press"
+                />
+              </a>
+            </div>
+            <div className="inline-flex items-center mr-4">
+              <a href="https://piecepress.com">
+                <img
+                  src="https://piecepress.com/piecepress-badge.svg"
+                  width="120"
+                  height="44"
+                  alt="Published on Piece Press"
+                />
+              </a>
+            </div>
           </div>
 
           <button
