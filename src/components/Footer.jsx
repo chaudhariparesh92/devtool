@@ -290,6 +290,19 @@ export default function Footer() {
                 />
               </a>
             </div>
+            <div className="inline-flex items-center mr-4">
+              <a
+                href="https://useneedle.net/directory/online-developer-tools"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img
+                  src="https://api.useneedle.net/api/directory/badges/online-developer-tools.svg"
+                  alt="Listed on Needle Directory"
+                  height="44"
+                />
+              </a>
+            </div>
           </div>
 
           <button
