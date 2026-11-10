@@ -236,7 +236,7 @@ export default function Footer() {
                 />
               </a>
             </div>
-            <div className="hidden inline-flex items-center mr-4">
+            <div className="inline-flex items-center mr-4">
               <a href="https://ledepress.com">
                 <img
                   src="https://ledepress.com/ledepress-badge.svg"
