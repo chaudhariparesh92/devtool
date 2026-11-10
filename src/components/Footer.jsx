@@ -226,7 +226,7 @@ export default function Footer() {
                 />
               </a>
             </div>
-            <div className="inline-flex items-center mr-4">
+            <div className="hidden inline-flex items-center mr-4">
               <a href="https://www.betterlaunch.co/product/online-developer-tool">
                 <img
                   src="https://www.betterlaunch.co/badge-launching-dark.svg"
