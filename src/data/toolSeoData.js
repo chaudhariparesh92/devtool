@@ -226,12 +226,12 @@ export const TOOL_SEO_DATA = {
 
   // ----------------------------------------------------------- Generators
   '/uuid-generator': S({
-    title: 'UUID Generator Online - Random UUID v4 and v7 (GUID)',
-    description: 'Free online UUID generator: create random UUID v4 or time-ordered v7 values in bulk, as GUIDs in uppercase, no-hyphen or braces format. Runs in your browser.',
+    title: 'UUID Generator – Free Online Random UUID v4 & v7 (GUID)',
+    description: 'Free UUID generator online: create a random UUID or bulk GUIDs in your browser. Supports v4, time-ordered v7, uppercase, no-hyphen and braces. Nothing is uploaded.',
     h1: 'UUID Generator Online',
-    primary: 'uuid generator online',
-    secondary: ['random uuid generator', 'generate random uuid', 'online uuid generator tool', 'guid generator', 'uuid gen'],
-    longTail: ['generate uuid online', 'online generate uuid', 'custom uuid generator', 'generate UUID v7 online', 'create multiple UUIDs at once'],
+    primary: 'uuid generator',
+    secondary: ['uuid generator online', 'random uuid', 'random uuid generator', 'generate uuid online', 'online uuid generator', 'guid generator', 'uuid gen'],
+    longTail: ['online generate uuid', 'online uuid generator tool', 'generate random uuid', 'custom uuid generator', 'generate UUID v7 online', 'create multiple UUIDs at once'],
     intent: 'utility + informational',
     related: ['/uuid-validator', '/uuid-parser', '/hash-generator', '/jwt-decoder', '/timestamp-converter'],
   }),

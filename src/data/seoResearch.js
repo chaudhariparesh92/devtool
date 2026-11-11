@@ -22,7 +22,7 @@ export const SEO_RESEARCH = {
   '/html-encoder': { topObserved: 'Site24x7 / emn178', focus: 'html encoder head term, encode+escape FAQs, entity table, XSS context, vs URL encode' },
   '/html-decoder': { topObserved: 'W3docs / Kordu', focus: 'entity decoding, numeric/hex entities, copy/download, examples' },
   '/jwt-decoder': { topObserved: 'Legendev / IRQKit', focus: 'header/payload, exp/iat/nbf, explicit non-verification warning, privacy' },
-  '/uuid-generator': { topObserved: 'UUIDTools / uuid.tools', focus: 'v4/v7, bulk generation, formatting, copy/download' },
+  '/uuid-generator': { topObserved: 'uuidgenerator.net / uuidtools.com', focus: 'head term uuid generator, instant UUID on load, bulk download, v4 vs v7, GUID formats, browser-only' },
   '/uuid-validator': { topObserved: 'Torinoa / UUIDDev', focus: 'RFC 9562, version/variant, bulk validation, timestamps' },
   '/uuid-parser': { topObserved: 'ToolNinja / tool.io', focus: 'version, variant, timestamps, structured inspection' },
   '/jwt-generator': { topObserved: 'JWT generator tools', focus: 'header/payload claims, signing/verification distinction, test tokens' },

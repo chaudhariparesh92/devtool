@@ -404,6 +404,39 @@ export const EXTRA_MORE = {
   },
 
   // ---------------------------------------------------------------- UUID/JWT
+  '/uuid-generator': {
+    sections: [
+      {
+        h: 'UUID v4 vs UUID v7',
+        paras: [
+          'Version 4 is random: 122 bits from a secure random source. Use it when you need an opaque unique id and do not care about sort order.',
+          'Version 7 is time-ordered: the first 48 bits are a Unix millisecond timestamp, then random bits. Newer IDs sort after older ones, which helps B-tree indexes and log streams. Both versions use the same 8-4-4-4-12 string layout.',
+        ],
+      },
+      {
+        h: 'GUID vs UUID',
+        paras: [
+          'GUID is the name Windows and .NET use for the same 128-bit value. This generator can emit uppercase hex and {braces} so the string matches common GUID style, while the bits remain a standard UUID.',
+        ],
+        links: [
+          ['UUID Validator', '/uuid-validator'],
+          ['UUID Parser', '/uuid-parser'],
+          ['Timestamp Converter', '/timestamp-converter'],
+        ],
+        linksLabel: 'Related',
+      },
+      {
+        h: 'Generate UUIDs in code',
+        code: '// JavaScript (browser or Node 19+)\ncrypto.randomUUID()\n\n// C#\nGuid.NewGuid()\n\n// Python\nimport uuid; uuid.uuid4()',
+      },
+    ],
+    faqs: [
+      {
+        q: 'Does anything leave my browser?',
+        a: 'No. UUIDs are created locally with the Web Crypto API. There is no server round-trip for generation.',
+      },
+    ],
+  },
   '/uuid-validator': {
     sections: [
       {

@@ -181,14 +181,29 @@ export const TOOL_GAP = {
 
   // ------------------------------------------------------------------ Generators and hashes
   '/uuid-generator': {
-    tasks: ['Generate a random UUID', 'Online UUID generator tool', 'Custom UUID format: uppercase, no hyphens, braces', 'Generate UUID v4 online', 'Generate UUID v7 online', 'Generate 100 UUIDs at once', 'Create random UUIDs for test data or database keys'],
+    tasks: [
+      'UUID generator',
+      'Generate a random UUID',
+      'Online UUID generator tool',
+      'Generate uuid online',
+      'Random uuid generator',
+      'Custom UUID format: uppercase, no hyphens, braces',
+      'Generate UUID v4 online',
+      'Generate UUID v7 online',
+      'Generate 100 UUIDs at once',
+      'Create random UUIDs for test data or database keys',
+      'Download UUIDs as a text file',
+    ],
     faqs: [
-      f('How do I generate a random UUID online?', 'Choose how many you need, pick version 4 (random) or version 7 (time-ordered), press generate and copy the list. Version 4 values come from your browser\'s secure random source, and nothing is sent to a server.'),
-      f('Can I customize the UUID format?', 'Yes. Output can be standard lowercase, UPPERCASE, without hyphens, or wrapped in {braces} for GUID style. The version (v4 or v7) is selectable, and the layout is always the standard 8-4-4-4-12 one.'),
-      f('What is the difference between UUID v4 and UUID v7?', 'UUID v4 is almost entirely random. UUID v7 starts with a millisecond timestamp followed by random bits, so values created later sort after earlier ones. That makes v7 friendlier to database indexes. Both are available here, in standard, UPPERCASE, no-hyphen and {braces} formats.'),
-      f('How do I generate a UUID in JavaScript, C# or Python?', 'Use crypto.randomUUID() in JavaScript, Guid.NewGuid() in C# and uuid.uuid4() in Python.'),
+      f('How do I generate a random UUID online?', 'A UUID is ready when this page loads. Copy it, or change the quantity, version and format and press Generate. Version 4 values come from your browser\'s secure random source; nothing is sent to a server. For many values at once, raise the quantity and use Download .txt.'),
+      f('What is the difference between UUID v4 and UUID v7?', 'UUID v4 is almost entirely random — the usual choice for opaque IDs. UUID v7 starts with a millisecond timestamp followed by random bits, so values created later sort after earlier ones and are friendlier to database indexes. Both are available here.'),
+      f('Is a UUID the same as a GUID?', 'Yes for practical purposes. GUID is the Microsoft name for the same 128-bit identifier. This tool can output uppercase and {braces} forms that match common GUID style in .NET.'),
+      f('Can I customize the UUID format?', 'Yes. Choose standard lowercase, UPPERCASE, without hyphens, or wrapped in {braces}. The version (v4 or v7) is selectable; the layout stays the standard 8-4-4-4-12 pattern.'),
+      f('How do I generate a UUID in JavaScript, C# or Python?', 'In JavaScript use crypto.randomUUID(). In C# use Guid.NewGuid(). In Python use uuid.uuid4(). This page is for quick one-offs and bulk lists without opening a REPL.'),
+      f('Is it safe that UUIDs are generated in the browser?', 'Yes for identifiers. Version 4 uses the Web Crypto API secure random source in your browser, and the values never leave your device. Do not treat a UUID as a password or API secret; use a purpose-built token for those.'),
     ],
   },
+
   '/uuid-validator': {
     tasks: ['UUID version checker', 'Validate a GUID', 'Check if a string is a valid UUID', 'Validate a GUID format', 'Check a UUID before saving it to a database', 'Test whether an id matches the 8-4-4-4-12 pattern'],
     faqs: [
