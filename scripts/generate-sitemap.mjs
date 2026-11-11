@@ -9,7 +9,8 @@ import { SITE_URL, getLastModified, getIndexableRoutes } from '../src/data/seo.j
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const routes = [...new Set(getIndexableRoutes())];
-const loc = (p) => (p === '/' ? `${SITE_URL}/` : `${SITE_URL}${p}`);
+// Keep trailing slashes so sitemap locs match prerendered canonicals and Cloudflare directory URLs.
+const loc = (p) => (p === '/' ? `${SITE_URL}/` : `${SITE_URL}${p}/`);
 
 const xml =
   '<?xml version="1.0" encoding="UTF-8"?>\n' +

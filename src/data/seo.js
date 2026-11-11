@@ -20,6 +20,13 @@ export const SITE_DOMAIN = 'onlinedevelopertool.com';
 export const OG_IMAGE_PATH = '/images/og-onlinedevelopertool.webp';
 export const DEFAULT_IMAGE = `${SITE_URL}${OG_IMAGE_PATH}`;
 
+/** Absolute canonical URL with trailing slash (except root). Matches prerender + sitemap. */
+export function canonicalUrl(path) {
+  if (!path || path === '/') return `${SITE_URL}/`;
+  const clean = `/${String(path)}`.replace(/\/{2,}/g, '/').replace(/\/+$/, '');
+  return `${SITE_URL}${clean}/`;
+}
+
 // Latest genuine content modification anywhere on the site.
 // Update this whenever content is genuinely changed.
 // NOTE: every route listed in KEYWORD_BOOST inherits this date, so only change it
@@ -328,7 +335,7 @@ export function getCategoryByPath(path) {
 }
 
 export function getGuideJsonLd(guide) {
-  const url = `${SITE_URL}/guides/${guide.slug}`;
+  const url = canonicalUrl(`/guides/${guide.slug}`);
   const org = {
     '@type': 'Organization',
     name: SITE_NAME,
@@ -342,7 +349,7 @@ export function getGuideJsonLd(guide) {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-          { '@type': 'ListItem', position: 2, name: 'Guides', item: `${SITE_URL}/guides` },
+          { '@type': 'ListItem', position: 2, name: 'Guides', item: canonicalUrl('/guides') },
           { '@type': 'ListItem', position: 3, name: guide.h1, item: url },
         ],
       },
@@ -365,7 +372,7 @@ export function getGuideJsonLd(guide) {
 
 export function getCategoryJsonLd(category) {
   const c = CATEGORY_PAGES[category];
-  const url = `${SITE_URL}/category/${c.slug}`;
+  const url = canonicalUrl(`/category/${c.slug}`);
   const tools = TOOLS.filter((t) => t.category === category);
 
   return {
@@ -375,7 +382,7 @@ export function getCategoryJsonLd(category) {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-          { '@type': 'ListItem', position: 2, name: 'Categories', item: `${SITE_URL}/categories` },
+          { '@type': 'ListItem', position: 2, name: 'Categories', item: canonicalUrl('/categories') },
           { '@type': 'ListItem', position: 3, name: category, item: url },
         ],
       },
@@ -392,7 +399,7 @@ export function getCategoryJsonLd(category) {
             '@type': 'ListItem',
             position: i + 1,
             name: t.name,
-            url: `${SITE_URL}${t.path}`,
+            url: canonicalUrl(t.path),
           })),
         },
       },
@@ -475,7 +482,7 @@ export function getToolSeo(path, fallbackName, fallbackDesc) {
       '@type': 'ListItem',
       position: crumbs.length + 1,
       name: tool.category,
-      item: `${SITE_URL}${catPath}`,
+      item: canonicalUrl(catPath),
     });
   }
 
@@ -483,7 +490,7 @@ export function getToolSeo(path, fallbackName, fallbackDesc) {
     '@type': 'ListItem',
     position: crumbs.length + 1,
     name,
-    item: `${SITE_URL}${path}`,
+    item: canonicalUrl(path),
   });
 
   const jsonLd = c && {
@@ -492,19 +499,19 @@ export function getToolSeo(path, fallbackName, fallbackDesc) {
       { '@type': 'BreadcrumbList', itemListElement: crumbs },
       {
         '@type': 'WebPage',
-        '@id': `${SITE_URL}${path}#webpage`,
-        url: `${SITE_URL}${path}`,
+        '@id': `${canonicalUrl(path)}#webpage`,
+        url: canonicalUrl(path),
         name,
         description,
         dateModified: getLastModified(path),
         isPartOf: { '@id': `${SITE_URL}/#website` },
-        mainEntity: { '@id': `${SITE_URL}${path}#application` },
+        mainEntity: { '@id': `${canonicalUrl(path)}#application` },
       },
       {
         '@type': 'WebApplication',
-        '@id': `${SITE_URL}${path}#application`,
+        '@id': `${canonicalUrl(path)}#application`,
         name,
-        url: `${SITE_URL}${path}`,
+        url: canonicalUrl(path),
         description,
         applicationCategory: 'DeveloperApplication',
         applicationSubCategory: tool?.category || 'Developer Tool',

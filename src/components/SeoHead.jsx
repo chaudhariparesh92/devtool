@@ -10,6 +10,8 @@ export { SITE_URL, SITE_NAME, SITE_DOMAIN, DEFAULT_IMAGE };
 function normalizeCanonicalPath(value) {
   if (!value || typeof value !== 'string') return null;
   // Canonicals describe the page, not tracking/query variants or in-page fragments.
+  // Always use a trailing slash for non-root paths so they match prerender output,
+  // the sitemap, and Cloudflare's directory-style serving (/path/index.html → /path/).
   let path = value.trim();
   try {
     if (/^https?:\/\//i.test(path)) {
@@ -21,7 +23,9 @@ function normalizeCanonicalPath(value) {
     return null;
   }
   path = `/${path}`.replace(/\/{2,}/g, '/').split(/[?#]/, 1)[0];
-  if (path.length > 1) path = path.replace(/\/+$/, '');
+  if (path.length > 1) {
+    path = path.replace(/\/+$/, '') + '/';
+  }
   return path || '/';
 }
 
