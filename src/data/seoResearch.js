@@ -20,7 +20,7 @@ export const SEO_RESEARCH = {
   '/base64-encoder': { topObserved: 'Base64 Studio / ByteKiln', focus: 'Unicode, URL-safe mode, files/data URI, local processing' },
   '/base64-decoder': { topObserved: 'Base64 Studio / ByteKiln', focus: 'Unicode, URL-safe mode, files/data URI, local processing' },
   '/html-encoder': { topObserved: 'Site24x7 / emn178', focus: 'html encoder head term, encode+escape FAQs, entity table, XSS context, vs URL encode' },
-  '/html-decoder': { topObserved: 'W3docs / Kordu', focus: 'entity decoding, numeric/hex entities, copy/download, examples' },
+  '/html-decoder': { topObserved: 'emn178 / CodeBeautify', focus: 'html decode online head term, named+numeric+hex, security note, vs URL decode, how-to' },
   '/jwt-decoder': { topObserved: 'Legendev / IRQKit', focus: 'header/payload, exp/iat/nbf, explicit non-verification warning, privacy' },
   '/uuid-generator': { topObserved: 'uuidgenerator.net / uuidtools.com', focus: 'head term uuid generator, instant UUID on load, bulk download, v4 vs v7, GUID formats, browser-only' },
   '/uuid-validator': { topObserved: 'Torinoa / UUIDDev', focus: 'RFC 9562, version/variant, bulk validation, timestamps' },

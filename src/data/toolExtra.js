@@ -355,55 +355,51 @@ export const EXTRA_MORE = {
   '/html-decoder': {
     sections: [
       {
-        "h": "Decode HTML entities in code",
-        "code": "# Python\nimport html; html.unescape(text)\n// C#\nSystem.Net.WebUtility.HtmlDecode(text)\n// JavaScript (browser)\nnew DOMParser().parseFromString(text, 'text/html').documentElement.textContent"
-      },
-      {
-        "h": "Named and numeric entities",
-        "paras": [
-          "An entity can be written by name, by decimal number or by hex number. All three below mean the same character."
-        ],
-        "code": "&copy;   &#169;   &#xA9;   ->  (c) symbol\n&amp;    &#38;    &#x26;   ->  &\n&nbsp;   &#160;            ->  non-breaking space",
-        "links": [
-          [
-            "HTML Encoder",
-            "/html-encoder"
-          ],
-          [
-            "URL Decoder",
-            "/url-decoder"
-          ],
-          [
-            "Base64 Decoder",
-            "/base64-decoder"
-          ]
-        ],
-        "linksLabel": "Related"
-      },
-      {
-        h: 'When you need to decode encoded text',
+        h: 'How to HTML decode online',
         paras: [
-          'Entities appear when text has been escaped so it can sit safely inside HTML documents. You meet them in page source, scraped content, RSS and API responses, CMS exports and database fields, where a quote shows up as &quot; or an apostrophe as &#39;.',
-          'HTML entities are not the same thing as percent-encoding. A value like %20 or %3D comes from a URL encoder, so use the URL Decoder for that. Going the other way, the HTML Encoder escapes characters and the URL Encoder percent-encodes them.',
+          'Paste text that contains HTML entities into the input box. The decoded result updates as you type. Copy the plain characters when you are ready.',
         ],
-        links: [['URL Decoder', '/url-decoder'], ['URL Encoder', '/url-encoder'], ['HTML Encoder', '/html-encoder']],
+        list: [
+          'Paste encoded text from page source, a feed, an API or a database field.',
+          'Named, decimal and hex entities are decoded automatically.',
+          'Copy the output for use as plain text.',
+          'If you need the reverse step, use the HTML Encoder.',
+        ],
+        links: [['HTML Encoder', '/html-encoder'], ['URL Decoder', '/url-decoder']],
         linksLabel: 'Related',
       },
       {
-        h: 'HTML decoding example',
-        code: '&lt;p&gt;Fish &amp; chips&lt;/p&gt; &copy; 2026\n\n// decoded\n<p>Fish & chips</p> © 2026',
+        h: 'Named and numeric entities',
+        paras: [
+          'An entity can be written by name, by decimal number or by hex number. All three below mean the same character.',
+        ],
+        code: '&copy;   &#169;   &#xA9;   ->  ©\n&amp;    &#38;    &#x26;   ->  &\n&lt;     &#60;    &#x3C;   ->  <\n&gt;     &#62;    &#x3E;   ->  >\n&quot;   &#34;    &#x22;   ->  "\n&#39;    &#x27;           ->  \'',
       },
       {
-        h: 'Which entities are decoded',
-        list: ['Named entities such as &amp;, &lt;, &gt;, &quot; and &copy;.', 'Numeric entities such as &#169; and &#x1F600;.', 'The browser\'s own HTML parser does the decoding, so the result matches what a browser would show.'],
+        h: 'HTML decoding example',
+        code: '&lt;p class=&quot;note&quot;&gt;Fish &amp; chips&lt;/p&gt; &copy; 2026\n\n// decoded\n<p class="note">Fish & chips</p> © 2026',
+      },
+      {
+        h: 'Decode HTML entities in code',
+        code: '# Python\nimport html; html.unescape(text)\n// C#\nSystem.Net.WebUtility.HtmlDecode(text)\n// JavaScript (browser)\nconst t = document.createElement("textarea");\nt.innerHTML = encoded; t.value;',
+      },
+      {
+        h: 'Decoding and security',
+        paras: [
+          'Decoding does not make the result safe as HTML. An encoded tag becomes a real tag after decoding. If content is untrusted and will be rendered as markup, use a maintained HTML sanitizer and text insertion APIs rather than relying on entity decoding alone.',
+        ],
         links: [['HTML Encoder', '/html-encoder'], ['URL Decoder', '/url-decoder'], ['Diff Checker', '/diff-checker']],
         linksLabel: 'Related',
       },
     ],
-    faqs: [q('Can decoding run scripts in my text?', 'The tool decodes into a textarea element, which treats the content as text, so tags in your input are not run.')],
+    faqs: [
+      {
+        q: 'Can decoding run scripts in my text?',
+        a: 'The tool decodes into a textarea element, which treats the content as text, so tags in your input are not executed.',
+      },
+    ],
   },
 
-  // ---------------------------------------------------------------- UUID/JWT
   '/uuid-generator': {
     sections: [
       {

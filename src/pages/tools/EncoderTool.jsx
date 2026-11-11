@@ -12,6 +12,16 @@ function htmlEncode(val) {
     .replace(/'/g, '&#39;');
 }
 
+function placeholderFor(path) {
+  if (path.includes('html-dec')) return 'Paste HTML entities, e.g. &lt;b&gt;Tom &amp; Jerry&lt;/b&gt;';
+  if (path.includes('html-enc')) return 'Paste text or markup to escape, e.g. <b>Tom & Jerry</b>';
+  if (path.includes('url-dec')) return 'Paste a percent-encoded string…';
+  if (path.includes('url-enc')) return 'Paste text to URL-encode…';
+  if (path.includes('base64-dec')) return 'Paste a Base64 string…';
+  if (path.includes('base64-enc')) return 'Paste text to Base64-encode…';
+  return 'Input text…';
+}
+
 export default function EncoderTool({ path }) {
   const [inp, setInp] = useState('');
   const [out, setOut] = useState('');
@@ -41,9 +51,9 @@ export default function EncoderTool({ path }) {
           className="w-full p-4 font-mono text-sm bg-gray-50 dark:bg-gray-900 border rounded"
           value={inp}
           onChange={(e) => process(e.target.value)}
-          placeholder="Input text..."
+          placeholder={placeholderFor(path)}
         />
-        <OutputBox value={out} label="Output" placeholder="Output..." />
+        <OutputBox value={out} label="Output" placeholder="Decoded output appears here…" />
       </div>
     </ToolLayout>
   );
