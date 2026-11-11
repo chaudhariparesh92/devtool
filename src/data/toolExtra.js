@@ -548,12 +548,23 @@ export const EXTRA_MORE = {
   '/unix-timestamp': {
     sections: [
       {
-        "h": "Notable Unix timestamps",
-        "code": "0           1970-01-01T00:00:00Z  (the epoch)\n1000000000  2001-09-09T01:46:40Z\n2147483647  2038-01-19T03:14:07Z  (largest signed 32-bit value)"
+        h: 'What is a Unix timestamp?',
+        paras: ['A Unix timestamp, or epoch time, counts the time elapsed since 1 January 1970 00:00:00 UTC. It has no time zone, which is why APIs, databases and JWT claims such as exp and iat use it.', 'The page opens with the current time in seconds already filled in, so you can copy the current Unix timestamp right away. The live clock at the top has a Pause button if you want to copy a value that stays still.'],
+      },
+      {
+        h: 'Seconds or milliseconds?',
+        list: ['10 digits, such as 1700000000, is normally seconds (JWT, most Unix tools).', '13 digits, such as 1700000000000, is normally milliseconds (JavaScript Date.now()).', '16 digits is microseconds and 19 digits is nanoseconds.', 'Pasting the wrong unit gives a date in 1970 or the far future, which is the quickest way to spot the mix-up. Auto detect goes by the number of digits; pick the unit by hand if it guesses wrong.'],
+        links: [['Timestamp Converter', '/timestamp-converter'], ['JWT Decoder', '/jwt-decoder'], ['Number Base Converter', '/number-base-converter']],
+        linksLabel: 'Related',
+      },
+      {
+        h: 'Unix timestamp for today, this month and this year',
+        paras: ['Under the live clock, the page lists the Unix timestamp for the start and end of today, the start of this month and the start of this year. Each row shows UTC and your own time zone, because midnight happens at a different moment in each. To work out the start of today yourself, round the current time down to a whole number of days:'],
+        code: '// JavaScript: start of today in UTC, in seconds\nMath.floor(Date.now() / 86400000) * 86400\n\n# Python\nimport time\nint(time.time()) // 86400 * 86400\n\n# Example: 11 November 2026 00:00:00 UTC\n1794355200',
       },
       {
         "h": "Get the current Unix timestamp in code",
-        "code": "// JavaScript (seconds)\nMath.floor(Date.now() / 1000)\n# Python\nimport time; int(time.time())\n// C#\nDateTimeOffset.UtcNow.ToUnixTimeSeconds()\n# Bash\ndate +%s\n-- PostgreSQL\nSELECT EXTRACT(EPOCH FROM now());",
+        "code": "// JavaScript (seconds)\nMath.floor(Date.now() / 1000)\n# Python\nimport time; int(time.time())\n// PHP\ntime()\n// Java\nInstant.now().getEpochSecond()\n// C#\nDateTimeOffset.UtcNow.ToUnixTimeSeconds()\n// Go\ntime.Now().Unix()\n# Ruby\nTime.now.to_i\n# Bash\ndate +%s\n-- MySQL\nSELECT UNIX_TIMESTAMP();\n-- PostgreSQL\nSELECT EXTRACT(EPOCH FROM now());",
         "links": [
           [
             "Timestamp Converter",
@@ -571,17 +582,34 @@ export const EXTRA_MORE = {
         "linksLabel": "Related"
       },
       {
-        h: 'What is a Unix timestamp?',
-        paras: ['A Unix timestamp, or epoch time, counts the time elapsed since 1 January 1970 00:00:00 UTC. It has no time zone, which is why APIs, databases and JWT claims such as exp and iat use it.', 'The page opens with the current time in seconds already filled in, so you can copy the current Unix timestamp right away.'],
+        h: 'Convert a Unix timestamp to a date in code',
+        code: '// JavaScript\nnew Date(1700000000 * 1000).toISOString()   // "2023-11-14T22:13:20.000Z"\n\n# Python\nfrom datetime import datetime, timezone\ndatetime.fromtimestamp(1700000000, timezone.utc)   # 2023-11-14 22:13:20+00:00\n\n# Bash (GNU date)\ndate -u -d @1700000000',
+        paras: ['JavaScript dates count milliseconds, so multiply a seconds timestamp by 1000 first.'],
       },
       {
-        h: 'Seconds or milliseconds?',
-        list: ['10 digits, such as 1700000000, is normally seconds (JWT, most Unix tools).', '13 digits, such as 1700000000000, is normally milliseconds (JavaScript Date.now()).', 'Pasting the wrong unit gives a date in 1970 or the far future, which is the quickest way to spot the mix-up.'],
-        links: [['Timestamp Converter', '/timestamp-converter'], ['JWT Decoder', '/jwt-decoder'], ['Number Base Converter', '/number-base-converter']],
+        h: 'Unix time in seconds: common values',
+        paras: ['These are exact numbers of seconds, not averages. Unix time ignores leap seconds, so a day is always 86,400 seconds.'],
+        code: '1 minute    60\n1 hour      3,600\n1 day       86,400\n1 week      604,800\n30 days     2,592,000\n365 days    31,536,000',
+      },
+      {
+        h: 'Unix timestamps in JWTs and APIs',
+        paras: ['The exp, iat and nbf claims in a JSON Web Token are Unix timestamps in seconds. To read one, paste it into the converter. For example, an exp of 1700000000 is 14 November 2023 22:13:20 UTC, and 1516239022 (the iat in many JWT examples) is 18 January 2018 01:30:22 UTC. If a token is rejected, compare exp with the current timestamp above.'],
+        links: [['JWT Decoder', '/jwt-decoder'], ['JWT Generator', '/jwt-generator'], ['Guide: how to decode a JWT', '/guides/how-to-decode-a-jwt']],
         linksLabel: 'Related',
       },
+      {
+        "h": "Notable Unix timestamps",
+        "code": "0           1970-01-01T00:00:00Z  (the epoch)\n1000000000  2001-09-09T01:46:40Z\n2147483647  2038-01-19T03:14:07Z  (largest signed 32-bit value)",
+        "paras": ["On 19 January 2038 a signed 32-bit seconds counter overflows. Systems that still store Unix time in 32 bits will wrap around to 1901. Modern 64-bit systems and JavaScript dates are not affected."]
+      },
     ],
-    faqs: [q('Why does my Unix timestamp show 1970?', 'The number is probably in seconds being read as a smaller unit, or it is 0 or a very small value. Check whether your source uses seconds or milliseconds.')],
+    faqs: [
+      q('Why does my Unix timestamp show 1970?', 'The number is probably in seconds being read as a smaller unit, or it is 0 or a very small value. Check whether your source uses seconds or milliseconds.'),
+      q('Is Unix time the same as UTC?', 'Unix time counts seconds since 1 January 1970 00:00:00 UTC, so it is tied to UTC but has no time zone of its own. The same timestamp is the same moment everywhere. Only the way it is displayed (UTC or local time) differs.'),
+      q('How do I get the Unix timestamp for the start of today?', 'Look at the table under the live clock. It shows the start and end of today in UTC and in your time zone. In code, Math.floor(Date.now() / 86400000) * 86400 gives midnight UTC in JavaScript.'),
+      q('What happens to Unix time in 2038?', 'A signed 32-bit seconds counter reaches its maximum, 2147483647, on 19 January 2038 at 03:14:07 UTC. Systems that still use 32 bits will overflow. 64-bit timestamps do not have this problem.'),
+      q('How do I read the exp claim of a JWT as a date?', 'The exp claim is a Unix timestamp in seconds. Paste its value into the converter to see the expiry date in UTC and local time, and the Relative line to see how long ago or how soon that is.'),
+    ],
   },
   '/color-converter': {
     sections: [
