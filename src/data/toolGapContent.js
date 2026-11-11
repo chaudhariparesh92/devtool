@@ -41,14 +41,26 @@ export const TOOL_GAP = {
     ],
   },
   '/json-to-csharp': {
-    tasks: ['Convert JSON to a C# class online', 'Generate a C# model from an API response', 'Create C# classes for nested JSON objects', 'Add System.Text.Json or Newtonsoft attributes', 'Set the root class name for generated C# code'],
+    tasks: [
+      'JSON to C# converter',
+      'Convert JSON to a C# class online',
+      'Generate C# classes from JSON',
+      'Generate a C# model from an API response',
+      'Create C# classes for nested JSON objects',
+      'Add System.Text.Json or Newtonsoft attributes',
+      'JSON to C# class online',
+      'JSON C# model generator',
+    ],
     faqs: [
-      f('Can I generate C# model classes from a JSON sample?', 'Yes. Paste a JSON object and it generates C# classes with public get/set properties: a root class, a class for each nested object and List<T> for arrays. You can choose System.Text.Json or Newtonsoft.Json attributes and mark properties nullable.'),
-      f('How do I convert JSON to C# in Visual Studio?', 'Visual Studio has Edit > Paste Special > Paste JSON as Classes. This page does the same job in the browser, with attribute and nullable options, when you are not in the IDE.'),
-      f('How do I convert a JSON array to a C# class?', 'Paste a single object from the array. The tool expects the root value to be a JSON object and returns an error for a bare array. Arrays of objects inside that object become List<T> properties with their own generated class.'),
-      f('Can I rename the root class or mark properties nullable?', 'Yes. Use the root type name field to change the name from Root. The Optional / nullable properties checkbox adds a ? to each property type so missing values are allowed.'),
+      f('How do I convert JSON to C# online?', 'Paste a JSON object into the input, set the root class name if you want, choose System.Text.Json or Newtonsoft.Json attributes, then press Generate. Copy the C# classes or download the file. Everything runs in your browser.'),
+      f('Can I generate C# model classes from a JSON sample?', 'Yes. The tool creates a root class plus nested classes for objects and List<T> for arrays. Property names are PascalCase. You can mark properties nullable and pick serialization attributes.'),
+      f('Should I use Newtonsoft.Json or System.Text.Json?', 'For new .NET 5+ projects prefer System.Text.Json ([JsonPropertyName]) — it is built in and fast. Use Newtonsoft.Json ([JsonProperty]) for older projects or when you need advanced Newtonsoft features.'),
+      f('How do I convert JSON to C# in Visual Studio?', 'Visual Studio has Edit > Paste Special > Paste JSON as Classes. This page does the same job in the browser when you are not in the IDE, with attribute and nullable options.'),
+      f('How do I deserialize the generated classes?', 'With Newtonsoft: JsonConvert.DeserializeObject<Root>(json). With System.Text.Json: JsonSerializer.Deserialize<Root>(json). Add the matching using directive from the generated attributes option.'),
+      f('How do I convert a JSON array to a C# class?', 'Paste a single object from the array as the root. The tool expects a JSON object at the root. Arrays inside that object become List<T> properties with their own generated class.'),
     ],
   },
+
   '/json-to-typescript': {
     tasks: ['Convert JSON to a TypeScript interface', 'Type an API response in TypeScript', 'Generate TypeScript interfaces for nested objects', 'Make TypeScript properties optional'],
     faqs: [

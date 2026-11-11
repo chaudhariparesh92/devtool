@@ -464,6 +464,49 @@ export const EXTRA_MORE = {
     ],
     faqs: [q('Does it work on a GUID from .NET?', 'Yes, if the GUID is written with hyphens in the standard format, since a GUID uses the same 128-bit layout.')],
   },
+  '/json-to-csharp': {
+    sections: [
+      {
+        h: 'How to convert JSON to C# online',
+        list: [
+          'Paste a JSON object (API response, config, or sample payload).',
+          'Optionally set the root class name and mark properties nullable.',
+          'Choose None, System.Text.Json, or Newtonsoft.Json attributes.',
+          'Press Generate, then copy or download the C# classes.',
+        ],
+      },
+      {
+        h: 'Type inference',
+        paras: [
+          'The converter maps JSON values to C# types: strings to string, booleans to bool, integers to int (or double for decimals), arrays to List<T>, and nested objects to their own classes. Null samples become object so you can tighten the type by hand.',
+        ],
+        code: 'JSON string     -> string\nJSON number     -> double (or int when whole)\nJSON true/false -> bool\nJSON null       -> object\nJSON array      -> List<T>\nJSON object     -> nested class',
+      },
+      {
+        h: 'Newtonsoft.Json vs System.Text.Json',
+        paras: [
+          'System.Text.Json ships with modern .NET and uses [JsonPropertyName("key")]. Newtonsoft.Json is still common in older codebases and uses [JsonProperty("key")]. Pick the option that matches the library already in your project.',
+        ],
+        code: '// System.Text.Json\nJsonSerializer.Deserialize<Root>(json);\n\n// Newtonsoft.Json\nJsonConvert.DeserializeObject<Root>(json);',
+      },
+      {
+        h: 'Worked example',
+        code: '{\n  "id": 1,\n  "email": "user@example.com",\n  "roles": ["admin"]\n}\n\n// becomes (System.Text.Json style)\npublic class Root {\n  [JsonPropertyName("id")]\n  public double Id { get; set; }\n  [JsonPropertyName("email")]\n  public string Email { get; set; }\n  [JsonPropertyName("roles")]\n  public List<string> Roles { get; set; }\n}',
+        links: [
+          ['JSON Validator', '/json-validator'],
+          ['JSON Formatter', '/json-formatter'],
+          ['JSON to TypeScript', '/json-to-typescript'],
+        ],
+        linksLabel: 'Related',
+      },
+    ],
+    faqs: [
+      {
+        q: 'Does any JSON leave my browser?',
+        a: 'No. Conversion runs entirely in your browser. Use that when the sample contains private fields.',
+      },
+    ],
+  },
   '/jwt-generator': {
     sections: [
       {

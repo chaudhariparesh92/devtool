@@ -169,7 +169,7 @@ const GROUPS = [
       const L = LANGS[p.split('-to-')[1]];
       const cs = p === '/json-to-csharp';
       return {
-        lede: cs ? 'Convert JSON to C# online: paste a JSON object and get ready-to-use classes with public properties, nested types and optional attributes.' : `Paste JSON, get a ${L.label} model for it.`,
+        lede: cs ? 'Free JSON to C# converter: paste JSON and get C# classes with nested types, List<T>, and System.Text.Json or Newtonsoft attributes. Runs in your browser.' : `Paste JSON, get a ${L.label} model for it.`,
         meta: `${n}: generate a ${L.label} class or type from a JSON sample. Free and runs in your browser.`,
         what: cs ? `This page generates C# model classes from a sample JSON object. It writes a root class with one public property per JSON key (each with a { get; set; } accessor pair), a separate class for each nested object and List<T> for arrays. ${L.note}` : `${n} reads a JSON object and writes a ${L.label} type with one field per key, a separate type for each nested object and a list type for arrays. ${L.note}`,
         problem: `Typing out model classes by hand for every API response is repetitive. Generating the first draft from a real JSON sample saves the boring part.`,
@@ -712,53 +712,31 @@ const EXTRA = {
       {
         h: 'How the C# output is generated',
         list: [
-          'The class is named Root and gets one property for each top-level key.',
+          'The root class uses the name you set (default Root) and one property per top-level key.',
           'Numbers become double, true/false becomes bool and text becomes string.',
-          'Nested objects become their own classes, arrays become List<T>, and null values become object, so refine those by hand.',
-          'Property names have their first letter capitalized: "name" becomes Name.',
+          'Nested objects become their own classes, arrays become List<T>, and null values become object so you can refine those by hand.',
+          'Property names are PascalCase: "user_id" becomes UserId.',
         ],
       },
       {
         h: 'How JSON keys map to C# properties',
         paras: [
-          'Each JSON key becomes one public C# property. The generator drops characters that are not letters or digits and capitalizes the next letter, so first_name and user-id become FirstName and UserId, and name becomes Name. If you pick System.Text.Json or Newtonsoft.Json in the Property attributes menu, the original key is kept in a [JsonPropertyName] or [JsonProperty] attribute, so serialization still uses the JSON key.',
-          'Nested objects and arrays follow the same idea, as in the example above. The class is named after the key (address becomes Address, orders becomes Orders) and an array of objects becomes List<Orders>. An array of plain values becomes a list of that type, such as List<string>. Keys are not singularized, so rename Orders to Order by hand if you prefer.',
+          'Each JSON key becomes one public C# property. Characters that are not letters or digits are dropped and the next letter is capitalized, so first_name and user-id become FirstName and UserId.',
         ],
       },
       {
-        h: 'Public properties and get/set accessors',
+        h: 'System.Text.Json and Newtonsoft.Json attributes',
         paras: [
-          'Every generated property is public and has a get and a set accessor, which is what most C# serializers need to fill an object from JSON. System.Text.Json, for example, ignores properties whose setter is not public unless you mark them with [JsonInclude].',
-          'Here is the shape of the output for {"name":"Ada","active":true,"score":9.5}:',
+          'Choose System.Text.Json for [JsonPropertyName] on modern .NET, or Newtonsoft.Json for [JsonProperty] on older projects. Leave attributes off when property names already match your JSON keys.',
         ],
-        code: 'public class Root {\n    public string Name { get; set; }\n    public bool Active { get; set; }\n    public double Score { get; set; }\n}',
-      },
-      {
-        h: 'What to adjust after generating',
-        list: [
-          'Rename Root to something meaningful such as OrderDto.',
-          'Change double to int, long or decimal where the data calls for it. One sample cannot tell them apart.',
-          'Replace object (used for null values) with a real type once you know it.',
-          'Mark properties nullable if a field can be missing.',
-          'If you want immutable models, change { get; set; } to { get; init; } or turn the class into a record by hand. The generator itself always writes public get and set.',
-          'Check unusual keys. A key that starts with a digit (such as "2fa") gives an invalid C# name, so rename it. For an array, only the first element is used to infer the item class, and if two nested objects share a key name only the first class is generated.',
+        code: '// Deserialize\nJsonSerializer.Deserialize<Root>(json);           // System.Text.Json\nJsonConvert.DeserializeObject<Root>(json);       // Newtonsoft.Json',
+        links: [
+          ['JSON Validator', '/json-validator'],
+          ['JSON Formatter', '/json-formatter'],
+          ['JSON to TypeScript', '/json-to-typescript'],
         ],
-      },
-      {
-        h: 'Matching property names when you deserialize',
-        paras: [
-          'System.Text.Json matches property names case-sensitively by default, so a JSON key "name" will not fill a property called Name unless you allow it. Either enable case-insensitive matching or add an attribute such as [JsonPropertyName("name")]. Pick System.Text.Json or Newtonsoft.Json in the Property attributes menu and the generator adds the matching attribute to every property. Newtonsoft.Json matches case-insensitively by default.',
-        ],
-        code: 'var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };\nvar root = JsonSerializer.Deserialize<Root>(json, options);',
-        links: [['JSON to TypeScript', '/json-to-typescript'], ['JSON Formatter', '/json-formatter'], ['JSON Validator', '/json-validator']],
         linksLabel: 'Related',
       },
-    ],
-    faqs: [
-      q('Can it generate nested classes?', 'Yes. Each nested object becomes its own class and arrays of objects become List<T>. Only null values fall back to object.'),
-      q('What does { get; set; } mean in the generated code?', 'It declares an auto-implemented property with a public getter and a public setter. Deserializers call the setter to fill each property from the JSON value, so the generator makes every property public with both accessors.'),
-      q('Why are all numbers double?', 'A JSON sample does not show whether a number is an integer or a decimal, so the tool uses double for every number. Change it to int, long or decimal where appropriate.'),
-      q('Does the output work with System.Text.Json and Newtonsoft.Json?', 'Yes. Choose the attribute style in the Property attributes menu: [JsonPropertyName] for System.Text.Json, [JsonProperty] for Newtonsoft.Json, or none for a plain class.'),
     ],
   },
 
