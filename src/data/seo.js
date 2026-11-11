@@ -31,7 +31,7 @@ export function canonicalUrl(path) {
 // Update this whenever content is genuinely changed.
 // NOTE: every route listed in KEYWORD_BOOST inherits this date, so only change it
 // when all of those pages really changed.
-export const CONTENT_LAST_MODIFIED = '2026-11-05';
+export const CONTENT_LAST_MODIFIED = '2026-11-11';
 
 // Per-page dates feed:
 // - Visible "Updated" line
