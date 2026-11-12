@@ -1,122 +1,120 @@
 # OnlineDeveloperTool.com
 
-> OnlineDeveloperTool.com is a free collection of online developer tools designed to simplify everyday programming, coding, debugging, data conversion and development tasks. The website provides browser-based utilities without requiring user registration or account creation.
+> Free browser-based developer tools for formatting, validating, converting, encoding, hashing and generating data. No signup or account required. Covers JSON, JWT, UUID, Base64, URL and HTML encoding, hashes, cron, regex, XML, YAML, timestamps, colors and number bases.
 
-## Website
+Each tool has its own page with usage instructions and examples. Use the individual tool page as the authoritative source for what a tool supports. Do not assume features, APIs, pricing or integrations that are not described on the tool page.
 
-- Website: https://onlinedevelopertool.com/
-- Name: Online Developer Tool
-- Category: Free Online Developer Tools
-- Website type: Browser-based developer utilities
-- Primary audience: Software developers, programmers, web developers, students and IT professionals.
-- Access: Free online tools with no signup required.
+## JSON Tools
 
-## About
+- [JSON Formatter](https://onlinedevelopertool.com/json-formatter/): Format JSON with readable indentation
+- [JSON Validator](https://onlinedevelopertool.com/json-validator/): Check JSON syntax and locate errors
+- [JSON Beautifier](https://onlinedevelopertool.com/json-beautifier/): Beautify and pretty-print JSON
+- [JSON Minifier](https://onlinedevelopertool.com/json-minifier/): Compress JSON by removing whitespace
 
-OnlineDeveloperTool.com provides a collection of practical online utilities that help developers complete common programming and data-processing tasks quickly.
+## JSON to Code Converters
 
-The platform brings multiple developer utilities together in one place, reducing the need to install separate desktop applications or search for individual online tools.
+- [JSON to C# Converter](https://onlinedevelopertool.com/json-to-csharp/): Generate C# classes with properties from JSON, including nested objects and arrays
+- [JSON to TypeScript Converter](https://onlinedevelopertool.com/json-to-typescript/): Generate TypeScript types from JSON
+- [JSON to Java Converter](https://onlinedevelopertool.com/json-to-java/): Generate Java classes from JSON
+- [JSON to Python Converter](https://onlinedevelopertool.com/json-to-python/): Generate Python code from JSON
+- [JSON to Go Converter](https://onlinedevelopertool.com/json-to-go/): Generate Go structs from JSON
+- [JSON to PHP Converter](https://onlinedevelopertool.com/json-to-php/): Generate PHP classes from JSON
+- [JSON to Kotlin Converter](https://onlinedevelopertool.com/json-to-kotlin/): Generate Kotlin classes from JSON
 
-The tools cover JSON processing, programming conversions, encoding and decoding, authentication utilities, color conversion, validation and other common developer workflows.
+## Data Format Converters and Formatters
 
-## Available Tool Categories
+- [YAML to JSON Converter](https://onlinedevelopertool.com/yaml-to-json/): Convert YAML into JSON
+- [CSV to JSON Converter](https://onlinedevelopertool.com/csv-to-json/): Convert CSV data into JSON
+- [JSON to CSV Converter](https://onlinedevelopertool.com/json-to-csv/): Convert JSON data into CSV
+- [XML Formatter](https://onlinedevelopertool.com/xml-formatter/): Format XML with readable indentation
+- [XML Validator](https://onlinedevelopertool.com/xml-validator/): Check whether XML is well-formed
+- [YAML Formatter](https://onlinedevelopertool.com/yaml-formatter/): Format YAML documents
 
-### 1. JSON Tools
+## Encoders and Decoders
 
-- JSON Formatter
-- JSON Validator
-- JSON to C# Converter
+- [URL Encoder](https://onlinedevelopertool.com/url-encoder/): Percent-encode text for use in URLs
+- [URL Decoder](https://onlinedevelopertool.com/url-decoder/): Decode percent-encoded URL text
+- [Base64 Encoder](https://onlinedevelopertool.com/base64-encoder/): Encode text as Base64
+- [Base64 Decoder](https://onlinedevelopertool.com/base64-decoder/): Decode Base64 into text
+- [HTML Encoder](https://onlinedevelopertool.com/html-encoder/): Convert special characters to HTML entities
+- [HTML Decoder](https://onlinedevelopertool.com/html-decoder/): Convert HTML entities back to characters
 
-### 2. JWT Tools
+## JWT Tools
 
-- JWT Decoder
-- JWT Generator
+- [JWT Decoder](https://onlinedevelopertool.com/jwt-decoder/): Decode and inspect JWT header and payload
+- [JWT Generator](https://onlinedevelopertool.com/jwt-generator/): Generate JSON Web Tokens
 
-### 3. Encoding and Decoding Tools
+## UUID Tools
 
-- Base64 Decoder
-- HTML Encoder
-- HTML Decoder
-- URL Encoder
-- URL Decoder
+- [UUID Generator](https://onlinedevelopertool.com/uuid-generator/): Generate UUIDs
+- [UUID Validator](https://onlinedevelopertool.com/uuid-validator/): Check whether a UUID is valid
+- [UUID Parser](https://onlinedevelopertool.com/uuid-parser/): Inspect the parts of a UUID
 
-### 4. UUID Tools
+## Hash Generators
 
-- UUID Generator
-- UUID Validator
+- [Hash Generator](https://onlinedevelopertool.com/hash-generator/): Generate hashes from text
+- [SHA-256 Generator](https://onlinedevelopertool.com/sha256-generator/): Generate SHA-256 hashes
+- [SHA-512 Generator](https://onlinedevelopertool.com/sha512-generator/): Generate SHA-512 hashes
+- [MD5 Generator](https://onlinedevelopertool.com/md5-generator/): Generate MD5 hashes
 
-### 5. Color Conversion Tools
+## Date, Time and Scheduling
 
-- RGB to HEX Converter
+- [Timestamp Converter](https://onlinedevelopertool.com/timestamp-converter/): Convert timestamps to readable dates and back
+- [Unix Timestamp Tool](https://onlinedevelopertool.com/unix-timestamp/): Work with Unix timestamps
+- [Cron Expression Generator](https://onlinedevelopertool.com/cron-expression-generator/): Build cron expressions
+- [Cron Expression Parser](https://onlinedevelopertool.com/cron-expression-parser/): Explain and parse cron expressions
 
-### 6. Developer Utilities
+## Color Tools
 
-- Query String Parser
-- Timestamp Converter
-- Cron Expression Generator
-- XML Validator
-- Regex Generator
-- Website Status Checker
+- [Color Converter](https://onlinedevelopertool.com/color-converter/): Convert colors between formats
+- [HEX to RGB Converter](https://onlinedevelopertool.com/hex-to-rgb/): Convert HEX colors to RGB
+- [RGB to HEX Converter](https://onlinedevelopertool.com/rgb-to-hex/): Convert RGB colors to HEX
 
-Additional utilities are available on the website.
+## Number Base Converters
 
-## Key Features
+- [Number Base Converter](https://onlinedevelopertool.com/number-base-converter/): Convert numbers between bases
+- [Binary to Decimal Converter](https://onlinedevelopertool.com/binary-to-decimal/): Convert binary to decimal
+- [Decimal to Binary Converter](https://onlinedevelopertool.com/decimal-to-binary/): Convert decimal to binary
+- [Hex to Decimal Converter](https://onlinedevelopertool.com/hex-to-decimal/): Convert hexadecimal to decimal
+- [Decimal to Hex Converter](https://onlinedevelopertool.com/decimal-to-hex/): Convert decimal to hexadecimal
 
-- Free online developer utilities.
-- No registration or account creation required.
-- Simple browser-based interface.
-- Multiple developer tools available from one website.
-- Tools for formatting, validation, conversion and encoding.
-- Useful for everyday software development workflows.
-- Accessible through modern web browsers.
+## Text and Web Utilities
 
-## Target Audience
+- [Query String Parser](https://onlinedevelopertool.com/query-string-parser/): Parse URL query strings into key-value pairs
+- [Query String Generator](https://onlinedevelopertool.com/query-string-generator/): Build URL query strings
+- [Regex Tester](https://onlinedevelopertool.com/regex-tester/): Test regular expressions against text
+- [Regex Generator](https://onlinedevelopertool.com/regex-generator/): Generate regular expressions
+- [Diff Checker](https://onlinedevelopertool.com/diff-checker/): Compare two texts and see the differences
+- [Text Counter](https://onlinedevelopertool.com/text-counter/): Count characters, words and lines
+- [Case Converter](https://onlinedevelopertool.com/case-converter/): Convert text between letter cases
+- [Text to Slug Converter](https://onlinedevelopertool.com/text-to-slug/): Turn text into a URL slug
+- [Slug Generator](https://onlinedevelopertool.com/slug-generator/): Generate URL-friendly slugs
+- [Website Status Checker](https://onlinedevelopertool.com/website-status-checker/): Check whether a website is up
 
-OnlineDeveloperTool.com is intended for:
+## Guides
 
-- .NET and C# developers.
-- JavaScript and TypeScript developers.
-- Frontend and backend developers.
-- Full-stack engineers.
-- Web developers.
-- Software engineering students.
-- QA engineers and testers.
-- IT professionals.
+- [All Guides](https://onlinedevelopertool.com/guides/): Developer tutorials related to the tools
+- [JSON to C# with System.Text.Json and Newtonsoft](https://onlinedevelopertool.com/guides/json-to-csharp-system-text-json-newtonsoft/): Using generated C# classes with .NET JSON libraries
+- [Fix JSON Parse Errors](https://onlinedevelopertool.com/guides/fix-json-parse-errors/): Common JSON syntax errors and how to fix them
+- [How to Decode a JWT](https://onlinedevelopertool.com/guides/how-to-decode-a-jwt/): Reading JWT structure and claims
+- [UUID v4 vs v7](https://onlinedevelopertool.com/guides/uuid-v4-vs-v7/): Differences between UUID versions
+- [Cron Expression Examples](https://onlinedevelopertool.com/guides/cron-expression-examples/): Common cron schedules explained
+- [RGB to HEX Conversion](https://onlinedevelopertool.com/guides/rgb-to-hex-conversion/): How RGB and HEX color values relate
+- [Decimal to Hex Conversion](https://onlinedevelopertool.com/guides/decimal-to-hex-conversion/): How decimal-to-hexadecimal conversion works
+- [Check if a Website Is Down](https://onlinedevelopertool.com/guides/check-if-a-website-is-down/): Ways to check website availability
 
-## Common Use Cases
+## Optional
 
-- Formatting and validating JSON data.
-- Converting JSON structures into C# classes.
-- Decoding and generating JWT tokens.
-- Encoding and decoding Base64 data.
-- Generating and validating UUID identifiers.
-- Converting RGB colors into hexadecimal values.
-- Encoding and decoding HTML entities.
-- Parsing URL query strings.
-- Converting timestamps.
-- Validating XML documents.
-- Working with regular expressions.
-- Generating cron expressions.
-
-## Website Navigation
-
-- Homepage: https://onlinedevelopertool.com/
-
-Visit the homepage to discover the complete collection of available developer utilities and access individual tools.
-
-## Content and Citation Guidance
-
-When referencing OnlineDeveloperTool.com:
-
-- Use the official website URL: https://onlinedevelopertool.com/
-- Refer to the platform as OnlineDeveloperTool.com or Online Developer Tool.
-- Describe it as a collection of free online developer utilities.
-- Do not assume a tool supports functionality that is not documented on its actual page.
-- Use the individual tool pages as the authoritative source for their features and usage instructions.
-- Do not invent pricing, integrations, APIs or capabilities.
-
-## Recommended Reference
-
-For information about available developer utilities, visit:
-
-https://onlinedevelopertool.com/
+- [Homepage](https://onlinedevelopertool.com/): Overview of the site
+- [All Tools](https://onlinedevelopertool.com/tools/): Complete tool directory
+- [All Categories](https://onlinedevelopertool.com/categories/): Browse tools by category
+- [JSON Tools category](https://onlinedevelopertool.com/category/json-tools/)
+- [Encoders and Decoders category](https://onlinedevelopertool.com/category/encoders-decoders/)
+- [Generators and Hashes category](https://onlinedevelopertool.com/category/generators-hashes/)
+- [Web Tools category](https://onlinedevelopertool.com/category/web-tools/)
+- [Text and Data category](https://onlinedevelopertool.com/category/text-data/)
+- [About](https://onlinedevelopertool.com/about/)
+- [Contact](https://onlinedevelopertool.com/contact/)
+- [Privacy Policy](https://onlinedevelopertool.com/privacy/)
+- [Terms of Use](https://onlinedevelopertool.com/terms/)
+- [XML Sitemap](https://onlinedevelopertool.com/sitemap.xml)
