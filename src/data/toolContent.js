@@ -923,7 +923,13 @@ export function getToolContent(path, name) {
   if (!g) return null;
   const base = { group: g.id, ...g.build(name, path) };
   const x = EXTRA[path] || EXTRA_MORE[path];
-  const merged = x ? { ...base, sections: x.sections, faqs: [...base.faqs, ...x.faqs] } : base;
+  const merged = x
+    ? {
+        ...base,
+        ...(x.sections ? { sections: x.sections } : {}),
+        faqs: [...base.faqs, ...(Array.isArray(x.faqs) ? x.faqs : [])],
+      }
+    : base;
   // Competitor-gap additions (data/toolGapContent.js): extra long-tail tasks and question-intent FAQs.
   const gap = TOOL_GAP[path];
   if (!gap) return merged;

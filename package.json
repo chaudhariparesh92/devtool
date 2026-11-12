@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "vite build && node scripts/prerender.mjs",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "validate:schema": "node scripts/validate-schema.mjs",
+    "validate:schema:strict": "node scripts/validate-schema.mjs --strict",
+    "prebuild": "node scripts/generate-sitemap.mjs && node scripts/validate-schema.mjs"
   },
   "dependencies": {
     "cronstrue": "^3.27.0",

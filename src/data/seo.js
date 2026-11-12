@@ -31,7 +31,7 @@ export function canonicalUrl(path) {
 // Update this whenever content is genuinely changed.
 // NOTE: every route listed in KEYWORD_BOOST inherits this date, so only change it
 // when all of those pages really changed.
-export const CONTENT_LAST_MODIFIED = '2026-11-11';
+export const CONTENT_LAST_MODIFIED = '2026-11-12';
 
 // Per-page dates feed:
 // - Visible "Updated" line
@@ -502,42 +502,109 @@ export function getToolSeo(path, fallbackName, fallbackDesc) {
     item: canonicalUrl(path),
   });
 
-  const jsonLd = c && {
-    '@context': 'https://schema.org',
-    '@graph': [
-      { '@type': 'BreadcrumbList', itemListElement: crumbs },
-      {
-        '@type': 'WebPage',
-        '@id': `${canonicalUrl(path)}#webpage`,
-        url: canonicalUrl(path),
-        name,
-        description,
-        dateModified: getLastModified(path),
-        isPartOf: { '@id': `${SITE_URL}/#website` },
-        mainEntity: { '@id': `${canonicalUrl(path)}#application` },
+  // Build rich JSON-LD for every tool page (WebApplication + breadcrumbs + optional HowTo/FAQ).
+  const pageUrl = canonicalUrl(path);
+  const featureList = [
+    ...(c?.tasks || []),
+    ...(cfg?.secondary || []).slice(0, 4),
+    'Runs in the browser',
+    'Free, no signup',
+  ].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).slice(0, 12);
+
+  const howToSteps = Array.isArray(c?.steps) && c.steps.length
+    ? c.steps.map((s, i) => ({
+        '@type': 'HowToStep',
+        position: i + 1,
+        name: typeof s === 'string' ? s.replace(/\.$/, '') : `Step ${i + 1}`,
+        text: typeof s === 'string' ? s : String(s),
+      }))
+    : null;
+
+  const graph = [
+    { '@type': 'BreadcrumbList', '@id': `${pageUrl}#breadcrumb`, itemListElement: crumbs },
+    {
+      '@type': 'WebPage',
+      '@id': `${pageUrl}#webpage`,
+      url: pageUrl,
+      name: title,
+      description,
+      dateModified: getLastModified(path),
+      inLanguage: 'en',
+      isPartOf: { '@id': `${SITE_URL}/#website` },
+      mainEntity: { '@id': `${pageUrl}#application` },
+      breadcrumb: { '@id': `${pageUrl}#breadcrumb` },
+    },
+    {
+      '@type': 'WebApplication',
+      '@id': `${pageUrl}#application`,
+      name,
+      url: pageUrl,
+      description,
+      applicationCategory: 'DeveloperApplication',
+      applicationSubCategory: tool?.category || 'Developer Tool',
+      operatingSystem: 'Any (web browser)',
+      browserRequirements: 'Requires JavaScript. Runs entirely in the browser.',
+      softwareVersion: '1.0',
+      inLanguage: 'en',
+      isAccessibleForFree: true,
+      offers: {
+        '@type': 'Offer',
+        price: '0',
+        priceCurrency: 'USD',
+        availability: 'https://schema.org/InStock',
       },
-      {
-        '@type': 'WebApplication',
-        '@id': `${canonicalUrl(path)}#application`,
-        name,
-        url: canonicalUrl(path),
-        description,
-        applicationCategory: 'DeveloperApplication',
-        applicationSubCategory: tool?.category || 'Developer Tool',
-        operatingSystem: 'Any (runs in a web browser)',
-        browserRequirements: 'Requires JavaScript',
-        isAccessibleForFree: true,
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+      featureList,
+      provider: {
+        '@type': 'Organization',
+        name: SITE_NAME,
+        url: `${SITE_URL}/`,
       },
-      {
+      potentialAction: {
+        '@type': 'UseAction',
+        target: pageUrl,
+        name: `Use ${name} online`,
+      },
+    },
+  ];
+
+  if (howToSteps) {
+    graph.push({
+      '@type': 'HowTo',
+      '@id': `${pageUrl}#howto`,
+      name: `How to use ${name}`,
+      description: c?.lede || description,
+      totalTime: 'PT1M',
+      step: howToSteps,
+      tool: { '@id': `${pageUrl}#application` },
+    });
+  }
+
+  if (c?.faqs?.length) {
+    // Deduplicate by normalized question text (gap + boost can overlap)
+    const seenFaq = new Set();
+    const faqEntities = [];
+    for (const f of c.faqs) {
+      const key = (f.q || '').toLowerCase().trim();
+      if (!key || seenFaq.has(key)) continue;
+      seenFaq.add(key);
+      faqEntities.push({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      });
+    }
+    if (faqEntities.length) {
+      graph.push({
         '@type': 'FAQPage',
-        mainEntity: c.faqs.map((f) => ({
-          '@type': 'Question',
-          name: f.q,
-          acceptedAnswer: { '@type': 'Answer', text: f.a },
-        })),
-      },
-    ],
+        '@id': `${pageUrl}#faq`,
+        mainEntity: faqEntities,
+      });
+    }
+  }
+
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@graph': graph,
   };
 
   return {
