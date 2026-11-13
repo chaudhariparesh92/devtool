@@ -540,12 +540,26 @@ export const TOOL_SEO_DATA = {
     related: ['/decimal-to-hex', '/number-base-converter', '/binary-to-decimal', '/hex-to-rgb', '/rgb-to-hex'],
   }),
   '/decimal-to-hex': S({
-    title: 'Decimal to Hex Converter – Free Online Tool',
-    description: 'Free decimal to hex converter online: convert numbers to hexadecimal in your browser.',
-    h1: 'Decimal to Hex Converter',
-    primary: 'decimal to hex',
-    secondary: ['decimal to hex online', 'decimal to hex', 'decimal hexadecimal converter', 'hex converter', 'base 10 to base 16', 'convert decimal'],
-    longTail: ['convert decimal to hexadecimal online', 'turn 255 into FF', 'convert a base 10 number to hex', 'show decimal to hex steps', 'decimal hexadecimal calculator'],
+    title: 'Decimal to Hex Converter & Calculator | Free Online',
+    description: 'Convert decimal to hexadecimal online with this free decimal to hex converter. Calculate base 10 to base 16 values instantly, see examples and a conversion chart.',
+    h1: 'Decimal to Hexadecimal Converter',
+    primary: 'decimal to hexadecimal',
+    secondary: [
+      'decimal to hexadecimal', 'decimal to hex', 'convert decimal to hexadecimal',
+      'convert decimal to hex', 'decimal to hexadecimal converter', 'decimal to hex converter',
+      'decimal to hexadecimal calculator', 'decimal to hex calculator', 'hexadecimal calculator',
+      'hex and decimal converter', 'decimal and hexadecimal converter', 'decimal convert to hex',
+      'converter decimal to hexadecimal', 'conversion decimal to hex',
+      'conversion decimal to hexadecimal', 'converting decimal to hexadecimal',
+      'converting decimals to hexadecimals calculator', 'base 10 to base 16',
+      'denary to hexadecimal', 'decimal to hexadecimal conversion chart'
+    ],
+    longTail: [
+      'how to convert decimal to hexadecimal', 'how to convert decimal to hex',
+      'convert a base 10 number to base 16', 'decimal to hexadecimal conversion calculator',
+      'decimal to hex conversion chart', 'decimal numbers to hexadecimal table',
+      'what is 255 in hexadecimal', 'convert decimal integers to hex online'
+    ],
     intent: 'utility + informational',
     related: ['/hex-to-decimal', '/number-base-converter', '/decimal-to-binary', '/rgb-to-hex', '/hex-to-rgb'],
   }),

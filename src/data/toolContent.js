@@ -138,7 +138,7 @@ const base = {
   '/binary-to-decimal': { lede: 'Convert a binary number to decimal.', ex: ['1010 (from base 2 to base 10)', '10'], tasks: ['Binary to decimal', 'Convert binary online', 'What is 1010 in decimal?'] },
   '/decimal-to-binary': { lede: 'Convert a decimal number to binary.', ex: ['10 (from base 10 to base 2)', '1010'], tasks: ['Decimal to binary', 'Convert decimal to binary online', 'What is 10 in binary?'] },
   '/hex-to-decimal': { lede: 'Convert a hexadecimal number to decimal.', ex: ['FF (from base 16 to base 10)', '255'], tasks: ['Hex to decimal', 'Convert hex online', 'What is FF in decimal?'] },
-  '/decimal-to-hex': { lede: 'Convert a decimal number to hexadecimal.', ex: ['255 (from base 10 to base 16)', 'FF'], tasks: ['Decimal to hex', 'Convert decimal to hexadecimal', 'What is 255 in hex?'] },
+  '/decimal-to-hex': { lede: 'Convert decimal numbers to hexadecimal online. Enter a base 10 whole number to get its base 16 result instantly, or use the examples and conversion chart below to learn how decimal-to-hex conversion works.', ex: ['255 (decimal / base 10)', 'FF (hexadecimal / base 16)'], tasks: ['Decimal to hexadecimal converter', 'Decimal to hex calculator', 'Convert decimal to hexadecimal (base 10 to base 16)', 'Denary to hexadecimal conversion', 'What is 255 in hex?', 'Use a decimal to hexadecimal conversion chart'] },
 };
 
 // ---- Group definitions ----------------------------------------------------

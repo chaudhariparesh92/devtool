@@ -44,6 +44,10 @@ export const CONTENT_LAST_MODIFIED = '2026-11-12';
 const BASELINE_MODIFIED = '2026-10-25';
 
 const MODIFIED_ON = {
+  '2026-11-13': [
+    '/decimal-to-hex',
+  ],
+
   '2026-11-11': [
     '/json-to-csharp',
     '/html-decoder',

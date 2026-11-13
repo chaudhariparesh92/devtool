@@ -444,13 +444,32 @@ export const KEYWORD_BOOST = {
     ],
   },
   '/decimal-to-hex': {
-    d: 'Decimal to hex converter: convert decimal numbers to hexadecimal online, with a step-by-step method and code. Free dec to hex calculator in your browser.',
-    s: ['decimal to hex', 'decimal to hexadecimal online', 'decimal to hex converter', 'dec hex calculator', 'numbers to hex converter'],
-    l: ['convert decimal to hexadecimal online', 'decimal to hex conversion calculator', 'how to convert decimal to hex', '255 to hex', 'integer to hex'],
-    tasks: ['Decimal to hexadecimal online', 'Dec to hex calculator', 'Convert numbers to hex'],
+    t: 'Decimal to Hex Converter & Calculator | Free Online',
+    d: 'Convert decimal to hexadecimal with this free online decimal to hex calculator. Turn base 10 numbers into base 16, with worked examples and a conversion chart.',
+    s: [
+      'decimal to hexadecimal', 'decimal to hex', 'convert decimal to hexadecimal', 'convert decimal to hex',
+      'decimal to hexadecimal converter', 'decimal to hex converter', 'decimal to hexadecimal calculator',
+      'decimal to hex calculator', 'hexadecimal calculator', 'hex and decimal converter',
+      'decimal and hexadecimal converter', 'decimal convert to hex', 'converter decimal to hexadecimal',
+      'conversion decimal to hex', 'conversion decimal to hexadecimal', 'converting decimal to hexadecimal',
+      'converting decimals to hexadecimals calculator', 'base 10 to base 16', 'denary to hexadecimal',
+      'decimal to hexadecimal conversion chart'
+    ],
+    l: [
+      'how to convert decimal to hexadecimal', 'how to convert decimal to hex',
+      'decimal to hexadecimal conversion calculator', 'decimal to hex conversion chart',
+      'convert base 10 to base 16', 'what is 255 in hexadecimal', 'decimal number to hex table'
+    ],
+    tasks: [
+      'Decimal to hexadecimal converter online', 'Decimal to hex calculator',
+      'Convert decimal numbers from base 10 to base 16', 'Use a decimal to hexadecimal conversion chart',
+      'Convert denary numbers to hexadecimal', 'Check common decimal and hexadecimal values'
+    ],
     faqs: [
-      ['How do I convert decimal to hexadecimal?', 'Divide the number by 16 repeatedly, note each remainder (10 to 15 are written A to F) and read the remainders from last to first. 255 gives FF. The Decimal to Hex guide has a worked example and code.'],
-      ['Does it support large numbers?', 'Values above 9007199254740991 can lose precision, because the tool uses standard JavaScript numbers. Use BigInt in code for larger values.'],
+      ['How do I convert decimal to hexadecimal?', 'Divide the whole-number value by 16 repeatedly. Record each remainder, write remainders 10 to 15 as A to F, and read the digits from last to first. For example, 255 becomes FF.'],
+      ['What is the difference between decimal and hexadecimal?', 'Decimal is base 10 and uses digits 0 to 9. Hexadecimal is base 16 and uses 0 to 9 plus A to F, where A represents 10 and F represents 15.'],
+      ['Is this a decimal to hexadecimal calculator?', 'Yes. Enter a decimal whole number and the result is converted to its hexadecimal representation as you type. The page starts with Decimal (10) as the input base and Hex (16) as the output base.'],
+      ['Does it support decimal fractions or very large integers?', 'The current converter uses JavaScript parseInt, so it converts the integer portion and does not preserve digits after a decimal point. Very large values can lose precision because JavaScript numbers have a safe-integer limit.'],
     ],
   },
 };

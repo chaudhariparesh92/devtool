@@ -451,10 +451,17 @@ export const TOOL_GAP = {
     ],
   },
   '/decimal-to-hex': {
-    tasks: ['Convert decimal to hex', 'Convert 255 to hexadecimal', 'Convert RGB decimal values to hex', 'Check a decimal to hex conversion'],
+    tasks: [
+      'Convert decimal to hex', 'Convert 255 to hexadecimal', 'Convert RGB decimal values to hex',
+      'Check a decimal to hex conversion', 'Convert a base 10 number to base 16',
+      'Look up decimal and hexadecimal equivalents', 'Convert denary to hexadecimal online'
+    ],
     faqs: [
-      f('What is 255 in hex?', 'FF.'),
+      f('What is 255 in hex?', '255 in decimal is FF in hexadecimal.'),
       f('How do I convert RGB decimal values to hex?', 'Convert each channel separately and join the pairs. For example 59, 130 and 246 become 3B, 82 and F6, which gives #3B82F6. The RGB to HEX page does this in one step.'),
+      f('What is 100 in hexadecimal?', '100 in decimal is 64 in hexadecimal.'),
+      f('What is 16 in hexadecimal?', '16 in decimal is 10 in hexadecimal.'),
+      f('What is denary to hexadecimal conversion?', 'Denary is another word for decimal. Denary to hexadecimal conversion is the same as converting base 10 to base 16.'),
     ],
   },
 

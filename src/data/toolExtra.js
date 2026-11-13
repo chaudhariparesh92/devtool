@@ -1143,44 +1143,71 @@ export const EXTRA_MORE = {
   '/decimal-to-hex': {
     sections: [
       {
-        "h": "Decimal and hex reference",
-        "code": "Decimal  Hex    Decimal  Hex\n0        0      16       10\n9        9      32       20\n10       A      64       40\n11       B      100      64\n12       C      128      80\n13       D      255      FF\n14       E      256      100\n15       F      4095     FFF"
+        h: 'Decimal to hexadecimal conversion chart',
+        paras: ['Use this decimal to hex chart to look up common base 10 values and their base 16 equivalents. Hexadecimal uses A through F for decimal values 10 through 15.'],
+        code: `Decimal  Hex   Decimal  Hex
+0        0     16       10
+1        1     20       14
+9        9     25       19
+10       A     32       20
+11       B     64       40
+12       C     100      64
+13       D     128      80
+14       E     255      FF
+15       F     256      100
+                 1000     3E8
+                 4095     FFF
+                 65535    FFFF`
       },
       {
-        "h": "Decimal to hex: method and code",
-        "paras": [
-          "Divide the number by 16 repeatedly and read the remainders from last to first. Remainders 10 to 15 are written A to F."
-        ],
-        "code": "255 / 16 = 15 remainder 15 (F)\n15 / 16 = 0  remainder 15 (F)\nRead upwards: FF\n\n// JavaScript\n(255).toString(16)            // 'ff'\n// C#\nConvert.ToString(255, 16)      // \"ff\"\n# Python\nhex(255)                       # '0xff'",
-        "links": [
-          [
-            "Hex to Decimal",
-            "/hex-to-decimal"
-          ],
-          [
-            "Number Base Converter",
-            "/number-base-converter"
-          ],
-          [
-            "RGB to HEX",
-            "/rgb-to-hex"
-          ]
-        ],
-        "linksLabel": "Related"
+        h: 'How to convert decimal to hexadecimal',
+        paras: ['To convert a whole decimal number to hex, divide it by 16 and record the remainder. Divide the quotient by 16 again until it reaches zero. Read the remainders in reverse order. Remainders from 10 to 15 become A, B, C, D, E and F.'],
+        code: `255 ÷ 16 = 15 remainder 15  →  F
+ 15 ÷ 16 =  0 remainder 15  →  F
+Read the remainders upwards: FF
+
+Therefore: 255 (base 10) = FF (base 16)`,
       },
       {
-        h: 'How to convert decimal to hex',
-        paras: ['Divide by 16 repeatedly and write the remainders as hex digits, then read them from last to first.'],
-        code: '255 / 16 = 15 r 15  ->  F, F\nResult: FF\n\n4095 = FFF',
+        h: 'Decimal to hex examples',
+        paras: ['These worked examples show how a decimal to hexadecimal calculator represents familiar values.'],
+        code: `Decimal     Hexadecimal
+10          A
+16          10
+100         64
+255         FF
+256         100
+4095        FFF
+
+For 4095:
+4095 ÷ 16 = 255 remainder 15 (F)
+ 255 ÷ 16 =  15 remainder 15 (F)
+  15 ÷ 16 =   0 remainder 15 (F)
+Read upwards: FFF`,
+      },
+      {
+        h: 'Decimal to hexadecimal in programming',
+        paras: ['Most programming languages provide a built-in way to convert an integer from decimal to hexadecimal. These examples use the value 255.'],
+        code: `// JavaScript
+(255).toString(16).toUpperCase(); // "FF"
+
+# Python
+format(255, "X")                  # "FF"
+
+// C#
+255.ToString("X")                 // "FF"
+Convert.ToString(255, 16)          // "ff"`,
+        links: [['Hex to Decimal Converter', '/hex-to-decimal'], ['Number Base Converter', '/number-base-converter']],
+        linksLabel: 'Related converters'
       },
       {
         h: 'Decimal to hex in this tool',
-        list: ['The page opens with From set to Decimal (10) and To set to Hex (16). Type your number.', 'The result is uppercase and has no 0x prefix.', 'To turn RGB channel values into a color code, use the RGB to HEX converter.'],
-        links: [['Guide: how to convert decimal to hex, with worked examples and a table', '/guides/decimal-to-hex-conversion'], ['Hex to Decimal', '/hex-to-decimal'], ['RGB to HEX Converter', '/rgb-to-hex'], ['Number Base Converter', '/number-base-converter']],
-        linksLabel: 'Related',
+        list: ['The page opens with From set to Decimal (10) and To set to Hex (16). Enter a whole number in the input field.', 'The hexadecimal result appears in uppercase and does not include a 0x prefix.', 'The converter uses the integer portion of the input; digits after a decimal point are not converted.', 'For RGB colour channels, use the RGB to HEX converter instead of converting the three values separately.'],
+        links: [['Step-by-step decimal to hexadecimal guide', '/guides/decimal-to-hex-conversion'], ['Hex to Decimal', '/hex-to-decimal'], ['RGB to HEX Converter', '/rgb-to-hex'], ['Number Base Converter', '/number-base-converter']],
+        linksLabel: 'Related tools and guide'
       },
     ],
-    faqs: [q('Does it add the 0x prefix?', 'No. Add 0x yourself if your code needs it.')],
+    faqs: [q('Does it add the 0x prefix?', 'No. The result is shown without a 0x prefix. Add 0x yourself if your code or documentation requires it.')],
   },
 
   // ----------------------------------------------------------- Website check
