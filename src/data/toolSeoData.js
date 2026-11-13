@@ -566,13 +566,27 @@ export const TOOL_SEO_DATA = {
 
   // ------------------------------------------------------ Website checking
   '/website-status-checker': S({
-    title: 'Website Status Checker – Is My Site Up or Down?',
-    description: 'Free website status checker: see if a site is up or down and check response status. Fast checks.',
-    h1: 'Website Status Checker',
-    primary: 'website status checker',
-    secondary: ['website status checker online', 'check website status', 'website up checker', 'is my site up', 'is this site down', 'website online check'],
-    longTail: ['how to check if a website is down', 'is this url working', 'check url working or not', 'test website status', 'check if a website is down'],
+    title: 'Website Down Checker – Is It Down Right Now? | OnlineDeveloperTool',
+    description: 'Free website down checker to see if a URL is reachable from your browser. Check website status, HTTP response, redirects and response time. No signup.',
+    h1: 'Website Down Checker – Check If a Site Is Down',
+    primary: 'website down checker',
+    secondary: [
+      'website down checker', 'website status checker', 'check if website is down',
+      'is it down right now', 'is it down or just me', 'is this website down',
+      'is the site down', 'is my website down', 'site down checker',
+      'website downtime checker', 'website availability checker', 'website online checker',
+      'website offline checker', 'check website availability', 'check website status',
+      'check if a site is down', 'URL status checker', 'server status checker',
+      'website reachability checker', 'website response time checker'
+    ],
+    longTail: [
+      'how to check if a website is down', 'is my website down or just me',
+      'is it down for everyone or just me', 'check if a website is online',
+      'check whether a website is reachable', 'website down or just me',
+      'why is my website not loading', 'check website HTTP status code',
+      'test website response time', 'check multiple website URLs at once'
+    ],
     intent: 'utility + troubleshooting',
-    related: ['/url-encoder', '/query-string-parser', '/cron-expression-parser', '/timestamp-converter', '/json-validator'],
+    related: ['/guides/check-if-a-website-is-down', '/url-encoder', '/query-string-parser', '/json-validator'],
   }),
 };

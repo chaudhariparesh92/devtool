@@ -467,10 +467,19 @@ export const TOOL_GAP = {
 
   // ------------------------------------------------------------------ Website checking
   '/website-status-checker': {
-    tasks: ['Check if a website is down', 'Check if a site is down', 'Test website status', 'Check several sites at once', 'See the HTTP status code of a URL', 'Check whether a URL is working or not', 'Test whether a domain or path responds'],
+    tasks: [
+      'Check if a website is down', 'Check if a site is down', 'Test website status',
+      'Check several sites at once', 'See the HTTP status code of a URL',
+      'Check whether a URL is working or not', 'Test whether a domain or path responds',
+      'Check if a website is online', 'Find out if a site is down or just me',
+      'Check website availability from this browser', 'Measure the response time for a URL'
+    ],
     faqs: [
       f('What do HTTP 200, 301, 404 and 503 mean?', '200 means the request succeeded. 301 is a permanent redirect to another address. 404 means the page was not found. 503 means the server is temporarily unavailable.'),
       f('How do I check whether my own website is down?', 'Enter the domain here and read the result, then compare with how the site behaves on another network. This check runs from your browser, so a site that responds here can still be blocked for visitors in other places.'),
+      f('Is my website down or is it just me?', 'Run the check, then open the same URL on a different device or network such as mobile data. If it works on the second connection, investigate your local DNS, VPN, firewall, browser or ISP. If it fails from several independent connections, the website or its host may be having an outage.'),
+      f('Does this website status checker test from multiple locations?', 'No. It sends requests from your current browser and network only. A multi-location checker uses remote servers in different regions, which can reveal regional outages that a single browser check cannot detect.'),
+      f('Why does another website down checker show a different result?', 'Different checkers may test from different networks, countries and server locations. Your browser may also be blocked by CORS, a firewall, DNS filtering or a VPN. Compare results from another network before concluding that the site is down for everyone.'),
     ],
   },
 };
