@@ -1,4 +1,5 @@
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import Link from '../components/SiteLink';
 import SeoHead from '../components/SeoHead';
 import { TOOLS, CATEGORIES, CATEGORY_INFO } from '../data/tools';
 import { PAGE_SEO } from '../data/seo';

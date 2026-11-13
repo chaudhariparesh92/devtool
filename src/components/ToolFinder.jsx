@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from './SiteLink';
 import { TOOLS } from '../data/tools';
 
 // Live filter over the real tool list (src/data/tools.js). No new tools are invented.

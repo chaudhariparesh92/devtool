@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from '../components/SiteLink';
 import SeoHead from '../components/SeoHead';
 
 export default function NotFound() {

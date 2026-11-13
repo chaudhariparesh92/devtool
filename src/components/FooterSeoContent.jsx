@@ -95,10 +95,10 @@ export default function FooterSeoContent() {
 
       <p className="text-sm leading-relaxed" style={{ color: 'var(--muted)' }}>
         Missing a tool you need? Visit{' '}
-        <a href="/contact" className="a-link">the contact page</a> and tell us what you
+        <a href="/contact/" className="a-link">the contact page</a> and tell us what you
         reach for most often. You can also{' '}
-        <a href="/tools" className="a-link">browse every tool</a> or read the{' '}
-        <a href="/about" className="a-link">About page</a> to see how the site is built and what it does with your data.
+        <a href="/tools/" className="a-link">browse every tool</a> or read the{' '}
+        <a href="/about/" className="a-link">About page</a> to see how the site is built and what it does with your data.
       </p>
     </section>
   );

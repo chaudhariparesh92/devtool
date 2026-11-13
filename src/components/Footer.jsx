@@ -1,4 +1,5 @@
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import Link, { normalizePathname } from "./SiteLink";
 import { Terminal, ArrowUp, ExternalLink } from "lucide-react";
 import { CATEGORIES } from "../data/tools";
 import { categoryLink } from "../data/seo";
@@ -26,7 +27,7 @@ const SITE_LINKS = [
 const colHead = "text-sm font-black uppercase tracking-wider mb-3";
 
 export default function Footer() {
-  const { pathname } = useLocation();
+  const pathname = normalizePathname(useLocation().pathname);
 
   // Same pill style as the header nav; the current page is highlighted.
   const FooterLink = ({ to, children }) => {

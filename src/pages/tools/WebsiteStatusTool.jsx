@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import Link from '../../components/SiteLink';
 import ToolLayout from '../../components/ToolLayout';
 import CopyButton from '../../components/CopyButton';
 import DownloadButton from '../../components/DownloadButton';

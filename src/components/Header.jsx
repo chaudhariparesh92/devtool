@@ -1,4 +1,5 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import Link, { normalizePathname } from './SiteLink';
 import { Terminal, Moon, Sun } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
@@ -7,7 +8,7 @@ const STATIC_PATHS = ['/', '/tools', '/categories', '/about', '/privacy', '/term
 export default function Header() {
   const [dark, setDark] = useState(true);
   const [scrolled, setScrolled] = useState(false);
-  const { pathname } = useLocation();
+  const pathname = normalizePathname(useLocation().pathname);
 
   // Default to the dark developer theme; respect a saved choice or an OS light preference.
   useEffect(() => {

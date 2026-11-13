@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from './SiteLink';
 import SeoHead from './SeoHead';
 import AdSlot from './AdSlot';
 import { getToolSeo, getRelatedTools } from '../data/seo';

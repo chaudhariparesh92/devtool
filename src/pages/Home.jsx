@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import Link from '../components/SiteLink';
 import SeoHead, { SITE_URL, SITE_DOMAIN } from '../components/SeoHead';
 import VideoEmbed from '../components/VideoEmbed';
 import AdSlot from '../components/AdSlot';
