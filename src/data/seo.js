@@ -48,6 +48,7 @@ const MODIFIED_ON = {
     '/decimal-to-hex',
     '/website-status-checker',
     '/unix-timestamp',
+    '/xml-validator',
   ],
 
   '2026-11-11': [

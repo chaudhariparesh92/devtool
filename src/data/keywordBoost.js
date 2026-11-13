@@ -341,13 +341,17 @@ export const KEYWORD_BOOST = {
     ],
   },
   '/xml-validator': {
-    d: 'Online XML validator and XML checker: paste XML to check it is well-formed and see the parser error. Validate the contents of an XML file in your browser.',
-    s: ['xml validator online', 'xml checker', 'validate xml', 'online xml validation', 'xml syntax checker'],
-    l: ['validate xml file', 'check xml is well formed', 'xml error finder', 'xml validator free', 'xml lint online'],
-    tasks: ['XML validator online', 'Validate an XML file', 'XML checker'],
+    d: 'Validate XML online for well-formed syntax errors. Paste XML or upload a file, then inspect parser errors and line details. Free, browser-based XML checker.',
+    s: ['online xml validator', 'xml validator', 'validate xml', 'xml validation', 'xml checker online', 'xml syntax checker', 'xml linter', 'xml lint', 'xml file checker', 'xml file validator', 'xml parser online', 'xml well formed checker', 'xml document validator', 'xml validation tool', 'xml syntax validation'],
+    l: ['validate xml online', 'validate xml file', 'check xml syntax online', 'check if xml is well formed', 'find xml syntax errors', 'xml error checker', 'xml format checker', 'xml structure checker', 'xml tag checker', 'xml code validator', 'xml markup validator', 'xml data format checker', 'check xml before an api request', 'validate sitemap xml syntax', 'xml namespace syntax check'],
+    tasks: ['Validate XML online for syntax errors', 'Check if an XML document is well-formed', 'Validate an XML file in your browser', 'Find mismatched and unclosed XML tags', 'Check XML before importing or sending it to an API'],
     faqs: [
-      ['How do I validate an XML file?', 'Open the file, copy its contents and paste them in. The tool checks that the XML is well-formed: one root element, properly nested and closed tags, quoted attributes.'],
-      ['Does it validate against an XSD or DTD?', 'No. It checks well-formedness only, not conformance to a schema. Use a schema validator for XSD checks.'],
+      ['Can I validate an XML file online?', 'Yes. Choose or drop a text or XML file into the input area, then press Process. The file is read in your browser and parsed locally.'],
+      ['Does this online XML validator check XSD or DTD schemas?', 'No. It checks XML well-formedness and syntax only. Schema validity is a separate check that compares the document with rules defined by an XSD or DTD.'],
+      ['What is the difference between XML well-formedness and XML validity?', 'Well-formed XML follows the XML syntax rules, such as one root element and correctly nested, closed tags. Valid XML is also compliant with a DTD or XML Schema (XSD).'],
+      ['Why does an XML parser report an error on a different line?', 'A parser reports where it detected the problem, which can be after the original mistake. For example, an omitted closing tag may only become obvious when the parser reaches the next element.'],
+      ['Can I use this XML checker for a sitemap or SOAP response?', 'You can check whether the sitemap or SOAP XML is well-formed. This does not verify sitemap protocol rules, SOAP message rules, or an external schema.'],
+      ['Is my XML uploaded to a server?', 'No. The XML text is parsed by your browser. A selected file is read locally with the browser FileReader API; the validator does not send it to a validation server.'],
     ],
   },
   '/yaml-formatter': {

@@ -40,7 +40,7 @@ export const SEO_RESEARCH = {
   '/cron-expression-generator': { topObserved: 'easytime.tools / cron builders', focus: 'visual builder, presets, five-field syntax, next runs' },
   '/cron-expression-parser': { topObserved: 'easytime.tools / AppBox', focus: 'plain English, field breakdown, next runs, presets, timezone note' },
   '/xml-formatter': { topObserved: 'cligc', focus: 'format/minify, file types, parser position, sitemap/SVG/RSS use cases' },
-  '/xml-validator': { topObserved: 'xmlvalidators.com', focus: 'well-formedness, line/column errors, file input, schema distinction' },
+  '/xml-validator': { topObserved: 'W3Schools XML Validator; XMLValidation.com', focus: 'online XML syntax checking, file input, parser error position, and clear well-formedness versus XSD/DTD distinction' },
   '/yaml-formatter': { topObserved: 'yaml-formatter.com / JSON Buddy', focus: 'YAML 1.2, indentation errors, file input, compact/tree/validation' },
   '/text-counter': { topObserved: 'Count Words / WordCharCounter', focus: 'live counts, reading time, character variants, SEO/social limits' },
   '/case-converter': { topObserved: 'caseconv.co / TheCaseConverter.in', focus: 'many case styles, shortcuts, copy/download, partial text' },

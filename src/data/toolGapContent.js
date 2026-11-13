@@ -374,10 +374,18 @@ export const TOOL_GAP = {
     ],
   },
   '/xml-validator': {
-    tasks: ['Check if XML is well-formed', 'Find a mismatched XML tag', 'Validate XML before sending it to an API', 'Debug an XML parse error'],
+    tasks: ['Validate XML online before importing or sending it to an API', 'Check whether an XML file is well-formed', 'Find mismatched, missing or unclosed XML tags', 'Check XML syntax and attribute quoting', 'Inspect a browser XML parser error with its line and column', 'Check the syntax of sitemap, RSS, SOAP or configuration XML'],
     faqs: [
-      f('What are the most common XML errors?', 'Mismatched or unclosed tags, an unescaped & or < inside text, more than one root element and attribute values without quotes. The validator shows your browser\'s parser message so you can find the spot.'),
-      f('What is the difference between well-formed and valid XML?', 'Well-formed means the document follows the XML syntax rules. Valid means it also matches a schema such as a DTD or XSD. This page checks that the XML is well-formed.'),
+      f('How do I validate XML online?', 'Paste your XML into the input area or choose an XML file, then press Process. The browser XML parser checks whether it is well-formed and displays a parser error if it is not.'),
+      f('Can I validate an XML file instead of pasting its contents?', 'Yes. Choose or drop a file in the input area. The browser reads the file as text; press Process to run the well-formedness check.'),
+      f('What XML errors does this checker find?', 'It detects XML parsing problems such as mismatched or unclosed tags, multiple root elements, unquoted attribute values and unescaped special characters. The exact error wording depends on your browser.'),
+      f('Does this XML validator support XSD or DTD validation?', 'No. It checks whether the document is well-formed XML. XSD and DTD validation require comparing the document with a schema or document type definition, which this browser parser workflow does not do.'),
+      f('What is the difference between well-formed XML and valid XML?', 'Well-formed XML follows the XML syntax rules. Valid XML must also conform to a DTD or XML Schema (XSD). A document can be well-formed but still fail schema validation.'),
+      f('Why is an XML error reported after the actual mistake?', 'The parser reports where it noticed the inconsistency, not necessarily where it began. A missing closing tag may only be detected when a later closing tag does not match.'),
+      f('Can I check an XML sitemap with this tool?', 'You can check that the sitemap is well-formed XML. This does not check sitemap-specific requirements such as the sitemap namespace, URL limits or protocol rules.'),
+      f('Is XML sent to a server when I use the validator?', 'No. Pasted text is parsed in your browser, and a selected file is read locally with FileReader. The tool does not upload the XML to a remote validation service.'),
+      f('Why does the validator show only the first XML error?', 'The browser DOMParser reports a parser error rather than a complete list of diagnostics. Fix the first reported issue and run the validation again to reveal any later errors.'),
+      f('Can I format XML after checking it?', 'Yes. Use the XML Formatter to indent and make well-formed XML easier to read. Formatting and validation are separate tasks; formatting does not add XSD or DTD checks.'),
     ],
   },
   '/yaml-formatter': {

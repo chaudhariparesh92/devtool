@@ -187,77 +187,64 @@ export const EXTRA_MORE = {
   '/xml-validator': {
     sections: [
       {
-        "h": "Well-formed versus valid XML",
-        "paras": [
-          "A well-formed document follows the XML syntax rules. A valid document also matches a schema (XSD) or DTD. This page checks well-formedness only; it does not validate against a schema."
-        ],
-        "list": [
-          "There is exactly one root element.",
-          "Every start tag has a matching end tag, nested correctly.",
-          "Tag and attribute names are case-sensitive.",
-          "Attribute values are quoted.",
-          "The characters & and < are escaped as &amp; and &lt; in text."
-        ],
-        "links": [
-          [
-            "XML Formatter",
-            "/xml-formatter"
-          ],
-          [
-            "JSON Validator",
-            "/json-validator"
-          ],
-          [
-            "YAML Formatter",
-            "/yaml-formatter"
-          ]
-        ],
-        "linksLabel": "Related"
-      },
-      {
-        h: 'What XML is and why the format matters',
+        h: 'What this online XML validator checks',
         paras: [
-          'XML (Extensible Markup Language) is a markup language for storing and sending structured data. An XML document is human readable text, which is why it is still common for data exchange between systems, in sitemaps, RSS feeds, SOAP messages and configuration files.',
-          'Parsers are strict about the format. One missing closing tag makes the whole XML data unusable, so checking the document first saves a failed import or API call. This XML format checker tells you whether the document is well-formed. It does not compare the document with a document type definition (DTD) or an XML Schema.',
+          'This free XML validator checks whether a document is well-formed: it parses the XML and reports syntax errors that prevent it from being read as an XML document. Paste XML text or choose a local file, then press Process to see the result.',
+          'The check uses the XML parser built into your browser. It does not upload your XML to a remote validation service. When the browser reports a location, the tool shows the line and column with a short excerpt to help you inspect the problem.',
         ],
+        list: ['One document root element is present.', 'Elements are properly nested and closing tags match their opening tags.', 'Attribute values use quotation marks.', 'Reserved characters in text and attributes are escaped correctly.', 'The document can be parsed as XML.'],
+        links: [['XML Formatter', '/xml-formatter'], ['JSON Validator', '/json-validator'], ['YAML Formatter', '/yaml-formatter']],
+        linksLabel: 'Related tools',
       },
       {
-        h: 'What counts as valid XML here',
-        paras: ['The tool uses your browser\'s XML parser and reports a parser error if the document is not well-formed. That covers syntax, not meaning.'],
-        list: ['Every opening tag has a matching closing tag, in the right order.', 'There is exactly one root element.', 'Attribute values are quoted, and & is written as &amp;.'],
-      },
-      {
-        h: 'Common XML errors and how to fix them',
-        paras: ['Most XML syntax errors come from a short list of mistakes. Each line below shows the broken XML, then the fix:'],
-        code: 'Mismatched tag        <root><item>one</root>     ->  <root><item>one</item></root>\nUnescaped ampersand   <to>Tom & Jerry</to>       ->  <to>Tom &amp; Jerry</to>\nTwo root elements     <a>1</a><b>2</b>         ->  <root><a>1</a><b>2</b></root>\nUnquoted attribute    <item id=5>x</item>        ->  <item id="5">x</item>\nCase mismatch         <Item>x</item>             ->  <Item>x</Item>',
-        list: ['A missing or misspelled end tag is the most common cause.', 'Text that contains & or < must be escaped, or wrapped in a CDATA section.', 'The XML declaration, if you use one, must be the very first thing in the file, with no blank line or space before it.'],
-      },
-      {
-        h: 'How to read the error message',
+        h: 'Well-formed XML vs valid XML: what is the difference?',
         paras: [
-          'When the XML is not well-formed, the page shows the parser message. If your browser reports a position, it also shows the line and column with a caret under the spot. Browsers word these messages differently.',
-          'The parser stops at the first error, so fix it and validate again to find the next one. The reported spot is where the parser noticed the problem, which can be just after the real mistake: a missing end tag is usually reported at the next tag that does not match. For minified XML on a single line, use the column number.',
+          'Well-formedness is the basic syntax requirement for every XML document. A well-formed document has a single root element, correctly nested tags, quoted attribute values and properly escaped reserved characters.',
+          'Validity is a stricter check. A valid document must be well-formed and also conform to a grammar defined by a Document Type Definition (DTD) or an XML Schema (XSD). This page checks well-formedness only; it does not evaluate an XML document against an XSD, DTD, namespace contract or application-specific rules.',
+        ],
+        code: `<book><title>XML Basics</title></book>\n\n// Well-formed: tags are nested and closed.\n// Schema validity is a separate check against an XSD or DTD.`,
+      },
+      {
+        h: 'Common XML syntax errors and how to fix them',
+        paras: ['Use these small examples to recognize frequent XML parser errors. Correct the markup, then run the XML check again.'],
+        code: `Mismatched tags\n<root><item>one</root>\n<root><item>one</item></root>\n\nUnescaped ampersand\n<name>Tom & Jerry</name>\n<name>Tom &amp; Jerry</name>\n\nUnquoted attribute\n<item id=7>Book</item>\n<item id="7">Book</item>\n\nTwo root elements\n<a>1</a><b>2</b>\n<root><a>1</a><b>2</b></root>\n\nCase-sensitive tag names\n<Item>Book</item>\n<Item>Book</Item>`,
+        list: ['XML tag names are case-sensitive: <Item> and <item> are different names.', 'Escape ampersands as &amp; and less-than signs as &lt; when they are data, not markup.', 'Use a CDATA section when you need to include a larger block of text containing markup-like characters.', 'Keep the XML declaration, if present, at the beginning of the document.'],
+      },
+      {
+        h: 'How to read XML validation errors',
+        paras: [
+          'The browser parser may include a line and column in its error message. When available, this tool displays the reported position and a short excerpt with a caret. Browser engines use different parser messages, so the exact wording can vary.',
+          'The reported position is where the parser detected a problem, not always where the mistake was introduced. If a closing tag is missing, for example, the parser may only notice when a later tag does not match. Check the preceding element as well as the highlighted position.',
+          'The browser parser generally stops at the first fatal XML syntax error. Correct that issue and press Process again to check the document for the next one.',
         ],
       },
       {
-        h: 'XML validator example',
-        code: '<root><item>one</root>\n\n// Result: an error from the XML parser, with the line and column when your browser reports them (wording depends on your browser)\n\n<root><item>one</item></root>\n\n// Result:\nValid XML!\nRoot element: root\nElements: 2\nAttributes: 0\nNesting depth: 2\nSize: 29 characters',
-        links: [['XML Formatter', '/xml-formatter'], ['HTML Encoder', '/html-encoder'], ['JSON Validator', '/json-validator']],
-        linksLabel: 'Related',
+        h: 'Validate an XML file in your browser',
+        paras: ['You can paste XML directly or choose/drop a local XML or text file using the file control below the input. The browser reads the selected file as text; the contents are then passed to the same XML parser as pasted input. Press Process to run the check.'],
+        list: ['Open or paste the XML document.', 'Choose or drop a local file if you do not want to copy its contents.', 'Press Process.', 'If the parser reports an error, review the message and line/column excerpt.', 'Fix the XML and validate it again.'],
       },
       {
-        h: 'Validate XML in code, or against an XSD',
-        paras: ['Browsers cannot check XML against an XSD or DTD, so this page checks well-formedness only. For schema validation, use xmllint or the schema support in your language\'s XML library. These commands check the same syntax rules in code:'],
-        code: '# xmllint (libxml2): well-formedness\nxmllint --noout file.xml\n\n# xmllint: validate against an XSD schema\nxmllint --noout --schema schema.xsd file.xml\n\n# Python\nimport xml.dom.minidom\nxml.dom.minidom.parseString(text)      # raises ExpatError with line and column\n\n// C#\nSystem.Xml.Linq.XDocument.Parse(text);  // throws XmlException with LineNumber and LinePosition',
+        h: 'Checking XML sitemaps, SOAP messages and RSS feeds',
+        paras: [
+          'Sitemaps, SOAP envelopes, RSS feeds and XML configuration files all need to be well-formed before another system can parse them. This validator can check that baseline XML syntax.',
+          'A successful syntax check does not prove that a sitemap follows the sitemap protocol, that a SOAP message meets a service contract, or that an RSS feed follows every application-specific requirement. Those checks need the relevant protocol rules or schema. For sitemap-specific checks, use a dedicated sitemap validator; for XSD or DTD checks, use a schema-aware validator.',
+        ],
         links: [['XML Formatter', '/xml-formatter'], ['Diff Checker', '/diff-checker'], ['YAML to JSON', '/yaml-to-json']],
-        linksLabel: 'Related',
+        linksLabel: 'Related tools',
+      },
+      {
+        h: 'Validate XML against an XSD or DTD with developer tools',
+        paras: ['This browser-based XML checker does not perform XSD or DTD validation. If you need to check element types, required attributes, allowed child elements or other schema constraints, use a schema-aware tool such as xmllint or the XML validation APIs in your programming language.'],
+        code: `# Check XML well-formedness with xmllint\nxmllint --noout document.xml\n\n# Validate XML against an XSD schema\nxmllint --noout --schema schema.xsd document.xml\n\n# Python: parse XML for well-formedness\nimport xml.etree.ElementTree as ET\nET.parse("document.xml")\n\n// C#: parse XML for well-formedness\nSystem.Xml.Linq.XDocument.Load("document.xml");`,
       },
     ],
     faqs: [
-      q('Does it check a DTD or XSD schema?', 'No. It only checks that the XML is well-formed.'),
-      q('How do I validate XML against an XSD schema?', 'Browsers cannot do this, so this page does not. Use xmllint (xmllint --noout --schema schema.xsd file.xml) or the schema validation built into your language\'s XML library.'),
-      q('Can I upload an XML file to validate?', 'Yes. Choose or drop an .xml file under the input box. It is read in your browser and is not uploaded to a server. Then press Process.'),
-      q('Why is the error reported after the real mistake?', 'The parser reports where it noticed the problem, not where you made it. A missing end tag, for example, is found at the next tag that does not match it, so look at the line before the reported position too.'),
+      q('Does this XML validator check XSD or DTD schemas?', 'No. It checks whether the XML is well-formed. Use a schema-aware validator to compare the document with an XSD or DTD.'),
+      q('Can I upload an XML file to validate?', 'Yes. Choose or drop a local XML or text file below the input. The browser reads it locally; press Process to validate its syntax.'),
+      q('Does the XML checker upload or store my document?', 'No. The parser runs in your browser and the selected file is read locally. The validator does not send the XML to a remote validation service.'),
+      q('Can I validate a sitemap with this XML checker?', 'It checks whether the sitemap is well-formed XML, but it does not validate sitemap protocol requirements such as namespaces, URL limits or required elements.'),
+      q('Why does the parser show only one error?', 'The browser XML parser reports a fatal parse error rather than a complete diagnostic list. Fix the first issue and run the check again.'),
+      q('What should I use to format XML after validation?', 'Use the XML Formatter to indent and make well-formed XML easier to read. Formatting does not replace syntax or schema validation.'),
     ],
   },
 
