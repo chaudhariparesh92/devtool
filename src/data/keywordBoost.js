@@ -255,6 +255,18 @@ export const KEYWORD_BOOST = {
       ['Is MD5 safe to use?', 'It is fine for non-security checksums such as cache keys or spotting duplicates, but it is broken for security uses like signatures or password storage. Use SHA-256 or better there.'],
     ],
   },
+  '/unix-timestamp': {
+    t: 'Unix Timestamp Converter - Epoch Time & Date Converter',
+    d: 'Convert Unix timestamps to readable dates and dates to Unix time. See current epoch time in seconds and milliseconds. Free online epoch converter.',
+    s: ['unix timestamp converter', 'epoch converter', 'epoch time converter', 'unix time converter', 'unix epoch converter', 'unix epoch time converter', 'epoch timestamp converter', 'current epoch time', 'current unix time', 'current timestamp', 'timestamp to date', 'epoch to date', 'epoch to time', 'unix timestamp to date', 'unix time to date', 'date to epoch', 'date to unix timestamp', 'unix timestamp to datetime', 'timestamp calculator', 'epoch calculator', 'unix timestamp calculator', 'posix time converter'],
+    l: ['convert epoch time to date', 'convert epoch to time', 'convert unix timestamp to date', 'convert unix time to date', 'convert date to epoch time', 'convert date to unix timestamp', 'convert milliseconds to date', 'convert seconds to date', 'convert epoch milliseconds to date', 'convert epoch seconds to date', 'human date to unix timestamp', 'how to convert unix timestamp', 'how to read unix timestamp', 'what is epoch time', 'what is unix time', 'what is a unix timestamp', 'unix timestamp in seconds vs milliseconds'],
+    tasks: ['Epoch converter online', 'Convert epoch time to date', 'Convert Unix time to date', 'Convert date to Unix timestamp', 'Get current epoch time', 'Convert a timestamp from seconds or milliseconds', 'Read a Unix timestamp from a JWT exp claim or API response'],
+    faqs: [
+      ['How do I convert epoch time to a date?', 'Paste the epoch value into the converter. Select the unit if needed, then read the UTC, local and ISO 8601 date results.'],
+      ['How do I convert a date to epoch time?', 'Enter a date and time in a browser-supported format, preferably ISO 8601. The converter shows the matching Unix timestamp in seconds and milliseconds as well as smaller units.'],
+      ['Why are Unix timestamps sometimes 10 digits and sometimes 13 digits?', 'A 10-digit value is commonly seconds since the Unix epoch. A 13-digit value is commonly milliseconds. JavaScript Date.now() returns milliseconds, while many Unix commands and APIs use seconds.'],
+    ],
+  },
   '/timestamp-converter': {
     t: 'Timestamp Converter - Timestamp to Date and Back',
     d: 'Timestamp to date converter: decode Unix timestamps in seconds or milliseconds to UTC, local and ISO time, or convert a date back. Free, in your browser.',

@@ -290,12 +290,26 @@ export const TOOL_GAP = {
     ],
   },
   '/unix-timestamp': {
-    tasks: ['Get the current Unix timestamp', 'See Unix time today', 'Convert epoch time to a human-readable date', 'Check whether a timestamp is in seconds or milliseconds', 'Convert a date string to epoch time', 'Read a timestamp from a log line or API response'],
+    tasks: [
+      'Get the current Unix timestamp', 'See the current epoch time in seconds and milliseconds',
+      'Convert epoch time to a human-readable date', 'Convert Unix timestamp to UTC or local time',
+      'Convert a date and time to Unix timestamp', 'Convert milliseconds, microseconds and nanoseconds to a date',
+      'Check whether a timestamp is in seconds or milliseconds',
+      'Read a timestamp from a log, database row, API response or JWT claim'
+    ],
     faqs: [
-      f('What is the current Unix timestamp?', 'The live value is shown at the top of the page in seconds and milliseconds and updates every second, together with the current UTC date. Copy it with the buttons next to it.'),
-      f('How do I get the Unix timestamp for today or another date?', 'The live panel gives the timestamp for right now. For any other date, type an ISO 8601 date such as 2026-11-01T00:00:00Z into the converter and read the seconds value.'),
-      f('What is epoch time?', 'Epoch time, also called Unix time or POSIX time, counts the time since 1 January 1970 at 00:00:00 UTC. The same moment is the same number everywhere, whatever the local time zone.'),
-      f('Can I convert a date like 2026-10-31T10:00:00Z to a Unix timestamp?', 'Yes. Type an ISO 8601 date into the input instead of a number. The result shows the Unix time in seconds, milliseconds, microseconds and nanoseconds.'),
+      f('What is the current Unix timestamp?', 'The live clock at the top shows the current Unix timestamp in seconds and milliseconds and updates every second. It also shows the current UTC date. Use the adjacent copy buttons to copy either value.'),
+      f('What is an epoch converter?', 'An epoch converter changes a Unix timestamp (the number of seconds or smaller time units since 1 January 1970 at 00:00:00 UTC) into a readable date and time. It can also convert a date and time back into a Unix timestamp.'),
+      f('How do I convert a Unix timestamp to a date?', 'Paste the timestamp into the input. Keep Auto detect selected for a typical seconds or milliseconds value, or choose Seconds, Milliseconds, Microseconds or Nanoseconds if you know the unit. The result includes UTC, local time and ISO 8601.'),
+      f('How do I convert a date to a Unix timestamp?', 'Enter a date string accepted by your browser, preferably ISO 8601 such as 2026-11-13T10:30:00Z. The result includes Unix seconds, milliseconds, microseconds and nanoseconds.'),
+      f('What is the difference between Unix time and epoch time?', 'They are commonly used to mean the same thing: a count of time from the Unix epoch, 1 January 1970 at 00:00:00 UTC. POSIX time is another common name.'),
+      f('Is a Unix timestamp in seconds or milliseconds?', 'Most Unix and API timestamps use 10 digits for seconds. JavaScript Date.now() usually returns 13 digits in milliseconds. This converter can auto-detect common seconds, milliseconds, microseconds and nanoseconds values; use the unit selector when you need to override detection.'),
+      f('Why does my timestamp convert to a date in 1970?', 'The input may be in seconds but interpreted as milliseconds, or it may genuinely represent a date close to the Unix epoch. Check the source system and select the correct unit manually.'),
+      f('Does changing the time zone change a Unix timestamp?', 'No. A Unix timestamp represents one instant and does not contain a time zone. The same timestamp can be displayed as different local clock times in different time zones; its UTC instant remains the same.'),
+      f('What is the Unix epoch date?', 'The Unix epoch is 1 January 1970 at 00:00:00 UTC. Its Unix timestamp is 0.'),
+      f('What is the Year 2038 problem?', 'Older systems that store Unix time in a signed 32-bit integer reach their maximum value at 2,147,483,647 seconds, corresponding to 19 January 2038 at 03:14:07 UTC. Systems using 64-bit time values avoid this specific limit.'),
+      f('Can I convert a timestamp from a JWT, API response or server log?', 'Yes. Copy the numeric timestamp value from the exp or iat claim in a JWT, an API field or a log entry and paste it here. Check whether the source uses seconds or milliseconds before relying on the converted date.'),
+      f('Does this tool support microsecond and nanosecond timestamps?', 'Yes. Choose Microseconds or Nanoseconds in the unit selector, or leave Auto detect selected for values with the usual digit lengths. Browser date display itself has millisecond precision, so sub-millisecond digits are not preserved in the displayed date.'),
     ],
   },
   '/color-converter': {

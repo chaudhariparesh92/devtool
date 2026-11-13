@@ -122,7 +122,7 @@ const hash = {
 // ---- Timestamps -----------------------------------------------------------
 const ts = {
   '/timestamp-converter': { lede: 'Convert Unix timestamps to human-readable dates, or date strings to Unix time.', ex: ['1700000000', 'ISO: 2023-11-14T22:13:20.000Z\nUnix (ms): 1700000000000\nUnix (s): 1700000000\n(UTC and local time are shown too)'], tasks: ['Convert timestamp to date', 'Date to Unix timestamp', 'Epoch converter'] },
-  '/unix-timestamp': { lede: 'See the current Unix timestamp live, or turn a Unix (epoch) timestamp into UTC, local and ISO time.', ex: ['0', 'ISO: 1970-01-01T00:00:00.000Z\nUnix (ms): 0\nUnix (s): 0'], tasks: ['Current Unix timestamp', 'Get the Unix timestamp now', 'Unix timestamp converter', 'Epoch to date'] },
+  '/unix-timestamp': { lede: 'Use this free Unix timestamp converter to see the current epoch time and convert Unix timestamps into readable UTC, local and ISO dates. Enter a date or timestamp to get Unix time in seconds, milliseconds, microseconds and nanoseconds.', ex: ['1700000000', 'UTC: Tue, 14 Nov 2023 22:13:20 GMT\nISO 8601: 2023-11-14T22:13:20.000Z\nUnix (ms): 1700000000000\nUnix (s): 1700000000'], tasks: ['Unix timestamp converter', 'Epoch time converter', 'Current Unix timestamp', 'Current epoch time in seconds', 'Convert Unix timestamp to date', 'Convert date to Unix timestamp', 'Convert epoch milliseconds to date', 'Convert epoch seconds to date'] },
 };
 
 // ---- Colors ---------------------------------------------------------------

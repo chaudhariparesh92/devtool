@@ -635,40 +635,89 @@ export const EXTRA_MORE = {
   '/unix-timestamp': {
     sections: [
       {
-        "h": "Notable Unix timestamps",
-        "code": "0           1970-01-01T00:00:00Z  (the epoch)\n1000000000  2001-09-09T01:46:40Z\n2147483647  2038-01-19T03:14:07Z  (largest signed 32-bit value)"
-      },
-      {
-        "h": "Get the current Unix timestamp in code",
-        "code": "// JavaScript (seconds)\nMath.floor(Date.now() / 1000)\n# Python\nimport time; int(time.time())\n// C#\nDateTimeOffset.UtcNow.ToUnixTimeSeconds()\n# Bash\ndate +%s\n-- PostgreSQL\nSELECT EXTRACT(EPOCH FROM now());",
-        "links": [
-          [
-            "Timestamp Converter",
-            "/timestamp-converter"
-          ],
-          [
-            "Cron Expression Generator",
-            "/cron-expression-generator"
-          ],
-          [
-            "JWT Decoder",
-            "/jwt-decoder"
-          ]
+        h: 'What is a Unix timestamp or epoch time?',
+        paras: [
+          'A Unix timestamp (also called Unix time, epoch time or POSIX time) represents a moment as a count from 1 January 1970 at 00:00:00 UTC. The epoch itself is timestamp 0. A timestamp represents the same instant worldwide; the time zone only affects how that instant is displayed as a calendar date and clock time.',
+          'Developers use Unix timestamps in API responses, database records, application logs, analytics events and JWT claims. A numeric value is compact, easy to compare and unambiguous when systems agree on whether it is measured in seconds or milliseconds.'
         ],
-        "linksLabel": "Related"
+        links: [['JWT Decoder', '/jwt-decoder'], ['Timestamp Converter', '/timestamp-converter']],
+        linksLabel: 'Related developer tools'
       },
       {
-        h: 'What is a Unix timestamp?',
-        paras: ['A Unix timestamp, or epoch time, counts the time elapsed since 1 January 1970 00:00:00 UTC. It has no time zone, which is why APIs, databases and JWT claims such as exp and iat use it.', 'The page opens with the current time in seconds already filled in, so you can copy the current Unix timestamp right away.'],
+        h: 'Unix timestamp in seconds vs. milliseconds',
+        paras: ['Unix and POSIX tools commonly return seconds. JavaScript Date.now() returns milliseconds, which is why two timestamps for the same moment can differ by a factor of 1,000. This converter also accepts microseconds and nanoseconds when you select the matching unit.'],
+        list: [
+          'Seconds: commonly 10 digits, for example 1700000000.',
+          'Milliseconds: commonly 13 digits, for example 1700000000000.',
+          'Microseconds: commonly 16 digits, for example 1700000000000000.',
+          'Nanoseconds: commonly 19 digits, for example 1700000000000000000.',
+          'If a result lands in 1970 or far in the future, check the input unit and use the unit selector to correct it.'
+        ]
       },
       {
-        h: 'Seconds or milliseconds?',
-        list: ['10 digits, such as 1700000000, is normally seconds (JWT, most Unix tools).', '13 digits, such as 1700000000000, is normally milliseconds (JavaScript Date.now()).', 'Pasting the wrong unit gives a date in 1970 or the far future, which is the quickest way to spot the mix-up.'],
-        links: [['Timestamp Converter', '/timestamp-converter'], ['JWT Decoder', '/jwt-decoder'], ['Number Base Converter', '/number-base-converter']],
-        linksLabel: 'Related',
+        h: 'Unix timestamp conversion examples',
+        code: `Unix timestamp     UTC date and time
+0                  1970-01-01T00:00:00Z
+1000000000         2001-09-09T01:46:40Z
+1700000000         2023-11-14T22:13:20Z
+2147483647         2038-01-19T03:14:07Z`,
+        paras: ['For example, 1700000000 seconds is the same instant as 1700000000000 milliseconds. Both convert to 2023-11-14T22:13:20.000Z.']
       },
+      {
+        h: 'How to get the current Unix timestamp in code',
+        code: `// JavaScript: seconds and milliseconds
+Math.floor(Date.now() / 1000)
+Date.now()
+
+# Python: seconds
+import time
+int(time.time())
+
+// C#: seconds and milliseconds
+DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+
+// Java
+Instant.now().getEpochSecond()
+
+// PHP
+time()
+
+// Go
+time.Now().Unix()
+
+-- PostgreSQL
+SELECT EXTRACT(EPOCH FROM NOW());
+
+-- MySQL
+SELECT UNIX_TIMESTAMP();
+
+# Linux / macOS shell
+date +%s`,
+        links: [['JWT Decoder', '/jwt-decoder'], ['Timestamp Converter', '/timestamp-converter'], ['Cron Expression Parser', '/cron-expression-parser']],
+        linksLabel: 'Related developer tools'
+      },
+      {
+        h: 'Where developers use Unix timestamps',
+        list: [
+          'API responses: interpret created_at, updated_at, expires_at and other numeric date fields.',
+          'JWT tokens: inspect exp and iat claims to understand when a token expires or was issued.',
+          'Application logs: translate numeric event times into readable dates while debugging.',
+          'Databases: inspect epoch values stored in SQL or NoSQL records.',
+          'Testing: create a known timestamp for a test fixture or compare two event times.'
+        ],
+        links: [['JWT Decoder', '/jwt-decoder'], ['Timestamp Converter', '/timestamp-converter']]
+      },
+      {
+        h: 'Unix epoch and the Year 2038 problem',
+        paras: ['The Unix epoch begins at 1970-01-01 00:00:00 UTC. A signed 32-bit integer can store a maximum positive value of 2,147,483,647 seconds, which corresponds to 2038-01-19 03:14:07 UTC. Systems that still use signed 32-bit time storage need to migrate to a wider representation; modern 64-bit timestamps avoid this particular overflow limit.']
+      }
     ],
-    faqs: [q('Why does my Unix timestamp show 1970?', 'The number is probably in seconds being read as a smaller unit, or it is 0 or a very small value. Check whether your source uses seconds or milliseconds.')],
+    faqs: [
+      q('What is the Unix timestamp for January 1, 1970?', 'The Unix timestamp is 0 at 1970-01-01 00:00:00 UTC. This moment is known as the Unix epoch.'),
+      q('Can I use this as a date to epoch converter?', 'Yes. Enter a date string, preferably in ISO 8601 format, in the input. The result displays the matching Unix timestamp in seconds, milliseconds, microseconds and nanoseconds.'),
+      q('Does a Unix timestamp include a time zone?', 'No. It represents an instant relative to UTC and contains no time-zone identifier. The converter displays the instant in UTC and your browser\'s local time.'),
+    ],
   },
   '/color-converter': {
     sections: [
