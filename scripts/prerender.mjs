@@ -253,6 +253,16 @@ function auditInternalLinks(html, route, knownRoutes) {
 
     let pathname = href.split(/[?#]/, 1)[0];
 
+    // Canonical URLs end in a slash. A slash-less internal link forces a 301 before the
+    // crawler reaches the canonical page, so flag it.
+    if (
+      pathname.length > 1 &&
+      !pathname.endsWith("/") &&
+      !/\.[a-z0-9]{2,8}$/i.test(pathname)
+    ) {
+      problems.add(`${pathname} (missing trailing slash)`);
+    }
+
     try {
       pathname = decodeURIComponent(pathname);
     } catch {
@@ -274,7 +284,7 @@ function auditInternalLinks(html, route, knownRoutes) {
 
   if (problems.size) {
     console.warn(
-      `[SEO audit] ${route}: internal links target paths not present in the route registry: ${[...problems].join(", ")}`,
+      `[SEO audit] ${route}: internal link problems (unknown route or missing trailing slash): ${[...problems].join(", ")}`,
     );
   }
 }
