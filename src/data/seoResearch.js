@@ -19,7 +19,7 @@ export const SEO_RESEARCH = {
   '/url-decoder': { topObserved: 'URLDecoder / PocketWebTools', focus: 'UTF-8 decoding, query/path handling, readable output' },
   '/base64-encoder': { topObserved: 'Base64 Studio / ByteKiln', focus: 'Unicode, URL-safe mode, files/data URI, local processing' },
   '/base64-decoder': { topObserved: 'Base64 Studio / ByteKiln', focus: 'Unicode, URL-safe mode, files/data URI, local processing' },
-  '/html-encoder': { topObserved: 'Site24x7 / emn178', focus: 'html encoder head term, encode+escape FAQs, entity table, XSS context, vs URL encode' },
+  '/html-encoder': { topObserved: 'emn178 / MotherEff / W3Schools', focus: 'html encoder head term, five-character escaping, entity examples, JavaScript guidance, context-specific output encoding, vs URL encoding; distinguish from decoder intent' },
   '/html-decoder': { topObserved: 'emn178 / CodeBeautify', focus: 'html decode online head term, named+numeric+hex, security note, vs URL decode, how-to' },
   '/jwt-decoder': { topObserved: 'Legendev / IRQKit', focus: 'header/payload, exp/iat/nbf, explicit non-verification warning, privacy' },
   '/uuid-generator': { topObserved: 'uuidgenerator.net / uuidtools.com', focus: 'head term uuid generator, instant UUID on load, bulk download, v4 vs v7, GUID formats, browser-only' },

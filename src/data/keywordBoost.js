@@ -184,6 +184,17 @@ export const KEYWORD_BOOST = {
       ['Can it decode URL-safe Base64 (Base64URL)?', 'Base64URL uses - and _ instead of + and /. Replace them with + and / before pasting, because this decoder expects the standard alphabet.'],
     ],
   },
+  '/html-encoder': {
+    t: 'HTML Encoder Online – Encode HTML Entities & Escape Text',
+    d: 'Free HTML encoder online: escape &, <, >, double quotes and apostrophes as entities. Display HTML markup as text instantly in your browser. No signup.',
+    s: ['html encode', 'html encoder', 'html encoding', 'html encode online', 'html encoder online', 'html encode entities', 'html escape', 'encode html', 'html encoding characters', 'html htmlentities', 'encoder html', 'encode in html', 'html encode html', 'encode html js', 'js html encode'],
+    l: ['encode html entities online', 'HTML encode a string online', 'encode special characters in HTML', 'convert HTML characters to entities', 'replace HTML characters with entities', 'escape ampersands and angle brackets', 'JavaScript HTML encode string', 'how to encode text in HTML'],
+    tasks: ['HTML encode online', 'Encode HTML entities', 'Escape HTML special characters', 'Encode HTML tags to display as text', 'HTML encode a string in JavaScript'],
+    faqs: [
+      ['What is HTML entity encoding?', 'HTML entity encoding replaces characters that have special meaning in markup with character references. For example, < becomes &lt; and & becomes &amp; so the browser displays them as text in an HTML context.'],
+      ['Can I encode HTML with JavaScript?', 'Use textContent to display a string as text in an existing element. If you need an encoded string, replace &, <, >, double quotes and apostrophes with their HTML entities. Use context-specific encoding for JavaScript, CSS and URL values.'],
+    ],
+  },
   '/html-decoder': {
     t: 'HTML Decoder Online – Decode HTML Entities & Encoded Text',
     d: 'Free HTML decoder online for named, decimal and hexadecimal entities. Decode encoded text in your browser, then copy or download the result. No signup.',

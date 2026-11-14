@@ -156,14 +156,14 @@ export const TOOL_GAP = {
   },
   '/html-encoder': {
     tasks: [
+      'Encode HTML entities online',
       'HTML encode a string online',
-      'Online HTML encoder tool',
-      'HTML encode online',
-      'Escape HTML special characters',
-      'Convert < and > to HTML entities',
-      'Encode HTML for display inside a web page',
+      'Encode HTML special characters for display',
+      'Escape ampersands, angle brackets and quotes',
+      'Convert HTML characters to named entities',
+      'Encode markup so it appears as text',
       'Escape an ampersand as &amp;',
-      'HTML encode a string tool',
+      'HTML encode a string in JavaScript',
     ],
     faqs: [
       f('How do I HTML encode a string online?', 'Paste or type the string into the input box. The encoded text appears as you type: & becomes &amp;, < becomes &lt;, > becomes &gt;, " becomes &quot; and \' becomes &#39;. Press Copy and paste the result into your page.'),
@@ -172,6 +172,10 @@ export const TOOL_GAP = {
       f('Is HTML encoding the same as URL encoding?', 'No. HTML encoding uses entities such as &amp; and &lt; for markup. URL encoding uses percent codes such as %26 and %3C for URLs. Use this page for HTML entities and the URL Encoder for percent-encoding.'),
       f('Is HTML encoding enough to prevent XSS?', 'No. Escaping special characters is one part of output encoding, and the right escaping depends on where the text lands: element content, an attribute value, JavaScript or a URL. Prefer your framework\'s built-in escaping, and add a Content Security Policy for defense in depth.'),
       f('What is the difference between &lt; and &#60;?', 'They are two spellings of the same character. &lt; is a named entity and &#60; is a numeric one. This tool writes the named forms &amp;, &lt;, &gt;, &quot; and the numeric form &#39; for the apostrophe.'),
+      f('Which characters does this HTML encoder replace?', 'It replaces five HTML-significant characters: ampersand (&) with &amp;, less-than (<) with &lt;, greater-than (>) with &gt;, double quote with &quot; and apostrophe with &#39;. Other characters, including ordinary Unicode text, are left unchanged.'),
+      f('How do I HTML encode text in JavaScript?', 'Use a text-node API such as textContent when you want to display user text in an element. If you specifically need an encoded string, replace &, <, >, double quotes and apostrophes with their corresponding HTML entities. Avoid building HTML with untrusted strings.'),
+      f('Is HTML encoding the same as HTML sanitization?', 'No. Encoding converts selected characters to entities for a particular output context. Sanitization parses markup and applies an allowlist or policy to remove unsafe elements and attributes. This encoder does not sanitize HTML or make arbitrary markup safe to insert into a page.'),
+      f('Does HTML encoding work the same as URL encoding?', 'No. HTML entities such as &amp; and &lt; are used in HTML markup. URL encoding uses percent-encoded bytes such as %26 and %3C for URL components. Use the URL Encoder for URL values.'),
     ],
   },
 

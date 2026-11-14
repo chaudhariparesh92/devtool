@@ -44,6 +44,78 @@ export default function EncoderTool({ path }) {
     }
   };
 
+  if (path.includes('html-enc')) {
+    const examples = [
+      { label: 'HTML snippet', value: '<div class="note">Tom & Jerry</div>' },
+      { label: 'Special characters', value: `5 < 10 && 10 > 5; "quoted" and 'apostrophe'` },
+      { label: 'Code sample', value: '<script>alert("Hello")</script>' },
+    ];
+
+    return (
+      <ToolLayout title="HTML Encoder Online" desc="Encode HTML special characters as entities so markup displays as text." path={path}>
+        <div className="p-5 sm:p-6 space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="font-bold text-lg">Encode HTML entities</h2>
+              <p className="text-sm mt-1" style={{ color: 'var(--muted)' }}>Paste text or markup. HTML special characters are escaped as you type.</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => { setInp(''); setOut(''); }}
+              disabled={!inp && !out}
+              className="px-3 py-2 text-sm rounded border hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50"
+            >
+              Clear
+            </button>
+          </div>
+
+          <div className="flex flex-wrap gap-2" aria-label="HTML encoder examples">
+            <span className="text-xs self-center mr-1" style={{ color: 'var(--muted)' }}>Try an example:</span>
+            {examples.map((example) => (
+              <button
+                key={example.label}
+                type="button"
+                onClick={() => process(example.value)}
+                className="px-3 py-1.5 text-xs rounded border hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
+              >
+                {example.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="min-w-0 space-y-2">
+              <label htmlFor="html-encoder-input" className="block text-sm font-semibold">Text or HTML input</label>
+              <textarea
+                id="html-encoder-input"
+                className="w-full min-h-[260px] p-4 font-mono text-sm bg-gray-50 dark:bg-gray-900 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                value={inp}
+                onChange={(e) => process(e.target.value)}
+                placeholder="Paste text or markup, e.g. <p>Tom & Jerry</p>"
+                spellCheck="false"
+                autoCapitalize="off"
+                autoCorrect="off"
+              />
+              <p className="text-xs" style={{ color: 'var(--muted)' }}>Escapes &, &lt;, &gt;, double quotes and apostrophes.</p>
+            </div>
+            <div className="min-w-0 space-y-2">
+              <p className="text-sm font-semibold">Encoded HTML entities</p>
+              <OutputBox
+                value={out}
+                label="Encoded HTML output"
+                placeholder="Encoded entities appear here…"
+                textareaClassName="min-h-[260px]"
+                downloadFilename="encoded-html.txt"
+              />
+              <p className="text-xs" style={{ color: 'var(--muted)' }}>Output is plain text. Use it in the matching HTML text or quoted-attribute context.</p>
+            </div>
+          </div>
+          <p className="text-xs" style={{ color: 'var(--muted)' }}>Encoding runs in your browser. It is not a sanitizer and does not replace context-specific escaping in application code.</p>
+        </div>
+      </ToolLayout>
+    );
+  }
+
   if (path.includes('html-dec')) {
     const examples = [
       { label: 'Basic entities', value: '&lt;h1&gt;Tom &amp; Jerry&lt;/h1&gt;' },

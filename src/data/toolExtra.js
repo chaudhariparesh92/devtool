@@ -283,21 +283,21 @@ export const EXTRA_MORE = {
   '/html-encoder': {
     sections: [
       {
-        h: 'How to HTML encode a string online',
+        h: 'How to encode HTML online',
         paras: [
-          'Paste or type any text into the input. The encoded result updates as you type. Copy it and paste into HTML where you need the characters shown as text, not interpreted as markup.',
+          'Paste text or an HTML snippet into the input. The HTML encoder converts ampersands, angle brackets and quotation marks into character references as you type. Copy the result when you want the original characters to appear literally rather than being parsed as markup.',
         ],
         list: [
-          'Paste the text or HTML snippet you want to display literally.',
-          'The tool escapes &, <, >, " and \'.',
-          'Copy the output into element content or a quoted attribute.',
-          'For user-controlled data in a real app, prefer your framework\'s built-in escaping.',
+          'Paste the text or markup you want to display as text.',
+          'The encoder escapes &, <, >, double quotes and apostrophes.',
+          'Copy the encoded output into the appropriate HTML text or quoted-attribute context.',
+          'Use your framework\'s contextual output escaping for application templates and user-controlled values.',
         ],
       },
       {
-        h: 'HTML entity reference',
+        h: 'HTML encoding characters and entity reference',
         paras: [
-          'These five characters are the ones that matter when you put text into HTML markup or attributes.',
+          'HTML entity encoding replaces characters that have special meaning in markup with character references. This tool uses readable named references for four characters and a numeric reference for the apostrophe.',
         ],
         code: '&   ->  &amp;\n<   ->  &lt;\n>   ->  &gt;\n"   ->  &quot;\n\'   ->  &#39;',
         links: [
@@ -305,36 +305,48 @@ export const EXTRA_MORE = {
           ['URL Encoder', '/url-encoder'],
           ['Base64 Encoder', '/base64-encoder'],
         ],
-        linksLabel: 'Related',
+        linksLabel: 'Related tools',
       },
       {
-        h: 'HTML encoding example',
-        code: '<p class="note">Fish & chips</p>\n\n// encoded\n&lt;p class=&quot;note&quot;&gt;Fish &amp; chips&lt;/p&gt;',
+        h: 'HTML encode example: convert markup to visible text',
+        paras: ['For example, encoding a snippet changes the markup characters into entities. When the result is placed in an HTML text node, the browser displays the tags and attributes as text instead of creating those elements.'],
+        code: 'Input:\n<div class="note">Tom & Jerry\'s offer</div>\n\nEncoded output:\n&lt;div class=&quot;note&quot;&gt;Tom &amp; Jerry&#39;s offer&lt;/div&gt;',
       },
       {
-        h: 'Encode in code, and why it matters for security',
+        h: 'How to HTML encode in JavaScript',
         paras: [
-          'Escaping user input before placing it in a page is a core defence against cross-site scripting. Prefer your framework escaping or textContent over building HTML strings by hand. Correct encoding depends on context: element text, attributes, URLs, CSS and JavaScript each need different rules.',
+          'When displaying a string inside an existing element, prefer assigning it with textContent. The browser treats the value as text and does not parse it as markup. If another system specifically requires an HTML-encoded string, escape the relevant characters for that output context.',
         ],
-        code: '// JavaScript\nel.textContent = userInput;   // safe, no manual escaping\n// C#\nSystem.Net.WebUtility.HtmlEncode(text)\n# Python\nimport html; html.escape(text)',
+        code: '// Safely display text in an existing element\nelement.textContent = userInput;\n\n// Create an HTML-encoded string when a string is required\nconst escapeHtml = (value) => value.replace(/[&<>"\']/g, (char) => ({\n  "&": "&amp;", "<": "&lt;", ">": "&gt;",\n  "\\\"": "&quot;", "\'": "&#39;"\n}[char]));',
       },
       {
-        h: 'HTML encode vs URL encode',
+        h: 'HTML encoding, escaping and XSS protection',
         paras: [
-          'HTML encoding turns special characters into entities so browsers display them as text. URL encoding (percent-encoding) represents bytes in a URL path or query string. Use this tool for HTML entities and the URL Encoder for %20-style codes.',
+          'HTML output encoding is an important defense when untrusted text is inserted into an HTML context, but the correct method depends on where the value is used. HTML text, quoted attributes, JavaScript, CSS and URL components have different parsing rules. This tool only produces a basic HTML entity-escaped string; it is not an HTML sanitizer and does not make input safe for every context.',
+          'For application code, prefer framework-provided contextual escaping and avoid inserting untrusted strings with innerHTML. If you need to accept and render user-authored markup, use a reputable HTML sanitizer with an explicit allowlist.',
+        ],
+      },
+      {
+        h: 'HTML encoding vs URL encoding',
+        paras: [
+          'HTML encoding uses character references such as &amp; and &lt; so characters display correctly in HTML. URL encoding uses percent-encoded bytes such as %20 and %26 for a URL path or query component. They solve different problems and are not interchangeable.',
         ],
         links: [
           ['URL Encoder', '/url-encoder'],
           ['URL Decoder', '/url-decoder'],
           ['HTML Decoder', '/html-decoder'],
         ],
-        linksLabel: 'Related',
+        linksLabel: 'Related tools',
       },
     ],
     faqs: [
       {
-        q: 'Does it escape quotes?',
-        a: 'Yes. Double quotes become &quot; and single quotes become &#39;, along with &, < and >.',
+        q: 'Does this HTML encoder convert every character into an entity?',
+        a: 'No. It escapes &, <, >, double quotes and apostrophes. Ordinary letters, numbers, accented characters and emoji are left as they are.',
+      },
+      {
+        q: 'Can I use HTML entities to encode JavaScript?',
+        a: 'HTML entities are not a general-purpose JavaScript string encoder. Use JavaScript string serialization or a context-aware API for JavaScript values. This tool is intended for HTML entity escaping.',
       },
     ],
   },

@@ -47,6 +47,7 @@ const MODIFIED_ON = {
   '2026-11-14': [
     '/uuid-generator',
     '/html-decoder',
+    '/html-encoder',
   ],
 
   '2026-11-13': [
