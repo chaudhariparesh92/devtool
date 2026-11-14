@@ -298,15 +298,12 @@ export const KEYWORD_BOOST = {
     ],
   },
   '/timestamp-converter': {
-    t: 'Timestamp Converter - Timestamp to Date and Back',
-    d: 'Timestamp to date converter: decode Unix timestamps in seconds or milliseconds to UTC, local and ISO time, or convert a date back. Free, in your browser.',
-    s: ['timestamp to date', 'timestamp converter', 'timestamp decoder', 'timestamp convert', 'unix time to date'],
-    l: ['timestamp to date online', 'timecode to date', 'convert timestamp to datetime', 'epoch to human date', 'date to timestamp converter'],
-    tasks: ['Timestamp to date', 'Timestamp decoder', 'Convert a date to a timestamp'],
-    faqs: [
-      ['How do I convert a timestamp to a date?', 'Paste the number. The tool detects seconds, milliseconds, microseconds or nanoseconds and shows the date in UTC, local time and ISO 8601.'],
-      ['What if my timestamp shows the wrong year?', 'The unit is probably wrong. 10 digits are normally seconds and 13 digits milliseconds; choose the unit manually if the automatic guess does not fit.'],
-    ],
+    t: 'Timestamp Converter – Epoch & Unix Time to Date',
+    d: 'Convert Unix timestamps to dates and dates to epoch time. Detect seconds, milliseconds, microseconds or nanoseconds and view UTC, local and ISO 8601 results.',
+    s: ['timestamp converter', 'epoch converter', 'epoch time converter', 'unix timestamp', 'timestamp to date', 'date to timestamp', 'unix time converter', 'timestamp to datetime', 'epoch to date', 'time to epoch', 'convert epoch time', 'unix timestamp to date', 'unix time to date', 'posix time'],
+    l: ['convert from unix timestamp', 'convert timestamp to date', 'timestamp to unix time', 'epoch timestamp to date', 'convert unix timestamp to datetime', 'convert unix time to time', 'epoch time to date', 'unix stamp converter', 'date epoch converter', 'convert date to epoch time'],
+    tasks: ['Convert a timestamp to a date', 'Convert a date to an epoch timestamp', 'Convert Unix time in seconds or milliseconds', 'Convert microsecond and nanosecond timestamps', 'Read a timestamp from a log or API response'],
+    faqs: [],
   },
   '/color-converter': {
     s: ['color converter', 'hex to rgb and rgb to hex', 'color code converter', 'color format converter', 'css color converter'],

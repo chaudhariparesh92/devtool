@@ -129,7 +129,11 @@ const hash = {
 
 // ---- Timestamps -----------------------------------------------------------
 const ts = {
-  '/timestamp-converter': { lede: 'Convert Unix timestamps to human-readable dates, or date strings to Unix time.', ex: ['1700000000', 'ISO: 2023-11-14T22:13:20.000Z\nUnix (ms): 1700000000000\nUnix (s): 1700000000\n(UTC and local time are shown too)'], tasks: ['Convert timestamp to date', 'Date to Unix timestamp', 'Epoch converter'] },
+  '/timestamp-converter': {
+    lede: 'Convert a Unix timestamp or epoch value into a readable date, or turn a date and time back into Unix time. Auto-detect seconds, milliseconds, microseconds and nanoseconds, then compare UTC, local and ISO 8601 output.',
+    ex: ['1700000000', 'UTC: Tue, 14 Nov 2023 22:13:20 GMT\nLocal: shown in your device time zone\nISO 8601: 2023-11-14T22:13:20.000Z\nUnix (ms): 1700000000000\nUnix (s): 1700000000'],
+    tasks: ['Convert a timestamp to a date', 'Convert a date to a Unix timestamp', 'Convert epoch seconds and milliseconds', 'Convert microsecond or nanosecond timestamps', 'Convert an ISO 8601 date to epoch time', 'Read timestamps from logs and API responses'],
+  },
   '/unix-timestamp': { lede: 'Use this free Unix timestamp converter to see the current epoch time and convert Unix timestamps into readable UTC, local and ISO dates. Enter a date or timestamp to get Unix time in seconds, milliseconds, microseconds and nanoseconds.', ex: ['1700000000', 'UTC: Tue, 14 Nov 2023 22:13:20 GMT\nISO 8601: 2023-11-14T22:13:20.000Z\nUnix (ms): 1700000000000\nUnix (s): 1700000000'], tasks: ['Unix timestamp converter', 'Epoch time converter', 'Current Unix timestamp', 'Current epoch time in seconds', 'Convert Unix timestamp to date', 'Convert date to Unix timestamp', 'Convert epoch milliseconds to date', 'Convert epoch seconds to date'] },
 };
 
@@ -351,14 +355,14 @@ const GROUPS = [
       return {
         lede: v.lede,
         meta: `${n}: ${v.lede} Free, instant, runs in your browser.`,
-        what: `${n} converts a number or date string into UTC, local time, ISO 8601, and Unix time in seconds and milliseconds. The box starts with the current time.`,
+        what: `${n} converts a numeric timestamp or date string into UTC, local time, ISO 8601, and Unix time in seconds, milliseconds, microseconds and nanoseconds. The input starts with the current time in seconds.`,
         problem: 'Logs, databases and APIs store time as numbers that nobody can read at a glance, and mixing up seconds and milliseconds is an easy mistake.',
         steps: ['Enter a Unix timestamp or a date string.', 'The conversions appear as you type.', 'Copy the result.'],
         example: { inLabel: 'Input', input: v.ex[0], outLabel: 'Output', output: v.ex[1] },
         useCases: ['Reading timestamps in logs and database rows', 'Checking token expiry times', 'Converting a date into epoch seconds for an API'],
         tasks: v.tasks,
         faqs: [
-          q('Seconds or milliseconds?', 'All-digit input longer than 11 digits is treated as milliseconds; shorter input is treated as seconds.'),
+          q('How does automatic timestamp unit detection work?', 'The converter estimates the unit from the number of digits: common values are 10 digits for seconds, 13 for milliseconds, 16 for microseconds and 19 for nanoseconds. These are conventions rather than guarantees, so choose the unit manually when you know the source format.'),
           q('Which time zone is used?', 'Both UTC and your browser\'s local time zone are shown.'),
         ],
       };

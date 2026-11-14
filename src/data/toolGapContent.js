@@ -292,10 +292,13 @@ export const TOOL_GAP = {
 
   // ------------------------------------------------------------------ Web tools
   '/timestamp-converter': {
-    tasks: ['Convert a Unix timestamp to a date', 'Convert a date to a Unix timestamp', 'Convert milliseconds, microseconds or nanoseconds to a date', 'Convert an ISO 8601 date to epoch time'],
+    tasks: ['Convert a Unix timestamp to a human-readable date', 'Convert a date and time to Unix epoch seconds', 'Convert milliseconds to a date', 'Convert microseconds or nanoseconds to a date', 'Convert an ISO 8601 date string to Unix time', 'Check a timestamp copied from a Linux log or API response', 'Compare the UTC date with your device local time'],
     faqs: [
-      f('How do I get the current Unix timestamp?', 'The input opens with the current time in seconds already filled in. In JavaScript the same value is Math.floor(Date.now() / 1000).'),
-      f('What is the Year 2038 problem?', 'Systems that store Unix time in a signed 32-bit integer overflow on 19 January 2038. JavaScript dates use larger numbers, so the dates this tool converts are not affected.'),
+      f('What is the difference between a timestamp and an epoch timestamp?', 'A timestamp is a general value that identifies a date or moment. An epoch timestamp usually means a numeric count from a reference point; Unix epoch time counts from 1 January 1970 at 00:00:00 UTC.'),
+      f('Can I convert a Linux timestamp?', 'Yes. Paste the numeric value from a Linux command or log. Linux date +%s commonly returns Unix time in seconds. If your value comes from another program, check whether it uses seconds or milliseconds.'),
+      f('Can I convert a timestamp from an API or database?', 'Yes. Copy the numeric timestamp field and paste it into the input. Check the API or database documentation for its unit; seconds and milliseconds differ by a factor of 1,000.'),
+      f('Does this page convert time zones?', 'It displays the converted moment in UTC and your device local time. It does not provide a separate picker for arbitrary time zones; use an ISO 8601 input with Z or an explicit UTC offset when the source time zone matters.'),
+      f('What is the Year 2038 problem?', 'Systems that store Unix time in a signed 32-bit integer reach their maximum at 2,147,483,647 seconds, or 19 January 2038 at 03:14:07 UTC. This is a storage limit in older systems, not a limitation of the browser date display used here.'),
     ],
   },
   '/unix-timestamp': {

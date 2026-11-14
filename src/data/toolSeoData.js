@@ -308,14 +308,14 @@ export const TOOL_SEO_DATA = {
 
   // ------------------------------------------------------------ Web tools
   '/timestamp-converter': S({
-    title: 'Timestamp Converter – Free Unix Time & Date Tool',
-    description: 'Free timestamp converter: Unix epoch to date and back, with UTC and local time. Runs in your browser.',
-    h1: 'Timestamp Converter Online',
+    title: 'Timestamp Converter – Epoch & Unix Time to Date',
+    description: 'Convert Unix timestamps to dates and dates to epoch time. Detect seconds, milliseconds, microseconds or nanoseconds and view UTC, local and ISO 8601 results.',
+    h1: 'Timestamp & Epoch Converter Online',
     primary: 'timestamp converter',
-    secondary: ['timestamp converter online', 'timestamp converter', 'date timestamp converter', 'epoch converter', 'timestamp to date', 'date to timestamp'],
-    longTail: ['convert Unix timestamp to date', 'convert date to Unix timestamp', 'convert seconds and milliseconds timestamps', 'read timestamp values from logs', 'convert ISO date to Unix time'],
+    secondary: ['timestamp converter online', 'epoch converter', 'epoch time converter', 'unix timestamp', 'unix time converter', 'timestamp to date', 'timestamp to date converter', 'date to timestamp', 'epoch time', 'unix time', 'unix timestamp converter', 'timestamp to datetime', 'unix timestamp to date', 'convert epoch time', 'epoch to date', 'epoch to time', 'time to epoch', 'unix timestamp to datetime', 'convert timestamp to date', 'convert from unix timestamp', 'timestamp to unix time', 'unix time to date', 'posix time'],
+    longTail: ['convert a Unix timestamp to a human-readable date', 'convert a date and time to Unix epoch seconds', 'convert epoch milliseconds to a date', 'convert epoch microseconds or nanoseconds to a date', 'convert an ISO 8601 date to a Unix timestamp', 'read a timestamp from a server log or API response', 'check whether a timestamp uses seconds or milliseconds', 'convert a timestamp to UTC and local time'],
     intent: 'utility',
-    related: ['/unix-timestamp', '/jwt-decoder', '/cron-expression-parser', '/number-base-converter', '/uuid-generator', '/uuid-parser', '/cron-expression-generator'],
+    related: ['/unix-timestamp', '/jwt-decoder', '/cron-expression-parser', '/query-string-parser', '/number-base-converter'],
   }),
   '/unix-timestamp': S({
     title: 'Unix Timestamp Converter – Epoch Time & Date Converter',

@@ -51,6 +51,7 @@ const MODIFIED_ON = {
     '/uuid-generator',
     '/html-decoder',
     '/html-encoder',
+    '/timestamp-converter',
   ],
 
   '2026-11-13': [
@@ -66,7 +67,6 @@ const MODIFIED_ON = {
     '/uuid-generator',
     '/html-encoder',
     '/unix-timestamp',
-    '/timestamp-converter',
   ],
 
   '2026-11-10': [

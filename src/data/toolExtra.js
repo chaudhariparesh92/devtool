@@ -633,47 +633,74 @@ export const EXTRA_MORE = {
   '/timestamp-converter': {
     sections: [
       {
-        "h": "Seconds, milliseconds and microseconds",
-        "paras": [
-          "Count the digits before you convert: the wrong unit gives a date in 1970 or in the far future."
+        h: 'What is a Unix timestamp or epoch time?',
+        paras: [
+          'A Unix timestamp (also called Unix time, epoch time or POSIX time) represents a moment as a numeric count from 1 January 1970 at 00:00:00 UTC. The starting moment is the Unix epoch, timestamp 0. The number identifies the same instant worldwide; the time zone only changes how that instant is displayed as a calendar date and clock time.',
+          'Timestamp values commonly appear in Linux command output, application logs, database fields, analytics events and API responses. This converter turns those values into readable dates and also converts date strings back into Unix time.'
         ],
-        "list": [
-          "10 digits: seconds (for example 1700000000)",
-          "13 digits: milliseconds (JavaScript Date.now())",
-          "16 digits: microseconds",
-          "19 digits: nanoseconds"
+        links: [['Unix Timestamp', '/unix-timestamp'], ['JWT Decoder', '/jwt-decoder'], ['Cron Expression Parser', '/cron-expression-parser']],
+        linksLabel: 'Related developer tools'
+      },
+      {
+        h: 'Convert Unix timestamps in seconds, milliseconds, microseconds or nanoseconds',
+        paras: ['The same instant can be represented using different units. Keep Auto detect selected for common values, or choose the unit manually when you know how the source system stores its timestamp. The converter uses the browser Date API for the calendar display, which has millisecond precision.'],
+        list: [
+          'Seconds: commonly 10 digits, such as 1700000000.',
+          'Milliseconds: commonly 13 digits, such as 1700000000000. JavaScript Date.now() returns milliseconds.',
+          'Microseconds: commonly 16 digits, such as 1700000000000000.',
+          'Nanoseconds: commonly 19 digits, such as 1700000000000000000.',
+          'Digit length is a useful convention, not a universal guarantee. If the result looks wrong, select the source unit explicitly.'
         ],
-        "code": "1700000000 seconds  -> 2023-11-14T22:13:20Z\n// JavaScript\nnew Date(1700000000 * 1000).toISOString()\n# Python\nfrom datetime import datetime, timezone\ndatetime.fromtimestamp(1700000000, timezone.utc)",
-        "links": [
-          [
-            "Unix Timestamp",
-            "/unix-timestamp"
-          ],
-          [
-            "JWT Decoder",
-            "/jwt-decoder"
-          ],
-          [
-            "Cron Expression Parser",
-            "/cron-expression-parser"
-          ]
-        ],
-        "linksLabel": "Related"
+        code: `1700000000 seconds      -> 2023-11-14T22:13:20.000Z
+1700000000000 ms         -> 2023-11-14T22:13:20.000Z
+1700000000000000 µs      -> 2023-11-14T22:13:20.000Z
+1700000000000000000 ns   -> 2023-11-14T22:13:20.000Z`
       },
       {
         h: 'Convert a Unix timestamp to a date',
-        paras: ['Enter a number or a date string. The input starts with the current time in seconds. Digit-only values longer than 11 digits are read as milliseconds, shorter ones as seconds.'],
-        code: '1700000000\n\n// output\nUTC: Tue, 14 Nov 2023 22:13:20 GMT\nISO: 2023-11-14T22:13:20.000Z\nUnix (ms): 1700000000000\nUnix (s): 1700000000',
+        paras: ['Paste a numeric epoch value into the input. Auto detect estimates the unit from the number of digits; use the selector to choose Seconds, Milliseconds, Microseconds or Nanoseconds if you know the exact format. The result includes UTC, your device local date and time, ISO 8601, and the equivalent Unix values.'],
+        code: `Input: 1700000000
+
+UTC: Tue, 14 Nov 2023 22:13:20 GMT
+ISO 8601: 2023-11-14T22:13:20.000Z
+Unix (ms): 1700000000000
+Unix (s): 1700000000`,
+        links: [['Unix Timestamp', '/unix-timestamp'], ['JWT Decoder', '/jwt-decoder']],
+        linksLabel: 'Related tools'
       },
       {
-        h: 'Convert a date to a Unix timestamp',
-        paras: ['Type a date string that JavaScript can parse, such as an ISO 8601 value like 2023-11-14T22:13:20Z. The same panel shows Unix seconds and milliseconds. The Local line uses your device time zone.'],
-        list: ['If you see Invalid Date / Timestamp, the string could not be parsed. ISO 8601 is the safest format.', 'There is no time zone picker. Add Z or an offset such as +05:30 to the string when the zone matters.'],
-        links: [['Unix Timestamp', '/unix-timestamp'], ['JWT Decoder', '/jwt-decoder'], ['Cron Expression Parser', '/cron-expression-parser']],
-        linksLabel: 'Related',
+        h: 'Convert a date and time to a Unix timestamp',
+        paras: ['Enter a date string that the browser can parse. ISO 8601 is a reliable choice, for example 2023-11-14T22:13:20Z. The output includes Unix seconds, milliseconds, microseconds and nanoseconds. Add Z for UTC or an explicit offset such as +05:30 when the input represents a specific time zone.'],
+        list: ['A date-time string without a zone is generally interpreted in your device local time.', 'A trailing Z means UTC.', 'An explicit offset such as +05:30 or -04:00 identifies the offset from UTC.', 'If the input cannot be parsed, use a valid ISO 8601 date-time string.'],
+        code: `Input: 2023-11-14T22:13:20Z
+Unix (s): 1700000000
+Unix (ms): 1700000000000`
       },
+      {
+        h: 'Why a timestamp can appear as the wrong date',
+        paras: ['A common mistake is mixing seconds and milliseconds. JavaScript Date expects milliseconds, while many Unix tools and APIs return seconds. Passing a seconds value directly to Date can place the result near January 1970. A value interpreted with the wrong unit can also land far in the future.'],
+        list: ['Check the API, database or log documentation for the timestamp unit.', 'Compare the number of digits with common seconds and milliseconds conventions.', 'Use the unit selector to override automatic detection.', 'Remember that a timestamp itself has no time zone; UTC and local displays are two views of the same instant.'],
+        links: [['Unix Timestamp', '/unix-timestamp'], ['Query String Parser', '/query-string-parser'], ['JWT Decoder', '/jwt-decoder']],
+        linksLabel: 'Related developer tools'
+      },
+      {
+        h: 'Unix timestamp examples for developers',
+        paras: ['The Unix epoch starts at timestamp 0. These familiar values can help check whether a conversion is using the expected unit and UTC date.'],
+        code: `0          -> 1970-01-01T00:00:00.000Z
+1000000000 -> 2001-09-09T01:46:40.000Z
+1700000000 -> 2023-11-14T22:13:20.000Z
+2147483647 -> 2038-01-19T03:14:07.000Z`,
+        links: [['Unix Timestamp', '/unix-timestamp'], ['Cron Expression Parser', '/cron-expression-parser']],
+        linksLabel: 'Related developer tools'
+      }
     ],
-    faqs: [q('How do I convert milliseconds to a date?', 'Paste the 13-digit value. Numbers longer than 11 digits are treated as milliseconds automatically.')],
+    faqs: [
+      q('What is the difference between Unix time and epoch time?', 'They are commonly used as names for the same time standard: a count of seconds from 1 January 1970 at 00:00:00 UTC. POSIX time is another common name.'),
+      q('How do I convert epoch time to a date?', 'Paste the numeric epoch value, leave Auto detect selected or choose its unit, and read the UTC, local and ISO 8601 results.'),
+      q('How do I convert a date to epoch time?', 'Enter a browser-supported date string, preferably ISO 8601. The result includes the equivalent Unix timestamp in seconds, milliseconds, microseconds and nanoseconds.'),
+      q('Does a Unix timestamp include a time zone?', 'No. It represents one instant. UTC and your device local time may show different clock values for that same instant.'),
+      q('Why does my timestamp convert to a date in 1970?', 'The value may be seconds interpreted as milliseconds, or it may genuinely be close to the Unix epoch. Check the source unit and select it manually.'),
+    ],
   },
   '/unix-timestamp': {
     sections: [

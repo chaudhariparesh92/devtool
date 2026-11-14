@@ -30,7 +30,7 @@ export const SEO_RESEARCH = {
   '/sha256-generator': { topObserved: 'SHAGenerator / WaveSpeed', focus: 'text/files, checksum verification, output formats, local processing' },
   '/sha512-generator': { topObserved: 'SHAGenerator', focus: '512-bit explanation, output length, local processing, verification' },
   '/md5-generator': { topObserved: 'Hash generator suites', focus: 'checksum use, clear MD5 security warning, copy/download' },
-  '/timestamp-converter': { topObserved: 'DataFormatter / timestamp.tools', focus: 'seconds/ms/us/ns, ISO/RFC, date-to-timestamp, timezone context' },
+  '/timestamp-converter': { topObserved: 'EpochConverter.com / Timestamp-Converter.com', focus: 'epoch converter and timestamp-to-date intent; bidirectional date/epoch conversion; seconds, milliseconds, microseconds and nanoseconds; UTC/local/ISO output; explain unit detection and the 1970/2038 pitfalls without claiming arbitrary timezone selection' },
   '/unix-timestamp': { topObserved: 'W3Schools / timestamp.tools', focus: 'current Unix time, seconds/ms, UTC/local, epoch explanation' },
   '/color-converter': { topObserved: 'Zerethon / COLOREF', focus: 'HEX/RGB/HSL/HSV/CMYK, live swatch, copy, named colors' },
   '/hex-to-rgb': { topObserved: 'ColorName / ToolMatic', focus: '3/6/8-digit HEX, alpha, preview, related color formats' },
