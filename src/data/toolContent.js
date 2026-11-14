@@ -718,33 +718,59 @@ const EXTRA = {
   '/json-to-csharp': {
     sections: [
       {
-        h: 'How the C# output is generated',
+        h: 'How to convert JSON to C# classes online',
+        paras: ['Use a representative JSON object from an API response, webhook, configuration file or test fixture. The converter creates a root C# class and writes a property for each top-level key. Set the root type name before generating if you want a name other than Root.'],
         list: [
-          'The root class uses the name you set (default Root) and one property per top-level key.',
-          'Numbers become double, true/false becomes bool and text becomes string.',
-          'Nested objects become their own classes, arrays become List<T>, and null values become object so you can refine those by hand.',
-          'Property names are PascalCase: "user_id" becomes UserId.',
+          'Paste a valid JSON object or choose a .json file.',
+          'Enter the root class name, such as ApiResponse or Customer.',
+          'Choose no attributes, System.Text.Json [JsonPropertyName], or Newtonsoft.Json [JsonProperty].',
+          'Optionally mark the generated properties nullable, then select Generate C# models.',
+          'Copy the generated code or download it and review it against the full API schema.',
         ],
       },
       {
-        h: 'How JSON keys map to C# properties',
-        paras: [
-          'Each JSON key becomes one public C# property. Characters that are not letters or digits are dropped and the next letter is capitalized, so first_name and user-id become FirstName and UserId.',
-        ],
+        h: 'JSON value types and their C# equivalents',
+        paras: ['The generator infers types from the sample values. Its current mapping uses double for every JSON number; it does not distinguish int, long and decimal automatically. Arrays use the first item to infer their element type, so check the output when an array is empty or contains mixed shapes.'],
+        code: 'JSON string     -> string\nJSON number     -> double\nJSON true/false -> bool\nJSON null       -> object\nJSON array      -> List<T> (type inferred from first item)\nJSON object     -> nested C# class',
       },
       {
-        h: 'System.Text.Json and Newtonsoft.Json attributes',
-        paras: [
-          'Choose System.Text.Json for [JsonPropertyName] on modern .NET, or Newtonsoft.Json for [JsonProperty] on older projects. Leave attributes off when property names already match your JSON keys.',
-        ],
-        code: '// Deserialize\nJsonSerializer.Deserialize<Root>(json);           // System.Text.Json\nJsonConvert.DeserializeObject<Root>(json);       // Newtonsoft.Json',
+        h: 'Nested JSON objects, arrays and C# properties',
+        paras: ['A nested object is emitted as a separate class and referenced by a property on its parent. An array becomes List<T>; an array whose first item is an object gets a corresponding nested class. The tool expects an object at the root, so for a top-level JSON array, use an object wrapper or convert a representative item.'],
+        code: '{\n  "customer": { "first_name": "Ada" },\n  "roles": ["admin", "editor"]\n}\n\n// Generated property shape\npublic Customer Customer { get; set; }\npublic List<string> Roles { get; set; }',
+      },
+      {
+        h: 'System.Text.Json vs Newtonsoft.Json attributes',
+        paras: ['Choose System.Text.Json to add [JsonPropertyName("key")] attributes for the built-in .NET serializer, or Newtonsoft.Json to add [JsonProperty("key")]. These attributes preserve the original JSON key when the generated PascalCase C# property name differs. Select None when the property names already match or you plan to configure naming policies separately.'],
+        code: '// System.Text.Json\nusing System.Text.Json;\nusing System.Text.Json.Serialization;\n\nvar systemTextJsonModel = JsonSerializer.Deserialize<Root>(json);\n\n// Newtonsoft.Json\nusing Newtonsoft.Json;\n\nvar newtonsoftModel = JsonConvert.DeserializeObject<Root>(json);',
         links: [
           ['JSON Validator', '/json-validator'],
           ['JSON Formatter', '/json-formatter'],
           ['JSON to TypeScript', '/json-to-typescript'],
+          ['JSON to Java', '/json-to-java'],
+          ['JSON to Python', '/json-to-python'],
         ],
-        linksLabel: 'Related',
+        linksLabel: 'Related JSON tools',
       },
+      {
+        h: 'Review generated C# before using it',
+        list: [
+          'A sample only describes the values present in that sample. Check optional fields and nullability against your API contract.',
+          'The nullable option appends ? to generated property types; enable nullable reference types in your C# project if you want compiler nullable analysis.',
+          'All JSON numbers are emitted as double. Change to int, long or decimal when the API contract requires a different numeric type.',
+          'Only the first array item determines the generated item type. Review empty arrays and arrays with inconsistent elements.',
+          'Generated classes are a starting point, not a complete schema validator or a guarantee that every future API response matches.',
+        ],
+      },
+    ],
+    faqs: [
+      q('How do I convert JSON to a C# class?', 'Paste a valid JSON object, choose a root class name, select an optional serializer attribute style and generate the code. The output contains a root class and separate classes for nested objects. Copy or download the result, then review the inferred types.'),
+      q('Can I convert a JSON object to a C# class with properties?', 'Yes. Each key in the JSON object becomes a public C# property with get and set accessors. Property names are converted to PascalCase, while the optional serializer attributes preserve the original JSON key.'),
+      q('Does the JSON to C# converter support nested objects and arrays?', 'Yes. Nested objects are emitted as separate C# classes and arrays are represented as List<T>. The element type is inferred from the first array item, so review arrays that are empty or contain mixed item types.'),
+      q('Does it generate int, long or decimal for JSON numbers?', 'No. The current generator maps all JSON numbers to double. If your API contract requires int, long or decimal, change the generated property type manually.'),
+      q('What is the difference between System.Text.Json and Newtonsoft.Json?', 'System.Text.Json is built into modern .NET and uses [JsonPropertyName]. Newtonsoft.Json is a widely used separate library and uses [JsonProperty]. Choose the option that matches the serializer in your project.'),
+      q('Can I convert a top-level JSON array to C#?', 'The converter expects a JSON object at the root. For a top-level array, wrap the array in an object property or paste a representative object from the array as the root input.'),
+      q('Does the converter generate C# records or immutable classes?', 'No. It currently generates standard mutable C# classes with public get and set properties. You can adapt the output to records or init-only properties in your project.'),
+      q('Is my JSON uploaded to a server?', 'No. JSON parsing and C# code generation run in your browser. The input is not sent to a server for conversion.'),
     ],
   },
 

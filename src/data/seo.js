@@ -45,6 +45,7 @@ const BASELINE_MODIFIED = '2026-10-25';
 
 const MODIFIED_ON = {
   '2026-11-14': [
+    '/json-to-csharp',
     '/uuid-generator',
     '/html-decoder',
     '/html-encoder',

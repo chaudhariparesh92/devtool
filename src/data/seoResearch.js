@@ -5,7 +5,7 @@ export const SEO_RESEARCH = {
   '/json-validator': { topObserved: 'JSONYard / jsonfmt.dev', focus: 'line-column errors, repair context, RFC language, local processing' },
   '/json-beautifier': { topObserved: 'JSON Beautify / jsonbeautifier.io', focus: 'multiple indentation choices, upload, tree view, syntax errors' },
   '/json-minifier': { topObserved: 'Q3 Labs / GigaJSON', focus: 'size savings, validation, copy/download, large-file handling' },
-  '/json-to-csharp': { topObserved: 'json2csharp.com / jsonlint.com', focus: 'json to c# head term, STJ vs Newtonsoft, type table, deserialize examples, browser-only' },
+  '/json-to-csharp': { topObserved: 'json2csharp.com / jsonlint.com', focus: 'json to c# and json to csharp head terms, class/property generation, nested objects and List<T>, STJ vs Newtonsoft attributes, accurate type limits, deserialize examples, browser-only' },
   '/json-to-typescript': { topObserved: 'Minitool / QoTool', focus: 'root type name, optional fields, export keyword, local processing' },
   '/json-to-java': { topObserved: 'DataFormatter / Recast', focus: 'nested classes, POJO/record output, type inference, root naming' },
   '/json-to-python': { topObserved: 'JSON model generators', focus: 'dataclass/Pydantic intent, nested structures, type inference' },
