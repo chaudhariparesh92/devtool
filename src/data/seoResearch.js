@@ -3,7 +3,7 @@
 export const SEO_RESEARCH = {
   '/json-formatter': { topObserved: 'FormatKit / JSONYard', focus: 'custom indentation, exact error location, file input, tree view, privacy' },
   '/json-validator': { topObserved: 'JSONYard / jsonfmt.dev', focus: 'line-column errors, repair context, RFC language, local processing' },
-  '/json-beautifier': { topObserved: 'JSON Beautify / jsonbeautifier.io', focus: 'multiple indentation choices, upload, tree view, syntax errors' },
+  '/json-beautifier': { topObserved: 'jsonbeautifier.org / jsonformatter.org / CodeBeautify JSON Viewer', focus: 'online JSON beautifier, pretty printing minified JSON, file and URL input, configurable indentation, key sorting, structured tree view, parser errors and browser-side privacy' },
   '/json-minifier': { topObserved: 'CodeBeautify / JSONFormatter.org', focus: 'JSON minifier head terms, one-line compact output, syntax validation, file and URL input, download, character savings, whitespace inside strings, gzip/Brotli distinction' },
   '/json-to-csharp': { topObserved: 'json2csharp.com / jsonlint.com', focus: 'json to c# and json to csharp head terms, class/property generation, nested objects and List<T>, STJ vs Newtonsoft attributes, accurate type limits, deserialize examples, browser-only' },
   '/json-to-typescript': { topObserved: 'Minitool / QoTool', focus: 'root type name, optional fields, export keyword, local processing' },

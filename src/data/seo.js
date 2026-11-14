@@ -52,6 +52,7 @@ const MODIFIED_ON = {
     '/html-decoder',
     '/html-encoder',
     '/timestamp-converter',
+    '/json-beautifier',
   ],
 
   '2026-11-13': [

@@ -27,10 +27,12 @@ export const TOOL_GAP = {
     ],
   },
   '/json-beautifier': {
-    tasks: ['Beautify JSON copied from the browser network tab', 'Make minified API response JSON readable', 'Pretty print JSON with tab indentation', 'Prepare JSON for a code review or bug report'],
+    tasks: ['Beautify JSON copied from a browser Network response', 'Pretty print a minified API payload', 'Format a JSON configuration file before editing it', 'Sort nested JSON keys for easier inspection', 'Inspect objects and arrays in the tree view', 'Choose tab or custom space indentation'],
     faqs: [
-      f('How do I beautify JSON copied from browser dev tools?', 'Copy the response body from the Network tab, paste it into the input box and press the format button. The tool re-prints it with one item per line and the indentation you pick.'),
-      f('What is the difference between beautifying and validating JSON?', 'Beautifying changes only the whitespace so the structure is easier to read. Validating only tells you whether the text parses. This page does both in one step: valid JSON is re-printed, invalid JSON returns the parser error.'),
+      f('How do I beautify JSON copied from the browser Network tab?', 'Open the request, copy its JSON response body, paste it into the input area and select Beautify JSON. Choose the indentation width first if you want something other than the default two spaces.'),
+      f('Can I beautify JSON from a file?', 'Yes. Choose a .json file or drag it into the file drop area. The file is read in the browser, then you can format, inspect and download the result.'),
+      f('Can I sort JSON keys while beautifying?', 'Yes. Enable Sort keys before processing. The option sorts object keys recursively; arrays keep their item order.'),
+      f('What if the JSON has a syntax error?', 'The parser displays an error and does not generate formatted output. Check the reported position and line/column when available, correct the JSON syntax, and run the beautifier again.'),
     ],
   },
   '/json-minifier': {
