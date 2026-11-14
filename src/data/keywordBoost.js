@@ -6,6 +6,12 @@
 // No search volumes are implied. Every answer describes what the tool really does.
 
 export const KEYWORD_BOOST = {
+  // UUID Generator: supporting FAQ for supplied SEMrush developer-query intent.
+  '/uuid-generator': {
+    faqs: [
+      ['How do I generate a UUID in Java or Node.js?', "In Java, import java.util.UUID and call UUID.randomUUID(). In Node.js, import { randomUUID } from 'node:crypto' and call randomUUID(). Both create a version 4 UUID."],
+    ],
+  },
   '/json-formatter': {
     d: 'Free online JSON formatter and viewer. Paste minified JSON, get indented output with key sorting, a tree view and parser errors. Runs in your browser.',
     s: ['online json formatter', 'json formatter online', 'free json formatter', 'format json', 'json pretty print', 'json viewer online', 'view json'],

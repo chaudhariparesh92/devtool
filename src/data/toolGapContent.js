@@ -215,7 +215,7 @@ export const TOOL_GAP = {
       'Custom UUID format: uppercase, no hyphens, braces',
       'Generate UUID v4 online',
       'Generate UUID v7 online',
-      'Generate 100 UUIDs at once',
+      'Generate up to 500 UUIDs at once',
       'Create random UUIDs for test data or database keys',
       'Download UUIDs as a text file',
     ],

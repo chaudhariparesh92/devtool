@@ -77,7 +77,7 @@ const enc = {
 
 // ---- UUID -----------------------------------------------------------------
 const uuid = {
-  '/uuid-generator': { lede: 'Free UUID generator: get a random UUID instantly in your browser, or bulk-generate v4 and v7 values as GUIDs. Nothing is uploaded.', what: 'UUID Generator creates random version 4 UUIDs with your browser\'s crypto.randomUUID() and time-ordered version 7 UUIDs from the current time plus secure random bytes. Use them for database keys, request IDs and test data. Output as standard, UPPERCASE, no-hyphen or {braces} GUID format, then copy or download a .txt file.', ex: ['One click', '3b241101-e2bb-4255-8caf-4136c566a962'], steps: ['A UUID is ready when the page loads — copy it or press Generate another.', 'Choose quantity, version 4 (random) or 7 (time-ordered), and format.', 'Copy the list or download a .txt file for bulk use.'], tasks: ['UUID generator', 'Generate a UUID online', 'Random UUID generator', 'Create random GUIDs', 'Bulk UUID generator'] },
+  '/uuid-generator': { lede: 'Use this free UUID generator online to create a random UUID instantly. Generate UUID v4 or time-ordered v7 values in bulk, copy them, or download a text file. Everything runs in your browser.', what: 'A UUID generator creates a universally unique identifier (UUID), a 128-bit value commonly used as a unique ID in applications and databases. This online UUID generator creates random version 4 UUIDs with your browser\'s crypto.randomUUID() and time-ordered version 7 UUIDs from the current time plus secure random bytes. Choose standard, UPPERCASE, no-hyphen or {braces} output, then copy or download the generated UUIDs.', ex: ['Example UUID v4', '3b241101-e2bb-4255-8caf-4136c566a962'], steps: ['A random UUID is generated when the page loads — copy it or press Generate another.', 'Choose the quantity, UUID version 4 (random) or 7 (time-ordered), and output format.', 'Copy one UUID or the full list, or download the generated UUIDs as a .txt file.'], tasks: ['UUID generator online', 'Generate a random UUID', 'UUID v4 generator', 'Online random UUID generator', 'Generate multiple UUIDs at once', 'Download UUIDs as a text file'] },
   '/uuid-validator': { lede: 'Check whether a UUID or GUID is valid and see which version it is.', what: 'UUID Validator tests a string against the standard 8-4-4-4-12 hex layout, with a version digit of 1-8 and an RFC 4122 / RFC 9562 variant. The nil and max UUIDs are recognised as special values.', ex: ['123e4567-e89b-12d3-a456-426614174000', 'Valid UUID (version 1)'], steps: ['Paste the UUID (curly braces are fine).', 'Press the validate button.', 'Read the result: Valid UUID with its version, or Invalid UUID.'], tasks: ['Validate a UUID', 'Validate a GUID', 'UUID version checker', 'Is this a valid UUID?'] },
   '/uuid-parser': { lede: 'Decode a UUID: version, variant and, for v1, v6 and v7, the embedded timestamp.', what: 'UUID Parser checks the UUID format, reports its version and variant, and converts the creation time stored in version 1, 6 and 7 UUIDs into a readable date.', ex: ['123e4567-e89b-12d3-a456-426614174000', 'Version: 1\nVariant: RFC 4122 / RFC 9562 (variant 1)\nKind: Time-based\nTimestamp: 2228-06-25T20:01:28.545Z'], steps: ['Paste the UUID.', 'Press the parse button.', 'Read the version, variant and any timestamp.'], tasks: ['Parse a UUID', 'Find UUID version', 'Inspect a GUID'] },
 };
@@ -883,23 +883,47 @@ const EXTRA = {
   '/uuid-generator': {
     sections: [
       {
-        h: 'What a UUID looks like',
+        h: 'Generate a random UUID online',
         paras: [
-          'A UUID is a 128-bit identifier written as 32 hexadecimal digits in five groups, 8-4-4-4-12, for example 3b241101-e2bb-4255-8caf-4136c566a962. In .NET and some databases it is called a GUID.',
-          'This tool generates version 4 UUIDs (random bits) or version 7 UUIDs (a millisecond timestamp followed by random bits). The version digit appears at the start of the third group, and the first digit of the fourth group is 8, 9, a or b.',
+          'Use this online UUID generator when you need a new identifier for an application, database record, API request or test fixture. A random UUID v4 is generated as soon as the page opens, so you can copy it immediately or generate another one. For bulk work, select 5, 10, 25, 50, 100, 250 or 500 UUIDs and copy or download the list.',
+          'The generator also supports time-ordered UUID v7. Choose the version that fits your use case, then select standard, uppercase, no-hyphen or braces formatting.',
         ],
       },
       {
-        h: 'How the UUIDs are generated',
+        h: 'What is a UUID? Format and example UUID',
         paras: [
-          'Version 4 UUIDs come from your browser\'s crypto.randomUUID(), which uses a cryptographically secure random source; version 7 UUIDs combine the current time with secure random bytes. You can generate 1, 5, 10, 25, 50 or 100 at a time and choose standard, UPPERCASE, no-hyphen or {braces} output. Nothing is stored or sent anywhere.',
+          'A UUID (universally unique identifier) is a 128-bit identifier written as 32 hexadecimal digits in five groups, in the 8-4-4-4-12 pattern. For example: 3b241101-e2bb-4255-8caf-4136c566a962. In .NET and some databases, the same kind of identifier is commonly called a GUID.',
+          'The version digit appears at the start of the third group. The first digit of the fourth group identifies the variant; for the standard RFC variant it is 8, 9, a or b.',
         ],
+      },
+      {
+        h: 'UUID v4 generator: how random UUIDs work',
+        paras: [
+          'A UUID v4 generator creates identifiers using random bits. This tool uses your browser\'s crypto.randomUUID() method, which relies on a cryptographically secure random source. Version 4 is a common choice for database IDs, request IDs, test data and other identifiers that do not need to sort by creation time.',
+          'UUID v7 is different: it starts with a millisecond timestamp and uses random bits for the remaining fields. That time-ordered layout can make UUID v7 a better fit for database indexes that benefit from values sorting roughly by creation time.',
+        ],
+      },
+      {
+        h: 'Generate a UUID in Java and Node.js',
+        paras: [
+          'A UUID generator is also available in common developer runtimes. Java provides UUID.randomUUID() in java.util.UUID. Node.js provides crypto.randomUUID() in its built-in crypto module. These examples generate version 4 UUIDs; this page is useful when you need a UUID quickly without writing code.',
+        ],
+        code: `// Java
+import java.util.UUID;
+UUID id = UUID.randomUUID();
+
+// Node.js
+import { randomUUID } from 'node:crypto';
+const id = randomUUID();
+
+// C#
+Guid id = Guid.NewGuid();`,
       },
       {
         h: 'When to use UUIDs, and when to think twice',
         list: [
           'Good for: primary keys created on the client, request and correlation IDs, test fixtures and unique file names.',
-          'Random UUIDs make poor clustered index keys in some databases, because new rows land at random positions and cause page splits. Time-ordered UUIDs such as version 7 are designed for that case, and you can generate them here.',
+          'Random UUIDs can be less suitable as clustered index keys in some databases because new rows land at random positions. Time-ordered UUIDs such as version 7 are designed for that case.',
           'A UUID is an identifier, not a secret. Do not use one as a password or an authorization token.',
         ],
         links: [['UUID Validator', '/uuid-validator'], ['UUID Parser', '/uuid-parser'], ['Hash Generator', '/hash-generator'], ['Timestamp Converter', '/timestamp-converter']],
