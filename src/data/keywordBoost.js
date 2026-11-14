@@ -54,11 +54,17 @@ export const KEYWORD_BOOST = {
     ],
   },
   '/json-minifier': {
-    s: ['json minifier online', 'minify json', 'compress json', 'json compressor', 'remove whitespace from json'],
-    l: ['minify json online', 'json to one line', 'reduce json size', 'strip json whitespace', 'compact json'],
-    tasks: ['Minify JSON online', 'JSON minify online', 'Compress JSON to one line', 'Remove whitespace from JSON'],
+    d: 'Free online JSON minifier: validate JSON and convert formatted data into compact, single-line output. See character savings, then copy or download the minified JSON in your browser.',
+    s: ['json minifier online', 'minify json online', 'json minify', 'compress json', 'json compressor', 'json compact', 'single line json', 'one line json', 'json one line', 'minified json document', 'json minification', 'json minimize', 'json compress', 'json stringify online'],
+    l: ['minify formatted json', 'convert json to one line', 'remove unnecessary json whitespace', 'reduce json character count', 'compact json for api request', 'minify json file online', 'create compressed json text'],
+    tasks: ['Minify JSON online', 'JSON minify online', 'Compress JSON to one line', 'Remove unnecessary whitespace from JSON', 'Create a compact JSON document', 'Minify a JSON file', 'Check JSON size savings'],
     faqs: [
-      ['How do I minify JSON?', 'Paste your JSON and the minified version appears as a single line with all spaces and line breaks outside strings removed. Copy it into your request, config or test fixture.'],
+      ['How do I minify JSON online?', 'Paste valid JSON into the input area, or load a .json file or HTTP(S) URL. Select Minify JSON to validate and serialize it as compact single-line JSON, then copy or download the output.'],
+      ['What does a JSON minifier remove?', 'It removes formatting whitespace between JSON tokens, such as indentation, line breaks and spaces after commas or colons. Whitespace inside quoted string values is preserved because it is part of the data.'],
+      ['What is a minified JSON document?', 'A minified JSON document is valid JSON serialized without optional formatting whitespace. Objects and arrays remain structured, but the text is compact and usually appears on one line.'],
+      ['Does minifying JSON reduce file size?', 'It reduces the character count when the input contains formatting whitespace. The amount varies with the original formatting; an already compact document may have little or no size reduction.'],
+      ['What is the difference between JSON minify and JSON stringify?', 'JSON.stringify serializes a JavaScript value as JSON text. Calling JSON.stringify without a spacing argument produces compact output, which is the same basic serialization approach used by this minifier after JSON.parse validates the input.'],
+      ['Can I use minified JSON in Arduino or embedded projects?', 'Yes, compact JSON can be useful when placing a JSON document in a source file, configuration value or payload for an Arduino or other embedded device. Check the memory limits and JSON library used by your device; minification does not make the document smaller once your application has parsed it into an in-memory object.'],
     ],
   },
   '/json-to-typescript': {

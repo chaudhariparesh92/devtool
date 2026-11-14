@@ -34,10 +34,16 @@ export const TOOL_GAP = {
     ],
   },
   '/json-minifier': {
-    tasks: ['Minify JSON to a single line', 'Remove whitespace from JSON for a request body', 'Shrink JSON before putting it in an environment variable', 'Compress JSON for a quick payload test'],
+    tasks: ['Minify JSON to a single line', 'Remove insignificant whitespace from JSON', 'Create a compact JSON request body', 'Shrink formatted JSON before putting it in an environment variable', 'Minify a JSON file in your browser', 'Check JSON size before and after minification', 'Validate JSON while converting it to one line'],
     faqs: [
-      f('How much smaller does minified JSON get?', 'It depends on how much whitespace the original had. Deeply indented, pretty-printed JSON shrinks the most. JSON that is already compact barely changes.'),
-      f('Is minifying the same as compressing with gzip?', 'No. Minifying only removes spaces and line breaks and the result is still plain JSON. Gzip is a separate compression step applied by a server or build tool, and it works on top of minified or pretty-printed JSON.'),
+      f('How much smaller does minified JSON get?', 'There is no fixed percentage. It depends on how much indentation, line breaks and spacing the original document contains. A deeply indented JSON document can lose many formatting characters, while JSON that is already compact may barely change.'),
+      f('Is JSON minification the same as gzip or Brotli compression?', 'No. Minification removes insignificant JSON formatting whitespace and leaves you with ordinary JSON text. Gzip and Brotli are compression algorithms usually applied when data is transferred or stored. They can compress minified JSON further, and often reduce the additional benefit of removing whitespace.'),
+      f('Does minifying JSON remove spaces inside string values?', 'No. Spaces, tabs and other characters inside quoted JSON strings are part of the value and are preserved. The minifier removes formatting whitespace between JSON tokens, not meaningful characters inside strings.'),
+      f('Can I minify an invalid JSON document?', 'No. The tool first parses the input as standard JSON. If the syntax is invalid, it shows the parser error instead of generating output. Fix the JSON and run Minify JSON again.'),
+      f('Can I minify a JSON file or load JSON from a URL?', 'Yes. Choose or drop a .json file, or enter an HTTP or HTTPS URL and load it in the browser. URL loading depends on the remote server allowing cross-origin requests (CORS); if it does not, download the file and use the file picker.'),
+      f('Does minifying JSON make an API request faster?', 'A smaller request body can reduce the number of bytes sent, especially when the original contains lots of formatting whitespace. Actual request speed also depends on network latency, server processing, and whether HTTP compression such as gzip or Brotli is enabled.'),
+      f('Does this tool change JSON values or key order?', 'It parses and re-serializes the document, so it is not a character-preserving whitespace remover. Duplicate object keys collapse to the last value, large integers can lose precision in JavaScript, numeric notation can be normalized, and integer-like object keys may be reordered. Keep the original if exact textual preservation matters.'),
+      f('How do I turn minified JSON back into readable JSON?', 'Paste the compact output into the JSON Formatter or JSON Beautifier to add indentation and line breaks. Those tools parse and re-serialize the data, so keep the original when exact textual preservation is important.'),
     ],
   },
   '/json-to-csharp': {

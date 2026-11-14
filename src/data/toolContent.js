@@ -44,13 +44,13 @@ const jsonFmt = {
     tasks: ['Beautify JSON online', 'Pretty print JSON', 'Make minified JSON readable'],
   },
   '/json-minifier': {
-    lede: 'Minify JSON online: remove spaces and line breaks to get compact one-line JSON, and see how many characters it saved.',
-    what: 'JSON Minifier parses your JSON and prints it back on a single line with no extra spaces or line breaks.',
-    problem: 'Pretty-printed JSON carries whitespace you do not need in a request body, a query parameter or an environment variable.',
-    steps: ['Paste formatted JSON into the input box.', 'Press Process.', 'Copy the single-line output.'],
-    example: { inLabel: 'Input', input: '{\n  "name": "Ada",\n  "tags": ["dev", "math"]\n}', outLabel: 'Output', output: '{"name":"Ada","tags":["dev","math"]}' },
-    useCases: ['Putting JSON into an env var or a one-line config', 'Shrinking a payload for a quick test', 'Comparing two JSON blobs without whitespace noise'],
-    tasks: ['Minify JSON online', 'Compress JSON to one line', 'Remove whitespace from JSON'],
+    lede: 'Minify JSON online into compact, single-line output. Validate the JSON, remove unnecessary formatting whitespace, and see the character savings before copying or downloading it.',
+    what: 'The JSON Minifier parses valid JSON and serializes it without indentation or extra formatting whitespace. It keeps whitespace inside quoted string values, validates input during processing, and displays the input and output character counts.',
+    problem: 'Pretty-printed JSON includes indentation, line breaks and spacing that are useful to people but not required by the JSON data format. Compact output is handy for API request bodies, environment variables, test fixtures, embedded configuration and other places where a single-line value is easier to use.',
+    steps: ['Paste formatted or multi-line JSON into the input box, or choose a .json file or load a JSON URL.', 'Select Minify JSON. The tool parses the input and reports an error if it is not valid JSON.', 'Review the compact single-line output and the before/after character counts.', 'Copy the result or download it as a .min.json file.'],
+    example: { inLabel: 'Formatted JSON', input: '{\n  "name": "Ada Lovelace",\n  "active": true,\n  "tags": ["developer", "math"]\n}', outLabel: 'Minified JSON', output: '{"name":"Ada Lovelace","active":true,"tags":["developer","math"]}' },
+    useCases: ['Create a single-line JSON value for an environment variable or configuration entry', 'Remove formatting whitespace from an API request body or test fixture', 'Compare the character count before and after compacting a JSON document', 'Prepare JSON for a system that expects compact one-line input'],
+    tasks: ['Minify JSON online', 'Compress JSON to one line', 'Create a minified JSON document', 'Remove JSON formatting whitespace', 'Compact a JSON file', 'Compare JSON size before and after minifying', 'Validate and minify JSON online'],
   },
 };
 
