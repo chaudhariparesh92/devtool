@@ -129,7 +129,11 @@ const ts = {
 const color = {
   '/color-converter': { lede: 'Convert colors between HEX and RGB.', ex: ['#FF5733', 'rgb(255, 87, 51)'], tasks: ['HEX to RGB', 'RGB to HEX', 'Color code converter'] },
   '/hex-to-rgb': { lede: 'Convert a HEX color code to RGB.', ex: ['#FF5733', 'rgb(255, 87, 51)'], tasks: ['HEX to RGB converter', 'Hex color to rgb()', 'Convert #FFF to RGB'] },
-  '/rgb-to-hex': { lede: 'Convert RGB to hex online: enter red, green and blue values and get the hex color code for CSS, with a live preview.', ex: ['rgb(255, 87, 51)', '#FF5733'], tasks: ['RGB to HEX converter', 'RGB to hex value', 'rgb() to hex color', 'Convert RGB to #hex'] },
+  '/rgb-to-hex': {
+    lede: 'Convert RGB to HEX online. Enter red, green and blue values from 0 to 255, paste an rgb() or rgba() color, and get the matching hexadecimal color code with a live preview.',
+    ex: ['rgb(255, 87, 51)', '#FF5733'],
+    tasks: ['RGB to HEX converter', 'Convert RGB color to hexadecimal', 'RGB to hex code for CSS', 'Red green blue to HEX', 'Convert rgba() to 8-digit HEX'],
+  },
 };
 
 // ---- Number bases ---------------------------------------------------------

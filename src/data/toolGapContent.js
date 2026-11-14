@@ -333,12 +333,21 @@ export const TOOL_GAP = {
     ],
   },
   '/rgb-to-hex': {
-    tasks: ['Convert RGB to a HEX color code', 'Convert rgb(59, 130, 246) to hex', 'Change RGB to hex for CSS', 'Turn CSS rgb values into a hex code', 'Get an uppercase hex code for a design tool', 'Convert RGB to hexadecimal'],
+    tasks: [
+      'Convert RGB values from 0 to 255 into a six-digit HEX code',
+      'Convert rgb(255, 87, 51) to #FF5733',
+      'Convert red green blue channels to hexadecimal',
+      'Get a CSS HEX color code from RGB values',
+      'Convert RGBA color values to an eight-digit HEX code',
+      'Convert HEX color input back to RGB values',
+      'Preview and copy an RGB color conversion',
+    ],
     faqs: [
-      f('Is it RGB to HEX or GRB to HEX?', 'CSS, design tools and this converter all use RGB order: red, green, blue. GRB is usually a typo. Some LED strips (WS2812, for example) do expect bytes in green, red, blue order. If you are working with one, swap the first two numbers before converting, then enter them as RGB.'),
-      f('How do I convert rgb(59, 130, 246) to hex?', 'Convert each channel to two hex digits: 59 is 3B, 130 is 82 and 246 is F6. Together that is #3B82F6.'),
-      f('What range should each RGB value be in?', 'Each channel is a whole number from 0 to 255. A value outside that range shows an error instead of a hex code.'),
-      f('Does RGB to HEX support alpha (rgba)?', 'Yes. rgba(59, 130, 246, 0.5) becomes the 8-digit code #3B82F680, where the last two digits are the alpha value.'),
+      f('How do I convert red, green and blue to hex?', 'Convert red, green and blue separately to two-digit hexadecimal values, then join them in that order. For example, 255, 87, 51 becomes FF, 57, 33 and the final code is #FF5733.'),
+      f('What is the HEX code for RGB 34?', 'RGB needs three channel values, not one. If you mean rgb(34, 34, 34), the HEX code is #222222. If 34 is only one channel, provide the red, green and blue values to get a complete color.'),
+      f('Does RGB to HEX include a leading hash?', 'Yes. The converter returns uppercase six-digit HEX codes beginning with #, such as #3B82F6.'),
+      f('Can I convert RGB to a HEX color code for HTML?', 'Yes. CSS and HTML color attributes accept the resulting #RRGGBB value. For example, use style="color: #FF5733" to apply the converted color.'),
+      f('Does it support RGB percentages or decimal channels?', 'No. Enter whole-number channel values from 0 to 255. Percentage channels and fractional RGB values are not accepted.'),
     ],
   },
   '/query-string-parser': {

@@ -34,7 +34,7 @@ export const SEO_RESEARCH = {
   '/unix-timestamp': { topObserved: 'W3Schools / timestamp.tools', focus: 'current Unix time, seconds/ms, UTC/local, epoch explanation' },
   '/color-converter': { topObserved: 'Zerethon / COLOREF', focus: 'HEX/RGB/HSL/HSV/CMYK, live swatch, copy, named colors' },
   '/hex-to-rgb': { topObserved: 'ColorName / ToolMatic', focus: '3/6/8-digit HEX, alpha, preview, related color formats' },
-  '/rgb-to-hex': { topObserved: 'Color converter suites', focus: 'RGB to HEX, alpha, CSS syntax, preview, copy' },
+  '/rgb-to-hex': { topObserved: 'rgbtohex.net / OpenReplay / RapidTables', focus: 'RGB to HEX head terms, 0–255 channel range, two-digit channel mapping, worked examples, RGBA alpha byte, CSS usage, preview and copy; avoid unsupported HSL/named-color claims' },
   '/query-string-parser': { topObserved: 'Torinoa / Utilify', focus: 'full URL input, duplicate keys, decoded values, JSON output' },
   '/query-string-generator': { topObserved: 'Query-string builder tools', focus: 'JSON/key-value input, repeated keys, percent encoding, copy' },
   '/cron-expression-generator': { topObserved: 'easytime.tools / cron builders', focus: 'visual builder, presets, five-field syntax, next runs' },
