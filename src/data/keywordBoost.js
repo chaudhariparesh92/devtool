@@ -185,13 +185,14 @@ export const KEYWORD_BOOST = {
     ],
   },
   '/html-decoder': {
-    d: 'Free online HTML decoder: decode HTML entities such as &lt; &gt; &amp; and &#60; back to text and tags. HTML decode online in your browser, no signup.',
-    s: ['html decoder', 'html decode online', 'online html decoder', 'html entity decoder', 'html unescape'],
-    l: ['html decode', 'decode html entities online', 'convert &lt; to <', 'html decoder tool', 'unescape html entities'],
-    tasks: ['HTML decode online', 'Decode &amp; &lt; &gt; entities', 'Unescape HTML'],
+    t: 'HTML Decoder Online – Decode HTML Entities & Encoded Text',
+    d: 'Free HTML decoder online for named, decimal and hexadecimal entities. Decode encoded text in your browser, then copy or download the result. No signup.',
+    s: ['html decoder', 'html decode online', 'decode html', 'online html decoder', 'html entity decode', 'html entities decode', 'html entity decoder', 'htmlentities decode', 'html unescape', 'decode text online'],
+    l: ['decode html entities online', 'decode html encoded string online', 'decode named html entities', 'decode decimal html entities', 'decode hexadecimal html entities', 'decode numeric html entities', 'decode text containing html entities'],
+    tasks: ['HTML decoder online', 'Decode HTML entities to text', 'Decode named, decimal and hexadecimal entities', 'Unescape HTML character references', 'Decode encoded text from HTML source'],
     faqs: [
-      ['How do I decode HTML entities?', 'Paste the text containing entities such as &lt;div&gt; and the decoded version, <div>, appears. Both named entities like &amp; and numeric ones like &#60; are handled.'],
-      ['What is the difference between an HTML encoder and decoder?', 'An encoder turns characters like < and & into entities so they display as text. A decoder reverses that and returns the original characters.'],
+      ['What is the difference between an HTML encoder and decoder?', 'An HTML encoder converts characters such as < and & into character references so they can be displayed as text in HTML. An HTML decoder reverses those references and returns the represented characters.'],
+      ['Can I decode HTML entities in JavaScript?', 'Yes. In a browser, a detached textarea can parse character references: create a textarea element, assign the encoded string to its innerHTML, then read its value. Keep the decoded result as text unless you have safely sanitized it for an HTML context.'],
     ],
   },
   '/jwt-decoder': {

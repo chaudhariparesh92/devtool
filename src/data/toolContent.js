@@ -72,7 +72,7 @@ const enc = {
   '/base64-encoder': { what: 'Base64 Encoder converts text (including UTF-8 characters) into a Base64 string.', lede: 'Encode text to Base64 in your browser. Handles UTF-8 input.', ex: ['hello', 'aGVsbG8='], tasks: ['Base64 encode a string', 'Encode text to Base64', 'Base64 online encoder'] },
   '/base64-decoder': { what: 'Base64 Decoder converts a Base64 string back into plain text. Paste the encoded value and the original text appears straight away. It reads the result as UTF-8, so accented letters and emoji decode correctly.', lede: 'Online decode Base64: paste a Base64 string and read the plain text inside it, right in your browser.', problem: 'Base64 data turns up in API responses, config files, HTTP headers and emails. It looks like random letters, so you cannot read it without decoding it first.', ex: ['aGVsbG8=', 'hello'], tasks: ['Base64 decode online', 'Decode a Base64 string', 'Read Base64 encoded text'] },
   '/html-encoder': { what: 'HTML Encoder replaces special characters with HTML entities so markup shows up as text instead of being rendered. It converts &, <, >, " and \' to &amp;, &lt;, &gt;, &quot; and &#39;.', lede: 'Free HTML encoder online: encode a string so tags and special characters display as text. Instant HTML encode and escape in your browser.', ex: ['<b class="x">Tom & Jerry</b>', '&lt;b class=&quot;x&quot;&gt;Tom &amp; Jerry&lt;/b&gt;'], tasks: ['HTML encode a string online', 'HTML escape online', 'Encode HTML entities', 'Show HTML tags as text', 'HTML encoder tool'] },
-  '/html-decoder': { what: 'HTML Decoder turns HTML entities such as &lt;, &amp; and &quot; back into the characters they stand for. Named, decimal and hex references are all supported. Use it on encoded text from page source, feeds, APIs or database fields.', lede: 'Free HTML decode online: paste text with entities like &lt; and &amp; and get plain characters back instantly in your browser.', problem: 'Text copied from HTML documents, scraped pages, RSS feeds or API responses often arrives full of entities such as &quot; and &#39;. Reading it that way is tedious, and replacing each one by hand is easy to get wrong.', ex: ['&lt;b class=&quot;x&quot;&gt;Tom &amp; Jerry&lt;/b&gt;', '<b class="x">Tom & Jerry</b>'], tasks: ['HTML decode online', 'HTML decoder', 'Unescape HTML entities', 'Convert &amp; back to &', 'Decode HTML encoded string online'] },
+  '/html-decoder': { what: 'An HTML decoder converts HTML character references back into the characters they represent. This tool handles named entities such as &amp; and &lt;, decimal references such as &#38;, and hexadecimal references such as &#x26;. It is useful for reading encoded text copied from HTML source, feeds, API responses and database fields.', lede: 'Decode HTML entities online: paste encoded text and turn named, decimal and hexadecimal character references back into readable text and markup. Processing happens in your browser.', problem: 'Text copied from HTML documents, scraped pages, RSS feeds or API responses can contain character references such as &quot;, &#39; and &amp;. Manually replacing them is slow and easy to get wrong, especially when numeric or Unicode characters are involved.', ex: ['&lt;b class=&quot;x&quot;&gt;Tom &amp; Jerry&lt;/b&gt; &copy; 2026', '<b class="x">Tom & Jerry</b> © 2026'], tasks: ['HTML decoder online', 'Decode HTML entities to text', 'Unescape named HTML entities', 'Decode decimal and hexadecimal references', 'Decode text copied from HTML source'] },
 };
 
 // ---- UUID -----------------------------------------------------------------
@@ -199,11 +199,18 @@ const GROUPS = [
         example: { inLabel: 'Input', input: v.ex[0], outLabel: 'Output', output: v.ex[1] },
         useCases: ['Debugging query strings and redirect URLs', 'Reading values from HTTP headers or config files', 'Preparing text to embed in a URL or HTML page'],
         tasks: v.tasks,
-        faqs: [
-          ...(p === '/html-decoder' ? [] : [q('What if the output is empty?', 'The tool shows nothing when the input cannot be converted, for example malformed Base64 or a stray % in a URL. Check the input for typos or cut-off characters.')]),
-          q('Is encoding the same as encryption?', 'No. Encoding only changes the representation, and anyone can reverse it. Never use it to protect secrets.'),
-          LOCAL,
-        ],
+        faqs: p === '/html-decoder'
+          ? [
+              q('What is an HTML decoder?', 'An HTML decoder converts character references such as &amp;, &lt; and &#169; back into the characters they represent.'),
+              q('Does this decoder support named, decimal and hexadecimal entities?', 'Yes. The browser HTML parser handles named references such as &amp;, decimal references such as &#38;, and hexadecimal references such as &#x26;.'),
+              q('Does decoding make HTML safe to render?', 'No. Decoding only converts character references. It does not sanitize markup or make untrusted HTML safe to insert into a page.'),
+              LOCAL,
+            ]
+          : [
+              q('What if the output is empty?', 'The tool shows nothing when the input cannot be converted, for example malformed Base64 or a stray % in a URL. Check the input for typos or cut-off characters.'),
+              q('Is encoding the same as encryption?', 'No. Encoding only changes the representation, and anyone can reverse it. Never use it to protect secrets.'),
+              LOCAL,
+            ],
       };
     },
   },

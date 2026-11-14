@@ -189,10 +189,8 @@ export const TOOL_GAP = {
     faqs: [
       f('How do I HTML decode online?', 'Paste text that contains entities into the input. The decoded characters appear as you type. Named forms such as &amp; and &lt;, decimal forms such as &#38;, and hex forms such as &#x26; are all supported. Press Copy when you are done.'),
       f('What is an HTML decoder?', 'An HTML decoder (or HTML unescape tool) converts character references back into the characters they represent. That is how &lt;div&gt; becomes the text <div> again, and &amp; becomes &.'),
-      f('Does it decode numeric and hex entities like &#169; and &#xA9;?', 'Yes. Decoding uses the browser\'s own HTML parser, so named entities, decimal entities and hexadecimal entities all decode to their characters.'),
       f('Is HTML decoding the same as URL decoding?', 'No. HTML entities such as &amp; and &#39; belong inside HTML documents. URL decoding handles percent codes such as %26. Use the URL Decoder for percent-encoded text and this tool for entities.'),
       f('Why does &amp;amp; decode to &amp; instead of &?', 'Decoding runs one pass. &amp;amp; is an ampersand that was escaped twice, so one pass leaves &amp;. Run the output through the decoder again to remove the second layer.'),
-      f('Is decoded output safe to put back into a page?', 'Decoding alone does not sanitize HTML. If the result will be rendered as markup and the source is untrusted, use a proper HTML sanitizer and prefer text insertion APIs so tags stay inert.'),
     ],
   },
 

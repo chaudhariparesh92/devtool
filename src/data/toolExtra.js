@@ -342,48 +342,66 @@ export const EXTRA_MORE = {
   '/html-decoder': {
     sections: [
       {
-        h: 'How to HTML decode online',
+        h: 'How to decode HTML entities online',
         paras: [
-          'Paste text that contains HTML entities into the input box. The decoded result updates as you type. Copy the plain characters when you are ready.',
+          'Paste text containing HTML character references into the input. The decoded text appears as you type, and you can copy it or download it as a text file. The decoder performs one pass, matching the usual behavior of an HTML entity decoder.',
         ],
         list: [
-          'Paste encoded text from page source, a feed, an API or a database field.',
-          'Named, decimal and hex entities are decoded automatically.',
-          'Copy the output for use as plain text.',
-          'If you need the reverse step, use the HTML Encoder.',
+          'Paste encoded text from HTML source, an email, an RSS feed, an API response or a database field.',
+          'Named references such as &amp; and &lt; are decoded alongside decimal and hexadecimal numeric references.',
+          'Review the decoded result in the output field, then copy or download it.',
+          'To convert ordinary characters into HTML entities instead, open the HTML Encoder.',
         ],
-        links: [['HTML Encoder', '/html-encoder'], ['URL Decoder', '/url-decoder']],
-        linksLabel: 'Related',
+        links: [['HTML Encoder', '/html-encoder'], ['URL Decoder', '/url-decoder'], ['Base64 Decoder', '/base64-decoder']],
+        linksLabel: 'Related tools',
       },
       {
-        h: 'Named and numeric entities',
+        h: 'Named, decimal and hexadecimal HTML entities',
         paras: [
-          'An entity can be written by name, by decimal number or by hex number. All three below mean the same character.',
+          'HTML character references can identify a character by a readable name, a decimal Unicode code point, or a hexadecimal code point. Different reference forms can represent the same character.',
         ],
-        code: '&copy;   &#169;   &#xA9;   ->  ©\n&amp;    &#38;    &#x26;   ->  &\n&lt;     &#60;    &#x3C;   ->  <\n&gt;     &#62;    &#x3E;   ->  >\n&quot;   &#34;    &#x22;   ->  "\n&#39;    &#x27;           ->  \'',
+        code: '&copy;   &#169;   &#xA9;   ->  ©\n&amp;    &#38;    &#x26;   ->  &\n&lt;     &#60;    &#x3C;   ->  <\n&gt;     &#62;    &#x3E;   ->  >\n&quot;   &#34;    &#x22;   ->  "\n&apos;   &#39;    &#x27;   ->  \'',
       },
       {
-        h: 'HTML decoding example',
-        code: '&lt;p class=&quot;note&quot;&gt;Fish &amp; chips&lt;/p&gt; &copy; 2026\n\n// decoded\n<p class="note">Fish & chips</p> © 2026',
+        h: 'HTML decoder example',
+        paras: ['For example, an encoded paragraph can be decoded back into readable markup. The result is displayed as text in the output field rather than being rendered as a page element.'],
+        code: 'Input:\n&lt;p class=&quot;note&quot;&gt;Fish &amp; chips&lt;/p&gt; &copy; 2026\n\nDecoded output:\n<p class="note">Fish & chips</p> © 2026',
+      },
+      {
+        h: 'Decode Unicode and numeric character references',
+        paras: [
+          'Numeric references can represent characters beyond basic ASCII, including copyright symbols, accented letters and many scripts. A decimal reference starts with &# and a hexadecimal reference starts with &#x. The browser HTML parser resolves valid references to their corresponding characters.',
+        ],
+        code: '&#233;   ->  é\n&#xE9;  ->  é\n&#128512; -> 😀\n&#x1F600; -> 😀',
+      },
+      {
+        h: 'Why does double-encoded HTML need another pass?',
+        paras: [
+          'This decoder processes the input once. If &amp;amp; is decoded, the result is &amp; because the original ampersand entity was itself encoded. Run that result through the decoder again only when you know the text was intentionally encoded more than once.',
+        ],
+        code: 'First pass:  &amp;lt;div&amp;gt;  ->  &lt;div&gt;\nSecond pass: &lt;div&gt;        ->  <div>',
+      },
+      {
+        h: 'HTML decoding vs URL decoding',
+        paras: [
+          'HTML entity decoding and URL percent-decoding solve different problems. HTML references use forms such as &amp;, &lt; and &#38;. URL-encoded values use percent sequences such as %26, %3C and %20. Choose the decoder that matches the format of your input.',
+        ],
+        links: [['URL Decoder', '/url-decoder'], ['HTML Encoder', '/html-encoder']],
+        linksLabel: 'Related tools',
+      },
+      {
+        h: 'HTML decoding and security',
+        paras: [
+          'Decoding is not sanitization, validation or deobfuscation of arbitrary scripts. An encoded tag becomes markup characters after decoding. This tool keeps the result in a text field, but if you later insert untrusted output into a web page, use safe text APIs or a maintained HTML sanitizer appropriate to the context.',
+        ],
       },
       {
         h: 'Decode HTML entities in code',
-        code: '# Python\nimport html; html.unescape(text)\n// C#\nSystem.Net.WebUtility.HtmlDecode(text)\n// JavaScript (browser)\nconst t = document.createElement("textarea");\nt.innerHTML = encoded; t.value;',
-      },
-      {
-        h: 'Decoding and security',
-        paras: [
-          'Decoding does not make the result safe as HTML. An encoded tag becomes a real tag after decoding. If content is untrusted and will be rendered as markup, use a maintained HTML sanitizer and text insertion APIs rather than relying on entity decoding alone.',
-        ],
-        links: [['HTML Encoder', '/html-encoder'], ['URL Decoder', '/url-decoder'], ['Diff Checker', '/diff-checker']],
-        linksLabel: 'Related',
+        code: '# Python\nimport html\nhtml.unescape(encoded_text)\n\n// C#\nSystem.Net.WebUtility.HtmlDecode(encodedText)\n\n// JavaScript in a browser\nconst textarea = document.createElement("textarea");\ntextarea.innerHTML = encodedText;\nconst decodedText = textarea.value;',
       },
     ],
     faqs: [
-      {
-        q: 'Can decoding run scripts in my text?',
-        a: 'The tool decodes into a textarea element, which treats the content as text, so tags in your input are not executed.',
-      },
+      { q: 'Can decoding run scripts in my text?', a: 'No. This tool reads the decoded value from a textarea and displays it in a read-only text field. It does not insert the decoded result into the page as executable markup.' },
     ],
   },
 
