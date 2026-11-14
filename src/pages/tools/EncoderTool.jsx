@@ -25,6 +25,10 @@ function placeholderFor(path) {
 export default function EncoderTool({ path }) {
   const [inp, setInp] = useState('');
   const [out, setOut] = useState('');
+  const [urlPlusAsSpace, setUrlPlusAsSpace] = useState(false);
+  const [urlRecursive, setUrlRecursive] = useState(false);
+  const [urlPerLine, setUrlPerLine] = useState(true);
+  const [urlError, setUrlError] = useState('');
 
   const process = (val) => {
     setInp(val);
@@ -43,6 +47,128 @@ export default function EncoderTool({ path }) {
       setOut('');
     }
   };
+
+  const processUrl = (value, options = {}) => {
+    const plusAsSpace = options.plusAsSpace ?? urlPlusAsSpace;
+    const recursive = options.recursive ?? urlRecursive;
+    const perLine = options.perLine ?? urlPerLine;
+    setInp(value);
+    setUrlError('');
+
+    const decodeValue = (raw) => {
+      let current = plusAsSpace ? raw.replace(/\+/g, ' ') : raw;
+      let passes = 0;
+      do {
+        const previous = current;
+        current = decodeURIComponent(current);
+        passes += 1;
+        if (!recursive || current === previous || passes >= 16) break;
+      } while (true);
+      return current;
+    };
+
+    try {
+      const result = perLine
+        ? value.split(/\r?\n/).map((line) => decodeValue(line)).join('\n')
+        : decodeValue(value);
+      setOut(result);
+    } catch (error) {
+      setOut('');
+      setUrlError(error instanceof URIError
+        ? 'Unable to decode this value. Check that every % is followed by two hexadecimal digits and that the encoded bytes form valid UTF-8.'
+        : 'The URL value could not be decoded. Check the input and try again.');
+    }
+  };
+
+  if (path.includes('url-dec')) {
+    const examples = [
+      { label: 'Encoded text', value: 'Hello%2C%20world%21%20%F0%9F%91%8B' },
+      { label: 'Query value', value: 'name=Jane%20Doe%26role=developer' },
+      { label: 'UTF-8 text', value: 'caf%C3%A9%20au%20lait' },
+      { label: 'Double encoded', value: 'hello%2520world' },
+      { label: 'Form query', value: 'q=hello+world&category=web+tools' },
+    ];
+
+    return (
+      <ToolLayout title="URL Decoder Online" desc="Decode percent-encoded URLs and query values into readable text." path={path}>
+        <div className="p-5 sm:p-6 space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <h2 className="font-bold text-lg">Decode URL-encoded text</h2>
+              <p className="text-sm mt-1" style={{ color: 'var(--muted)' }}>Paste a percent-encoded URL, URI component or query value. The decoded result appears as you type.</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => { setInp(''); setOut(''); setUrlError(''); }}
+              disabled={!inp && !out && !urlError}
+              className="px-3 py-2 text-sm rounded border hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50"
+            >
+              Clear
+            </button>
+          </div>
+
+          <div className="flex flex-wrap gap-2" aria-label="URL decoder examples">
+            <span className="text-xs self-center mr-1" style={{ color: 'var(--muted)' }}>Try an example:</span>
+            {examples.map((example) => (
+              <button
+                key={example.label}
+                type="button"
+                onClick={() => { const plus = example.label === 'Form query' ? true : urlPlusAsSpace; const repeat = example.label === 'Double encoded' ? true : urlRecursive; if (example.label === 'Form query') setUrlPlusAsSpace(true); if (example.label === 'Double encoded') setUrlRecursive(true); processUrl(example.value, { plusAsSpace: plus, recursive: repeat }); }}
+                className="px-3 py-1.5 text-xs rounded border hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-300 transition-colors"
+              >
+                {example.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm">
+            <label className="inline-flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={urlPlusAsSpace} onChange={(e) => { setUrlPlusAsSpace(e.target.checked); processUrl(inp, { plusAsSpace: e.target.checked }); }} className="rounded border-gray-400" />
+              Treat + as space (form data)
+            </label>
+            <label className="inline-flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={urlRecursive} onChange={(e) => { setUrlRecursive(e.target.checked); processUrl(inp, { recursive: e.target.checked }); }} className="rounded border-gray-400" />
+              Decode recursively (up to 16 passes)
+            </label>
+            <label className="inline-flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" checked={urlPerLine} onChange={(e) => { setUrlPerLine(e.target.checked); processUrl(inp, { perLine: e.target.checked }); }} className="rounded border-gray-400" />
+              Decode each line separately
+            </label>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="min-w-0 space-y-2">
+              <label htmlFor="url-decoder-input" className="block text-sm font-semibold">Encoded URL or text</label>
+              <textarea
+                id="url-decoder-input"
+                className="w-full min-h-[260px] p-4 font-mono text-sm bg-gray-50 dark:bg-gray-900 border rounded focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                value={inp}
+                onChange={(e) => processUrl(e.target.value)}
+                placeholder="Paste encoded text, e.g. hello%20world%20%26%20welcome"
+                spellCheck="false"
+                autoCapitalize="off"
+                autoCorrect="off"
+              />
+              <p className="text-xs" style={{ color: 'var(--muted)' }}>Supports percent-encoded UTF-8. Input is processed locally in this browser.</p>
+            </div>
+            <div className="min-w-0 space-y-2">
+              <p className="text-sm font-semibold">Decoded URL text</p>
+              <OutputBox
+                value={out}
+                label="Decoded URL output"
+                placeholder="Readable decoded text appears here…"
+                textareaClassName="min-h-[260px]"
+                downloadFilename="decoded-url.txt"
+              />
+              <p className="text-xs" style={{ color: 'var(--muted)' }}>The output is text; decoding does not validate a URL or make a destination safe to open.</p>
+            </div>
+          </div>
+          {urlError && <p role="alert" className="text-sm rounded border border-red-300 dark:border-red-800 bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-300 p-3">{urlError}</p>}
+          <p className="text-xs" style={{ color: 'var(--muted)' }}>URL decoding is not decryption. Percent-encoded values are reversible and provide no protection for passwords, tokens or other sensitive data.</p>
+        </div>
+      </ToolLayout>
+    );
+  }
 
   if (path.includes('html-enc')) {
     const examples = [

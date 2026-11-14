@@ -268,17 +268,43 @@ export const EXTRA_MORE = {
   '/url-decoder': {
     sections: [
       {
-        h: 'URL decoding example',
-        code: 'caf%C3%A9%20au%20lait\n\n// decoded\ncafé au lait',
+        h: 'How to decode a URL online',
+        paras: [
+          'Paste the encoded text into the URL decoder and read the result in the output panel. A percent-encoded sequence has a percent sign followed by two hexadecimal digits. The decoder converts the represented bytes back into characters using UTF-8, so both ordinary symbols and non-ASCII text can become readable.',
+          'For example, an encoded value such as caf%C3%A9%20au%20lait becomes café au lait. The same process can reveal encoded query values copied from an API request, a browser address bar, application logs or a redirect parameter.',
+        ],
+        code: 'Input:  caf%C3%A9%20au%20lait%20%26%20tea%3D%2B\nOutput: café au lait & tea=+',
       },
       {
-        h: 'Why URL decoding fails',
-        list: ['A stray % that is not followed by two hex digits is malformed, and the output stays empty.', 'A plus sign is not turned into a space. If a form-encoded value uses +, replace it with a space first.', 'Text that was encoded twice needs to be decoded twice.'],
-        links: [['URL Encoder', '/url-encoder'], ['Query String Parser', '/query-string-parser'], ['Base64 Decoder', '/base64-decoder']],
-        linksLabel: 'Related',
+        h: 'Common URL percent-encoding characters',
+        paras: ['These are common percent-encoded characters you may see when inspecting a URL or query string. A UTF-8 character outside the basic ASCII range can be represented by multiple percent-encoded bytes.'],
+        code: '%20  space\n%21  !\n%22  \"\n%23  #\n%25  %\n%26  &\n%2B  +\n%2F  /\n%3A  :\n%3D  =\n%3F  ?\n%C3%A9  é (UTF-8)',
+      },
+      {
+        h: 'URL decoder vs URI decoder and URL parsing',
+        paras: [
+          'URL decoder and URI decoder are commonly used names for tools that reverse percent-encoding. This page applies the browser decodeURIComponent operation to the supplied text. It is intended for an encoded URI component or value; it does not parse a URL into its protocol, host, path and query fields. For structured query parameters, use the Query String Parser.',
+          'Decoding is not the same as decrypting. Percent-encoding does not conceal data with a secret key. Anyone who has the encoded value can reverse it, so never place passwords, access tokens or other secrets in a URL on the assumption that percent-encoding protects them.',
+        ],
+        links: [['Query String Parser', '/query-string-parser'], ['URL Encoder', '/url-encoder'], ['Query String Generator', '/query-string-generator']],
+        linksLabel: 'Related tools',
+      },
+      {
+        h: 'Why URL decoding can fail',
+        list: [
+          'A percent sign must be followed by exactly two hexadecimal digits. Incomplete sequences such as %2 or %XZ are malformed.',
+          'The decoded bytes must form valid UTF-8 for decodeURIComponent. A broken or partial multibyte sequence can produce a malformed URI error.',
+          'A plus sign is a literal plus in URI components. Some form-encoded query strings use + to represent a space; enable the form-style option when that convention applies.',
+          'Double-encoded text contains another percent sequence after the first pass. Enable recursive decoding to continue until the value stops changing.',
+        ],
+        links: [['URL Encoder', '/url-encoder'], ['HTML Decoder', '/html-decoder'], ['Base64 Decoder', '/base64-decoder']],
+        linksLabel: 'Related tools',
       },
     ],
-    faqs: [q('Does it decode + as a space?', 'No. It uses decodeURIComponent, which leaves + unchanged. Replace + with a space yourself for form-encoded data.')],
+    faqs: [
+      q('What does %20 mean in a URL?', '%20 is the percent-encoded representation of a space. For example, hello%20world decodes to hello world.'),
+      q('Can I decode multiple URL values or lines at once?', 'Yes. Paste multiple lines and enable “Decode each line separately”. Each line is decoded independently, and line breaks are preserved.'),
+    ],
   },
   '/html-encoder': {
     sections: [

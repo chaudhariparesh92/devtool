@@ -164,13 +164,13 @@ export const TOOL_SEO_DATA = {
     related: ['/url-decoder', '/query-string-parser', '/query-string-generator', '/base64-encoder', '/html-encoder', '/website-status-checker'],
   }),
   '/url-decoder': S({
-    title: 'URL Decoder – Free Online Percent-Decode Tool',
-    description: 'Free URL decoder online: decode percent-encoded URLs and query values. Runs in your browser.',
+    title: 'URL Decoder Online – Decode Percent-Encoded URLs Free',
+    description: 'Free URL decoder online. Decode percent-encoded URLs, query values and UTF-8 text into readable characters instantly in your browser.',
     h1: 'URL Decoder Online',
     primary: 'url decoder',
-    secondary: ['url decoder online', 'url decoder', 'url decode', 'percent decoder', 'decode url', 'decode url encoded text'],
-    longTail: ['decode percent-encoded URL online', 'decode URL query parameters', 'turn %20 into spaces', 'decode encoded query strings', 'URL decode Unicode text'],
-    intent: 'utility',
+    secondary: ['url decoder online', 'url decode', 'decode url', 'url decode online', 'online url decoder', 'url decoder online free', 'url decoding', 'url encoding decoder', 'percent decoder', 'decode percent encoding', 'decode url encoding', 'url encoded decode', 'decode encoded url', 'uri decoder', 'uri decode', 'decode uri component', 'url unescape', 'unescape url'],
+    longTail: ['decode percent-encoded URL online', 'decode URL query parameters', 'turn %20 into spaces', 'decode encoded query strings', 'decode a URL string online', 'decode UTF-8 percent-encoded text', 'decode a URL parameter from an API response', 'decode multiple URL-encoded lines', 'recursively decode double-encoded URL text'],
+    intent: 'utility + informational',
     related: ['/url-encoder', '/query-string-parser', '/query-string-generator', '/base64-decoder', '/html-decoder', '/website-status-checker'],
   }),
   '/base64-encoder': S({

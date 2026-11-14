@@ -138,10 +138,13 @@ export const TOOL_GAP = {
     ],
   },
   '/url-decoder': {
-    tasks: ['Decode a percent-encoded URL', 'Read %20 and %3A in a link', 'Decode an encoded query string from a log file', 'Decode a UTF-8 URL parameter'],
+    tasks: ['Decode a percent-encoded URL', 'Read %20, %3A and %2F in a link', 'Decode an encoded query string from an application log', 'Decode a UTF-8 URL parameter', 'Decode multiple URL-encoded lines separately', 'Recursively decode a double-encoded URL value', 'Convert form-style + spaces when decoding query values'],
     faqs: [
-      f('What do %20, %3A and %2F mean in a URL?', '%20 is a space, %3A is a colon and %2F is a slash. Each % sequence is the hexadecimal value of one byte, and UTF-8 characters use several of them in a row.'),
-      f('Why does the URL decoder return nothing for my text?', 'A stray % that is not followed by two hexadecimal digits is not valid percent-encoding, so the browser refuses to decode it and the output stays empty. Fix or remove that character and try again.'),
+      f('What do %20, %3A and %2F mean in a URL?', '%20 is a space, %3A is a colon and %2F is a slash. Each percent sequence represents a byte using two hexadecimal digits. UTF-8 characters outside ASCII can require multiple encoded bytes.'),
+      f('Why does URL decoding show a malformed URI error?', 'A percent sign must be followed by two hexadecimal digits, and the decoded bytes must form valid UTF-8. Incomplete sequences such as %2, non-hex characters after % or invalid UTF-8 byte sequences can cause decodeURIComponent to report a malformed URI.'),
+      f('Should I use decodeURI or decodeURIComponent?', 'Use decodeURIComponent for an individual encoded value or URI component, such as a query parameter. decodeURI is intended for a complete URI and preserves reserved characters that have structural meaning. This tool uses decodeURIComponent behavior.'),
+      f('Can I decode a complete URL with this URL decoder?', 'You can paste a URL, but this tool applies component decoding to the supplied string; it does not parse or validate the URL structure. If you need the query keys and values separated into fields, use the Query String Parser.'),
+      f('Does URL decoding make a link safe to open?', 'No. Decoding only changes the text representation. It does not check the destination, remove tracking, verify a domain or make a suspicious link safe. Inspect the decoded hostname carefully before opening an unfamiliar link.'),
     ],
   },
   '/base64-encoder': {

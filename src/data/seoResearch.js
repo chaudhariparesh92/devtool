@@ -16,7 +16,7 @@ export const SEO_RESEARCH = {
   '/csv-to-json': { topObserved: 'CSVJSON / Utilza', focus: 'delimiter detection, type inference, headers, JSONL/file input' },
   '/json-to-csv': { topObserved: 'Utilza', focus: 'nested flattening, delimiter, headers, Excel-safe output, file input' },
   '/url-encoder': { topObserved: 'PocketWebTools / DataFormatter', focus: 'component vs full URL encoding, UTF-8, copy/download' },
-  '/url-decoder': { topObserved: 'URLDecoder / PocketWebTools', focus: 'UTF-8 decoding, query/path handling, readable output' },
+  '/url-decoder': { topObserved: 'MeyerWeb dencoder / URLDecoder.org', focus: 'percent-decoding, UTF-8 text, form-style plus handling, multiline input, recursive decoding, clear malformed-input errors and privacy' },
   '/base64-encoder': { topObserved: 'Base64 Studio / ByteKiln', focus: 'Unicode, URL-safe mode, files/data URI, local processing' },
   '/base64-decoder': { topObserved: 'Base64 Studio / ByteKiln', focus: 'Unicode, URL-safe mode, files/data URI, local processing' },
   '/html-encoder': { topObserved: 'emn178 / MotherEff / W3Schools', focus: 'html encoder head term, five-character escaping, entity examples, JavaScript guidance, context-specific output encoding, vs URL encoding; distinguish from decoder intent' },
