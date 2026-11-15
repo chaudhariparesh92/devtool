@@ -447,10 +447,10 @@ export const TOOL_GAP = {
     ],
   },
   '/regex-tester': {
-    tasks: ['Test a regular expression online', 'Find and replace with a regex', 'Test an email regex', 'Check a JavaScript regex against sample text'],
+    tasks: ['Check whether a regex matches a sample string', 'Find every occurrence of a pattern in multiline text', 'Test case-insensitive and multiline matching', 'Preview a replacement using JavaScript replacement tokens', 'Validate sample values against an email or URL pattern'],
     faqs: [
-      f('How do I do a regex find and replace?', 'Enter the pattern and flags, paste your text and type the replacement in the replacement box. You can use $1 for a capture group and $& for the whole match. The replaced text appears below the matches.'),
-      f('What do the g, i and m flags do?', 'g finds every match instead of just the first, i ignores letter case, and m makes ^ and $ match at the start and end of each line.'),
+      f('How do I test a regex with multiple lines of text?', 'Paste the complete multiline sample into the test text area. Use the g flag to find every match. Add m when ^ and $ should match the beginning and end of each line, rather than only the whole input.'),
+      f('What is the difference between a regex tester and a regex generator?', 'A regex tester checks a pattern against sample text and shows the matches. A regex generator or builder helps you create or assemble a pattern. Use the separate Regex Generator page for editable starter examples; this tester is focused on checking patterns and replacements.'),
     ],
   },
   '/regex-generator': {

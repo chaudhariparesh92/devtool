@@ -46,7 +46,7 @@ export const SEO_RESEARCH = {
   '/case-converter': { topObserved: 'caseconv.co / TheCaseConverter.in', focus: 'many case styles, shortcuts, copy/download, partial text' },
   '/text-to-slug': { topObserved: 'Craftora', focus: 'SEO-friendly slugs, separators, accents, punctuation cleanup' },
   '/slug-generator': { topObserved: 'Slug generator tools', focus: 'SEO-friendly URLs, lowercase/hyphen rules, accents, copy' },
-  '/regex-tester': { topObserved: 'regextester.com / regexregex.com', focus: 'live matches, flags, captures, replacement, explanations' },
+  '/regex-tester': { topObserved: 'regex101.com / regexr.com / OpenReplay Regex Tester', focus: 'online regular expression testing, JavaScript flavor accuracy, global and other flags, match indexes, replacement, clear syntax errors and browser-side privacy; differentiate from multi-engine debuggers and regex builders' },
   '/regex-generator': { topObserved: 'Regex builder/generator tools', focus: 'pattern generation, examples, validation use cases' },
   '/diff-checker': { topObserved: 'Diffchecker / Art of Code', focus: 'side-by-side/unified, word/char diff, ignore rules, files/download' },
   '/number-base-converter': { topObserved: 'W3Schools / BaseConvert', focus: 'bases 2–36, large integers, prefixes, multiple outputs' },

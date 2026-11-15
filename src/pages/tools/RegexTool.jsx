@@ -9,7 +9,7 @@ export default function RegexTool({ path }) {
   const [regex,setRegex]=useLocalStorage(`odt:${path}:regex`,''); const [flags,setFlags]=useLocalStorage(`odt:${path}:flags`,'g'); const [text,setText]=useLocalStorage(`odt:${path}:text`,'');
   const [replacement,setReplacement]=useState(''); const [out,setOut]=useState([]); const [replaced,setReplaced]=useState(''); const [err,setErr]=useState('');
   const isGenerator=path.includes('generator');
-  const testRegex=()=>{ try{setErr('');const re=new RegExp(regex,flags);setOut([...text.matchAll(re)]);setReplaced(text.replace(re,replacement));}catch(e){setErr(e.message);setOut([]);setReplaced('');} };
+  const testRegex=()=>{ try{setErr('');const re=new RegExp(regex,flags);const matches=re.global?[...text.matchAll(re)]:(()=>{const match=text.match(re);return match?[match]:[]})();setOut(matches);setReplaced(text.replace(re,replacement));}catch(e){setErr(e.message);setOut([]);setReplaced('');} };
   const loadExample=(k)=>{setRegex(EXAMPLES[k]);setFlags('g');setText(k==='email'?'ada@example.com\nnot-an-email\nhello@site.dev':'Try '+k+' with 123 and https://example.com');};
   const generated = useMemo(()=>regex ? `/${regex}/${flags}` : '',[regex,flags]);
   return <ToolLayout title={path.replace('/','').replace(/-/g,' ').toUpperCase()} desc="Test, generate and explain regular expressions locally in your browser." path={path}>

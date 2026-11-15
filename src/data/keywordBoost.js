@@ -432,12 +432,13 @@ export const KEYWORD_BOOST = {
     ],
   },
   '/regex-tester': {
-    s: ['regex tester', 'regex tester online', 'regular expression tester', 'javascript regex tester', 'test regex online'],
-    l: ['online regex tester', 'regex checker', 'test regular expression', 'regex match tester', 'regex replace tester'],
-    tasks: ['Test a regex online', 'JavaScript regex tester', 'Test regex replace'],
+    s: ['regular expression tester', 'online regex tester', 'regex tester online', 'regex test', 'regex matcher', 'regex checker', 'check regex', 'verify regular expression', 'regex validation', 'online regex tool', 'regexp tester', 'javascript regex tester', 'regular expression test'],
+    l: ['test a regular expression online', 'check a JavaScript regex against sample text', 'find all regex matches', 'test regex flags online', 'regex find and replace tester', 'check an email regex against examples'],
+    tasks: ['Test a regular expression against sample text', 'Find all matches with the global flag', 'Check a JavaScript regex before using it in code', 'Preview regex find and replace', 'Test email and URL patterns with sample values'],
     faqs: [
-      ['Which regex flavor does the tester use?', 'It uses the JavaScript RegExp engine of your browser. Patterns that rely on features from other flavors, such as PCRE, Python or .NET, may behave differently.'],
-      ['How do I test a regular expression?', 'Enter the pattern, set flags such as g or i, and add sample text. Matches are listed as you type, and you can try a replacement string too.'],
+      ['What does the global (g) flag do in a regex tester?', 'The g flag tells JavaScript to find every match rather than stopping after the first match. This tester enables g by default so the match list can show multiple results.'],
+      ['Can a regex tester confirm that an email address is real?', 'No. A regular expression can check whether text follows a chosen format, but it cannot verify that the mailbox exists or can receive messages.'],
+      ['Does this online regex tester support Python or Java syntax?', 'No. It uses the browser JavaScript RegExp engine. Python, Java, .NET and PCRE have different syntax and behavior, so verify patterns in the engine used by your application.'],
     ],
   },
   '/regex-generator': {
