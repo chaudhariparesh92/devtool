@@ -1080,39 +1080,52 @@ date +%s`,
   '/regex-generator': {
     sections: [
       {
-        h: 'Common regex patterns to start from',
-        paras: ['This page does not build patterns for you. It runs the same matcher as the Regex Tester, so you write or paste a pattern, add flags and check it against sample text. These patterns work in JavaScript and can be pasted in:'],
-        code: 'Digits:            \\d+\nISO date:          \\d{4}-\\d{2}-\\d{2}\nEmail (simple):    \\b[\\w.+-]+@[\\w-]+\\.[\\w.]+\\b\nWord characters:   \\w+',
+        h: 'How to create a regular expression step by step',
+        paras: [
+          'A regular expression describes a text pattern. Build one by starting with the characters that stay fixed, then replacing changing parts with character classes, groups and quantifiers. Use the editable examples above as a starting point and test the pattern against realistic sample text as you refine it.',
+          'For example, ORD-2048 is one order identifier. If the number can change, ORD-\\d+ matches the ORD- prefix followed by one or more digits. Add anchors such as ^ and $ when the complete input must match, rather than a substring inside longer text.',
+        ],
+        code: 'Example: match order IDs\nPattern: \\bORD-\\d+\\b\nText: ORD-2048, ORD-73, REF-19\nMatches: ORD-2048, ORD-73',
       },
       {
-        h: 'What a regular expression is',
-        paras: [
-          'A regular expression (regex) is a sequence of characters that describes a search pattern. Regular expressions let you find, extract or check text without writing a loop for every case, for example pulling email addresses or order numbers out of a log file.',
-          'Use this page as a regex pattern maker and regex builder: write the pattern in small parts, run it after each change and watch the matches list update. A complex regex is much easier to debug when you grow it one piece at a time.',
+        h: 'Common regex building blocks',
+        paras: ['Combine these JavaScript regular-expression tokens to create patterns for common text structures. The meaning of a token can depend on its position and the regex flags.'],
+        list: [
+          '\\d matches a digit; \\D matches a non-digit',
+          '\\w matches a word character; \\W matches a non-word character',
+          '\\s matches whitespace; \\S matches a non-whitespace character',
+          '[A-Z] matches one uppercase ASCII letter; [0-9] matches one digit',
+          '+ means one or more; * means zero or more; ? means optional',
+          '{3} means exactly three repetitions; {2,5} means between two and five',
+          '^ and $ mark the start and end of the input (or line with the m flag)',
+          '(...) groups a pattern and captures its matched text; (?:...) groups without capturing',
         ],
       },
       {
-        h: 'Regex generator from a string: build the pattern by hand',
-        paras: [
-          'To turn a sample string into a regex, start with the string itself and escape the characters that have a special meaning: . * + ? ^ $ { } ( ) | [ ] and the backslash. Then swap the variable parts for classes such as \\d for a digit or \\w for a word character.',
-        ],
-        code: 'String:        price: $5.00 (USD)\nEscaped regex: price: \\$5\\.00 \\(USD\\)\nGeneral regex: price: \\$\\d+\\.\\d{2} \\([A-Z]{3}\\)',
+        h: 'Regex pattern examples you can adapt',
+        paras: ['These are starter patterns, not universal validators. Adjust them for your input rules and the JavaScript runtime where the expression will run.'],
+        code: 'Digits:             \\d+\nLetters:           [A-Za-z]+\nAlphanumeric:      [A-Za-z0-9]+\nISO-style date:     \\d{4}-\\d{2}-\\d{2}\nSimple email form:  ^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$\nSimple URL form:    https?://[^\\s]+',
       },
       {
-        h: 'Find and replace with a regex',
+        h: 'Build a regex from a fixed string',
         paras: [
-          'Fill in the replacement box to see the text after a find and replace. Wrap parts of the pattern in parentheses to make groups, then refer to them as $1, $2 and so on.',
+          'If you have one sample string, first escape its regex metacharacters so they are treated literally. Then decide which characters can vary and replace those portions with a suitable token. This is a manual way to generalize a sample; the generator does not infer a pattern automatically from a string or natural-language instruction.',
         ],
-        code: 'Pattern:      (\\w+)@(\\w+)\\.com   Flags: g\nReplacement:  $2: $1\nText:         ada@example.com, bob@site.com\nResult:       example: ada, site: bob',
+        code: 'Fixed sample:  INV-0075\nGeneral pattern: INV-\\d+\nAlso matches: INV-12, INV-90001',
       },
       {
-        h: 'Test a pattern before you ship it',
-        list: ['Run it against both text that should match and text that should not.', 'Keep g in the flags so every match is listed.', 'A simple email pattern accepts most addresses but not every valid one. Use your language\'s validation library for strict checks.'],
-        links: [['Regex Tester', '/regex-tester'], ['UUID Validator', '/uuid-validator'], ['Query String Parser', '/query-string-parser']],
-        linksLabel: 'Related',
+        h: 'Create first, then test in the target environment',
+        paras: ['The generator uses the JavaScript RegExp engine in your browser. If you plan to use the expression in Python, Java, .NET or PCRE, check the syntax and behavior in that engine because regex flavors are not identical.'],
+        list: ['Include examples that should match and examples that should fail.', 'Use ^ and $ when the whole value must satisfy the pattern.', 'Treat simple email and URL expressions as format checks, not complete validation.', 'Open the Regex Tester when you mainly need to inspect matches or preview replacements.'],
+        links: [['Regex Tester', '/regex-tester'], ['Text Counter', '/text-counter'], ['Diff Checker', '/diff-checker']],
+        linksLabel: 'Related tools',
       },
     ],
-    faqs: [q('Does this page create a regex from a description?', 'No. You write the pattern. The page shows every match so you can refine it.')],
+    faqs: [
+      q('Does this tool generate regex from natural language?', 'No. It provides editable examples and a place to write and refine a JavaScript regex manually. It does not use AI to translate a sentence into a pattern.'),
+      q('Can I generate a regex from a string?', 'You can use a fixed string as a starting point: escape regex metacharacters, then replace the variable parts with tokens such as \\d or [A-Z]. The tool does not automatically infer which parts should vary.'),
+      q('Does a date regex validate that a date exists?', 'No. A pattern such as \\d{4}-\\d{2}-\\d{2} checks the YYYY-MM-DD shape only. It can still match impossible dates, so parse the date and validate its calendar values in your application.'),
+    ],
   },
   '/diff-checker': {
     sections: [

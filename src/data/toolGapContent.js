@@ -454,10 +454,11 @@ export const TOOL_GAP = {
     ],
   },
   '/regex-generator': {
-    tasks: ['Try a ready-made email, URL or digits regex', 'Build and test a regex pattern', 'Copy a regex with its flags', 'Check a regex against example text'],
+    tasks: ['Create a regular expression online', 'Try an editable email, URL, digits or words pattern', 'Build a reusable regex with character classes and quantifiers', 'Create a regex for order IDs or other identifiers', 'Copy a JavaScript regex with its flags'],
     faqs: [
-      f('How do I make a regex case-insensitive or match across lines?', 'Add the i flag to ignore letter case and the m flag so ^ and $ match at each line. Type the letters into the flags box, for example gi or gm, then run the test.'),
+      f('How do I make a regex case-insensitive or match across lines?', 'Add the i flag to ignore letter case and the m flag so ^ and $ match at each line. Type the letters into the flags box, for example gi or gm, then select Build & Test.'),
       f('How do I match digits, words or URLs?', 'Load one of the built-in examples as a starting point. \\d+ matches digits, \\b[A-Za-z]+\\b matches words and https?://[^\\s]+ matches simple web addresses. Then edit the pattern and test it.'),
+      f('Can I use this as a regex pattern generator for Python or Java?', 'The page uses the JavaScript RegExp engine. Many basic tokens look similar across languages, but syntax and behavior differ. Treat the pattern as JavaScript regex and test or adapt it in the target language before using it.'),
     ],
   },
   '/diff-checker': {

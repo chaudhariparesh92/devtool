@@ -46,6 +46,7 @@ const BASELINE_MODIFIED = '2026-10-25';
 const MODIFIED_ON = {
   '2026-11-15': [
     '/regex-tester',
+    '/regex-generator',
   ],
   '2026-11-14': [
     '/rgb-to-hex',

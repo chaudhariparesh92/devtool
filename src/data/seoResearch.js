@@ -47,7 +47,7 @@ export const SEO_RESEARCH = {
   '/text-to-slug': { topObserved: 'Craftora', focus: 'SEO-friendly slugs, separators, accents, punctuation cleanup' },
   '/slug-generator': { topObserved: 'Slug generator tools', focus: 'SEO-friendly URLs, lowercase/hyphen rules, accents, copy' },
   '/regex-tester': { topObserved: 'regex101.com / regexr.com / OpenReplay Regex Tester', focus: 'online regular expression testing, JavaScript flavor accuracy, global and other flags, match indexes, replacement, clear syntax errors and browser-side privacy; differentiate from multi-engine debuggers and regex builders' },
-  '/regex-generator': { topObserved: 'Regex builder/generator tools', focus: 'pattern generation, examples, validation use cases' },
+  '/regex-generator': { topObserved: 'Text.com Regex Builder / regex101.com / RegExr', focus: 'regex creator and pattern builder intent; editable examples, token/quantifier guidance, step-by-step pattern construction, sample matching, clear JavaScript engine scope; distinguish manual building from AI prompt-to-regex and multi-engine debuggers' },
   '/diff-checker': { topObserved: 'Diffchecker / Art of Code', focus: 'side-by-side/unified, word/char diff, ignore rules, files/download' },
   '/number-base-converter': { topObserved: 'W3Schools / BaseConvert', focus: 'bases 2–36, large integers, prefixes, multiple outputs' },
   '/binary-to-decimal': { topObserved: 'Binary Decimal', focus: 'worked positional steps, bit values, related bases' },

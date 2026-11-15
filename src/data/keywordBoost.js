@@ -442,12 +442,13 @@ export const KEYWORD_BOOST = {
     ],
   },
   '/regex-generator': {
-    d: 'Regex generator and pattern maker: write a regular expression, test it live against sample text and copy the /pattern/flags literal. Runs in your browser.',
-    s: ['regex generator', 'regex generator online', 'regular expression generator', 'regex pattern maker', 'regex builder'],
-    l: ['regex generator from string', 'create regex online', 'build a regex pattern', 'regex maker', 'regex pattern generator'],
-    tasks: ['Regex generator online', 'Regex pattern maker', 'Build a regular expression'],
+    d: 'Create a regex pattern online with editable examples for email, URLs, digits and words. Build and test JavaScript regular expressions in your browser, then copy the /pattern/flags expression.',
+    s: ['regex generator', 'regex generator online', 'regex creator', 'regex builder', 'regex maker', 'regular expression creator', 'regular expression builder', 'regex pattern generator', 'regex pattern builder', 'regex tool', 'online regex tool', 'regular expression maker'],
+    l: ['create regex online', 'create a regular expression', 'build a regex pattern', 'regex generator from string example', 'online regular expression builder', 'generate a regex for digits', 'make a simple email regex', 'javascript regex builder'],
+    tasks: ['Create a regex pattern online', 'Use an editable regex starter example', 'Build a regular expression step by step', 'Make a regex for digits, words or identifiers', 'Create a simple email or URL pattern', 'Copy a JavaScript regex with flags'],
     faqs: [
-      ['Can it generate a regex from a sample string?', 'No. It does not infer a pattern from examples. You write the pattern, see matches on your sample text immediately, and copy the finished /pattern/flags literal. Start from a building block such as \\d+ for digits or [a-z]+ for letters.'],
+      ['Can I generate a regex automatically from a sentence?', 'No. This page helps you build a pattern manually from editable examples and regex building blocks. It does not use AI or automatically convert plain English into a regular expression.'],
+      ['How can I create a regex from a sample string?', 'Escape regex metacharacters in the fixed parts, then replace variable sections with character classes and quantifiers. For example, ORD-2048 can be generalized to ORD-\\d+ when the digits change. The tool does not infer that generalization automatically.'],
     ],
   },
   '/diff-checker': {
