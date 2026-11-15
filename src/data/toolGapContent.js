@@ -412,10 +412,17 @@ export const TOOL_GAP = {
     ],
   },
   '/yaml-formatter': {
-    tasks: ['Format and clean up YAML online', 'Fix YAML indentation', 'Re-print a YAML config file consistently', 'Check that YAML parses'],
+    tasks: ['Format YAML online with consistent two-space indentation', 'Validate YAML syntax and check whether YAML is valid', 'Check YAML indentation and parser errors', 'Format a .yaml or .yml file in the browser', 'Beautify Kubernetes, Docker Compose or GitHub Actions YAML syntax', 'Use an online YAML parser to check a configuration before deployment'],
     faqs: [
-      f('Can YAML use tabs for indentation?', 'No. YAML requires spaces for indentation, and a tab causes a parse error. The formatter re-prints your data with consistent space indentation.'),
-      f('How do I convert YAML to JSON?', 'Use the YAML to JSON page. It parses the same YAML and prints it as indented JSON.'),
+      f('How do I validate YAML online?', 'Paste your YAML or choose a .yaml or .yml file, then press Process. A successfully parsed document is formatted; invalid YAML displays the parser error, which may include a line and column.'),
+      f('Can I use this as a YAML linter?', 'This tool checks whether one YAML document parses and reports syntax errors. It is not a full style linter and does not check application-specific schemas or deployment rules.'),
+      f('What is the difference between a YAML parser and a YAML validator?', 'A parser reads YAML text and turns it into data. This formatter uses parsing to check syntax, then prints the data again. Schema validation is a separate step that checks whether the parsed data follows rules for a particular application.'),
+      f('Why does my YAML file have an indentation error?', 'YAML structure depends on indentation. Use spaces instead of tabs, and align keys or list items that belong to the same level. A parser may report the line where it detects the problem rather than the line where the mistake began.'),
+      f('Does it validate Kubernetes, Docker Compose or GitHub Actions files?', 'It checks YAML syntax only. It does not verify Kubernetes resource schemas, Docker Compose configuration rules, GitHub Actions workflow requirements or other application-specific constraints.'),
+      f('Can I check a .yml file online?', 'Yes. Choose or drop a text-based .yml or .yaml file into the input area. It is read in your browser and processed locally.'),
+      f('Does the formatter preserve YAML comments?', 'No. The formatter parses and re-serializes the data, so comments are removed and some quoting or flow-style formatting may change. Keep a copy of the original when comments matter.'),
+      f('Can I format YAML with multiple documents?', 'The current formatter processes one document at a time. Split a multi-document YAML stream at --- and process each document separately.'),
+      f('How do I convert YAML to JSON?', 'Open the YAML to JSON converter, paste one YAML document and process it to produce indented JSON. Comments are not included because JSON does not have comment syntax.'),
     ],
   },
   '/text-counter': {

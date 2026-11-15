@@ -137,18 +137,37 @@ export const EXTRA_MORE = {
   '/yaml-formatter': {
     sections: [
       {
-        h: 'YAML formatter example',
-        paras: ['The tool parses your YAML and prints it again with consistent 2-space indentation.'],
-        code: 'name:   api\nports: [80,   443]\n\n// formatted output\nname: api\nports:\n  - 80\n  - 443',
+        h: 'Format and validate YAML in your browser',
+        paras: ['Use this online YAML formatter to turn compact or inconsistently indented configuration data into readable block-style YAML. Paste a YAML snippet or choose a .yaml or .yml file, then process it to check whether the document parses and produce consistently indented output.', 'The same parse step makes the page a practical YAML syntax checker: valid input is formatted, while invalid input displays the parser message. A successful parse confirms YAML syntax only; it does not prove that a Kubernetes manifest, Docker Compose file, GitHub Actions workflow or application configuration meets its own schema and rules.'],
+        links: [['YAML to JSON', '/yaml-to-json'], ['JSON Formatter', '/json-formatter'], ['XML Validator', '/xml-validator']],
+        linksLabel: 'Related tools',
       },
       {
-        h: 'What the YAML formatter changes',
-        list: ['Comments are removed, because the YAML is parsed to data and written back.', 'Quoting and flow style (inline lists) may change to the dumper\'s defaults.', 'If the YAML is invalid, you see the parser error instead of output, which also makes this a quick YAML syntax check.'],
-        links: [['YAML to JSON', '/yaml-to-json'], ['XML Formatter', '/xml-formatter'], ['Diff Checker', '/diff-checker']],
-        linksLabel: 'Related',
+        h: 'YAML formatter example',
+        code: 'name:   api\nports: [80,   443]\nhealthcheck:\n  enabled: true\n\n# formatted output\nname: api\nports:\n  - 80\n  - 443\nhealthcheck:\n  enabled: true',
+        paras: ['The formatter parses the YAML data and prints it again with consistent two-space indentation. Inline sequences are expanded into block-style lists where the YAML dumper chooses that representation.'],
+      },
+      {
+        h: 'Check YAML syntax and indentation errors',
+        list: ['YAML uses spaces for indentation; tabs used for indentation cause parsing errors.', 'Keys and list items at the same nesting level must line up consistently.', 'A missing colon, malformed list item or incorrectly nested block can stop the YAML parser.', 'A parser error points to where parsing failed, which may be after the original mistake.', 'A successful parse is not the same as schema validation for Kubernetes, Docker Compose or another application.'],
+      },
+      {
+        h: 'What changes when YAML is reformatted?',
+        list: ['Comments are removed because they are not part of the parsed data model.', 'Quoted scalars and inline collections may be printed in a different style.', 'The output uses readable block-style YAML and consistent two-space indentation.', 'This page processes one YAML document at a time; split documents separated by --- before formatting.', 'Keep the original file if comments, anchors or exact textual formatting must remain unchanged.'],
+        links: [['YAML to JSON', '/yaml-to-json'], ['Diff Checker', '/diff-checker'], ['XML Formatter', '/xml-formatter']],
+        linksLabel: 'Related tools',
       },
     ],
-    faqs: [q('Will it keep my comments?', 'No. Comments are not part of the parsed data, so they are dropped. Format a copy if you need to keep the original comments.')],
+    faqs: [
+      q('How do I validate YAML online?', 'Paste YAML or choose a .yaml or .yml file and press Process. If the parser accepts the document, formatted YAML appears. If not, the parser error is shown and may include a line and column.'),
+      q('Is this a YAML linter?', 'It checks YAML parse validity and reports syntax errors. It does not run a full style linter or application-specific schema checks.'),
+      q('Can I use this as a YAML syntax checker for Kubernetes?', 'You can catch YAML syntax and indentation errors in a Kubernetes manifest, but this tool does not validate Kubernetes API versions, resource fields or cluster-specific rules.'),
+      q('Does it support YAML and YML file extensions?', 'Yes. You can select or drop a text-based .yaml or .yml file. The file is read in your browser.'),
+      q('Can I format multiple YAML documents in one file?', 'The formatter handles one document at a time. Split a stream at each --- document separator and format the documents separately.'),
+      q('Does YAML formatting preserve comments?', 'No. Parsing and re-serializing YAML removes comments and may normalize quoting or inline collections. Keep the original file if those details matter.'),
+      q('Does a valid YAML result mean my Docker Compose file is valid?', 'Not necessarily. It means the YAML syntax parses. Docker Compose applies additional rules for supported keys, value types and service configuration.'),
+      q('Is my YAML sent to a server?', 'No. Pasted text is processed in your browser, and selected files are read locally with FileReader.'),
+    ],
   },
   '/xml-formatter': {
     sections: [
