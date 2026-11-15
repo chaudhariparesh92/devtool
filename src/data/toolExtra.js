@@ -1044,42 +1044,35 @@ date +%s`,
   '/slug-generator': {
     sections: [
       {
-        "h": "What makes a good URL slug",
-        "list": [
-          "Lowercase letters, numbers and hyphens only.",
-          "Short and readable: keep the words that describe the page.",
-          "Hyphens between words, not underscores or spaces.",
-          "Stable: avoid dates and version numbers you will have to change."
-        ],
-        "code": "Best Free JSON Tools in 2026!  ->  best-free-json-tools-in-2026",
-        "links": [
-          [
-            "Text to Slug",
-            "/text-to-slug"
-          ],
-          [
-            "Case Converter",
-            "/case-converter"
-          ],
-          [
-            "URL Encoder",
-            "/url-encoder"
-          ]
-        ],
-        "linksLabel": "Related"
+        h: 'How to create a URL slug',
+        paras: ['Enter a page title or phrase and use the generated lowercase, hyphen-separated text as the final path segment of a URL. For example, a title such as “How to Create SEO-Friendly URLs” becomes “how-to-create-seo-friendly-urls”.'],
+        list: ['Use words that clearly describe the page.', 'Separate words with hyphens rather than spaces.', 'Remove punctuation and unnecessary symbols.', 'Keep the path readable and avoid unnecessary filler.'],
+        code: 'How to Create SEO-Friendly URLs!\n\n// URL slug\nhow-to-create-seo-friendly-urls',
+        links: [['Text to Slug', '/text-to-slug'], ['Case Converter', '/case-converter'], ['URL Encoder', '/url-encoder']],
+        linksLabel: 'Related tools',
       },
       {
-        h: 'Slug generator example',
-        code: 'How to Format JSON in 2026\n\n// slug\nhow-to-format-json-in-2026',
+        h: 'URL slug, website slug and permalink: what is the difference?',
+        paras: ['A slug is the human-readable part of a URL path that identifies a page. A website slug is the path segment used on a site, while a permalink is the full, intended permanent link to that page. The slug is only one part of the complete URL.'],
+        code: 'https://example.com/blog/seo-friendly-url-guide\n                         └── seo-friendly-url-guide (slug)',
       },
       {
-        h: 'Tips for a good URL slug',
-        list: ['Keep it short and descriptive, using the words people would search for.', 'Use hyphens between words, and lowercase letters and digits.', 'Avoid dates and filler words that you may want to change later.', 'Check the output for accented letters: this tool removes them instead of transliterating.'],
-        links: [['Text to Slug', '/text-to-slug'], ['URL Encoder', '/url-encoder'], ['Text Counter', '/text-counter']],
-        linksLabel: 'Related',
+        h: 'Slug format tips for SEO-friendly URLs',
+        list: ['Prefer lowercase words and hyphens for a familiar URL format.', 'Keep the most important topic words; do not force every keyword into the slug.', 'Keep URLs stable after publishing. If a slug must change, configure a 301 redirect.', 'This tool creates a text slug; it does not check whether a URL or page already exists, reserve a route, or guarantee search rankings.', 'Review accented and non-Latin text manually because this generator removes characters outside its supported a-z and 0-9 character set rather than providing full language transliteration.'],
+        links: [['URL Encoder', '/url-encoder'], ['URL Decoder', '/url-decoder'], ['Text Counter', '/text-counter']],
+        linksLabel: 'Related tools',
       },
     ],
-    faqs: [q('Should a slug include stop words?', 'It is usually fine to drop words such as a, the and of when the slug stays clear. Edit the result by hand if needed.')],
+    faqs: [
+      q('What is a URL slug?', 'A URL slug is the readable path segment that identifies a page, usually placed after the domain and any parent path. For example, in https://example.com/blog/url-slug-guide, the slug is url-slug-guide.'),
+      q('How do I slugify text online?', 'Enter a title or phrase in the generator. It converts the text to lowercase, replaces spaces and unsupported character runs with hyphens, and removes extra hyphens at the beginning and end.'),
+      q('Should a URL slug use hyphens or underscores?', 'Hyphens are the conventional choice for readable URLs because they separate words. Use a consistent format across your website.'),
+      q('Does a slug generator improve SEO rankings?', 'A clear, descriptive URL can help people understand a page, but generating a slug does not guarantee higher rankings. Useful content and the overall quality of the page matter much more.'),
+      q('Can I use this as a website slug or permalink?', 'Yes. Copy the generated text into the slug or permalink field of your CMS or website. Check the complete URL and make sure it does not conflict with an existing route.'),
+      q('Does the tool check whether a slug is already taken?', 'No. It generates URL-friendly text only. It does not query your website, check route availability or guarantee uniqueness.'),
+      q('Can I change a slug after publishing a page?', 'You can, but changing a live URL may break existing links. Configure a permanent 301 redirect from the old URL to the new one and update internal links.'),
+      q('Does it transliterate every language?', 'No. The current slug conversion keeps supported lowercase English letters and digits. Accented or non-Latin characters may be removed, so review the output for multilingual titles.'),
+    ],
   },
   '/regex-tester': {
     sections: [

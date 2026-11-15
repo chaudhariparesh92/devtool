@@ -447,10 +447,12 @@ export const TOOL_GAP = {
     ],
   },
   '/slug-generator': {
-    tasks: ['Generate an SEO-friendly URL slug', 'Make a slug from an article title', 'Create a clean permalink', 'Convert a product name to a URL slug'],
+    tasks: ['Create a URL slug from a blog title', 'Slugify website text online', 'Generate a clean permalink for a page', 'Convert a heading into a lowercase URL path', 'Make a readable slug for a product or category page'],
     faqs: [
-      f('Should a slug use hyphens or underscores?', 'Use hyphens. Search engines read hyphens as word separators, and Google\'s URL guidance recommends them over underscores.'),
-      f('How long should a URL slug be?', 'There is no fixed limit, but short and descriptive works best. Keep the main words of the title and drop filler words when the slug would otherwise run long.'),
+      f('What makes a URL slug SEO-friendly?', 'A useful slug is concise, readable and descriptive. Include the main topic naturally, use hyphens between words and avoid unnecessary symbols or keyword repetition.'),
+      f('What does slugify mean?', 'Slugify is the process of converting a title or phrase into a URL-friendly text value, typically lowercase with words separated by hyphens.'),
+      f('Can I use the generated slug for a website page?', 'Yes. Copy it into your CMS or routing configuration as the page path, then check that the complete URL is correct and does not conflict with another page.'),
+      f('Does a URL slug need to contain my target keyword?', 'Use the main topic when it fits naturally, but do not stuff several variations into the URL. A short, accurate description is more useful than a long keyword list.'),
     ],
   },
   '/regex-tester': {

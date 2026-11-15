@@ -432,12 +432,14 @@ export const KEYWORD_BOOST = {
     ],
   },
   '/slug-generator': {
-    s: ['slug generator', 'url slug generator', 'seo slug generator', 'permalink generator', 'create slug online'],
-    l: ['generate url slug from title', 'seo friendly url generator', 'clean url slug', 'blog post slug generator', 'wordpress slug generator'],
-    tasks: ['SEO-friendly slug generator', 'Create a clean URL slug', 'Generate a permalink'],
+    s: ['url slug', 'slugify', 'website slug', 'slug maker', 'slug generator', 'slug url', 'slugify online', 'slug format', 'slug online', 'slug text', 'web slug', 'seo friendly url slug', 'permalink generator'],
+    l: ['slugify text online', 'generate a URL slug from a title', 'website slug generator', 'slug generator for SEO-friendly URLs', 'create a slug for a website page', 'format a URL slug online', 'make a blog post slug', 'convert a title to a permalink', 'online slug maker', 'create a lowercase hyphenated URL'],
+    tasks: ['Generate a URL slug from a title', 'Slugify text for a website URL', 'Create a blog post permalink', 'Make a lowercase, hyphen-separated slug', 'Generate a clean website slug'],
     faqs: [
-      ['What is a URL slug?', 'The slug is the readable last part of a URL that identifies a page, for example /how-to-format-json. A good slug is short, lowercase and uses hyphens between words.'],
-      ['How do I make a slug from a title?', 'Paste the title. The generator lowercases it, replaces spaces and symbols with single hyphens and trims hyphens from the ends.'],
+      ['What does slugify mean?', 'Slugify means converting ordinary text, such as a page title, into a URL-friendly slug by applying consistent casing, separators and character cleanup.'],
+      ['What is the difference between a URL and a slug?', 'A URL is the complete web address. The slug is the readable path segment that identifies a specific page within that address.'],
+      ['Can I use a slug as an HTML slug?', 'A URL slug is commonly used in a page URL. HTML element IDs and CSS class names have different rules, so do not assume a URL slug is suitable for every HTML identifier.'],
+      ['Does a slug generator check URL availability?', 'No. This tool generates a slug from text; it does not check your website routes or determine whether the resulting URL is already in use.'],
     ],
   },
   '/regex-tester': {
