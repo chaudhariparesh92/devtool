@@ -424,11 +424,14 @@ export const KEYWORD_BOOST = {
     ],
   },
   '/text-to-slug': {
-    s: ['text to slug', 'title to slug', 'slugify text', 'url slug converter', 'string to slug'],
-    l: ['convert title to url slug', 'slugify string online', 'make url friendly text', 'blog title to slug', 'text to url slug online'],
-    tasks: ['Slugify text', 'Convert a title to a URL slug', 'Make URL-friendly text'],
+    s: ['text to slug', 'seo slug', 'slug seo', 'url slug', 'slugify', 'url handle', 'url maker', 'url creator', 'title to slug', 'slugify text', 'url slug converter', 'string to slug', 'website slug', 'slug maker', 'slug generator', 'slugify online', 'slugify url', 'slug format', 'slug text', 'slug online', 'web slug', 'page slug', 'site slug', 'permalink generator'],
+    l: ['convert text to an seo-friendly url slug', 'slugify a title online', 'create a url handle from text', 'make a website slug from a heading', 'convert a blog title to a url slug', 'create a lowercase hyphenated url', 'remove punctuation from a url slug', 'generate a readable page permalink', 'url slug maker free online', 'turn text into a clean website url path'],
+    tasks: ['Convert text to an SEO-friendly URL slug', 'Slugify a title or heading online', 'Create a lowercase hyphen-separated URL handle', 'Make a website slug or blog permalink', 'Remove punctuation and repeated separators from slug text'],
     faqs: [
-      ['What happens to accented letters?', 'Characters outside a to z and 0 to 9 are treated as separators, so accents are removed rather than transliterated: cafe with an accent becomes caf. Replace accented letters before converting if you want to keep them.'],
+      ['What is a URL slug?', 'A URL slug is the readable part of a web address that identifies a page, usually placed after the domain and any parent path. For example, in example.com/blog/seo-basics, the slug is seo-basics.'],
+      ['What makes a slug SEO-friendly?', 'A useful SEO slug is short, descriptive and easy to read. Use the page topic naturally, separate words with hyphens and avoid unnecessary words, symbols and keyword repetition.'],
+      ['Does this tool transliterate accented or non-English characters?', 'No. This converter keeps lowercase English letters a to z and digits 0 to 9. Other characters are treated as separators, not transliterated. Review the result for names or words that use accents or non-Latin scripts.'],
+      ['Does the generated slug check whether a URL is available?', 'No. It converts text into a slug but does not check your website routes, domain availability, duplicate page paths or redirect rules.'],
     ],
   },
   '/slug-generator': {

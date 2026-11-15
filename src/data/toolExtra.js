@@ -1010,36 +1010,44 @@ date +%s`,
   '/text-to-slug': {
     sections: [
       {
-        "h": "Slugify a title in code",
-        "code": "// JavaScript\ntitle.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')\n# Python (python-slugify package)\nfrom slugify import slugify; slugify(title)",
-        "links": [
-          [
-            "Slug Generator",
-            "/slug-generator"
-          ],
-          [
-            "Case Converter",
-            "/case-converter"
-          ],
-          [
-            "Text Counter",
-            "/text-counter"
-          ]
-        ],
-        "linksLabel": "Related"
+        h: 'What is a URL slug?',
+        paras: ['A URL slug is the readable page identifier in a web address. For example, the slug in example.com/guides/seo-friendly-urls is seo-friendly-urls. A clear slug helps people understand the destination before opening the link.'],
+        links: [['Slug Generator', '/slug-generator'], ['URL Encoder', '/url-encoder']],
+        linksLabel: 'Related tools',
+      },
+      {
+        h: 'How to create an SEO-friendly slug',
+        list: ['Describe the page topic in a few useful words.', 'Use lowercase letters and separate words with hyphens.', 'Remove punctuation, symbols and unnecessary filler words.', 'Keep the slug readable and avoid repeating keyword variations.', 'Check that the new path is unique and redirect the old URL if you rename a published page.'],
+        links: [['Slug Generator', '/slug-generator'], ['Case Converter', '/case-converter'], ['Text Counter', '/text-counter']],
+        linksLabel: 'Related tools',
       },
       {
         h: 'Text to slug example',
-        code: 'Hello, World! Café 2026\n\n// slug\nhello-world-caf-2026',
+        code: 'How to Create SEO-Friendly URLs: A Quick Guide!
+
+// generated slug
+how-to-create-seo-friendly-urls-a-quick-guide',
       },
       {
-        h: 'How the text becomes a slug',
-        list: ['Everything is lowercased.', 'Any run of characters other than a-z and 0-9 becomes a single hyphen.', 'Leading and trailing hyphens are removed.', 'Accented letters are not transliterated. The é in Café is dropped, so check the result for words that include accents.'],
-        links: [['Slug Generator', '/slug-generator'], ['Case Converter', '/case-converter'], ['URL Encoder', '/url-encoder']],
-        linksLabel: 'Related',
+        h: 'How this slugify converter works',
+        list: ['The input is converted to lowercase.', 'Runs of characters other than a-z and 0-9 become one hyphen.', 'Hyphens at the start and end are removed.', 'Accented and non-Latin characters are not transliterated; check the generated text for international names and terms.'],
+        links: [['Slug Generator', '/slug-generator'], ['URL Encoder', '/url-encoder'], ['Regex Tester', '/regex-tester']],
+        linksLabel: 'Related tools',
+      },
+      {
+        h: 'Slug, URL and URL handle: what is the difference?',
+        paras: ['A URL is the complete address, including its protocol, domain and path. A slug is usually the final readable page segment in that path. URL handle is another term used by some content systems and ecommerce platforms for a page identifier. The exact field name depends on your CMS.'],
       },
     ],
-    faqs: [q('Why did my accented letters disappear?', 'The tool keeps only a-z and 0-9. Replace accented letters with plain ones before converting.')],
+    faqs: [
+      q('What is a URL slug?', 'A URL slug is the readable part of a page address that identifies a specific page, such as seo-friendly-urls in example.com/seo-friendly-urls.'),
+      q('How do I make an SEO-friendly slug?', 'Use a short, descriptive phrase, lowercase letters and hyphens between words. Include the main topic naturally, remove unnecessary punctuation and avoid keyword stuffing.'),
+      q('Does this tool create a complete website URL?', 'No. It creates only the slug text. Add it to the correct path on your own website or CMS to form the complete URL.'),
+      q('Does the converter preserve accented letters?', 'No. It keeps a-z and 0-9; other characters become separators. It does not transliterate accented letters or non-Latin scripts, so review the result before publishing.'),
+      q('Can I use the result as a Shopify or WordPress URL handle?', 'You can copy the generated slug into the relevant permalink or URL handle field if it matches your platform rules. Check the final address and make sure it does not duplicate an existing page.'),
+      q('Will changing an existing slug affect my page URL?', 'Yes. Changing a published slug changes the page path. Set up a permanent redirect from the old URL to the new one and update internal links where appropriate.'),
+      q('Does this tool check whether a slug is unique?', 'No. It generates text only and cannot inspect your website routes or database for duplicate slugs.'),
+    ],
   },
   '/slug-generator': {
     sections: [

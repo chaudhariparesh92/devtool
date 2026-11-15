@@ -440,10 +440,12 @@ export const TOOL_GAP = {
     ],
   },
   '/text-to-slug': {
-    tasks: ['Turn a title into a URL slug', 'Convert text to a lowercase hyphenated slug', 'Remove special characters from a URL', 'Create a slug for a blog post title'],
+    tasks: ['Convert text into an SEO-friendly URL slug', 'Slugify a blog title or page heading', 'Create a lowercase hyphen-separated URL handle', 'Make a readable website page slug or permalink', 'Remove punctuation and repeated separators from slug text', 'Generate a clean URL path from a product or category title'],
     faqs: [
-      f('What slug does "Hello, World! 2026" produce?', 'hello-world-2026. The text is lowercased, runs of other characters become a single hyphen, and hyphens at the start or end are trimmed.'),
-      f('Are underscores kept in the slug?', 'No. Anything that is not a lowercase letter or a digit, including underscores, turns into a hyphen.'),
+      f('What slug does "Hello, World! 2026" produce?', 'hello-world-2026. The converter lowercases the text, changes runs of non-alphanumeric characters into one hyphen and trims hyphens from both ends.'),
+      f('Are underscores and spaces kept in the slug?', 'No. Spaces, underscores, punctuation and other characters outside a-z and 0-9 are converted into hyphens. Repeated separators are collapsed into one hyphen.'),
+      f('Is this a URL creator or a complete link generator?', 'It creates the slug portion of a URL, not a complete link or redirect. Add the slug to your own website domain and path.'),
+      f('Can it generate a unique URL slug?', 'It generates a slug from the supplied text but does not check existing pages. Confirm uniqueness in your CMS or website before publishing.'),
     ],
   },
   '/slug-generator': {
