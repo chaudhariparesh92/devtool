@@ -994,18 +994,30 @@ date +%s`,
   '/case-converter': {
     sections: [
       {
-        h: 'What the case converter returns',
-        paras: ['Paste text once and the tool shows three versions together: UPPERCASE, lowercase and Title Case.'],
-        code: 'convert this TEXT\n\n// output\nUPPERCASE: CONVERT THIS TEXT\nlowercase: convert this text\nTitle Case: Convert This Text',
+        h: 'How to use the online case converter',
+        paras: ['Paste your text into the converter and review three capitalization styles together. Choose UPPERCASE for labels or emphasis, lowercase for consistent plain text, and Title Case for headings. Copy the version you need and review proper nouns before using it in published content.'],
+        code: 'the QUICK brown FOX\n\n// output\nUPPERCASE: THE QUICK BROWN FOX\nlowercase: the quick brown fox\nTitle Case: The Quick Brown Fox',
       },
       {
-        h: 'Case styles that are not included',
-        list: ['camelCase, PascalCase, snake_case and kebab-case are not generated.', 'For a hyphenated lowercase form of a title, use the slug tool.'],
-        links: [['Text to Slug', '/text-to-slug'], ['Slug Generator', '/slug-generator'], ['Text Counter', '/text-counter']],
-        linksLabel: 'Related',
+        h: 'Uppercase, lowercase and Title Case explained',
+        list: ['UPPERCASE changes letters to capitals, for example: release notes → RELEASE NOTES.', 'lowercase changes letters to small letters, for example: API RESPONSE → api response.', 'Title Case capitalizes each word, for example: learn web development → Learn Web Development. Check short words and proper names against your style guide.'],
+      },
+      {
+        h: 'When to use a different text tool',
+        list: ['For camelCase, PascalCase, snake_case or kebab-case identifiers, use a converter that explicitly supports programming naming styles.', 'For a lowercase, hyphen-separated URL path, use a slug generator instead of a writing case converter.', 'For character, word and line totals, use a text counter.'],
+        links: [['Text to Slug', '/text-to-slug'], ['Slug Generator', '/slug-generator'], ['Text Counter', '/text-counter'], ['Regex Tester', '/regex-tester']],
+        linksLabel: 'Related tools',
+      },
+      {
+        h: 'Case conversion example',
+        code: 'Original: welcome to the developer tools\nUPPERCASE: WELCOME TO THE DEVELOPER TOOLS\nlowercase: welcome to the developer tools\nTitle Case: Welcome To The Developer Tools',
       },
     ],
-    faqs: [q('Can it convert to camelCase or snake_case?', 'No. It converts to uppercase, lowercase and title case only.')],
+    faqs: [
+      q('Can it convert to camelCase or snake_case?', 'No. This page currently converts to UPPERCASE, lowercase and Title Case only. Use a dedicated programming case converter for camelCase, PascalCase, snake_case or kebab-case.'),
+      q('Does Title Case follow AP, Chicago or APA rules?', 'The simple Title Case output capitalizes each word. It does not apply a full AP, Chicago, APA or MLA headline style guide, so review short words and capitalization rules before publishing.'),
+      q('Can I use it to fix text typed with Caps Lock on?', 'Yes. Paste the text and use the lowercase result as a starting point, then choose Title Case or restore any intended acronyms and names.'),
+    ],
   },
   '/text-to-slug': {
     sections: [

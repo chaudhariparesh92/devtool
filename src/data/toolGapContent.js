@@ -433,10 +433,13 @@ export const TOOL_GAP = {
     ],
   },
   '/case-converter': {
-    tasks: ['Convert text to uppercase', 'Convert text to lowercase', 'Convert text to title case', 'Fix text typed with caps lock on'],
+    tasks: ['Convert text to uppercase online', 'Change capital letters to lowercase', 'Convert text to Title Case for headings', 'Capitalize a title or sentence', 'Fix text typed with Caps Lock on', 'Standardize copied text before publishing'],
     faqs: [
-      f('How does the title case output work?', 'The first letter of every word is capitalized and the rest is lowercased. Small words such as of or the are capitalized too, so edit them by hand if your style guide differs.'),
-      f('Which cases does the tool produce?', 'It shows UPPERCASE, lowercase and Title Case together for whatever you paste. For code styles such as camelCase or snake_case, convert them by hand.'),
+      f('How does the Title Case output work?', 'The converter capitalizes the first letter of each word and lowercases the remaining letters. This simple approach may capitalize short words such as of, and or the; adjust the result to match your publication style guide.'),
+      f('Which case formats does this tool produce?', 'It displays UPPERCASE, lowercase and Title Case. It does not currently create camelCase, PascalCase, snake_case, kebab-case, alternating case or decorative Unicode fonts.'),
+      f('Can I convert multiple sentences or a full paragraph?', 'Yes. Paste multiple sentences or a paragraph to generate the three capitalization versions. Review punctuation, acronyms and proper names after conversion.'),
+      f('Will it correctly format names, brands and acronyms?', 'Not always. A general case conversion can change intentional capitalization in names, brands and acronyms. Check important terms such as iPhone, JavaScript, NASA and API before copying the result.'),
+      f('Is my text uploaded to a server?', 'The conversion is performed in your browser as part of the tool. Avoid entering confidential information into any online tool unless you have reviewed its privacy details.'),
     ],
   },
   '/text-to-slug': {

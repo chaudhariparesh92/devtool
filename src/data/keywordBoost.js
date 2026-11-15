@@ -416,11 +416,16 @@ export const KEYWORD_BOOST = {
     ],
   },
   '/case-converter': {
-    s: ['case converter', 'uppercase converter', 'lowercase converter', 'title case converter', 'text case changer'],
-    l: ['convert text to uppercase online', 'change case online', 'text to lowercase', 'capitalize each word', 'online case changer'],
-    tasks: ['Convert text to uppercase', 'Convert text to lowercase', 'Capitalize each word'],
+    s: ['case converter', 'case converter online', 'convert case', 'uppercase converter', 'lowercase converter', 'title case converter', 'sentence case', 'all caps converter', 'upper case converter', 'lower case converter', 'text case changer', 'capitalize my title', 'title capitalizer', 'uppercase to lowercase', 'lowercase to uppercase', 'to uppercase', 'to lowercase'],
+    l: ['convert text to uppercase online', 'change uppercase text to lowercase', 'convert lowercase text to capital letters', 'capitalize a title online', 'convert a paragraph to sentence case', 'change text case without retyping', 'fix text typed with caps lock on', 'make all letters uppercase or lowercase'],
+    tasks: ['Convert text to uppercase', 'Convert text to lowercase', 'Convert text to Title Case', 'Capitalize a title or heading', 'Fix text typed with Caps Lock on'],
     faqs: [
-      ['How do I change text to uppercase or lowercase?', 'Paste the text and choose the case you want. UPPERCASE, lowercase and Title Case are available.'],
+      ['How do I change text to uppercase or lowercase?', 'Paste your text into the input. The tool displays UPPERCASE, lowercase and Title Case versions so you can copy the one you need.'],
+      ['What is the difference between uppercase and lowercase?', 'Uppercase uses capital letters, such as HELLO. Lowercase uses small letters, such as hello.'],
+      ['What does Title Case do?', 'Title Case capitalizes the first letter of each word in the generated version. Check short words, names and acronyms against your preferred style guide before using the result.'],
+      ['Can I convert a whole paragraph at once?', 'Yes. Paste a paragraph or longer text and review the three converted versions. Very large inputs may depend on your browser and device.'],
+      ['Does this tool create camelCase, snake_case or programming formats?', 'No. This page currently provides UPPERCASE, lowercase and Title Case. Use a dedicated identifier converter when you need camelCase, PascalCase, snake_case or kebab-case.'],
+      ['Does the converter preserve names and acronyms?', 'Automatic capitalization can change the casing of proper nouns and acronyms. Review names such as iPhone, NASA and product names before publishing.'],
     ],
   },
   '/text-to-slug': {
