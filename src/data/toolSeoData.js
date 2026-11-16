@@ -276,8 +276,8 @@ export const TOOL_SEO_DATA = {
     related: ['/sha256-generator', '/sha512-generator', '/md5-generator', '/base64-encoder', '/jwt-generator', '/uuid-generator'],
   }),
   '/sha256-generator': S({
-    title: 'SHA256 Generator – Free Online SHA-256 Hash Tool',
-    description: 'Free SHA-256 generator online: hash text or files in your browser. Nothing is uploaded.',
+    title: 'SHA-256 Generator – Free Online SHA256 Hash Calculator',
+    description: 'Generate SHA-256 hashes online from text or files. Free SHA256 generator and checksum tool that runs in your browser—nothing is uploaded.',
     h1: 'SHA256 Generator Online',
     primary: 'sha256 generator',
     secondary: ['sha256 generator online', 'sha256 generator', 'sha-256 generator', 'sha256 hash generator', 'sha256 calculator', 'sha256 online'],
@@ -286,8 +286,8 @@ export const TOOL_SEO_DATA = {
     related: ['/sha512-generator', '/md5-generator', '/hash-generator', '/jwt-generator', '/base64-encoder'],
   }),
   '/sha512-generator': S({
-    title: 'SHA512 Generator – Free Online SHA-512 Hash Tool',
-    description: 'Free SHA-512 generator online: create SHA-512 hashes from text or files in your browser.',
+    title: 'SHA-512 Generator – Free Online SHA512 Hash Calculator',
+    description: 'Generate SHA-512 hashes online (128 hex characters) from text or files. Free SHA512 hash calculator in your browser, no signup.',
     h1: 'SHA512 Generator Online',
     primary: 'sha512 generator',
     secondary: ['sha512 generator online', 'sha512 generator', 'sha-512 generator', 'sha512 hash generator', 'sha512 calculator', 'sha512 online'],
@@ -474,8 +474,8 @@ export const TOOL_SEO_DATA = {
     related: ['/text-counter', '/text-to-slug', '/slug-generator', '/diff-checker', '/regex-tester', '/regex-generator'],
   }),
   '/text-to-slug': S({
-    title: 'Text to Slug Converter – Free SEO URL Slug Maker',
-    description: 'Convert text, titles and headings into clean SEO-friendly URL slugs. Slugify text online into lowercase, hyphen-separated URLs in your browser.',
+    title: 'Text to Slug – Free URL Slug Generator (SEO-Friendly)',
+    description: 'Convert text to slug online: turn titles into clean, SEO-friendly URL slugs with hyphens. Free text-to-slug converter in your browser.',
     h1: 'Text to Slug Converter – Create an SEO-Friendly URL Slug',
     primary: 'text to slug',
     secondary: ['text to slug online', 'seo slug', 'slug seo', 'url slug', 'slugify', 'url handle', 'url maker', 'url creator', 'slug converter', 'website slug', 'slug maker', 'slug generator', 'slugify online', 'slugify url', 'slug text', 'slug format', 'url slugs'],
@@ -544,8 +544,8 @@ export const TOOL_SEO_DATA = {
     related: ['/decimal-to-binary', '/number-base-converter', '/hex-to-decimal', '/decimal-to-hex', '/timestamp-converter'],
   }),
   '/decimal-to-binary': S({
-    title: 'Decimal to Binary Converter – Free Online Tool',
-    description: 'Free decimal to binary converter online: convert numbers to binary in your browser.',
+    title: 'Decimal to Binary Converter – Free Base 10 to Base 2 Online',
+    description: 'Convert decimal to binary online free. Base 10 to base 2 converter with instant results in your browser—no signup required.',
     h1: 'Decimal to Binary Converter',
     primary: 'decimal to binary',
     secondary: ['decimal to binary online', 'decimal to binary', 'decimal binary converter', 'base 10 to base 2', 'binary converter', 'convert decimal'],

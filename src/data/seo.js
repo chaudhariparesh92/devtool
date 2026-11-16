@@ -31,7 +31,7 @@ export function canonicalUrl(path) {
 // Update this whenever content is genuinely changed.
 // NOTE: every route listed in KEYWORD_BOOST inherits this date, so only change it
 // when all of those pages really changed.
-export const CONTENT_LAST_MODIFIED = '2026-11-12';
+export const CONTENT_LAST_MODIFIED = '2026-11-16';
 
 // Per-page dates feed:
 // - Visible "Updated" line
@@ -44,14 +44,22 @@ export const CONTENT_LAST_MODIFIED = '2026-11-12';
 const BASELINE_MODIFIED = '2026-10-25';
 
 const MODIFIED_ON = {
+  '2026-11-16': [
+    '/text-to-slug',
+    '/xml-validator',
+    '/sha256-generator',
+    '/json-to-csharp',
+    '/sha512-generator',
+    '/decimal-to-binary',
+    '/regex-generator',
+  ],
+
   '2026-11-15': [
     '/regex-tester',
-    '/regex-generator',
   ],
   '2026-11-14': [
     '/rgb-to-hex',
     '/json-minifier',
-    '/json-to-csharp',
     '/uuid-generator',
     '/html-decoder',
     '/html-encoder',
@@ -63,11 +71,9 @@ const MODIFIED_ON = {
     '/decimal-to-hex',
     '/website-status-checker',
     '/unix-timestamp',
-    '/xml-validator',
   ],
 
   '2026-11-11': [
-    '/json-to-csharp',
     '/html-decoder',
     '/uuid-generator',
     '/html-encoder',
@@ -75,7 +81,6 @@ const MODIFIED_ON = {
   ],
 
   '2026-11-10': [
-    '/xml-validator',
   ],
 
   '2026-11-09': [
@@ -83,12 +88,9 @@ const MODIFIED_ON = {
   ],
 
   '2026-11-05': [
-    '/json-to-csharp',
     '/html-decoder',
     '/base64-decoder',
     '/rgb-to-hex',
-    '/regex-generator',
-    '/xml-validator',
     '/timestamp-converter',
     '/unix-timestamp',
     '/json-formatter',
@@ -126,14 +128,11 @@ const MODIFIED_ON = {
     '/html-decoder',
     '/timestamp-converter',
     '/xml-formatter',
-    '/xml-validator',
     '/yaml-formatter',
     '/case-converter',
-    '/text-to-slug',
     '/slug-generator',
     '/number-base-converter',
     '/binary-to-decimal',
-    '/decimal-to-binary',
     '/hex-to-decimal',
     '/decimal-to-hex',
   ],

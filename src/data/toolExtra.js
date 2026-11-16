@@ -1035,10 +1035,7 @@ date +%s`,
       },
       {
         h: 'Text to slug example',
-        code: 'How to Create SEO-Friendly URLs: A Quick Guide!
-
-// generated slug
-how-to-create-seo-friendly-urls-a-quick-guide',
+        code: 'How to Create SEO-Friendly URLs: A Quick Guide!\n\n// generated slug\nhow-to-create-seo-friendly-urls-a-quick-guide',
       },
       {
         h: 'How this slugify converter works',
