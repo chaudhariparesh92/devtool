@@ -343,6 +343,11 @@ export default function Footer() {
                 />
               </a>
             </div>
+            <div>
+              <a href="https://startupfa.me" target="_blank" rel="noopener">
+                Listed on Startup Fame
+              </a>
+            </div>
           </div>
 
           <button
