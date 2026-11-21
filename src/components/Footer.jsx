@@ -330,7 +330,7 @@ export default function Footer() {
                 />
               </a>
             </div>
-            <div className="hidden inline-flex items-center mr-4">
+            <div className="inline-flex items-center mr-4">
               <a
                 href="https://startupfa.me/s/onlinedevelopertool?utm_source=onlinedevelopertool.com"
                 target="_blank"
