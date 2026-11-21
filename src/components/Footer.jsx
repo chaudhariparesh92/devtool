@@ -330,6 +330,19 @@ export default function Footer() {
                 />
               </a>
             </div>
+            <div className="hidden inline-flex items-center mr-4">
+              <a
+                href="https://startupfa.me/s/onlinedevelopertool?utm_source=onlinedevelopertool.com"
+                target="_blank"
+              >
+                <img
+                  src="https://startupfa.me/badges/featured-badge-small.webp"
+                  alt="OnlineDeveloperTool - Featured on Startup Fame"
+                  width="224"
+                  height="36"
+                />
+              </a>
+            </div>
           </div>
 
           <button
