@@ -234,6 +234,8 @@ export default function Footer() {
                   alt="betterlaunch.co"
                   width="200"
                   height="56"
+                  loading="lazy"
+                  decoding="async"
                 />
               </a>
             </div>
@@ -244,6 +246,8 @@ export default function Footer() {
                   width="120"
                   height="44"
                   alt="Published on Lede Press"
+                  loading="lazy"
+                  decoding="async"
                 />
               </a>
             </div>
@@ -254,6 +258,8 @@ export default function Footer() {
                   width="125"
                   height="44"
                   alt="Published on Hed Press"
+                  loading="lazy"
+                  decoding="async"
                 />
               </a>
             </div>
@@ -264,6 +270,8 @@ export default function Footer() {
                   width="120"
                   height="44"
                   alt="Published on Listed Press"
+                  loading="lazy"
+                  decoding="async"
                 />
               </a>
             </div>
@@ -274,6 +282,8 @@ export default function Footer() {
                   width="120"
                   height="44"
                   alt="Published on Piece Press"
+                  loading="lazy"
+                  decoding="async"
                 />
               </a>
             </div>
@@ -288,6 +298,8 @@ export default function Footer() {
                   alt="Online Developer Tools on Nick Launches"
                   width="244"
                   height="56"
+                  loading="lazy"
+                  decoding="async"
                 />
               </a>
             </div>
@@ -301,6 +313,8 @@ export default function Footer() {
                   src="https://api.useneedle.net/api/directory/badges/online-developer-tools.svg"
                   alt="Listed on Needle Directory"
                   height="44"
+                  loading="lazy"
+                  decoding="async"
                 />
               </a>
             </div>

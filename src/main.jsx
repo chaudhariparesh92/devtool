@@ -5,7 +5,14 @@ import App, { AppRoutes } from './App.jsx';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 
-if ('serviceWorker' in navigator) { window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {})); }
+if ('serviceWorker' in navigator) {
+  // Register after the page is idle so the worker's first-visit precache never competes with page load.
+  const registerSw = () => navigator.serviceWorker.register('/sw.js').catch(() => {});
+  window.addEventListener('load', () => {
+    if ('requestIdleCallback' in window) window.requestIdleCallback(registerSw, { timeout: 4000 });
+    else setTimeout(registerSw, 2000);
+  });
+}
 
 const container = document.getElementById('root');
 // /tools uses a query parameter to filter its visible list. That content differs

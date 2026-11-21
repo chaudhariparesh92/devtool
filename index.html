@@ -34,11 +34,27 @@
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="manifest" href="/manifest.webmanifest" />
 
-    <!-- Performance: warm up the ad connection; the ad script itself is async so it never blocks rendering. -->
-    <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin />
-    <!-- Publisher ID is configured in AdSlot.jsx. Add real numeric ad-slot IDs before enabling individual placements. -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237108044981261"
-     crossorigin="anonymous"></script>
+    <!-- Performance: the AdSense script is the heaviest third-party request (it pulls in several more
+         domains). It is injected after the page has loaded, or on the first scroll/tap/key press,
+         whichever comes first, so it never competes with the content visitors came for.
+         Publisher ID is configured in AdSlot.jsx. Add real numeric ad-slot IDs before enabling individual placements. -->
+    <script>
+      (function () {
+        var started = false;
+        function loadAds() {
+          if (started) return;
+          started = true;
+          var s = document.createElement('script');
+          s.async = true;
+          s.crossOrigin = 'anonymous';
+          s.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1237108044981261';
+          document.head.appendChild(s);
+        }
+        var opts = { once: true, passive: true };
+        ['scroll', 'pointerdown', 'keydown', 'touchstart'].forEach(function (e) { window.addEventListener(e, loadAds, opts); });
+        window.addEventListener('load', function () { setTimeout(loadAds, 3500); });
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

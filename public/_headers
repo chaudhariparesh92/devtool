@@ -1,0 +1,23 @@
+# Cache headers for Cloudflare static assets (copied to dist/ by Vite).
+# Fixes the "Add Expires headers" finding. HTML stays revalidated so deploys and Google always see fresh pages.
+
+# Vite output: filenames contain a content hash, so they can be cached for a year.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Fixed-name media: cached for 30 days. If you replace one, give the new file a new name.
+/images/*
+  Cache-Control: public, max-age=2592000
+/video/*
+  Cache-Control: public, max-age=2592000
+
+/favicon.ico
+  Cache-Control: public, max-age=604800
+/monitor.png
+  Cache-Control: public, max-age=604800
+/manifest.webmanifest
+  Cache-Control: public, max-age=86400
+
+# The service worker must always be re-checked or updates never reach visitors.
+/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
