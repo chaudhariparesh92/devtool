@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -11,25 +11,28 @@ import StaticPage from './pages/StaticPage';
 import GuidesIndex from './pages/GuidesIndex';
 import GuidePage from './pages/GuidePage';
 import { GUIDE_ROUTES } from './data/guides';
-import JsonFormatterTool from './pages/tools/JsonFormatterTool';
-import JsonConverterTool from './pages/tools/JsonConverterTool';
-import EncoderTool from './pages/tools/EncoderTool';
-import UuidTool from './pages/tools/UuidTool';
-import JwtTool from './pages/tools/JwtTool';
-import DataFormatTool from './pages/tools/DataFormatTool';
-import TextTools from './pages/tools/TextTools';
-import HashTool from './pages/tools/HashTool';
-import TimestampTool from './pages/tools/TimestampTool';
-import ColorTool from './pages/tools/ColorTool';
-import NumberBaseTool from './pages/tools/NumberBaseTool';
-import RegexTool from './pages/tools/RegexTool';
-import DiffTool from './pages/tools/DiffTool';
-import QueryStringTool from './pages/tools/QueryStringTool';
-import CronTool from './pages/tools/CronTool';
-import WebsiteStatusTool from './pages/tools/WebsiteStatusTool';
 import AdSlot from './components/AdSlot';
 import FooterSeoContent from './components/FooterSeoContent';
 import NotFound from './pages/NotFound';
+import { lazyRoute } from './lazyRoute';
+
+// Tool pages are code-split: each one is downloaded only when that tool is opened.
+const JsonFormatterTool = lazyRoute(() => import('./pages/tools/JsonFormatterTool'));
+const JsonConverterTool = lazyRoute(() => import('./pages/tools/JsonConverterTool'));
+const EncoderTool = lazyRoute(() => import('./pages/tools/EncoderTool'));
+const UuidTool = lazyRoute(() => import('./pages/tools/UuidTool'));
+const JwtTool = lazyRoute(() => import('./pages/tools/JwtTool'));
+const DataFormatTool = lazyRoute(() => import('./pages/tools/DataFormatTool'));
+const TextTools = lazyRoute(() => import('./pages/tools/TextTools'));
+const HashTool = lazyRoute(() => import('./pages/tools/HashTool'));
+const TimestampTool = lazyRoute(() => import('./pages/tools/TimestampTool'));
+const ColorTool = lazyRoute(() => import('./pages/tools/ColorTool'));
+const NumberBaseTool = lazyRoute(() => import('./pages/tools/NumberBaseTool'));
+const RegexTool = lazyRoute(() => import('./pages/tools/RegexTool'));
+const DiffTool = lazyRoute(() => import('./pages/tools/DiffTool'));
+const QueryStringTool = lazyRoute(() => import('./pages/tools/QueryStringTool'));
+const CronTool = lazyRoute(() => import('./pages/tools/CronTool'));
+const WebsiteStatusTool = lazyRoute(() => import('./pages/tools/WebsiteStatusTool'));
 
 // Keep ad wrappers out of the layout until real numeric AdSense slot IDs are configured.
 // This avoids empty top/bottom gaps when the project still contains placeholder IDs.
@@ -104,6 +107,14 @@ export const routes = [
   { path: '/website-status-checker', component: WebsiteStatusTool }
 ];
 
+// Load the code-split chunk for a path. Used before prerendering (server) and before hydrating (browser)
+// so the first render already contains the real page, never a Suspense fallback.
+export function preloadRoute(pathname) {
+  const clean = (pathname || '/').replace(/\/+$/, '') || '/';
+  const match = routes.find((r) => r.path === clean);
+  return match && match.component.preload ? match.component.preload() : Promise.resolve();
+}
+
 // Jump back to the top when navigating to a new page (hash links are left alone).
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -132,12 +143,14 @@ export function AppRoutes() {
 
           {/* Tool/Page Content (full width: the old sticky sidebar ads were removed so tools get room and ads stay in flow) */}
           <main id="main" className="flex-grow min-w-0 w-full max-w-[1100px] mx-auto">
+            <Suspense fallback={null}>
             <Routes>
               {routes.map((r, i) => (
                  <Route key={i} path={r.path} element={<r.component path={r.path} />} />
               ))}
               <Route path="*" element={<NotFound />} />
             </Routes>
+            </Suspense>
           </main>
 
           {/* AD 4 - BOTTOM: only reserve space when a real numeric slot is configured. */}

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createRoot, hydrateRoot } from 'react-dom/client';
 import { HelmetProvider } from 'react-helmet-async';
-import App, { AppRoutes } from './App.jsx';
+import App, { AppRoutes, preloadRoute } from './App.jsx';
 import { BrowserRouter } from 'react-router-dom';
 import './index.css';
 
@@ -31,8 +31,13 @@ const app = isPrerendered ? (
   </React.StrictMode>
 );
 
-if (isPrerendered) {
-  hydrateRoot(container, app);
-} else {
-  createRoot(container).render(app);
-}
+const start = () => {
+  if (isPrerendered) {
+    hydrateRoot(container, app);
+  } else {
+    createRoot(container).render(app);
+  }
+};
+
+// Tool pages are code-split: fetch this page's chunk first so hydration matches the prerendered HTML exactly.
+preloadRoute(window.location.pathname).then(start, start);

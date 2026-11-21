@@ -2,9 +2,10 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { HelmetProvider } from 'react-helmet-async';
 import { MemoryRouter } from 'react-router-dom';
-import { AppRoutes } from './App.jsx';
+import { AppRoutes, preloadRoute } from './App.jsx';
 
-export function renderPage(path) {
+export async function renderPage(path) {
+  await preloadRoute(path);
   const helmetContext = {};
   const markup = renderToString(
     <HelmetProvider context={helmetContext}>

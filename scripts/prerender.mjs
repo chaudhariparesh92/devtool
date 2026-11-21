@@ -427,7 +427,7 @@ async function main() {
     const normalizedSiteUrl = seo.SITE_URL.replace(/\/+$/, "");
 
     for (const route of routes) {
-      const { markup, helmet } = renderPage(route);
+      const { markup, helmet } = await renderPage(route);
 
       // Canonical URLs use trailing slashes for every page route.
       const expectedCanonical = `${normalizedSiteUrl}${route === "/" ? "/" : `${route}/`}`;
@@ -494,7 +494,7 @@ async function main() {
     }
 
     // Generate a useful noindex 404 page.
-    const notFound = renderPage("/__prerendered_404__");
+    const notFound = await renderPage("/__prerendered_404__");
 
     const notFoundHtml = injectMarkup(
       replaceHead(template, getHelmetHead(notFound.helmet)),
