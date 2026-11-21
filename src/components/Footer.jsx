@@ -330,7 +330,7 @@ export default function Footer() {
                 />
               </a>
             </div>
-            <div className="inline-flex items-center mr-4">
+            <div className="hidden inline-flex items-center mr-4">
               <a
                 href="https://startupfa.me/s/onlinedevelopertool?utm_source=onlinedevelopertool.com"
                 target="_blank"
@@ -341,11 +341,6 @@ export default function Footer() {
                   width="224"
                   height="36"
                 />
-              </a>
-            </div>
-            <div>
-              <a href="https://startupfa.me" target="_blank" rel="noopener">
-                Listed on Startup Fame
               </a>
             </div>
           </div>
